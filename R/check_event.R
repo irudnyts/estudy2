@@ -62,11 +62,10 @@ CheckEvent.character <- function(..., index, model, estimation_start,
 
     # calculate aanormals
     abnormals <- GetAbnormalReturns(companies_rates, index_rates, model,
-                                    estimation_start,
-                                    estimation_end, event.window.start,
-                                    event_end)
+                                    estimation_start, estimation_end,
+                                    event_start, event_end)
 
-    # analythe abnormals with critical_percentage
+    # analyze abnormals with critical_percentage
 
     return(companies_prices)
 }
