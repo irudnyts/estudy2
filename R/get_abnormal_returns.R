@@ -1,4 +1,4 @@
-get_abnormal_return <- function(companies_rates, index_rates,
+get_abnormal_returns <- function(companies_rates, index_rates,
                                model =
                                    c("mean_adjusted", "market_adjusted", "OLS"),
                                estimation_start, estimation_end,
