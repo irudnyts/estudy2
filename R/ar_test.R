@@ -27,27 +27,26 @@ ar_test <- function(..., index, model, estimation_start,
 
 
 
-    if(inherits(..., "zoo")) {
-        companies_prices <- merge(...)
-    } else if(inherits(..., "character")) {
-        tickers <- c(...)
-        companies_prices <- get_prices_form_tickers(...,
-                                                    start = estimation_start,
-                                                    end = event_end,
-                                                    quote = quote)
-    }
+#     if(inherits(..., "zoo")) {
+#         companies_prices <- merge(...)
+#     } else if(inherits(..., "character")) {
+#     }
+
+#     if(inherits(index, "zoo")) {
+#         index_prices <- index
+#     } else if(inherits(index, "character")) {
+#     }
+
+
+    # make sure that this ... is tickers
+    tickers <- c(...)
     quote <- match.arg(quote)
-
-    if(inherits(index, "zoo")) {
-        index_prices <- index
-    } else if(inherits(index, "character")) {
-        index_prices <- get_prices_form_tickers(index, start = estimation_start,
+    companies_prices <- get_prices_form_tickers(..., start = estimation_start,
                                                 end = event_end, quote = quote)
-    }
-
-
-    # calculate rate of return
-
+    # index is zoo object or index ticker
+    index_prices <- get_prices_form_tickers(index, start = estimation_start,
+                                            end = event_end, quote = quote)
+    # get_rates parallel?
     companies_rates <- get_rates_from_prices(companies_prices, quote = quote)
     index_rates <- get_rates_from_prices(index_prices, quote = quote)
 
@@ -64,8 +63,10 @@ ar_test <- function(..., index, model, estimation_start,
 }
 
 
-# test
 
+
+
+# test
 library("zoo")
 library("tseries")
 
