@@ -1,8 +1,7 @@
-check_event_dayly_parallel <- function(..., index, model, estimation_start,
-                                       estimation_end, event_start, event_end,
-                                       quote = c("Close", "Open"),
-                                       critical_percentage,
-                                       os = c("mac", "win")) {
+ar_test <- function(..., index, model, estimation_start,
+                              estimation_end, event_start, event_end,
+                              quote = c("Close", "Open"), critical_percentage,
+                              parallel = F, os = c("mac", "win")) {
     # ...: can be either the list of
     # index: either the ticker of the index or the
     #        column_prices of historical prices
@@ -52,7 +51,6 @@ check_event_dayly_parallel <- function(..., index, model, estimation_start,
     companies_rates <- get_rates_from_prices(companies_prices, quote = quote)
     index_rates <- get_rates_from_prices(index_prices, quote = quote)
 
-    # get_abnormal_returns_parallel
     # calculate aanormals
     # abnormals <- GetAbnormalReturns(companies_rates, index_rates, model,
     #                                     estimation_start, estimation_end,
@@ -72,7 +70,7 @@ library("zoo")
 library("tseries")
 
 index <- get_prices_form_tickers("AAPL", start = as.Date("2000-01-01"),
-                                 end = as.Date("2001-01-10"), quote = "Open")
+                             end = as.Date("2001-01-10"), quote = "Open")
 coredata(index)
 time(index)
 
