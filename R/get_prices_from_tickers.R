@@ -17,10 +17,4 @@ get_prices_form_tickers <- function(..., start, end,
     return(result)
 }
 
-# tests
-# get_prices_form_tickers("MSFT", start = as.Date("2000-01-01"),
-#                         end = as.Date("2000-01-10"), quote = "Open")
-# get_prices_form_tickers("AAPL", "IBM", start = as.Date("2000-01-01"),
-#                         end = as.Date("2000-01-10"), quote = "Open")
-# get_prices_form_tickers("AAPL", "IBM", "MSFT", start = as.Date("2000-01-01"),
-#                         end = as.Date("2000-01-10"), quote = "Open")
+

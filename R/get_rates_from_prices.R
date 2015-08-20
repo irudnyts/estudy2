@@ -1,37 +1,76 @@
-get_rates_from_prices <- function(prices, quote = c("Open", "Close")) {
+get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
+                                  compounding = c("periodic", "continuous"),
+                                  dividends) {
 
-    # implementation by neglecting the days between rate of return
+    #----------------------------
+    # fix dividends
+    # extend for n dimension case
+    #----------------------------
+
+    prices <- prices[!is.na(prices)]
+
     quote <- match.arg(quote)
-    if(is.null(attributes(prices)$dim)) {
-        attributes(prices)$dim <- c(length(prices), 1)
+    compounding <- match.arg(compounding)
+
+    if(missing(dividends)) {
+        dividends <- zoo(rep(0, length(prices)), time(prices))
+    } else {
+        #----------------------------------------
+        # transfrom devidents to appropriate form
+        #----------------------------------------
     }
 
-    rates <- zoo()
-    for(j in 1:ncol(prices)) {
-        column_prices <- prices[, j][!is.na(prices[, j])]
-        column_rates <- zoo((coredata(column_prices)[2:length(column_prices)] -
-                        coredata(column_prices)[1:(length(column_prices) - 1)])
-                        /
-                        coredata(column_prices)[1:(length(column_prices) - 1)])
-
-        if(quote == "Open") {
-            time(column_rates) <-
-                time(column_prices[1:(length(column_prices) - 1)])
-        } else {
-            time(column_rates) <-
-                time(column_prices[2:length(column_prices)])
-        }
-        rates <- merge(rates, column_rates)
-
+    if(compounding == "periodic")
+    {
+        rates <- zoo((coredata(prices[2:length(prices)]) +
+                          coredata(dividends[2:length(prices)]) -
+                          coredata(prices[1:(length(prices) - 1)]))
+                     / coredata(prices[1:(length(prices) - 1)]))
+    } else {
+        rates <- zoo(log((coredata(prices[2:length(prices)])
+                          + coredata(dividends[2:length(dividends)]))
+                         / coredata(prices[1:(length(prices)  - 1)])))
     }
-    time(rates) <- as.Date(time(rates))
-    if(is.null(attributes(rates)$dim)) {
-        attributes(rates)$dim <- c(length(rates), 1)
+
+    if(quote == "Open")
+    {
+        time(rates) <- time(prices[1:(length(prices)  - 1)])
+    } else {
+        time(rates) <- time(prices[2:length(prices)])
     }
-    colnames(rates) <- colnames(prices)
+
     return(rates)
+
+#     # implementation by neglecting the number days between rate of return
+#     quote <- match.arg(quote)
+#     if(is.null(attributes(prices)$dim)) {
+#         attributes(prices)$dim <- c(length(prices), 1)
+#     }
+#
+#     rates <- zoo()
+#     for(j in 1:ncol(prices)) {
+#         column_prices <- prices[, j][!is.na(prices[, j])]
+#         column_rates <- zoo((coredata(column_prices)[2:length(column_prices)] -
+#                         coredata(column_prices)[1:(length(column_prices) - 1)])
+#                         /
+#                         coredata(column_prices)[1:(length(column_prices) - 1)])
+#
+#         if(quote == "Open") {
+#             time(column_rates) <-
+#                 time(column_prices[1:(length(column_prices) - 1)])
+#         } else {
+#             time(column_rates) <-
+#                 time(column_prices[2:length(column_prices)])
+#         }
+#         browser()
+#         rates <- merge(rates, column_rates)
+#
+#     }
+#     time(rates) <- as.Date(time(rates))
+#     if(is.null(attributes(rates)$dim)) {
+#         attributes(rates)$dim <- c(length(rates), 1)
+#     }
+#     colnames(rates) <- colnames(prices)
+#     return(rates)
 }
 
-# k <- get_prices_form_tickers("MSFT", "AAPL", start = as.Date("2000-01-01"),
-#                              end = as.Date("2000-01-10"), quote = "Open")
-# get_rates_from_prices(k)
