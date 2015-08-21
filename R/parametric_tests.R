@@ -430,9 +430,12 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                   apply(event_standardized_abnormal, 1, sd, na.rm = T) *
                   sqrt(event_number_of_companies)
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= k_q1] <- "*"
-    significance[abs(statistics) >= k_q2] <- "**"
-    significance[abs(statistics) >= k_q3] <- "***"
+    significance[abs(statistics) >=
+                     qt(1 - 0.10/2, event_number_of_companies)] <- "*"
+    significance[abs(statistics) >=
+                     qt(1 - 0.05/2, event_number_of_companies)] <- "**"
+    significance[abs(statistics) >=
+                     qt(1 - 0.01/2, event_number_of_companies)] <- "***"
     result <- cbind(result, data.frame(statistics = statistics,
                                        significance = significance))
     return(result)
