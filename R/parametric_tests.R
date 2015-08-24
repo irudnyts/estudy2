@@ -72,6 +72,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     # zoo objects of abnormal returns
     estimation_abnormal <- zoo()
     event_abnormal <- zoo()
+    delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
 
@@ -98,6 +99,8 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
                                      estimation_abnormal, all = TRUE)
         event_abnormal <- merge(company_event_abnormal, event_abnormal,
                                 all = TRUE)
+
+        delta[i] <- list_of_returns[[i]]$estimation_length
     }
 
     result <- data.frame(date = time(event_abnormal),
@@ -109,15 +112,17 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
 
+    mean_delta <- mean(delta)
+
     sd_estimation_period <- sqrt(sum(apply(estimation_abnormal, 2, var,
                                            na.rm = T))) /
         ncol(estimation_abnormal)
     statistics <- apply(event_abnormal, 1, mean, na.rm = T) /
         sd_estimation_period
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= k_q1] <- "*"
-    significance[abs(statistics) >= k_q2] <- "**"
-    significance[abs(statistics) >= k_q3] <- "***"
+    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
+    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
+    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
     result <- cbind(result, data.frame(statistics = statistics,
                                        significance = significance))
     return(result)
@@ -142,6 +147,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     # zoo objects of abnormal returns
     estimation_abnormal <- zoo()
     event_abnormal <- zoo()
+    delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
 
@@ -168,6 +174,8 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
                                      estimation_abnormal, all = TRUE)
         event_abnormal <- merge(company_event_abnormal, event_abnormal,
                                 all = TRUE)
+
+        delta[i] <- list_of_returns[[i]]$estimation_length
     }
 
     result <- data.frame(date = time(event_abnormal),
@@ -179,14 +187,16 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
 
+    mean_delta <- mean(delta)
+
     sd_estimation_period <- sqrt(var(apply(estimation_abnormal, 1, mean,
                                            na.rm = T)))
     statistics <- apply(event_abnormal, 1, mean, na.rm = T) /
         sd_estimation_period
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= k_q1] <- "*"
-    significance[abs(statistics) >= k_q2] <- "**"
-    significance[abs(statistics) >= k_q3] <- "***"
+    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
+    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
+    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
     result <- cbind(result, data.frame(statistics = statistics,
                                        significance = significance))
     return(result)
@@ -274,7 +284,7 @@ patell <- function(list_of_returns, event_start, event_end) {
     estimation_abnormal <- zoo()
     event_abnormal <- zoo()
     event_standardized_abnormal <- zoo()
-    delta <- numeric()
+    delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
 
@@ -363,7 +373,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     estimation_abnormal <- zoo()
     event_abnormal <- zoo()
     event_standardized_abnormal <- zoo()
-    delta <- numeric()
+    # delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
 
@@ -410,7 +420,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         event_standardized_abnormal <- merge(company_event_standardized,
                                              event_standardized_abnormal,
                                              all = TRUE)
-        delta[i] <- list_of_returns[[i]]$estimation_length
+        # delta[i] <- list_of_returns[[i]]$estimation_length
         #browser()
     }
 
