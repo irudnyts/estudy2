@@ -1,5 +1,5 @@
 # use colSums instead apply
-
+# calculate the rate of return in C++
 
 parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
                              tests = c("brown_warner_1980", "brown_warner_1985",

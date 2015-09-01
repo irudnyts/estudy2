@@ -10,6 +10,8 @@ License: What license is it under?
 LazyData: TRUE
 URL: http://github.com/irudnyts/estudy2
 BugReports: http://github.com/irudnyts/estudy2/issues
-Imports:
+Imports: 
     tseries,
-    zoo
+    zoo,
+    Rcpp
+LinkingTo: Rcpp

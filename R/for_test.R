@@ -104,12 +104,21 @@ rates1 <- get_rates_from_prices(prices = prices1, quote = "Open", compounding = 
 allianz <- apply_market_model(rates = zoo(rates[, 2], rates[, 1]),
                    regressor = zoo(rates[, 12], rates[, 1]), market_model = "sim", estimation_method = "ols",
                    estimation_start = as.Date("2001-03-05"), estimation_end = as.Date("2001-09-09"))
-axa <-  apply_market_model(rates = zoo(rates[, 3], rates[, 1]),
+axa <-  apply_market_model(rates = zoo(rates[, 4], rates[, 1]),
                            regressor = zoo(rates[, 12], rates[, 1]), market_model = "sim", estimation_method = "ols",
                            estimation_start = as.Date("2001-03-05"), estimation_end = as.Date("2001-09-09"))
-axa <-  apply_market_model(rates = zoo(rates[, 3], rates[, 1]),
+generali <-  apply_market_model(rates = zoo(rates[, 6], rates[, 1]),
                            regressor = zoo(rates[, 12], rates[, 1]), market_model = "sim", estimation_method = "ols",
                            estimation_start = as.Date("2001-03-05"), estimation_end = as.Date("2001-09-09"))
+
+
+
+
+
+
+# axa <-  apply_market_model(rates = zoo(rates[, 3], rates[, 1]),
+#                            regressor = zoo(rates[, 12], rates[, 1]), market_model = "sim", estimation_method = "ols",
+#                            estimation_start = as.Date("2001-03-05"), estimation_end = as.Date("2001-09-09"))
 
 brown_warner_1980(list_of_returns = list(allianz, axa), event_start = as.Date("2001-09-10"), event_end = as.Date("2001-09-21"))
 brown_warner_1985(list_of_returns = list(allianz, axa), event_start = as.Date("2001-09-10"), event_end = as.Date("2001-09-21"))
