@@ -1,10 +1,11 @@
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
-                                  compounding = c("periodic", "continuous"),
+                                  compounding = c("discrete", "continuous"),
                                   dividends) {
 
     #----------------------------
     # fix dividends
     # extend for n dimension case
+    # descrete vs periodic ???
     #----------------------------
 
     prices <- prices[!is.na(prices)]
@@ -20,7 +21,7 @@ get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
         #----------------------------------------
     }
 
-    if(compounding == "periodic")
+    if(compounding == "discrete")
     {
         rates <- zoo((coredata(prices[2:length(prices)]) +
                           coredata(dividends[2:length(prices)]) -
