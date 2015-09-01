@@ -13,7 +13,7 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericVector GetContinuousRates(NumericVector prices) {
-    NumericVector rates(prices.size());
+    NumericVector rates(prices.size() - 1);
     for(int i = 0; i <= prices.size() - 2; i++)
     {
         rates[i] = (prices[i + 1] - prices[i]) / prices[i];
