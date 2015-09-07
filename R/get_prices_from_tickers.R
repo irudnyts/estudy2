@@ -7,7 +7,7 @@ get_prices_form_tickers <- function(..., start, end,
     result <- NULL
 
     for(ticker in tickers) {
-        if(is.na(result)) {
+        if(is.null(result)) {
             result <- get.hist.quote(instrument = tickers[i], start = start,
                                      end = end, quote = quote,
                                      provider = "yahoo",
