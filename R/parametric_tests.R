@@ -151,7 +151,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
     sd_estimation_period <- sqrt(sum(colVars(estimation_abnormal, na.rm = T))) /
         ncol(estimation_abnormal)
-    statistics <- rowMean(event_abnormal, na.rm = T) /
+    statistics <- rowMeans(event_abnormal, na.rm = T) /
         sd_estimation_period
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
