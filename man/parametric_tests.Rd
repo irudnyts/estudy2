@@ -2,7 +2,7 @@
 % Please edit documentation in R/parametric_tests.R
 \name{parametric_tests}
 \alias{parametric_tests}
-\title{Parametric Event Study Tests}
+\title{Parametric Tests for Event Study}
 \usage{
 parametric_tests(list_of_returns, event_start, event_end, all = T, tests)
 }
@@ -10,11 +10,11 @@ parametric_tests(list_of_returns, event_start, event_end, all = T, tests)
 \item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
 of which is treated as a company.}
 
-\item{event_start}{the object of class \code{Date}, which represents first
-(starting) date of the event window}
+\item{event_start}{the object of class \code{Date}, which represents the
+first (starting) date of the event window.}
 
 \item{event_end}{the object of class \code{Date}, which represents the last
-(ending) date in the event window}
+(ending) date in the event window.}
 
 \item{all}{a logical value indicating whether all tests should be performed.
 The default value is TRUE.}
@@ -22,9 +22,12 @@ The default value is TRUE.}
 \item{tests}{the list of tests functions among \code{brown_warner_1980},
 \code{brown_warner_1985}, \code{t_test}, \code{patell}, and \code{boehmer}.}
 }
+\value{
+The single table of statistics and significances of all tests.
+}
 \description{
-Performs main parametric tests and returns the table of statistics and
-significance.
+Performs main parametric tests for each date in the event window and returns
+the table of statistics and significance.
 }
 \details{
 \code{parametric_tests} performs given tests among \code{brown_warner_1980},
@@ -34,6 +37,8 @@ ignores the value of \code{tests}.
 }
 \references{
 \itemize{
+\item Brown S.J., Warner J.B. \emph{Measuring security price performance}.
+Journal of Financial Economics, 8:205-258, 1980.
 \item Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case of
 Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
 \item Boehmer, E. \emph{Event-study methodology under conditions of event-

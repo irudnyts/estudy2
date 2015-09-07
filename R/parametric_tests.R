@@ -2,10 +2,10 @@
 # calculate the rate of return in C++
 # put examples into the commets
 
-#' Parametric Event Study Tests
+#' Parametric Tests for Event Study
 #'
-#' Performs main parametric tests and returns the table of statistics and
-#' significance.
+#' Performs main parametric tests for each date in the event window and returns
+#' the table of statistics and significance.
 #'
 #' \code{parametric_tests} performs given tests among \code{brown_warner_1980},
 #' \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer} and
@@ -15,15 +15,18 @@
 #' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window
+#' first (starting) date of the event window.
 #' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window
+#' (ending) date in the event window.
 #' @param all a logical value indicating whether all tests should be performed.
 #' The default value is TRUE.
 #' @param tests the list of tests functions among \code{brown_warner_1980},
 #' \code{brown_warner_1985}, \code{t_test}, \code{patell}, and \code{boehmer}.
+#' @return The single table of statistics and significances of all tests.
 #'
 #' @references \itemize{
+#' \item Brown S.J., Warner J.B. \emph{Measuring security price performance}.
+#' Journal of Financial Economics, 8:205-258, 1980.
 #' \item Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case of
 #' Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
 #' \item Boehmer, E. \emph{Event-study methodology under conditions of event-
@@ -36,15 +39,10 @@
 #' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
 parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
                              tests) {
-
-    # for the reference see the paper of Boehmer 1991, Brown and Warner 1985
-    # options for tests = c("brown_warner", "patell", "t-test", "hybrid")
-
     if(all == T) {
         tests <- list(brown_warner_1980, brown_warner_1985, t_test, patell,
                       boehmer)
     }
-
     result <- NULL
     for(test in tests) {
         if(is.null(result)) {
@@ -53,13 +51,42 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
             result <- merge(x = result, y = test(list_of_returns, event_start,
                                                  event_end)[, c(1, 5, 6)],
                             by = "date", all = T)
-
         }
     }
     return(result)
-
 }
 
+#' Brown and Warner Parametric Test (1980)
+#'
+#' Parametric test for event study, which is descibed in Brown and Warner 1980
+#' paper.
+#'
+#' Performs the parametric test for event study, which is descibed in Brown and
+#' Warner 1980 paper. The test assumes cross-sectional independence and
+#' insignificance of event-induced variance. The test examines the hypothesis
+#' wether the theoretical cross-sectional expected value for a given day is
+#' equal to zero. The standard deviation in statistics is calculated as the
+#' cross-sectional mean of companies' variances, estimated on estimation period.
+#' It calculates statistics even if event window and estimation period are
+#' overlapped (intersect). The critical values are Student's t-destributed (no
+#' approximation in limit). The significance levels of alpha are 0.1, 0.05, and
+#' 0.05 (marked respectively by *, **, and ***). It was designed to measure
+#' monthly data: for daily data look at Brown and Warner 1985 paper and
+#' \code{brown_warner_1985}.
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references Brown S.J., Warner J.B. \emph{Measuring security price
+#' performance}. Journal of Financial Economics, 8:205-258, 1980.
+#'
+#' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1985}},
+#' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
 brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -140,9 +167,35 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-
-
-
+#' Brown and Warner Parametric Test (1985)
+#'
+#' Parametric test for event study, which is descibed in Brown and Warner 1985
+#' paper.
+#'
+#' Performs the parametric test for event study, which is descibed in Brown and
+#' Warner 1985 paper, which is traditional event study approach. Assumes
+#' cross-sectional independence and non-robust to event-induced variance. The
+#' test examines the hypothesis wether the theoretical cross-sectional expected
+#' value for a given day is equal to zero. The standard deviation in statistics
+#' is estimated as the cross-sectional standard deviation of companies' means,
+#' estimated on estimation period. It calculates statistics even if event window
+#' and estimation period are overlapped (intersect). The critical values are
+#' Student's t-destributed (no approximation in limit). The significance levels
+#' of alpha are 0.1, 0.05, and 0.05 (marked respectively by *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
+#'  of Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
+#'
+#' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
+#' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
 brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -222,6 +275,38 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
+#' t-test for Event Study
+#'
+#' Classical t-test, which examine each date in event window.
+#'
+#' Performs the t-test for event study. The procedure of this test is described
+#' in Boehmer 1991, sometimes is called cross-sectional test. Assumes
+#' independens of securities, however is stable to event-induced variance. This
+#' test examines the equality of cross-sectional expected value to zero. The
+#' standard deviation, which is used in this test, is simply cross-section
+#' standard deviation for given day in the event window. It calculates
+#' statistics even if event window and estimation period are overlapped
+#' (intersect). The critical values are Student's t-destributed (no
+#' approximation in limit). The significance levels of alpha are 0.1, 0.05, and
+#' 0.05 (marked respectively by *, **, and ***).
+#'
+#' @section Warning: This test strongly requires cross-sectional independence
+#' and sensative to the size of the sample.
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references Boehmer, E. \emph{Event-study methodology under conditions of
+#' event-induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.
+#'
+#' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
+#' \code{\link{brown_warner_1985}}, \code{\link{patell}}, and
+#' \code{\link{boehmer}}
 t_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -292,6 +377,43 @@ t_test <- function(list_of_returns, event_start, event_end) {
 
 }
 
+#' Patell's Parametric Test (1976)
+#'
+#' Parametric test for event study, which is descibed in Patell's 1976
+#' paper.
+#'
+#' Performs the parametric test for event study, which is descibed in Patell's
+#' 1976 paper, which is called standardized-residuals method in Boehmer's 1991
+#' paper. The test assumptions are cross-sectional independence and
+#' insignificance of event-induced variance. The standardization smooths the
+#' effect of event-induced variance comparing to Brown and Warner tests. Also
+#' standardization incorporates the situation, when high volatility secturity
+#' dominates the test. The test examines the hypothesis wether the theoretical
+#' cross-sectional expected value for a given day is equal to zero. It
+#' calculates statistics even if event window and estimation period are
+#' overlapped (intersect). The critical values are standard normal. The
+#' significance levels of alpha are 0.1, 0.05, and 0.05 (marked respectively by
+#'  *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references \itemize{
+#' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
+#' price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
+#' 276, 1976.
+#' \item Boehmer, E. \emph{
+#' Event-study methodology under conditions of event-
+#' induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.}
+#'
+#' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
+#' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
+#' \code{\link{boehmer}}
 patell <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -394,6 +516,41 @@ patell <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
+#' Boehmer's Parametric Test (1991)
+#'
+#' Parametric test for event study, which is descibed in Boehmer's 1991
+#' paper.
+#'
+#' Performs the parametric test for event study, which is descibed in Boehmer's
+#' 1991 paper, also called hybrid test or standardized cross-sectional test.
+#' This test performs t-test based on Patell's standardized resuduals. By
+#' combining Patell's and t- tests this test allows event-induced variance
+#' changes, but still assumes cross-sectional independence. The test examines
+#' the hypothesis wether the theoretical cross-sectional expected value for a
+#' given day is equal to zero. It calculates statistics even if event window and
+#' estimation period are overlapped (intersect). The critical values has
+#' Student's t-distribution. The significance levels of alpha are 0.1, 0.05, and
+#'  0.05 (marked respectively by *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references \itemize{
+#' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
+#' price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
+#' 276, 1976.
+#' \item Boehmer, E. \emph{
+#' Event-study methodology under conditions of event-
+#' induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.}
+#'
+#' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
+#' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
+#' \code{\link{patell}}
 boehmer <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
