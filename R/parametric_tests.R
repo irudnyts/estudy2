@@ -2,54 +2,25 @@
 # calculate the rate of return in C++
 
 parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
-                             tests = c("brown_warner_1980", "brown_warner_1985",
-                                       "t_test", "patell", "boehmer")) {
+                             tests) {
 
     # for the reference see the paper of Boehmer 1991, Brown and Warner 1985
     # options for tests = c("brown_warner", "patell", "t-test", "hybrid")
 
     if(all == T) {
-        tests <- c("brown_warner_1980", "brown_warner_1985",
-                  "t_test", "patell", "boehmer")
-    } else {
-        tests <- match.arg(tests)
+        tests <- list(brown_warner_1980, brown_warner_1985, t_test, patell,
+                      boehmer)
     }
 
-    for(i in seq_along(tests)) {
-        if(tests[i] == "brown_warner_1980") {
-            current_table <- brown_warner_1980(list_of_returns, event_start,
-                                               event_end)
-            colnames(current_table)[c(5, 6)] <- c("bw1980_stat",
-                                                     "bw1980_signif")
-        }
-        if(tests[i] == "brown_warner_1985") {
-            current_table <- brown_warner_1985(list_of_returns, event_start,
-                                               event_end)
-            colnames(current_table)[c(5, 6)] <- c("bw1985_stat",
-                                                     "bw1985_signif")
-        }
-        if(tests[i] == "t_test") {
-            current_table <- t_test(list_of_returns, event_start, event_end)
-            colnames(current_table)[c(5, 6)] <- c("t_test_stat",
-                                                     "t_test_signif")
-        }
-        if(tests[i] == "patell") {
-            current_table <- patell(list_of_returns, event_start, event_end)
-            colnames(current_table)[c(5, 6)] <- c("pt_stat", "pt_signif")
-        }
-        if(tests[i] == "boehmer") {
-            current_table <- boehmer(list_of_returns, event_start, event_end)
-            colnames(current_table)[c(5, 6)] <- c("bh_stat", "bh_signif")
-        }
-
-        if(i == 1) {
-            result <- current_table
+    result <- NULL
+    for(test in tests) {
+        if(is.null(result)) {
+            result <- test(list_of_returns, event_start, event_end)
         } else {
-            result_column_names <- c(colnames(result),
-                                     colnames(current_table[, c(5, 6)]))
-            result <- merge(x = result, y = current_table[, c(1, 5, 6)],
+            result <- merge(x = result, y = test(list_of_returns, event_start,
+                                                 event_end)[, c(1, 5, 6)],
                             by = "date", all = T)
-            colnames(result) <- result_column_names
+
         }
     }
     return(result)
@@ -123,8 +94,8 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
     significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
     significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
-    result <- cbind(result, data.frame(statistics = statistics,
-                                       significance = significance))
+    result <- cbind(result, data.frame(bw_1980_stat = statistics,
+                                       bw_1980_signif = significance))
     return(result)
 }
 
@@ -197,8 +168,8 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
     significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
     significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
-    result <- cbind(result, data.frame(statistics = statistics,
-                                       significance = significance))
+    result <- cbind(result, data.frame(bw_1985_stat = statistics,
+                                       bw_1985_signif = significance))
     return(result)
 }
 
@@ -261,8 +232,8 @@ t_test <- function(list_of_returns, event_start, event_end) {
                      qt(1 - 0.05/2, event_number_of_companies)] <- "**"
     significance[abs(statistics) >=
                      qt(1 - 0.01/2, event_number_of_companies)] <- "***"
-    result <- cbind(result, data.frame(statistics = statistics,
-                                       significance = significance))
+    result <- cbind(result, data.frame(t_test_stat = statistics,
+                                       t_test_signif = significance))
     return(result)
 
 }
@@ -351,8 +322,8 @@ patell <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= k_q1] <- "*"
     significance[abs(statistics) >= k_q2] <- "**"
     significance[abs(statistics) >= k_q3] <- "***"
-    result <- cbind(result, data.frame(statistics = statistics,
-                                       significance = significance))
+    result <- cbind(result, data.frame(pt_stat = statistics,
+                                       pt_signif = significance))
     return(result)
 }
 
@@ -446,8 +417,8 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                      qt(1 - 0.05/2, event_number_of_companies)] <- "**"
     significance[abs(statistics) >=
                      qt(1 - 0.01/2, event_number_of_companies)] <- "***"
-    result <- cbind(result, data.frame(statistics = statistics,
-                                       significance = significance))
+    result <- cbind(result, data.frame(bh_stat = statistics,
+                                       bh_signif = significance))
     return(result)
 }
 
