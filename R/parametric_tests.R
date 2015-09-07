@@ -1,6 +1,39 @@
 # use colMeans instead apply
 # calculate the rate of return in C++
+# put examples into the commets
 
+#' Parametric Event Study Tests
+#'
+#' Performs main parametric tests and returns the table of statistics and
+#' significance.
+#'
+#' \code{parametric_tests} performs given tests among \code{brown_warner_1980},
+#' \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer} and
+#' merge result to single table. If \code{all = T} (by default), the function
+#' ignores the value of \code{tests}.
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window
+#' @param all a logical value indicating whether all tests should be performed.
+#' The default value is TRUE.
+#' @param tests the list of tests functions among \code{brown_warner_1980},
+#' \code{brown_warner_1985}, \code{t_test}, \code{patell}, and \code{boehmer}.
+#'
+#' @references \itemize{
+#' \item Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case of
+#' Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
+#' \item Boehmer, E. \emph{Event-study methodology under conditions of event-
+#' induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.
+#' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
+#' price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
+#' 276, 1976.}
+#'
+#' @seealso \code{\link{brown_warner_1980}}, \code{\link{brown_warner_1985}},
+#' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
 parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
                              tests) {
 
