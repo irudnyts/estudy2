@@ -126,33 +126,32 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = TRUE)
+                                         estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                    all = TRUE)
+                                    all = T)
         }
 
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
-    browser()
     result <- data.frame(date = time(event_abnormal),
                          weekday = weekdays(time(event_abnormal)),
-                         percentage = apply(!is.na(as.matrix(event_abnormal)),
-                                        1, sum) / ncol(event_abnormal) * 100,
-                         mean = apply(event_abnormal, 1, mean, na.rm = T))
+                         percentage = rowSums(!is.na(as.matrix(event_abnormal)),
+                                              na.rm = T) /
+                                      ncol(event_abnormal) * 100,
+                         mean = rowMeans(event_abnormal, na.rm = T))
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
 
     mean_delta <- mean(delta)
 
-    sd_estimation_period <- sqrt(sum(apply(estimation_abnormal, 2, var,
-                                           na.rm = T))) /
+    sd_estimation_period <- sqrt(sum(colVars(estimation_abnormal, na.rm = T))) /
         ncol(estimation_abnormal)
-    statistics <- apply(event_abnormal, 1, mean, na.rm = T) /
+    statistics <- rowMean(event_abnormal, na.rm = T) /
         sd_estimation_period
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
@@ -235,13 +234,13 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = TRUE)
+                                         estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                    all = TRUE)
+                                    all = T)
         }
 
         delta[i] <- list_of_returns[[i]]$estimation_length
@@ -249,19 +248,18 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 
     result <- data.frame(date = time(event_abnormal),
                          weekday = weekdays(time(event_abnormal)),
-                         percentage = apply(!is.na(as.matrix(event_abnormal)),
-                         1, sum) / ncol(event_abnormal) * 100,
-                         mean = apply(event_abnormal, 1, mean, na.rm = T))
+                         percentage = rowSums(!is.na(as.matrix(event_abnormal)),
+                                              na.rm = T) /
+                             ncol(event_abnormal) * 100,
+                         mean = rowMeans(event_abnormal, na.rm = T))
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
 
     mean_delta <- mean(delta)
 
-    sd_estimation_period <- sqrt(var(apply(estimation_abnormal, 1, mean,
-                                           na.rm = T)))
-    statistics <- apply(event_abnormal, 1, mean, na.rm = T) /
-        sd_estimation_period
+    sd_estimation_period <- sqrt(var(rowMeans(estimation_abnormal, na.rm = T)))
+    statistics <- rowMeans(event_abnormal, na.rm = T) / sd_estimation_period
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
     significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
@@ -339,24 +337,23 @@ t_test <- function(list_of_returns, event_start, event_end) {
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                    all = TRUE)
+                                    all = T)
         }
     }
 
-    event_number_of_companies <- apply(!is.na(event_abnormal), 1, sum)
+    event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
 
     result <- data.frame(date = time(event_abnormal),
                          weekday = weekdays(time(event_abnormal)),
                          percentage = event_number_of_companies /
                              ncol(event_abnormal) * 100,
-                         mean = apply(event_abnormal, 1, mean, na.rm = T))
+                         mean = rowMeans(event_abnormal, na.rm = T))
 
     event_abnormal <- as.matrix(event_abnormal)
 
 
-    # browser()
-    statistics <- apply(event_abnormal, 1, mean, na.rm = T) /
-                  apply(event_abnormal, 1, sd, na.rm = T) *
+    statistics <- rowMeans(event_abnormal, na.rm = T) /
+                  rowSds(event_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
 
 
@@ -454,13 +451,13 @@ patell <- function(list_of_returns, event_start, event_end) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = TRUE)
+                                         estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                    all = TRUE)
+                                    all = T)
         }
 
 
@@ -485,23 +482,24 @@ patell <- function(list_of_returns, event_start, event_end) {
         } else {
             event_standardized_abnormal <- merge(company_event_standardized,
                                                  event_standardized_abnormal,
-                                                 all = TRUE)
+                                                 all = T)
         }
         delta[i] <- list_of_returns[[i]]$estimation_length
-        #browser()
+
     }
-    #browser()
+
     result <- data.frame(date = time(event_abnormal),
                          weekday = weekdays(time(event_abnormal)),
-                         percentage = apply(!is.na(as.matrix(event_abnormal)),
-                                        1, sum) / ncol(event_abnormal) * 100,
-                         mean = apply(event_abnormal, 1, mean, na.rm = T))
+                         percentage = rowSums(!is.na(as.matrix(event_abnormal)),
+                                              na.rm = T) /
+                             ncol(event_abnormal) * 100,
+                         mean = rowMeans(event_abnormal, na.rm = T))
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
     event_standardized_abnormal <- as.matrix(event_standardized_abnormal)
 
-    statistics <- apply(event_standardized_abnormal, 1, sum, na.rm = TRUE) /
+    statistics <- rowSums(event_standardized_abnormal, na.rm = T) /
         sqrt(sum((delta - 2) / (delta - 4)))
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= k_q1] <- "*"
@@ -591,13 +589,13 @@ boehmer <- function(list_of_returns, event_start, event_end) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = TRUE)
+                                         estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                    all = TRUE)
+                                    all = T)
         }
 
 
@@ -622,26 +620,25 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         } else {
             event_standardized_abnormal <- merge(company_event_standardized,
                                                  event_standardized_abnormal,
-                                                 all = TRUE)
+                                                 all = T)
         }
         # delta[i] <- list_of_returns[[i]]$estimation_length
-        #browser()
     }
 
-    event_number_of_companies <- apply(!is.na(event_abnormal), 1, sum)
-    #browser()
+    event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
     result <- data.frame(date = time(event_abnormal),
                          weekday = weekdays(time(event_abnormal)),
-                         percentage = apply(!is.na(as.matrix(event_abnormal)),
-                                        1, sum) / ncol(event_abnormal) * 100,
-                         mean = apply(event_abnormal, 1, mean, na.rm = T))
+                         percentage = rowSums(!is.na(as.matrix(event_abnormal)),
+                                              na.rm = T) /
+                             ncol(event_abnormal) * 100,
+                         mean = rowMeans(event_abnormal, na.rm = T))
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
     event_standardized_abnormal <- as.matrix(event_standardized_abnormal)
 
-    statistics <- apply(event_standardized_abnormal, 1, mean, na.rm = T) /
-                  apply(event_standardized_abnormal, 1, sd, na.rm = T) *
+    statistics <- rowMeans(event_standardized_abnormal, na.rm = T) /
+                  rowSds(event_standardized_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
