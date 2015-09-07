@@ -8,12 +8,12 @@ get_prices_form_tickers <- function(..., start, end,
 
     for(ticker in tickers) {
         if(is.null(result)) {
-            result <- get.hist.quote(instrument = tickers[i], start = start,
+            result <- get.hist.quote(instrument = ticker, start = start,
                                      end = end, quote = quote,
                                      provider = "yahoo",
                                      compression = "d", retclass = "zoo")
         } else {
-            result <- merge(result, get.hist.quote(instrument = tickers[i],
+            result <- merge(result, get.hist.quote(instrument = ticker,
                                                    start = start,
                                                    end = end, quote = quote,
                                                    provider = "yahoo",
