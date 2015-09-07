@@ -1,4 +1,4 @@
-# use colSums instead apply
+# use colMeans instead apply
 # calculate the rate of return in C++
 
 parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
@@ -41,8 +41,8 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    estimation_abnormal <- zoo()
-    event_abnormal <- zoo()
+    estimation_abnormal <- NULL
+    event_abnormal <- NULL
     delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
@@ -66,10 +66,18 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        estimation_abnormal <- merge(company_estimation_abnormal,
-                                     estimation_abnormal, all = TRUE)
-        event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                all = TRUE)
+        if(is.null(estimation_abnormal)){
+            estimation_abnormal <- company_estimation_abnormal
+        } else {
+            estimation_abnormal <- merge(company_estimation_abnormal,
+                                         estimation_abnormal, all = TRUE)
+        }
+        if(is.null(event_abnormal)){
+            event_abnormal <- company_event_abnormal
+        } else {
+            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+                                    all = TRUE)
+        }
 
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
@@ -116,8 +124,8 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    estimation_abnormal <- zoo()
-    event_abnormal <- zoo()
+    estimation_abnormal <- NULL
+    event_abnormal <- NULL
     delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
@@ -141,10 +149,18 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        estimation_abnormal <- merge(company_estimation_abnormal,
-                                     estimation_abnormal, all = TRUE)
-        event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                all = TRUE)
+        if(is.null(estimation_abnormal)){
+            estimation_abnormal <- company_estimation_abnormal
+        } else {
+            estimation_abnormal <- merge(company_estimation_abnormal,
+                                         estimation_abnormal, all = TRUE)
+        }
+        if(is.null(event_abnormal)){
+            event_abnormal <- company_event_abnormal
+        } else {
+            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+                                    all = TRUE)
+        }
 
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
@@ -187,7 +203,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    event_abnormal <- zoo()
+    event_abnormal <- NULL
 
     for(i in seq_along(list_of_returns)) {
 
@@ -204,8 +220,13 @@ t_test <- function(list_of_returns, event_start, event_end) {
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
-        event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                all = TRUE)
+
+        if(is.null(event_abnormal)){
+            event_abnormal <- company_event_abnormal
+        } else {
+            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+                                    all = TRUE)
+        }
     }
 
     event_number_of_companies <- apply(!is.na(event_abnormal), 1, sum)
@@ -252,9 +273,9 @@ patell <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    estimation_abnormal <- zoo()
-    event_abnormal <- zoo()
-    event_standardized_abnormal <- zoo()
+    estimation_abnormal <- NULL
+    event_abnormal <- NULL
+    event_standardized_abnormal <- NULL
     delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
@@ -278,10 +299,18 @@ patell <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
             time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        estimation_abnormal <- merge(company_estimation_abnormal,
-                                     estimation_abnormal, all = TRUE)
-        event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                all = TRUE)
+        if(is.null(estimation_abnormal)){
+            estimation_abnormal <- company_estimation_abnormal
+        } else {
+            estimation_abnormal <- merge(company_estimation_abnormal,
+                                         estimation_abnormal, all = TRUE)
+        }
+        if(is.null(event_abnormal)){
+            event_abnormal <- company_event_abnormal
+        } else {
+            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+                                    all = TRUE)
+        }
 
 
         market_event <- list_of_returns[[i]]$regressor[
@@ -299,9 +328,14 @@ patell <- function(list_of_returns, event_start, event_end) {
             sqrt(1 + 1 / list_of_returns[[i]]$estimation_length +
                  (market_event - mean_market_estimation) ^ 2 /
                  sum((market_estimation - mean_market_estimation) ^ 2))
-        event_standardized_abnormal <- merge(company_event_standardized,
-                                             event_standardized_abnormal,
-                                             all = TRUE)
+
+        if(is.null(event_standardized_abnormal)){
+            event_standardized_abnormal <- company_event_standardized
+        } else {
+            event_standardized_abnormal <- merge(company_event_standardized,
+                                                 event_standardized_abnormal,
+                                                 all = TRUE)
+        }
         delta[i] <- list_of_returns[[i]]$estimation_length
         #browser()
     }
@@ -341,9 +375,9 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    estimation_abnormal <- zoo()
-    event_abnormal <- zoo()
-    event_standardized_abnormal <- zoo()
+    estimation_abnormal <- NULL
+    event_abnormal <- NULL
+    event_standardized_abnormal <- NULL
     # delta <- numeric(length(list_of_returns))
 
     for(i in seq_along(list_of_returns)) {
@@ -367,10 +401,18 @@ boehmer <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        estimation_abnormal <- merge(company_estimation_abnormal,
-                                     estimation_abnormal, all = TRUE)
-        event_abnormal <- merge(company_event_abnormal, event_abnormal,
-                                all = TRUE)
+        if(is.null(estimation_abnormal)){
+            estimation_abnormal <- company_estimation_abnormal
+        } else {
+            estimation_abnormal <- merge(company_estimation_abnormal,
+                                         estimation_abnormal, all = TRUE)
+        }
+        if(is.null(event_abnormal)){
+            event_abnormal <- company_event_abnormal
+        } else {
+            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+                                    all = TRUE)
+        }
 
 
         market_event <- list_of_returns[[i]]$regressor[
@@ -388,9 +430,14 @@ boehmer <- function(list_of_returns, event_start, event_end) {
             sqrt(1 + 1 / list_of_returns[[i]]$estimation_length +
                      (market_event - mean_market_estimation) ^ 2 /
                      sum((market_estimation - mean_market_estimation) ^ 2))
-        event_standardized_abnormal <- merge(company_event_standardized,
-                                             event_standardized_abnormal,
-                                             all = TRUE)
+
+        if(is.null(event_standardized_abnormal)){
+            event_standardized_abnormal <- company_event_standardized
+        } else {
+            event_standardized_abnormal <- merge(company_event_standardized,
+                                                 event_standardized_abnormal,
+                                                 all = TRUE)
+        }
         # delta[i] <- list_of_returns[[i]]$estimation_length
         #browser()
     }
