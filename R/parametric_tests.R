@@ -1,7 +1,3 @@
-# use colMeans instead apply
-# calculate the rate of return in C++
-# put examples into the commets
-
 #' Parametric Tests for Event Study
 #'
 #' Performs main parametric tests for each date in the event window and returns
@@ -141,7 +137,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
-
+    browser()
     result <- data.frame(date = time(event_abnormal),
                          weekday = weekdays(time(event_abnormal)),
                          percentage = apply(!is.na(as.matrix(event_abnormal)),
