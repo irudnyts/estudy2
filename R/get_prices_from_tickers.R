@@ -4,13 +4,22 @@ get_prices_form_tickers <- function(..., start, end,
     # validity of arguments
     quote <- match.arg(quote)
     tickers <- c(...)
-    result <- zoo()
+    result <- NULL
 
-    for(i in seq_along(tickers)) {
-        prices <- get.hist.quote(instrument = tickers[i], start = start,
-                                 end = end, quote = quote, provider = "yahoo",
-                                 compression = "d", retclass = "zoo")
-        result <- merge(result, prices)
+    for(ticker in tickers) {
+        if(is.na(result)) {
+            result <- get.hist.quote(instrument = tickers[i], start = start,
+                                     end = end, quote = quote,
+                                     provider = "yahoo",
+                                     compression = "d", retclass = "zoo")
+        } else {
+            result <- merge(result, get.hist.quote(instrument = tickers[i],
+                                                   start = start,
+                                                   end = end, quote = quote,
+                                                   provider = "yahoo",
+                                                   compression = "d",
+                                                   retclass = "zoo"))
+        }
     }
     time(result) <- as.Date(time(result))
     colnames(result) <- tickers
