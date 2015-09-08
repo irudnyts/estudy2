@@ -5,7 +5,7 @@
 \title{Daily Prices of Securities}
 \usage{
 get_prices_form_tickers(..., start, end, quote = c("Open", "Close"),
-  retclass = c("list", "data.frame", "zoo"))
+  retclass = c("list", "zoo", "date.frame"))
 }
 \arguments{
 \item{...}{character vectors indicating the tickers (should be valid in Yahoo
@@ -20,12 +20,12 @@ observed time period.}
 \item{quote}{a character indicating the type of the price (Open or Close).
 The default value is Open}
 
-\item{retclass}{a character specifying the return class. "list", "data.frame"
-, or "zoo", by default is "list"}
+\item{retclass}{a character specifying the return class. "list", "zoo"
+, or "data.frame", by default is "list"}
 }
 \value{
-the data about prices in given class container: "list", "data.frame",
- or "zoo".
+the data about prices in given class container: "list", "zoo",
+ or "data.frame".
 }
 \description{
 Returns the daily Open or Close prices between \code{start} and \code{end}

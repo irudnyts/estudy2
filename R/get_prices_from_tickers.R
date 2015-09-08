@@ -16,15 +16,15 @@
 #' observed time period.
 #' @param quote a character indicating the type of the price (Open or Close).
 #' The default value is Open
-#' @param retclass a character specifying the return class. "list", "data.frame"
-#' , or "zoo", by default is "list"
-#' @return the data about prices in given class container: "list", "data.frame",
-#'  or "zoo".
+#' @param retclass a character specifying the return class. "list", "zoo"
+#' , or "data.frame", by default is "list"
+#' @return the data about prices in given class container: "list", "zoo",
+#'  or "data.frame".
 #'
 #' @seealso \code{\link[tseries]{get.hist.quote}}
 get_prices_form_tickers <- function(..., start, end,
                                     quote = c("Open", "Close"),
-                                    retclass = c("list", "data.frame", "zoo")) {
+                                    retclass = c("list", "zoo", "date.frame")) {
     quote <- match.arg(quote)
     retclass <- match.arg(retclass)
     tickers <- c(...)
