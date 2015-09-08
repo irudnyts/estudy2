@@ -149,7 +149,8 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
     mean_delta <- mean(delta)
 
-    sd_estimation_period <- sqrt(sum(colVars(estimation_abnormal, na.rm = T))) /
+    sd_estimation_period <- sqrt(sum(matrixStats::colVars(estimation_abnormal,
+                                                          na.rm = T))) /
         ncol(estimation_abnormal)
     statistics <- rowMeans(event_abnormal, na.rm = T) /
         sd_estimation_period
@@ -353,7 +354,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 
 
     statistics <- rowMeans(event_abnormal, na.rm = T) /
-                  rowSds(event_abnormal, na.rm = T) *
+                  matrixStats::rowSds(event_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
 
 
@@ -638,7 +639,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     event_standardized_abnormal <- as.matrix(event_standardized_abnormal)
 
     statistics <- rowMeans(event_standardized_abnormal, na.rm = T) /
-                  rowSds(event_standardized_abnormal, na.rm = T) *
+                  matrixStats::rowSds(event_standardized_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
