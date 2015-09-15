@@ -3,23 +3,37 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericVector getContinuousRates(NumericVector prices) {
-    NumericVector rates(prices.size() - 1);
-    for(int i = 0; i <= prices.size() - 2; i++)
+NumericVector getRates(NumericMatrix prices,
+                                 bool compounding) {
+    NumericMatrix rates(prices.nrow() - 1, prices.ncol());
+
+    if(compounding == TRUE)
     {
-        rates[i] = log(prices[i + 1] / prices[i]);
+        for(int j = 0; j <= prices.ncol() - 1; j++)
+        {
+            for(int i = 0; i <= prices.nrow() - 2; i++)
+            {
+                while(R_IsNA(prices(i + 1, j)))
+                {
+                    i++;
+                }
+                rates(i, j) = log(prices(i + 1, j) / prices(i, j));
+            }
+        }
+    }
+    else
+    {
+        for(int j = 0; j <= prices.ncol() - 1; j++)
+        {
+            for(int i = 0; i <= prices.nrow() - 2; i++)
+            {
+                while(R_IsNA(prices(i + 1, j)))
+                {
+                    i++;
+                }
+                rates(i, j) = (prices(i + 1, j) - prices(i, j)) / prices(i, j);
+            }
+        }
     }
     return rates;
-}
-
-
-// [[Rcpp::export]]
-NumericVector getDiscreteRates(NumericVector prices) {
-    NumericVector rates(prices.size() - 1);
-    for(int i = 0; i <= prices.size() - 2; i++)
-    {
-        rates[i] = (prices[i + 1] - prices[i]) / prices[i];
-    }
-    return rates;
-
 }

@@ -1,17 +1,45 @@
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
+                                  multi_day = FALSE,
                                   compounding = c("discrete", "continuous"),
                                   dividends) {
+    UseMethod("get_rates_from_prices")
+}
 
-    #----------------------------
-    # fix dividends
-    # extend for n dimension case
-    # descrete vs periodic ???
-    #----------------------------
-
-    prices <- prices[!is.na(prices)]
-
+get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
+                                       multi_day = FALSE,
+                                       compounding = c("discrete",
+                                                       "continuous"),
+                                       dividends) {
     quote <- match.arg(quote)
     compounding <- match.arg(compounding)
+    prices_df <- NULL
+    for(i in seq_along(prices)) {
+        if(is.null(prices_df)) {
+            prices_df <- data.frame(date = time(prices[[i]]),
+                                    prices = coredata(prices[[i]]))
+        } else {
+            prices_df <- merge(prices_df, data.frame(date = time(prices[[i]]),
+                                                prices = coredata(prices[[i]])),
+                               by = "date")
+        }
+    }
+    #### try(colnames(prices_df) <- names(prices), silent = TRUE)
+    browser()
+
+
+    if(missing(dividends)) {
+        if(compounding == "discrete") {
+            rates <-
+                getRatesDiscreteWithoutDividends(as.matrix(prices_df[, -1]))
+        } else if(compounding == "continuous") {
+            rates <-
+                getRatesContinuousWithoutDividends(as.matrix(prices_df[, -1]))
+
+        }
+    } else {
+        # fix devidends
+    }
+
 
     if(missing(dividends)) {
         dividends <- zoo(rep(0, length(prices)), time(prices))

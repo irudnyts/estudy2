@@ -5,25 +5,15 @@
 
 using namespace Rcpp;
 
-// getContinuousRates
-NumericVector getContinuousRates(NumericVector prices);
-RcppExport SEXP estudy2_getContinuousRates(SEXP pricesSEXP) {
+// getRates
+NumericVector getRates(NumericMatrix prices, bool compounding);
+RcppExport SEXP estudy2_getRates(SEXP pricesSEXP, SEXP compoundingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type prices(pricesSEXP);
-    __result = Rcpp::wrap(getContinuousRates(prices));
-    return __result;
-END_RCPP
-}
-// getDiscreteRates
-NumericVector getDiscreteRates(NumericVector prices);
-RcppExport SEXP estudy2_getDiscreteRates(SEXP pricesSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type prices(pricesSEXP);
-    __result = Rcpp::wrap(getDiscreteRates(prices));
+    Rcpp::traits::input_parameter< NumericMatrix >::type prices(pricesSEXP);
+    Rcpp::traits::input_parameter< bool >::type compounding(compoundingSEXP);
+    __result = Rcpp::wrap(getRates(prices, compounding));
     return __result;
 END_RCPP
 }
