@@ -6,14 +6,14 @@
 using namespace Rcpp;
 
 // getRates
-NumericVector getRates(NumericMatrix prices, bool compounding);
-RcppExport SEXP estudy2_getRates(SEXP pricesSEXP, SEXP compoundingSEXP) {
+NumericVector getRates(NumericMatrix prices, bool continuous);
+RcppExport SEXP estudy2_getRates(SEXP pricesSEXP, SEXP continuousSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericMatrix >::type prices(pricesSEXP);
-    Rcpp::traits::input_parameter< bool >::type compounding(compoundingSEXP);
-    __result = Rcpp::wrap(getRates(prices, compounding));
+    Rcpp::traits::input_parameter< bool >::type continuous(continuousSEXP);
+    __result = Rcpp::wrap(getRates(prices, continuous));
     return __result;
 END_RCPP
 }
