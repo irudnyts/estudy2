@@ -17,7 +17,7 @@ NumericVector getRates(NumericMatrix prices,
                 if(!R_IsNA(prices(i, j)))
                 {
                     k = i + 1;
-                    while((k < prices.nrow() - 1) & R_IsNA(prices(k, j)))
+                    while((k < prices.nrow() - 1) && R_IsNA(prices(k, j)))
                     {
                         rates(k, j) = NA_REAL;
                         k++;
@@ -30,7 +30,7 @@ NumericVector getRates(NumericMatrix prices,
                     {
                         rates(i, j) = NA_REAL;
                     }
-                    i = k;
+                    i = k - 1;
                 }
                 else
                 {
@@ -39,19 +39,36 @@ NumericVector getRates(NumericMatrix prices,
             }
         }
     }
-    /*else
+    else
     {
         for(int j = 0; j <= prices.ncol() - 1; j++)
         {
             for(int i = 0; i <= prices.nrow() - 2; i++)
             {
-                while(R_IsNA(prices(i + 1, j)) & i > prices.nrow() - 2)
+                if(!R_IsNA(prices(i, j)))
                 {
-                    i++;
+                    k = i + 1;
+                    while((k < prices.nrow() - 1) && R_IsNA(prices(k, j)))
+                    {
+                        rates(k, j) = NA_REAL;
+                        k++;
+                    }
+                    if(k <= prices.nrow() - 1)
+                    {
+                        rates(i, j) = prices(k, j) / prices(i, j) - 1;
+                    }
+                    else
+                    {
+                        rates(i, j) = NA_REAL;
+                    }
+                    i = k - 1;
                 }
-                rates(i, j) = (prices(i + 1, j) - prices(i, j)) / prices(i, j);
+                else
+                {
+                    rates(i, j) = NA_REAL;
+                }
             }
         }
-    }*/
+    }
     return rates;
 }
