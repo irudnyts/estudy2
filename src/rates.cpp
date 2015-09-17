@@ -3,7 +3,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericVector getRates(NumericMatrix prices,
+NumericMatrix getRates(NumericMatrix prices,
                                  bool continuous) {
     NumericMatrix rates(prices.nrow() - 1, prices.ncol());
     int k; //counter, initialized here to avoid initialization in loop
