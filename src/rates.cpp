@@ -3,7 +3,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericMatrix getRates(NumericMatrix prices,
+NumericMatrix getMultiDayRates(NumericMatrix prices,
                                  bool continuous) {
     NumericMatrix rates(prices.nrow() - 1, prices.ncol());
     int k; //counter, initialized here to avoid initialization in loop
@@ -72,3 +72,46 @@ NumericMatrix getRates(NumericMatrix prices,
     }
     return rates;
 }
+
+// [[Rcpp::export]]
+NumericMatrix getSingleDayRates(NumericMatrix prices,
+                               bool continuous) {
+    NumericMatrix rates(prices.nrow() - 1, prices.ncol());
+
+    if(continuous)
+    {
+        for(int j = 0; j <= prices.ncol() - 1; j++)
+        {
+            for(int i = 0; i <= prices.nrow() - 2; i++)
+            {
+                if(!R_IsNA(prices(i, j)) && !R_IsNA(prices(i + 1, j)))
+                {
+                    rates(i, j) = log(prices(i + 1, j) / prices(i, j));
+                }
+                else
+                {
+                    rates(i, j) = NA_REAL;
+                }
+            }
+        }
+    }
+    else
+    {
+        for(int j = 0; j <= prices.ncol() - 1; j++)
+        {
+            for(int i = 0; i <= prices.nrow() - 2; i++)
+            {
+                if(!R_IsNA(prices(i, j)) && !R_IsNA(prices(i + 1, j)))
+                {
+                    rates(i, j) = prices(i + 1, j) / prices(i, j) - 1;
+                }
+                else
+                {
+                    rates(i, j) = NA_REAL;
+                }
+            }
+        }
+    }
+    return rates;
+}
+

@@ -5,15 +5,27 @@
 
 using namespace Rcpp;
 
-// getRates
-NumericMatrix getRates(NumericMatrix prices, bool continuous);
-RcppExport SEXP estudy2_getRates(SEXP pricesSEXP, SEXP continuousSEXP) {
+// getMultiDayRates
+NumericMatrix getMultiDayRates(NumericMatrix prices, bool continuous);
+RcppExport SEXP estudy2_getMultiDayRates(SEXP pricesSEXP, SEXP continuousSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericMatrix >::type prices(pricesSEXP);
     Rcpp::traits::input_parameter< bool >::type continuous(continuousSEXP);
-    __result = Rcpp::wrap(getRates(prices, continuous));
+    __result = Rcpp::wrap(getMultiDayRates(prices, continuous));
+    return __result;
+END_RCPP
+}
+// getSingleDayRates
+NumericMatrix getSingleDayRates(NumericMatrix prices, bool continuous);
+RcppExport SEXP estudy2_getSingleDayRates(SEXP pricesSEXP, SEXP continuousSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type prices(pricesSEXP);
+    Rcpp::traits::input_parameter< bool >::type continuous(continuousSEXP);
+    __result = Rcpp::wrap(getSingleDayRates(prices, continuous));
     return __result;
 END_RCPP
 }
