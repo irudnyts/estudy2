@@ -55,8 +55,9 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
 
 
 get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
-                                       compounding = c("discrete",
-                                                       "continuous")) {
+                                             multi_day = TRUE,
+                                             compounding = c("discrete",
+                                                             "continuous")) {
     quote <- match.arg(quote)
     compounding <- match.arg(compounding)
     continuous <- if(compounding == "continuous") {
