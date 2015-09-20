@@ -1,17 +1,25 @@
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
                                   multi_day = FALSE,
-                                  compounding = c("discrete", "continuous"),
-                                  dividends) {
+                                  compounding = c("discrete", "continuous")) {
+    # in plans to add two arguments:
+    #   -dividends: for taking into account dividends
+    #   -multi_day: the period between two prices for rate of return could be
+    #               either one or coupe days (how it is currently impplemented)
     UseMethod("get_rates_from_prices")
 }
 
 get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
-                                       multi_day = FALSE,
                                        compounding = c("discrete",
-                                                       "continuous"),
-                                       dividends) {
+                                                       "continuous")) {
     quote <- match.arg(quote)
     compounding <- match.arg(compounding)
+    continuous <- if(compounding == "continuous") {
+        TRUE
+    } else if(compounding == "discrete") {
+        FALSE
+    }
+
+    # coert list to data.frame and then to matrix
     prices_df <- NULL
     for(i in seq_along(prices)) {
         if(is.null(prices_df)) {
@@ -23,83 +31,31 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
                                by = "date")
         }
     }
-    #### try(colnames(prices_df) <- names(prices), silent = TRUE)
-    browser()
-
-
-    if(missing(dividends)) {
-        if(compounding == "discrete") {
-            rates <-
-                getRatesDiscreteWithoutDividends(as.matrix(prices_df[, -1]))
-        } else if(compounding == "continuous") {
-            rates <-
-                getRatesContinuousWithoutDividends(as.matrix(prices_df[, -1]))
-
+    # calling C++ function to compute rate of return
+    rates <- getRates(matrix(prices_df[, -1], nrow = nrow(prices_df),
+                             ncol = ncol(prices_df) - 1), continuous)
+    # variable for result list
+    result <- list()
+    for(i in ncol(rates)) {
+        if(quote == "Open") {
+            result[[i]] <- zoo(rates[, i], prices_df[1:(nrow(prices_df) - 1),
+                                                     1])
+        } else {
+            result[[i]] <- zoo(rates[, i], prices_df[2:nrow(prices_df), 1])
         }
-    } else {
-        # fix devidends
     }
-
-
-    if(missing(dividends)) {
-        dividends <- zoo(rep(0, length(prices)), time(prices))
-    } else {
-        #----------------------------------------
-        # transfrom devidents to appropriate form
-        #----------------------------------------
-    }
-
-    if(compounding == "discrete")
-    {
-        rates <- zoo((coredata(prices[2:length(prices)]) +
-                          coredata(dividends[2:length(prices)]) -
-                          coredata(prices[1:(length(prices) - 1)]))
-                     / coredata(prices[1:(length(prices) - 1)]))
-    } else {
-        rates <- zoo(log((coredata(prices[2:length(prices)])
-                          + coredata(dividends[2:length(dividends)]))
-                         / coredata(prices[1:(length(prices)  - 1)])))
-    }
-
-    if(quote == "Open")
-    {
-        time(rates) <- time(prices[1:(length(prices)  - 1)])
-    } else {
-        time(rates) <- time(prices[2:length(prices)])
-    }
-
+    try(names(result) <- names(prices), T)
     return(rates)
-
-#     # implementation by neglecting the number days between rate of return
-#     quote <- match.arg(quote)
-#     if(is.null(attributes(prices)$dim)) {
-#         attributes(prices)$dim <- c(length(prices), 1)
-#     }
-#
-#     rates <- zoo()
-#     for(j in 1:ncol(prices)) {
-#         column_prices <- prices[, j][!is.na(prices[, j])]
-#         column_rates <- zoo((coredata(column_prices)[2:length(column_prices)] -
-#                         coredata(column_prices)[1:(length(column_prices) - 1)])
-#                         /
-#                         coredata(column_prices)[1:(length(column_prices) - 1)])
-#
-#         if(quote == "Open") {
-#             time(column_rates) <-
-#                 time(column_prices[1:(length(column_prices) - 1)])
-#         } else {
-#             time(column_rates) <-
-#                 time(column_prices[2:length(column_prices)])
-#         }
-#         browser()
-#         rates <- merge(rates, column_rates)
-#
-#     }
-#     time(rates) <- as.Date(time(rates))
-#     if(is.null(attributes(rates)$dim)) {
-#         attributes(rates)$dim <- c(length(rates), 1)
-#     }
-#     colnames(rates) <- colnames(prices)
-#     return(rates)
 }
+
+get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
+                                       compounding = c("discrete",
+                                                       "continuous")) {
+    quote <- match.arg(quote)
+    compounding <- match.arg(compounding)
+
+}
+
+
+
 
