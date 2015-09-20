@@ -75,10 +75,10 @@ get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
 
     # bind with column for rates
     if(quote == "Open") {
-        rates <- cbind(data.frame(date = prices[1:(nrow(prices_df) - 1), 1]),
+        rates <- cbind(data.frame(date = prices[1:(nrow(prices) - 1), 1]),
                        rates)
     } else if(quote == "Close" ){
-        rates <- cbind(data.frame(date = prices[2:nrow(prices_df), 1]), rates)
+        rates <- cbind(data.frame(date = prices[2:nrow(prices), 1]), rates)
     }
 
     return(rates)
