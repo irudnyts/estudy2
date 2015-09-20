@@ -34,21 +34,14 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     }
 
     # calling C++ function to compute rate of return
-    if(multiday) {
-        rates <- getMultiDayRates(matrix(prices_df[, -1],
-                                         nrow = nrow(prices_df),
-                                         ncol = ncol(prices_df) - 1),
-                                  continuous)
+    if(multi_day) {
+        rates <- getMultiDayRates(as.matrix(prices_df[, -1]), continuous)
     } else {
-        rates <- getSingleDayRates(matrix(prices_df[, -1],
-                                          nrow = nrow(prices_df),
-                                          ncol = ncol(prices_df) - 1),
-                                   continuous)
+        rates <- getSingleDayRates(as.matrix(prices_df[, -1]), continuous)
     }
-
     # variable for result list
     result <- list()
-    for(i in ncol(rates)) {
+    for(i in 1:ncol(rates)) {
         if(quote == "Open") {
             result[[i]] <- zoo(rates[, i], prices_df[1:(nrow(prices_df) - 1),
                                                      1])
@@ -73,16 +66,10 @@ get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
     }
 
     # calling C++ function to compute rate of return
-    if(multiday) {
-        rates <- getMultiDayRates(matrix(prices[, -1],
-                                         nrow = nrow(prices),
-                                         ncol = ncol(prices) - 1),
-                                  continuous)
+    if(multi_day) {
+        rates <- getMultiDayRates(as.matrix(prices[, -1]), continuous)
     } else {
-        rates <- getSingleDayRates(matrix(prices[, -1],
-                                          nrow = nrow(prices),
-                                          ncol = ncol(prices) - 1),
-                                   continuous)
+        rates <- getSingleDayRates(as.matrix(prices[, -1]), continuous)
     }
 
     # bind with column for rates
@@ -122,16 +109,10 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
     }
 
     # calling C++ function to compute rate of return
-    if(multiday) {
-        rates <- getMultiDayRates(matrix(prices_df[, -1],
-                                         nrow = nrow(prices_df),
-                                         ncol = ncol(prices_df) - 1),
-                                  continuous)
+    if(multi_day) {
+        rates <- getMultiDayRates(as.matrix(prices_df[, -1]), continuous)
     } else {
-        rates <- getSingleDayRates(matrix(prices_df[, -1],
-                                          nrow = nrow(prices_df),
-                                          ncol = ncol(prices_df) - 1),
-                                   continuous)
+        rates <- getSingleDayRates(as.matrix(prices_df[, -1]), continuous)
     }
 
     if(quote == "Open") {
