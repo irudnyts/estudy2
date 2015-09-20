@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // getRates
-NumericVector getRates(NumericMatrix prices, bool continuous);
+NumericMatrix getRates(NumericMatrix prices, bool continuous);
 RcppExport SEXP estudy2_getRates(SEXP pricesSEXP, SEXP continuousSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
