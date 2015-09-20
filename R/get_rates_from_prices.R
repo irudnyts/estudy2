@@ -1,5 +1,5 @@
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
-                                  multi_day = FALSE,
+                                  multi_day = TRUE,
                                   compounding = c("discrete", "continuous")) {
     # in plans to add two arguments:
     #   -dividends: for taking into account dividends
@@ -9,6 +9,7 @@ get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
 }
 
 get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
+                                       multi_day = TRUE,
                                        compounding = c("discrete",
                                                        "continuous")) {
     quote <- match.arg(quote)
@@ -31,9 +32,20 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
                                by = "date")
         }
     }
+
     # calling C++ function to compute rate of return
-    rates <- getRates(matrix(prices_df[, -1], nrow = nrow(prices_df),
-                             ncol = ncol(prices_df) - 1), continuous)
+    if(multiday) {
+        rates <- getMultiDayRates(matrix(prices_df[, -1],
+                                         nrow = nrow(prices_df),
+                                         ncol = ncol(prices_df) - 1),
+                                  continuous)
+    } else {
+        rates <- getSingleDayRates(matrix(prices_df[, -1],
+                                          nrow = nrow(prices_df),
+                                          ncol = ncol(prices_df) - 1),
+                                   continuous)
+    }
+
     # variable for result list
     result <- list()
     for(i in ncol(rates)) {
@@ -45,17 +57,92 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
         }
     }
     try(names(result) <- names(prices), T)
-    return(rates)
+    return(result)
 }
+
 
 get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
                                        compounding = c("discrete",
                                                        "continuous")) {
     quote <- match.arg(quote)
     compounding <- match.arg(compounding)
+    continuous <- if(compounding == "continuous") {
+        TRUE
+    } else if(compounding == "discrete") {
+        FALSE
+    }
 
+    # calling C++ function to compute rate of return
+    if(multiday) {
+        rates <- getMultiDayRates(matrix(prices[, -1],
+                                         nrow = nrow(prices),
+                                         ncol = ncol(prices) - 1),
+                                  continuous)
+    } else {
+        rates <- getSingleDayRates(matrix(prices[, -1],
+                                          nrow = nrow(prices),
+                                          ncol = ncol(prices) - 1),
+                                   continuous)
+    }
+
+    # bind with column for rates
+    if(quote == "Open") {
+        rates <- cbind(data.frame(date = prices[1:(nrow(prices_df) - 1), 1]),
+                       rates)
+    } else if(quote == "Close" ){
+        rates <- cbind(data.frame(date = prices[2:nrow(prices_df), 1]), rates)
+    }
+
+    return(rates)
 }
 
+get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
+                                       multi_day = TRUE,
+                                       compounding = c("discrete",
+                                                       "continuous")) {
+    quote <- match.arg(quote)
+    compounding <- match.arg(compounding)
+    continuous <- if(compounding == "continuous") {
+        TRUE
+    } else if(compounding == "discrete") {
+        FALSE
+    }
+
+    # coert list to data.frame and then to matrix
+    prices_df <- NULL
+    for(i in 1:ncol(prices)) {
+        if(is.null(prices_df)) {
+            prices_df <- data.frame(date = time(prices[, i]),
+                                    prices = coredata(prices[, i]))
+        } else {
+            prices_df <- merge(prices_df, data.frame(date = time(prices[, i]),
+                                                prices = coredata(prices[, i])),
+                               by = "date")
+        }
+    }
+
+    # calling C++ function to compute rate of return
+    if(multiday) {
+        rates <- getMultiDayRates(matrix(prices_df[, -1],
+                                         nrow = nrow(prices_df),
+                                         ncol = ncol(prices_df) - 1),
+                                  continuous)
+    } else {
+        rates <- getSingleDayRates(matrix(prices_df[, -1],
+                                          nrow = nrow(prices_df),
+                                          ncol = ncol(prices_df) - 1),
+                                   continuous)
+    }
+
+    if(quote == "Open") {
+        result <- zoo(rates, prices_df[1:(nrow(prices_df) - 1), 1])
+    } else {
+        result <- zoo(rates, prices_df[2:nrow(prices_df), 1])
+    }
+
+    try(colnames(result) <- colnames(prices), T)
+    return(result)
+}
 
 
 
