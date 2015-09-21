@@ -4,7 +4,8 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericMatrix getMultiDayRates(NumericMatrix prices,
-                                 bool continuous) {
+                                 bool continuous,
+                                 bool Open) {
     NumericMatrix rates(prices.nrow() - 1, prices.ncol());
     int k; //counter, initialized here to avoid initialization in loop
 
@@ -24,13 +25,21 @@ NumericMatrix getMultiDayRates(NumericMatrix prices,
                     }
                     if(k <= prices.nrow() - 1)
                     {
-                        rates(i, j) = log(prices(k, j) / prices(i, j));
+                        if(Open || k == i + 1)
+                        {
+                            rates(i, j) = log(prices(k, j) / prices(i, j));
+                        }
+                        else
+                        {
+                            rates(i, j) = NA_REAL;
+                            rates(k - 1, j) = log(prices(k, j) / prices(i, j));
+                        }
                     }
                     else
                     {
                         rates(i, j) = NA_REAL;
                     }
-                    i = k - 1;
+                    i = k - 1; // k - 1 because next iteration: i = i + 1
                 }
                 else
                 {
@@ -55,13 +64,21 @@ NumericMatrix getMultiDayRates(NumericMatrix prices,
                     }
                     if(k <= prices.nrow() - 1)
                     {
-                        rates(i, j) = prices(k, j) / prices(i, j) - 1;
+                        if(Open || k == i + 1)
+                        {
+                            rates(i, j) = prices(k, j) / prices(i, j) - 1;
+                        }
+                        else
+                        {
+                            rates(i, j) = NA_REAL;
+                            rates(k - 1, j) = prices(k, j) / prices(i, j) - 1;
+                        }
                     }
                     else
                     {
                         rates(i, j) = NA_REAL;
                     }
-                    i = k - 1;
+                    i = k - 1; // k - 1 because next iteration: i = i + 1
                 }
                 else
                 {
