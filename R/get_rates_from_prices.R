@@ -80,7 +80,7 @@ get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
     } else if(quote == "Close" ){
         rates <- cbind(data.frame(date = prices[2:nrow(prices), 1]), rates)
     }
-    try(colnames(rates) <- c("date", colnames(prices)), T)
+    try(colnames(rates) <- colnames(prices), T)
     return(rates)
 }
 
