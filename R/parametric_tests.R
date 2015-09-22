@@ -33,6 +33,7 @@
 #'
 #' @seealso \code{\link{brown_warner_1980}}, \code{\link{brown_warner_1985}},
 #' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+#' @export
 parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
                              tests) {
     if(all == T) {
@@ -83,6 +84,7 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1985}},
 #' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+#' @export
 brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -192,6 +194,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+#' @export
 brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -302,6 +305,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{patell}}, and
 #' \code{\link{boehmer}}
+#' @export
 t_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -408,6 +412,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
 #' \code{\link{boehmer}}
+#' @export
 patell <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
@@ -546,6 +551,7 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
 #' \code{\link{patell}}
+#' @export
 boehmer <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {

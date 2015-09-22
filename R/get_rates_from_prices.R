@@ -34,6 +34,7 @@
 #' @param compounding character, defines the type of compounting: "discrete" or
 #' "continuous". By default is "continuous".
 #' @return The rates of retunrs of the same class as prices.
+#' @export
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
                                   multi_day = TRUE,
                                   compounding = c("discrete", "continuous")) {
