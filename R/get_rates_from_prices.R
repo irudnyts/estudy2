@@ -1,3 +1,39 @@
+#' Calculate rates of return for given prices.
+#'
+#' \code{get_rates_from_prices} is used for computing rates of returns from
+#' prices for different classes.
+#'
+#' The generic function, dispatched for such classes as \code{list},
+#' \code{data.frame}, and \code{zoo}, which represent prices.
+#'
+#' The calculation is made in C++ (\code{Rcpp}) for high performance.
+#'
+#' The correspondens between dates and values of the rates depends on the quote,
+#' which can be either Open or Close. If the quote is Open, than the value of
+#' rate belongs to the first date. Otherwise, to the last. This is also applied
+#' for the algorithm, if multiday is allowed: the value of the rate of return
+#' is assigned to the last day in case of Close price, and to the first day in
+#' in case of Open quote.
+#'
+#' The \code{multi_day} parameter specifies what to do with missed values and
+#' handling of the weekend. If it is TRUE, the function ignores misseing values
+#' and the rates are calculated between non-missing prices. If it is FALSE, than
+#' only one-day period rates of return are computed (between two consecutive
+#' calendar dates).
+#'
+#' The function uses either continuous (by default) or descrete (periodic)
+#' compounding.
+#'
+#' @param prices the object either of class \code{list}, or \code{data.frame},
+#' or \code{zoo}. Represents prices, from with the rates of returns will be
+#' calculated.
+#' @param quote character, which specifies the type of quote: "Open" or "Close".
+#' By default is "Open".
+#' @param multi_day logical, is rate of return between more than 1 day is
+#' allowed?
+#' @param compounding character, defines the type of compounting: "discrete" or
+#' "continuous". By default is "continuous".
+#' @return The rates of retunrs of the same class as prices.
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
                                   multi_day = TRUE,
                                   compounding = c("discrete", "continuous")) {
@@ -8,6 +44,7 @@ get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
     UseMethod("get_rates_from_prices")
 }
 
+#' @export
 get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
                                        multi_day = TRUE,
                                        compounding = c("discrete",
@@ -58,7 +95,7 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     return(result)
 }
 
-
+#' @export
 get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
                                              multi_day = TRUE,
                                              compounding = c("discrete",
@@ -94,6 +131,7 @@ get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
     return(rates)
 }
 
+#' @export
 get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
                                        multi_day = TRUE,
                                        compounding = c("discrete",
@@ -140,6 +178,3 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
     colnames(result) <- colnames(prices)
     return(result)
 }
-
-
-
