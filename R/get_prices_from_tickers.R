@@ -1,4 +1,4 @@
-#' Daily Prices of Securities
+#' Returns the daily prices for securities.
 #'
 #' Returns the daily Open or Close prices between \code{start} and \code{end}
 #' date for given tickers.

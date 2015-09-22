@@ -1,4 +1,4 @@
-#' Parametric Tests for Event Study
+#' Returns the result for all parametric tests for event study.
 #'
 #' Performs main parametric tests for each date in the event window and returns
 #' the table of statistics and significance.
@@ -52,7 +52,7 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
     return(result)
 }
 
-#' Brown and Warner Parametric Test (1980)
+#' Brown and Warner parametric test (1980).
 #'
 #' Parametric test for event study, which is descibed in Brown and Warner 1980
 #' paper.
@@ -163,7 +163,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-#' Brown and Warner Parametric Test (1985)
+#' Brown and Warner parametric test (1985).
 #'
 #' Parametric test for event study, which is descibed in Brown and Warner 1985
 #' paper.
@@ -270,7 +270,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-#' t-test for Event Study
+#' t-test for event study.
 #'
 #' Classical t-test, which examine each date in event window.
 #'
@@ -371,7 +371,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 
 }
 
-#' Patell's Parametric Test (1976)
+#' Patell's parametric test (1976).
 #'
 #' Parametric test for event study, which is descibed in Patell's 1976
 #' paper.
@@ -511,7 +511,7 @@ patell <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-#' Boehmer's Parametric Test (1991)
+#' Boehmer's parametric test (1991).
 #'
 #' Parametric test for event study, which is descibed in Boehmer's 1991
 #' paper.
