@@ -160,7 +160,7 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
                                         prices = zoo::coredata(prices[, i]))
             } else {
                 prices_df <- merge(prices_df, data.frame(date = zoo::time(prices[, i]),
-                                            zoo::prices = coredata(prices[, i])),
+                                            prices = zoo::coredata(prices[, i])),
                                    by = "date")
             }
         }
