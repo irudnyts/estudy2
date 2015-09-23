@@ -22,6 +22,7 @@
 #'  or "data.frame".
 #'
 #' @seealso \code{\link[tseries]{get.hist.quote}}
+#' @export
 get_prices_form_tickers <- function(..., start, end,
                                     quote = c("Open", "Close"),
                                     retclass = c("list", "zoo", "date.frame")) {
