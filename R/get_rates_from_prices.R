@@ -41,10 +41,8 @@
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
                                   multi_day = TRUE,
                                   compounding = c("discrete", "continuous")) {
-    # in plans to add two arguments:
+    # in plans to add an argument:
     #   -dividends: for taking into account dividends
-    #   -multi_day: the period between two prices for rate of return could be
-    #               either one or coupe days (how it is currently impplemented)
     UseMethod("get_rates_from_prices")
 }
 
