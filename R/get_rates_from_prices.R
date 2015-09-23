@@ -68,11 +68,11 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     prices_df <- NULL
     for(i in seq_along(prices)) {
         if(is.null(prices_df)) {
-            prices_df <- data.frame(date = time(prices[[i]]),
-                                    prices = coredata(prices[[i]]))
+            prices_df <- data.frame(date = zoo::time(prices[[i]]),
+                                    prices = zoo::coredata(prices[[i]]))
         } else {
-            prices_df <- merge(prices_df, data.frame(date = time(prices[[i]]),
-                                                prices = coredata(prices[[i]])),
+            prices_df <- merge(prices_df, data.frame(date = zoo::time(prices[[i]]),
+                                        prices = zoo::coredata(prices[[i]])),
                                by = "date")
         }
     }
@@ -156,17 +156,17 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
     if(!is.na(ncol(prices))) {
         for(i in 1:ncol(prices)) {
             if(is.null(prices_df)) {
-                prices_df <- data.frame(date = time(prices[, i]),
-                                        prices = coredata(prices[, i]))
+                prices_df <- data.frame(date = zoo::time(prices[, i]),
+                                        prices = zoo::coredata(prices[, i]))
             } else {
-                prices_df <- merge(prices_df, data.frame(date = time(prices[, i]),
-                                                    prices = coredata(prices[, i])),
+                prices_df <- merge(prices_df, data.frame(date = zoo::time(prices[, i]),
+                                            zoo::prices = coredata(prices[, i])),
                                    by = "date")
             }
         }
     } else {
-        prices_df <- data.frame(data = time(prices[, i]),
-                                prices = coredata(prices))
+        prices_df <- data.frame(data = zoo::time(prices[, i]),
+                                prices = zoo::coredata(prices))
     }
 
     # calling C++ function to compute rate of return
