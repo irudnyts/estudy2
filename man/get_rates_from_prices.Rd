@@ -34,6 +34,9 @@ The generic function, dispatched for such classes as \code{list},
 
 The calculation is made in C++ (\code{Rcpp}) for high performance.
 
+If \code{prices} is data.frmae, than the first column should be of the class
+Date and contains ordered dates of prices.
+
 The correspondens between dates and values of the rates depends on the quote,
 which can be either Open or Close. If the quote is Open, than the value of
 rate belongs to the first date. Otherwise, to the last. This is also applied

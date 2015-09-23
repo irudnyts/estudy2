@@ -2,7 +2,6 @@
 #include <math.h>
 using namespace Rcpp;
 
-//' @export
 // [[Rcpp::export]]
 NumericMatrix getMultiDayRates(NumericMatrix prices,
                                  bool continuous,
