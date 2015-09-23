@@ -87,10 +87,10 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     result <- list()
     for(i in 1:ncol(rates)) {
         if(open) {
-            result[[i]] <- zoo(rates[, i], prices_df[1:(nrow(prices_df) - 1),
+            result[[i]] <- zoo::zoo(rates[, i], prices_df[1:(nrow(prices_df) - 1),
                                                      1])
         } else {
-            result[[i]] <- zoo(rates[, i], prices_df[2:nrow(prices_df), 1])
+            result[[i]] <- zoo::zoo(rates[, i], prices_df[2:nrow(prices_df), 1])
         }
     }
     try(names(result) <- names(prices), T)
@@ -153,7 +153,8 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
 
     # coert list to data.frame and then to matrix
     prices_df <- NULL
-    if(!is.na(ncol(prices))) {
+    browser()
+    if(!is.null(ncol(prices))) {
         for(i in 1:ncol(prices)) {
             if(is.null(prices_df)) {
                 prices_df <- data.frame(date = time(prices[, i]),
@@ -177,11 +178,12 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
     }
 
     if(open) {
-        result <- zoo(rates, prices_df[1:(nrow(prices_df) - 1), 1])
+        result <- zoo::zoo(rates, prices_df[1:(nrow(prices_df) - 1), 1])
     } else {
-        result <- zoo(rates, prices_df[2:nrow(prices_df), 1])
+        result <- zoo::zoo(rates, prices_df[2:nrow(prices_df), 1])
     }
-
-    colnames(result) <- colnames(prices)
+    if(!is.null(ncol(prices))) {
+        colnames(result) <- colnames(prices)
+    }
     return(result)
 }
