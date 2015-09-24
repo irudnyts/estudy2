@@ -103,7 +103,6 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
             time(estimation_data) >= estimation_start &
             time(estimation_data) <= estimation_end]
         delta <- nrow(estimation_data)
-        delta <- nrow(estimation_data)
         # two variables created, because predict is looking for the same
         # as in lm variables names
         y <- coredata(estimation_data[, 1])
