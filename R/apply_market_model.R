@@ -15,11 +15,11 @@ apply_market_model.list <- function(rates, regressors, market_model =
     market_model <- match.arg(market_model)
     estimation_method <- match.arg(estimation_method)
 
-    if(market_model != "mean_adj" & missing(regressor)) {
+    if(market_model != "mean_adj" & missing(regressors)) {
         stop(paste("For market model", market_model, "specify the regressors."))
     }
 
-    if(market_model != "mean_adj" & lengt(rates) != length(regressors)) {
+    if(market_model != "mean_adj" & length(rates) != length(regressors)) {
         stop(paste0("The number of regressors elements should be the same as",
                     "the number of rates elements"))
     }
@@ -48,6 +48,110 @@ apply_market_model.list <- function(rates, regressors, market_model =
         for(i in seq_along(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[[i]],
                                             regressor = regresors[[i]],
+                                            market_model = market_model,
+                                            estimation_method =
+                                                estimation_method,
+                                            estimation_start = estimation_start,
+                                            estimation_end = estimation_end)
+        }
+    }
+    return(list_of_retunrs)
+}
+
+#' @export
+apply_market_model.data.frame <- function(rates, regressors, market_model =
+                                              c("mean_adj", "mrkt_adj", "sim"),
+                                          estimation_method = c("ols"),
+                                          estimation_start, estimation_end) {
+    # check args for validity
+    market_model <- match.arg(market_model)
+    estimation_method <- match.arg(estimation_method)
+
+    if(market_model != "mean_adj" & missing(regressors)) {
+        stop(paste("For market model", market_model, "specify the regressors."))
+    }
+
+    if(market_model != "mean_adj" & ncol(rates) != ncol(regressors)) {
+        stop(paste0("The number of regressors columns should be the same as",
+                    "the number of rates columns"))
+    }
+
+    if(estimation_start >= estimation_end) {
+        stop("estimation_start should be earlier than estimation_end")
+    }
+
+    list_of_retunrs <- list()
+    if(market_model == "mean_adj") {
+        for(i in 2:ncol(rates)) {
+            list_of_returns[[i]] <- returns(rates = rates[, c(1, i)],
+                                            market_model = market_model,
+                                            estimation_start = estimation_start,
+                                            estimation_end = estimation_end)
+        }
+    } else if(market_model == "mrkt_adj") {
+        for(i in 2:ncol(rates)) {
+            list_of_returns[[i]] <- returns(rates = rates[, c(1, i)],
+                                            regressor = regresors[, c(1, i)],
+                                            market_model = market_model,
+                                            estimation_start = estimation_start,
+                                            estimation_end = estimation_end)
+        }
+    } else if(market_model == "sim"){
+        for(i in 2:ncol(rates)) {
+            list_of_returns[[i]] <- returns(rates = rates[, c(1, i)],
+                                            regressor = regresors[, c(1, i)],
+                                            market_model = market_model,
+                                            estimation_method =
+                                                estimation_method,
+                                            estimation_start = estimation_start,
+                                            estimation_end = estimation_end)
+        }
+    }
+    return(list_of_retunrs)
+}
+
+#' @export
+apply_market_model.zoo <- function(rates, regressors, market_model =
+                                       c("mean_adj", "mrkt_adj", "sim"),
+                                   estimation_method = c("ols"),
+                                   estimation_start, estimation_end) {
+    # check args for validity
+    market_model <- match.arg(market_model)
+    estimation_method <- match.arg(estimation_method)
+
+    if(market_model != "mean_adj" & missing(regressors)) {
+        stop(paste("For market model", market_model, "specify the regressors."))
+    }
+
+    if(market_model != "mean_adj" & ncol(rates) != ncol(regressors)) {
+        stop(paste0("The number of regressors columns should be the same as",
+                    "the number of rates columns"))
+    }
+
+    if(estimation_start >= estimation_end) {
+        stop("estimation_start should be earlier than estimation_end")
+    }
+
+    list_of_retunrs <- list()
+    if(market_model == "mean_adj") {
+        for(i in 2:ncol(rates)) {
+            list_of_returns[[i]] <- returns(rates = rates[, i],
+                                            market_model = market_model,
+                                            estimation_start = estimation_start,
+                                            estimation_end = estimation_end)
+        }
+    } else if(market_model == "mrkt_adj") {
+        for(i in 2:ncol(rates)) {
+            list_of_returns[[i]] <- returns(rates = rates[, i],
+                                            regressor = regresors[, i],
+                                            market_model = market_model,
+                                            estimation_start = estimation_start,
+                                            estimation_end = estimation_end)
+        }
+    } else if(market_model == "sim"){
+        for(i in 2:ncol(rates)) {
+            list_of_returns[[i]] <- returns(rates = rates[, i],
+                                            regressor = regresors[, i],
                                             market_model = market_model,
                                             estimation_method =
                                                 estimation_method,
