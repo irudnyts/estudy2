@@ -65,7 +65,7 @@ apply_market_model.list <- function(rates, regressors, market_model =
     } else if(market_model == "mrkt_adj") {
         for(i in seq_along(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[[i]],
-                                            regressor = regresors[[i]],
+                                            regressor = regressors[[i]],
                                             market_model = market_model,
                                             estimation_start = estimation_start,
                                             estimation_end = estimation_end)
@@ -73,7 +73,7 @@ apply_market_model.list <- function(rates, regressors, market_model =
     } else if(market_model == "sim"){
         for(i in seq_along(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[[i]],
-                                            regressor = regresors[[i]],
+                                            regressor = regressors[[i]],
                                             market_model = market_model,
                                             estimation_method =
                                                 estimation_method,
@@ -119,7 +119,7 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
     } else if(market_model == "mrkt_adj") {
         for(i in 2:ncol(rates)) {
             list_of_returns[[i - 1]] <- returns(rates = rates[, c(1, i)],
-                                            regressor = regresors[, c(1, i)],
+                                            regressor = regressors[, c(1, i)],
                                             market_model = market_model,
                                             estimation_start = estimation_start,
                                             estimation_end = estimation_end)
@@ -127,7 +127,7 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
     } else if(market_model == "sim"){
         for(i in 2:ncol(rates)) {
             list_of_returns[[i - 1]] <- returns(rates = rates[, c(1, i)],
-                                            regressor = regresors[, c(1, i)],
+                                            regressor = regressors[, c(1, i)],
                                             market_model = market_model,
                                             estimation_method =
                                                 estimation_method,
@@ -173,7 +173,7 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
     } else if(market_model == "mrkt_adj") {
         for(i in 1:ncol(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[, i],
-                                            regressor = regresors[, i],
+                                            regressor = regressors[, i],
                                             market_model = market_model,
                                             estimation_start = estimation_start,
                                             estimation_end = estimation_end)
@@ -181,7 +181,7 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
     } else if(market_model == "sim"){
         for(i in 1:ncol(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[, i],
-                                            regressor = regresors[, i],
+                                            regressor = regressors[, i],
                                             market_model = market_model,
                                             estimation_method =
                                                 estimation_method,
