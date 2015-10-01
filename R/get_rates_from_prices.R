@@ -153,7 +153,6 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
 
     # coert list to data.frame and then to matrix
     prices_df <- NULL
-    browser()
     if(!is.null(ncol(prices))) {
         for(i in 1:ncol(prices)) {
             if(is.null(prices_df)) {
