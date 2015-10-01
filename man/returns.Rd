@@ -34,10 +34,10 @@ fields:
 retunrs.
 \item predicted: the object of class \code{zoo}, containing predicted by
 market model rates of returns.
-\item lower95CI: the lower bound of the 95\% Confidence Interval for predicted
-rates of returns.
-\item upper95CI: the upper bound of the 95\% Confidence Interval for predicted
-rates of returns.
+\item lower95CI: the lower bound of the 95\% Confidence Interval for
+predicted rates of returns.
+\item upper95CI: the upper bound of the 95\% Confidence Interval for
+predicted rates of returns.
 \item abnormal: the object of class \code{zoo}, containing abnoraml returns.
 \item regressor: the object of class \code{zoo}, containing rates of
 regressor (typically market index).
