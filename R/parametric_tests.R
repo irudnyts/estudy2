@@ -111,7 +111,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
         }
 
         if(list_of_returns[[i]]$estimation_end >= event_start) {
-            message(paste0("For ", as.cahrachter(i), "-th company estimation",
+            message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
         }
 
@@ -221,7 +221,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
         }
 
         if(list_of_returns[[i]]$estimation_end >= event_start) {
-            message(paste0("For ", as.cahrachter(i), "-th company estimation",
+            message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
         }
 
@@ -330,7 +330,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
         }
 
         if(list_of_returns[[i]]$estimation_end >= event_start) {
-            message(paste0("For ", as.cahrachter(i), "-th company estimation",
+            message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
         }
 
@@ -440,7 +440,7 @@ patell <- function(list_of_returns, event_start, event_end) {
         }
 
         if(list_of_returns[[i]]$estimation_end >= event_start) {
-            message(paste0("For ", as.cahrachter(i), "-th company estimation",
+            message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
         }
 
@@ -579,7 +579,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         }
 
         if(list_of_returns[[i]]$estimation_end >= event_start) {
-            message(paste0("For ", as.cahrachter(i), "-th company estimation",
+            message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
         }
 
