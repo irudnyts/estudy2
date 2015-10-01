@@ -25,7 +25,7 @@
 #' @export
 get_prices_form_tickers <- function(..., start, end,
                                     quote = c("Open", "Close"),
-                                    retclass = c("list", "zoo", "date.frame")) {
+                                    retclass = c("list", "zoo", "data.frame")) {
     quote <- match.arg(quote)
     retclass <- match.arg(retclass)
     tickers <- c(...)
