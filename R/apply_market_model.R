@@ -1,3 +1,26 @@
+#' Apply market model and return the list of objects \code{returns}
+#'
+#' The function applies given market model to securities' rates of returns and
+#' returns the list of objects \code{returns} for each security, which can be
+#' passed directly to the whole battery of tests.
+#'
+#' The generic function is dispatched for such classes as \code{list},
+#' \code{data.frame}, and \code{zoo}.
+#'
+#' @param rates \code{list}, \code{data.frame}, \code{zoo} object containing
+#' rates of returns of securities.
+#' @param regressors an object of the same class as \code{rates} containing
+#' regressors. Can be ommited, if market model is \code{mean_adj}.
+#' \code{regressors} must have the same number of components as \code{rates}.
+#' @param market_model a character indicating the market model among
+#' \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.
+#' @param estimation_method a character, specifying the estimation method for
+#' \code{sim} market model.
+#' @param estimation_start an object of class Data, giving the start date of
+#' estimation period.
+#' @param estimation_end an object of class Data, giving the start date of
+#' estimation period.
+#' @return A list of objects \code{returns}
 #' @export
 apply_market_model <- function(rates, regressors,
                                market_model = c("mean_adj", "mrkt_adj", "sim"),
@@ -31,7 +54,7 @@ apply_market_model.list <- function(rates, regressors, market_model =
         stop("estimation_start should be earlier than estimation_end")
     }
 
-    list_of_retunrs <- list()
+    list_of_returns <- list()
     if(market_model == "mean_adj") {
         for(i in seq_along(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[[i]],
@@ -58,7 +81,7 @@ apply_market_model.list <- function(rates, regressors, market_model =
                                             estimation_end = estimation_end)
         }
     }
-    return(list_of_retunrs)
+    return(list_of_returns)
 }
 
 #' @export
@@ -85,17 +108,17 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
         stop("estimation_start should be earlier than estimation_end")
     }
 
-    list_of_retunrs <- list()
+    list_of_returns <- list()
     if(market_model == "mean_adj") {
         for(i in 2:ncol(rates)) {
-            list_of_returns[[i]] <- returns(rates = rates[, c(1, i)],
+            list_of_returns[[i - 1]] <- returns(rates = rates[, c(1, i)],
                                             market_model = market_model,
                                             estimation_start = estimation_start,
                                             estimation_end = estimation_end)
         }
     } else if(market_model == "mrkt_adj") {
         for(i in 2:ncol(rates)) {
-            list_of_returns[[i]] <- returns(rates = rates[, c(1, i)],
+            list_of_returns[[i - 1]] <- returns(rates = rates[, c(1, i)],
                                             regressor = regresors[, c(1, i)],
                                             market_model = market_model,
                                             estimation_start = estimation_start,
@@ -103,7 +126,7 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
         }
     } else if(market_model == "sim"){
         for(i in 2:ncol(rates)) {
-            list_of_returns[[i]] <- returns(rates = rates[, c(1, i)],
+            list_of_returns[[i - 1]] <- returns(rates = rates[, c(1, i)],
                                             regressor = regresors[, c(1, i)],
                                             market_model = market_model,
                                             estimation_method =
@@ -112,7 +135,7 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
                                             estimation_end = estimation_end)
         }
     }
-    return(list_of_retunrs)
+    return(list_of_returns)
 }
 
 #' @export
@@ -123,7 +146,6 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
     # check args for validity
     market_model <- match.arg(market_model)
     estimation_method <- match.arg(estimation_method)
-
     if(market_model != "mean_adj") {
         if(missing(regressors)) {
             stop(paste("For market model", market_model,
@@ -140,16 +162,16 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
         stop("estimation_start should be earlier than estimation_end")
     }
 
-    list_of_retunrs <- list()
+    list_of_returns <- list()
     if(market_model == "mean_adj") {
-        for(i in 2:ncol(rates)) {
+        for(i in 1:ncol(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[, i],
                                             market_model = market_model,
                                             estimation_start = estimation_start,
                                             estimation_end = estimation_end)
         }
     } else if(market_model == "mrkt_adj") {
-        for(i in 2:ncol(rates)) {
+        for(i in 1:ncol(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[, i],
                                             regressor = regresors[, i],
                                             market_model = market_model,
@@ -157,7 +179,7 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
                                             estimation_end = estimation_end)
         }
     } else if(market_model == "sim"){
-        for(i in 2:ncol(rates)) {
+        for(i in 1:ncol(rates)) {
             list_of_returns[[i]] <- returns(rates = rates[, i],
                                             regressor = regresors[, i],
                                             market_model = market_model,
@@ -167,7 +189,7 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
                                             estimation_end = estimation_end)
         }
     }
-    return(list_of_retunrs)
+    return(list_of_returns)
 }
 
 #' Constructor for a S3 returns class object
