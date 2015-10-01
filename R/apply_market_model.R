@@ -15,13 +15,16 @@ apply_market_model.list <- function(rates, regressors, market_model =
     market_model <- match.arg(market_model)
     estimation_method <- match.arg(estimation_method)
 
-    if(market_model != "mean_adj" & missing(regressors)) {
-        stop(paste("For market model", market_model, "specify the regressors."))
-    }
+    if(market_model != "mean_adj") {
+        if(missing(regressors)) {
+            stop(paste("For market model", market_model, "specify the",
+                       "regressors."))
+        }
+        if(length(rates) != length(regressors)) {
+            stop(paste("The number of regressors elements should be the same",
+                       "as the number of rates elements"))
 
-    if(market_model != "mean_adj" & length(rates) != length(regressors)) {
-        stop(paste0("The number of regressors elements should be the same as",
-                    "the number of rates elements"))
+        }
     }
 
     if(estimation_start >= estimation_end) {
@@ -67,13 +70,15 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
     market_model <- match.arg(market_model)
     estimation_method <- match.arg(estimation_method)
 
-    if(market_model != "mean_adj" & missing(regressors)) {
-        stop(paste("For market model", market_model, "specify the regressors."))
-    }
-
-    if(market_model != "mean_adj" & ncol(rates) != ncol(regressors)) {
-        stop(paste0("The number of regressors columns should be the same as",
-                    "the number of rates columns"))
+    if(market_model != "mean_adj") {
+        if(missing(regressors)) {
+            stop(paste("For market model", market_model, "specify the",
+                       "regressors."))
+        }
+        if(ncol(rates) != ncol(regressors)) {
+            stop(paste("The number of regressors columns should be the same",
+                       "as the number of rates columns"))
+        }
     }
 
     if(estimation_start >= estimation_end) {
@@ -119,13 +124,16 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
     market_model <- match.arg(market_model)
     estimation_method <- match.arg(estimation_method)
 
-    if(market_model != "mean_adj" & missing(regressors)) {
-        stop(paste("For market model", market_model, "specify the regressors."))
-    }
+    if(market_model != "mean_adj") {
+        if(missing(regressors)) {
+            stop(paste("For market model", market_model,
+                       "specify the regressors."))
+        }
+        if(ncol(rates) != ncol(regressors)) {
+            stop(paste("The number of regressors columns should be the same",
+                       "as the number of rates columns"))
+        }
 
-    if(market_model != "mean_adj" & ncol(rates) != ncol(regressors)) {
-        stop(paste0("The number of regressors columns should be the same as",
-                    "the number of rates columns"))
     }
 
     if(estimation_start >= estimation_end) {
