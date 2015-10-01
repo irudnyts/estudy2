@@ -5,7 +5,7 @@
 \title{Returns the daily prices for securities.}
 \usage{
 get_prices_form_tickers(..., start, end, quote = c("Open", "Close"),
-  retclass = c("list", "zoo", "date.frame"))
+  retclass = c("list", "zoo", "data.frame"))
 }
 \arguments{
 \item{...}{character vectors indicating the tickers (should be valid in Yahoo
