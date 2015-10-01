@@ -3,6 +3,7 @@
 S3method(get_rates_from_prices,data.frame)
 S3method(get_rates_from_prices,list)
 S3method(get_rates_from_prices,zoo)
+S3method(returns,data.frame)
 S3method(returns,zoo)
 export(boehmer)
 export(brown_warner_1980)
