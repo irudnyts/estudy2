@@ -47,7 +47,7 @@ regressor (typically market index).
 SIM).
 \item full_name_estimation_method: full name of estimation method (applied
 only for SIM).
-\item coefficients: coeffitients \alpha and \beta for SIM market model
+\item coefficients: coeffitients \eqn{\alpha} and \eqn{\beta} for SIM market model
 (applied only for SIM).
 \item estimation_start: the end of estimation period.
 \item estimation_end: the end of estimation period.
