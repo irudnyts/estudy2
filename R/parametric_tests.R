@@ -127,13 +127,13 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
         if(is.null(estimation_abnormal)){
             estimation_abnormal <- company_estimation_abnormal
         } else {
-            estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = T)
+            estimation_abnormal <- merge(estimation_abnormal,
+                                         company_estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
-            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+            event_abnormal <- merge(event_abnormal, company_event_abnormal,
                                     all = T)
         }
 
@@ -237,13 +237,13 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
         if(is.null(estimation_abnormal)){
             estimation_abnormal <- company_estimation_abnormal
         } else {
-            estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = T)
+            estimation_abnormal <- merge(estimation_abnormal,
+                                         company_estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
-            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+            event_abnormal <- merge(event_abnormal, company_event_abnormal,
                                     all = T)
         }
 
@@ -341,7 +341,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
-            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+            event_abnormal <- merge(event_abnormal, company_event_abnormal,
                                     all = T)
         }
     }
@@ -456,13 +456,13 @@ patell <- function(list_of_returns, event_start, event_end) {
         if(is.null(estimation_abnormal)){
             estimation_abnormal <- company_estimation_abnormal
         } else {
-            estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = T)
+            estimation_abnormal <- merge(estimation_abnormal,
+                                         company_estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
-            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+            event_abnormal <- merge(event_abnormal, company_event_abnormal,
                                     all = T)
         }
 
@@ -486,8 +486,8 @@ patell <- function(list_of_returns, event_start, event_end) {
         if(is.null(event_standardized_abnormal)){
             event_standardized_abnormal <- company_event_standardized
         } else {
-            event_standardized_abnormal <- merge(company_event_standardized,
-                                                 event_standardized_abnormal,
+            event_standardized_abnormal <- merge(event_standardized_abnormal,
+                                                 company_event_standardized,
                                                  all = T)
         }
         delta[i] <- list_of_returns[[i]]$estimation_length
@@ -595,13 +595,13 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         if(is.null(estimation_abnormal)){
             estimation_abnormal <- company_estimation_abnormal
         } else {
-            estimation_abnormal <- merge(company_estimation_abnormal,
-                                         estimation_abnormal, all = T)
+            estimation_abnormal <- merge(estimation_abnormal,
+                                         company_estimation_abnormal, all = T)
         }
         if(is.null(event_abnormal)){
             event_abnormal <- company_event_abnormal
         } else {
-            event_abnormal <- merge(company_event_abnormal, event_abnormal,
+            event_abnormal <- merge(event_abnormal, company_event_abnormal,
                                     all = T)
         }
 
@@ -625,8 +625,8 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         if(is.null(event_standardized_abnormal)){
             event_standardized_abnormal <- company_event_standardized
         } else {
-            event_standardized_abnormal <- merge(company_event_standardized,
-                                                 event_standardized_abnormal,
+            event_standardized_abnormal <- merge(event_standardized_abnormal,
+                                                 company_event_standardized,
                                                  all = T)
         }
         # delta[i] <- list_of_returns[[i]]$estimation_length
