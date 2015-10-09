@@ -61,14 +61,14 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
 #' Performs the parametric test for event study, which is descibed in Brown and
 #' Warner 1980 paper. The test assumes cross-sectional independence and
 #' insignificance of event-induced variance. The test examines the hypothesis
-#' wether the theoretical cross-sectional expected value for a given day is
+#' whether the theoretical cross-sectional expected value for a given day is
 #' equal to zero. The standard deviation in statistics is calculated as the
 #' cross-sectional mean of companies' variances, estimated on estimation period.
 #' It calculates statistics even if event window and estimation period are
 #' overlapped (intersect). The critical values are Student's t-destributed (no
-#' approximation in limit). The significance levels of alpha are 0.1, 0.05, and
-#' 0.05 (marked respectively by *, **, and ***). It was designed to measure
-#' monthly data: for daily data look at Brown and Warner 1985 paper and
+#' approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
+#' 0.05, and 0.01 (marked respectively by *, **, and ***). It was designed to
+#' measure monthly data: for daily data look at Brown and Warner 1985 paper and
 #' \code{brown_warner_1985}.
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
@@ -124,13 +124,13 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        if(is.null(estimation_abnormal)){
+        if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(estimation_abnormal,
                                          company_estimation_abnormal, all = T)
         }
-        if(is.null(event_abnormal)){
+        if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(event_abnormal, company_event_abnormal,
@@ -173,13 +173,14 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #' Performs the parametric test for event study, which is descibed in Brown and
 #' Warner 1985 paper, which is traditional event study approach. Assumes
 #' cross-sectional independence and non-robust to event-induced variance. The
-#' test examines the hypothesis wether the theoretical cross-sectional expected
+#' test examines the hypothesis whether the theoretical cross-sectional expected
 #' value for a given day is equal to zero. The standard deviation in statistics
 #' is estimated as the cross-sectional standard deviation of companies' means,
 #' estimated on estimation period. It calculates statistics even if event window
 #' and estimation period are overlapped (intersect). The critical values are
 #' Student's t-destributed (no approximation in limit). The significance levels
-#' of alpha are 0.1, 0.05, and 0.05 (marked respectively by *, **, and ***).
+#' of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and
+#' ***).
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
 #' of which is treated as a company.
@@ -234,13 +235,13 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        if(is.null(estimation_abnormal)){
+        if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(estimation_abnormal,
                                          company_estimation_abnormal, all = T)
         }
-        if(is.null(event_abnormal)){
+        if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(event_abnormal, company_event_abnormal,
@@ -285,8 +286,8 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' standard deviation for given day in the event window. It calculates
 #' statistics even if event window and estimation period are overlapped
 #' (intersect). The critical values are Student's t-destributed (no
-#' approximation in limit). The significance levels of alpha are 0.1, 0.05, and
-#' 0.05 (marked respectively by *, **, and ***).
+#' approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
+#' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @section Warning: This test strongly requires cross-sectional independence
 #' and sensative to the size of the sample.
@@ -338,7 +339,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        if(is.null(event_abnormal)){
+        if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(event_abnormal, company_event_abnormal,
@@ -386,12 +387,12 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #' insignificance of event-induced variance. The standardization smooths the
 #' effect of event-induced variance comparing to Brown and Warner tests. Also
 #' standardization incorporates the situation, when high volatility secturity
-#' dominates the test. The test examines the hypothesis wether the theoretical
+#' dominates the test. The test examines the hypothesis whether the theoretical
 #' cross-sectional expected value for a given day is equal to zero. It
 #' calculates statistics even if event window and estimation period are
 #' overlapped (intersect). The critical values are standard normal. The
-#' significance levels of alpha are 0.1, 0.05, and 0.05 (marked respectively by
-#'  *, **, and ***).
+#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
+#' respectively by *, **, and ***).
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
 #' of which is treated as a company.
@@ -453,13 +454,13 @@ patell <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
             time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        if(is.null(estimation_abnormal)){
+        if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(estimation_abnormal,
                                          company_estimation_abnormal, all = T)
         }
-        if(is.null(event_abnormal)){
+        if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(event_abnormal, company_event_abnormal,
@@ -483,7 +484,7 @@ patell <- function(list_of_returns, event_start, event_end) {
                  (market_event - mean_market_estimation) ^ 2 /
                  sum((market_estimation - mean_market_estimation) ^ 2))
 
-        if(is.null(event_standardized_abnormal)){
+        if(is.null(event_standardized_abnormal)) {
             event_standardized_abnormal <- company_event_standardized
         } else {
             event_standardized_abnormal <- merge(event_standardized_abnormal,
@@ -508,9 +509,9 @@ patell <- function(list_of_returns, event_start, event_end) {
     statistics <- rowSums(event_standardized_abnormal, na.rm = T) /
         sqrt(sum((delta - 2) / (delta - 4)))
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= k_q1] <- "*"
-    significance[abs(statistics) >= k_q2] <- "**"
-    significance[abs(statistics) >= k_q3] <- "***"
+    significance[abs(statistics) >= cosnst_q1] <- "*"
+    significance[abs(statistics) >= cosnst_q2] <- "**"
+    significance[abs(statistics) >= cosnst_q3] <- "***"
     result <- cbind(result, data.frame(pt_stat = statistics,
                                        pt_signif = significance))
     return(result)
@@ -526,11 +527,11 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' This test performs t-test based on Patell's standardized resuduals. By
 #' combining Patell's and t- tests this test allows event-induced variance
 #' changes, but still assumes cross-sectional independence. The test examines
-#' the hypothesis wether the theoretical cross-sectional expected value for a
+#' the hypothesis whether the theoretical cross-sectional expected value for a
 #' given day is equal to zero. It calculates statistics even if event window and
 #' estimation period are overlapped (intersect). The critical values has
-#' Student's t-distribution. The significance levels of alpha are 0.1, 0.05, and
-#'  0.05 (marked respectively by *, **, and ***).
+#' Student's t-distribution. The significance levels of \eqn{\alpha} are 0.1,
+#' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
 #' of which is treated as a company.
@@ -592,13 +593,13 @@ boehmer <- function(list_of_returns, event_start, event_end) {
             time(list_of_returns[[i]]$abnormal) >= event_start &
                 time(list_of_returns[[i]]$abnormal) <= event_end]
 
-        if(is.null(estimation_abnormal)){
+        if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
         } else {
             estimation_abnormal <- merge(estimation_abnormal,
                                          company_estimation_abnormal, all = T)
         }
-        if(is.null(event_abnormal)){
+        if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(event_abnormal, company_event_abnormal,
@@ -622,7 +623,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                      (market_event - mean_market_estimation) ^ 2 /
                      sum((market_estimation - mean_market_estimation) ^ 2))
 
-        if(is.null(event_standardized_abnormal)){
+        if(is.null(event_standardized_abnormal)) {
             event_standardized_abnormal <- company_event_standardized
         } else {
             event_standardized_abnormal <- merge(event_standardized_abnormal,
