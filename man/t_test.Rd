@@ -39,8 +39,9 @@ approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
 and sensative to the size of the sample.
 }
 \references{
-Boehmer, E. \emph{Event-study methodology under conditions of
-event-induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.
+Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study
+methodology under conditions of event-induced variance}. Journal of Financial
+Economics, 30(2):253-272, 1991.
 }
 \seealso{
 \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},

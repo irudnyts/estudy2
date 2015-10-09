@@ -42,9 +42,9 @@ respectively by *, **, and ***).
 \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
 price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
 276, 1976.
-\item Boehmer, E. \emph{
-Event-study methodology under conditions of event-
-induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.}
+\item Boehmer E., Musumeci J., Poulsen A.B. \emph{ Event-study methodology
+under conditions of event-induced variance}. Journal of Financial Economics,
+30(2):253-272, 1991.}
 }
 \seealso{
 \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
