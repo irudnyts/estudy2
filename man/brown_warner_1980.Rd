@@ -27,14 +27,14 @@ paper.
 Performs the parametric test for event study, which is descibed in Brown and
 Warner 1980 paper. The test assumes cross-sectional independence and
 insignificance of event-induced variance. The test examines the hypothesis
-wether the theoretical cross-sectional expected value for a given day is
+whether the theoretical cross-sectional expected value for a given day is
 equal to zero. The standard deviation in statistics is calculated as the
 cross-sectional mean of companies' variances, estimated on estimation period.
 It calculates statistics even if event window and estimation period are
 overlapped (intersect). The critical values are Student's t-destributed (no
-approximation in limit). The significance levels of alpha are 0.1, 0.05, and
-0.05 (marked respectively by *, **, and ***). It was designed to measure
-monthly data: for daily data look at Brown and Warner 1985 paper and
+approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
+0.05, and 0.01 (marked respectively by *, **, and ***). It was designed to
+measure monthly data: for daily data look at Brown and Warner 1985 paper and
 \code{brown_warner_1985}.
 }
 \references{

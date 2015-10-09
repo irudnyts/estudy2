@@ -29,11 +29,11 @@ Performs the parametric test for event study, which is descibed in Boehmer's
 This test performs t-test based on Patell's standardized resuduals. By
 combining Patell's and t- tests this test allows event-induced variance
 changes, but still assumes cross-sectional independence. The test examines
-the hypothesis wether the theoretical cross-sectional expected value for a
+the hypothesis whether the theoretical cross-sectional expected value for a
 given day is equal to zero. It calculates statistics even if event window and
 estimation period are overlapped (intersect). The critical values has
-Student's t-distribution. The significance levels of alpha are 0.1, 0.05, and
- 0.05 (marked respectively by *, **, and ***).
+Student's t-distribution. The significance levels of \eqn{\alpha} are 0.1,
+0.05, and 0.01 (marked respectively by *, **, and ***).
 }
 \references{
 \itemize{

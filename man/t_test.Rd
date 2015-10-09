@@ -31,8 +31,8 @@ standard deviation, which is used in this test, is simply cross-section
 standard deviation for given day in the event window. It calculates
 statistics even if event window and estimation period are overlapped
 (intersect). The critical values are Student's t-destributed (no
-approximation in limit). The significance levels of alpha are 0.1, 0.05, and
-0.05 (marked respectively by *, **, and ***).
+approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
+0.05, and 0.01 (marked respectively by *, **, and ***).
 }
 \section{Warning}{
  This test strongly requires cross-sectional independence

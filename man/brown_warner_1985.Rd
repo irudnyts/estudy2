@@ -27,13 +27,14 @@ paper.
 Performs the parametric test for event study, which is descibed in Brown and
 Warner 1985 paper, which is traditional event study approach. Assumes
 cross-sectional independence and non-robust to event-induced variance. The
-test examines the hypothesis wether the theoretical cross-sectional expected
+test examines the hypothesis whether the theoretical cross-sectional expected
 value for a given day is equal to zero. The standard deviation in statistics
 is estimated as the cross-sectional standard deviation of companies' means,
 estimated on estimation period. It calculates statistics even if event window
 and estimation period are overlapped (intersect). The critical values are
 Student's t-destributed (no approximation in limit). The significance levels
-of alpha are 0.1, 0.05, and 0.05 (marked respectively by *, **, and ***).
+of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and
+***).
 }
 \references{
 Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
