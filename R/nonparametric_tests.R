@@ -1,5 +1,5 @@
-nonparametric_tests <- function(list_of_returns, event_start, event_end, all = T,
-                             tests) {
+nonparametric_tests <- function(list_of_returns, event_start, event_end,
+                                all = T, tests) {
     if(all == T) {
         tests <- list(corrado_sign_test, binomial_sign_test, rank_test,
                       generalized_rank_test)
@@ -352,7 +352,9 @@ rank_test <- function(list_of_returns, event_start, event_end) {
                                            na.last = "keep",
                                            ties.method = "average"),
                                       time(company_full_abnormal))
-        company_event_rank <- company_full_rank[time(company_full_rank) >= event_start & time(company_full_rank) <= event_end]
+        company_event_rank <- company_full_rank[
+            time(company_full_rank) >= event_start &
+            time(company_full_rank) <= event_end]
 
         if(is.null(full_rank)) {
             full_rank <- company_full_rank
@@ -388,10 +390,12 @@ rank_test <- function(list_of_returns, event_start, event_end) {
                              nrow = nrow(event_rank), ncol = ncol(event_rank),
                              byrow = T)
 
-    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / number_of_companies * rowSums(full_rank - avg_rank_full, na.rm = T))^2))
+    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / number_of_companies *
+                            rowSums(full_rank - avg_rank_full, na.rm = T))^2))
 
 
-    statistics <- 1 / rowSums(!is.na(as.matrix(event_rank)), na.rm = T) * rowSums(event_rank - avg_rank_event, na.rm = T) / sd_full
+    statistics <- 1 / rowSums(!is.na(as.matrix(event_rank)), na.rm = T) *
+        rowSums(event_rank - avg_rank_event, na.rm = T) / sd_full
 
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
@@ -483,23 +487,28 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
                 time(list_of_returns[[i]]$abnormal) >= event_start &
                     time(list_of_returns[[i]]$abnormal) <= event_end])
 
-        company_full_rank_modif <- zoo::zoo(rank(x = coredata(company_full_abnormal),
-                                                 na.last = "keep",
-                                                 ties.method = "average") /
-                                                (1 + sum(!is.na(company_full_abnormal))),
+        company_full_rank_modif <- zoo::zoo(rank(x =
+                                                coredata(company_full_abnormal),
+                                                na.last = "keep",
+                                                ties.method = "average") /
+                                    (1 + sum(!is.na(company_full_abnormal))),
                                             time(company_full_abnormal))
-        company_event_rank_modif <- company_full_rank_modif[time(company_full_rank_modif) >= event_start & time(company_full_rank_modif) <= event_end]
+        company_event_rank_modif <- company_full_rank_modif[
+            time(company_full_rank_modif) >= event_start &
+                time(company_full_rank_modif) <= event_end]
 
         if(is.null(full_rank_modif)) {
             full_rank_modif <- company_full_rank_modif
         } else {
-            full_rank_modif <- merge(full_rank_modif, company_full_rank_modif, all = T)
+            full_rank_modif <- merge(full_rank_modif, company_full_rank_modif,
+                                     all = T)
         }
 
         if(is.null(event_rank_modif)) {
             event_rank_modif <- company_event_rank_modif
         } else {
-            event_rank_modif <- merge(event_rank_modif, company_event_rank_modif, all = T)
+            event_rank_modif <- merge(event_rank_modif,
+                                      company_event_rank_modif, all = T)
         }
 
         delta_full[i] <-
@@ -509,18 +518,21 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 
     result <- data.frame(date = time(event_rank_modif),
                          weekday = weekdays(time(event_rank_modif)),
-                         percentage = rowSums(!is.na(as.matrix(event_rank_modif)),
-                                              na.rm = T) /
+                         percentage = rowSums(
+                             !is.na(as.matrix(event_rank_modif)), na.rm = T) /
                              ncol(event_rank_modif) * 100)
 
     full_rank_modif <- as.matrix(full_rank_modif)
     event_rank_modif <- as.matrix(event_rank_modif)
     number_of_companies <- rowSums(!is.na(full_rank_modif), na.rm = T)
 
-    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / sqrt(number_of_companies) * rowSums(full_rank_modif - 0.5, na.rm = T))^2))
+    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / sqrt(number_of_companies) *
+                                rowSums(full_rank_modif - 0.5, na.rm = T))^2))
 
 
-    statistics <- 1 / sqrt(rowSums(!is.na(as.matrix(event_rank_modif)), na.rm = T)) * rowSums(event_rank_modif - 0.5, na.rm = T) / sd_full
+    statistics <- 1 / sqrt(rowSums(!is.na(as.matrix(event_rank_modif)),
+                                   na.rm = T)) *
+        rowSums(event_rank_modif - 0.5, na.rm = T) / sd_full
 
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
