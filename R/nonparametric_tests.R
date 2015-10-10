@@ -53,7 +53,6 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end, all = T
 #' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}
 #' @export
 corrado_sign_test <- function(list_of_returns, event_start, event_end) {
-    # Corrado Zivney 1992
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
         stop("event_start must be an object of class Date.")
@@ -143,11 +142,48 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 }
 
 
+#' Binomial sign test for event study.
+#'
+#' The binomial sign test which determines whether the frequency of positive
+#' abnormal returns in the event period is significantly different from one in
+#' the estimation period.
+#'
+#' This test is application of the simple binomial test to the event study,
+#' which indicates whether the cross-sectional frequency of positive abnormal
+#' returns is significantly different from the the expected. This test is stable
+#' to outliers, in other words allows to check if the result is driven by few
+#' companies with extremly large abnomal performance. For this test the
+#' estimation period and event period must not overlap, otherwise an error
+#' occurrs. This test instead of using naive value of expected frequency 0.5
+#' uses an estimate from the estimation period. The test statistic is assumed to
+#' have a normal distribution. Typically is used together with parametric tests.
+#' The test is well-specified for the case, when cross-sectional abnoral returns
+#' are not symmetric. Also this procedure is less sensative to extreme returns
+#' than the rank test. The significance levels of \eqn{\alpha} are 0.1, 0.05,
+#' and 0.01 (marked respectively by *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references \itemize{
+#' \item McConnell J.J., Muscarella C.J. \emph{Capital expenditure plans and
+#' firm value} Journal of Financial Economics, 14:399-422, 1985.
+#' \item Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study methodology
+#' under conditions of event-induced variance}. Journal of Financial Economics,
+#' 30(2):253-272, 1991.
+#' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
+#' Quantitative Finance and Accounting, 2:343-358, 1992.
+#' }
+#'
+#' @seealso \code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
+#' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}
 #' @export
 binomial_sign_test <- function(list_of_returns, event_start, event_end) {
-    # Cowan 1992
-    # Boehmer 1991
-    # McConnell Muscarella 1985 or 1989
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
         stop("event_start must be an object of class Date.")
@@ -229,11 +265,49 @@ binomial_sign_test <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
+#' Rank test for event study.
+#'
+#' The original rank test for event study, which is based on Wilcoxon (1945)
+#' rank test.
+#'
+#' This procedure uses ranks of abnormal returns to examine significance of each
+#' day in event window. In order to get ranks of correspoding abnormal returns,
+#' the procedure uses regular R function \code{\link{rank}} with parameter
+#' \code{ties.method = "average"} and \code{na.last = "keep"}. For this test the
+#' estimation period and event period must not overlap, otherwise an error
+#' occurrs. The test statistic is assumed to have a normal distribution (as an
+#' approximation). The test is well-specified for the case, when cross-sectional
+#' abnoral returns are not symmetric. The test is stable to variance increase
+#' during event window. This test is more sensative to extreme values than sign
+#' test. For data with missed data see the \code{\link{modified_rank_test}}. The
+#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
+#' respectively by *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references \itemize{
+#' \item Corrado C.J. \emph{A Nonparametric Test аor Abnormal Security-Price
+#' Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
+#' 1989.
+#' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
+#' Quantitative Finance and Accounting, 2:343-358, 1992.
+#' \item Campbell C.J., Wasley C.E. \emph{Measuring Security Price Performance
+#' Using Daily NASDAQ Retrurns}. Journal of Financial Economics 33:73-92, 1993.
+#' \item Savickas R. \emph{Event-Induced Volatility and Tests for Abnormal
+#' Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
+#' }
+#'
+#' @seealso \code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
+#' \code{\link{binomial_sign_test}}, and \code{\link{modified_rank_test}}
 #' @export
 rank_test <- function(list_of_returns, event_start, event_end) {
-    # Corrado 1989
-    # Cowan 1992
-    # Campbell Wasley 1992
+
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
         stop("event_start must be an object of class Date.")
@@ -330,6 +404,41 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 
 
 
+#' Modified rank test for event study.
+#'
+#' This test, the modification of the original rank test, proposed by Corrado
+#' (1989), is abapted to missing values in abnormal returns.
+#'
+#' In addition to original rank test, the procedure devides corresponding ranks
+#' on number of nonmissing returns plus one for each security. This leads to
+#' order statistics with uniform destribution. In limit overall statistics under
+#' null hypothesis is aproximately noramly distributed. For this test the
+#' estimation period and event period must not overlap, otherwise an error
+#' occurrs. The test is well-specified for the case, when cross-sectional
+#' abnoral returns are not symmetric. The test is stable to variance increase
+#' during event window. This test is more sensative to extreme values than sign
+#' test. The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
+#' respectively by *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references \itemize{
+#' \item Corrado C.J., Zivney T.L. \emph{The Specification and Power of
+#' the Sign Test in Event Study Hypothesis Tests Using Daily Stock Returns}.
+#' Journal of Financial and Quantitative Analysis, 27(3):465-478, 1992.
+#' \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
+#' Correlation of Abnormal Returns}. The Review of Financial Studies,
+#' 23(11):3996-4025, 2010.
+#' }
+#'
+#' @seealso \code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
+#' \code{\link{binomial_sign_test}}, and \code{\link{rank_test}}
 #' @export
 modified_rank_test <- function(list_of_returns, event_start, event_end) {
     # Corrado Zivney 1992
