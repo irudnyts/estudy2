@@ -75,7 +75,7 @@ get_prices_form_tickers <- function(..., start, end,
                                                       retclass = "zoo")
             if(is.null(prices)) {
                 prices <- data.frame(date = time(current_prices), prices =
-                                            coredata(current_prices))
+                                            zoo::coredata(current_prices))
             } else {
                 prices <- merge(prices, data.frame(date = time(current_prices),
                                                    prices =
