@@ -307,8 +307,8 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
         delta <- nrow(estimation_data)
         # two variables created, because predict is looking for the same
         # as in lm variables names
-        y <- coredata(estimation_data[, 1])
-        x <- coredata(estimation_data[, 2])
+        y <- zoo::coredata(estimation_data[, 1])
+        x <- zoo::coredata(estimation_data[, 2])
         lm_fit <- lm(y ~ x)
         lm_fit$coefficients <- c(0, 1)
         predicted <- predict.lm(object = lm_fit,
@@ -340,8 +340,8 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
             delta <- nrow(estimation_data)
             # two variables created, because predict is looking for the same
             # as in lm variables names
-            y <- coredata(estimation_data[, 1])
-            x <- coredata(estimation_data[, 2])
+            y <- zoo::coredata(estimation_data[, 1])
+            x <- zoo::coredata(estimation_data[, 2])
             lm_fit <- lm(y ~ x)
             predicted <- predict.lm(object = lm_fit,
                                     newdata = data.frame(x = data[, 2]),
