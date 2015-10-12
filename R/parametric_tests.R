@@ -510,9 +510,9 @@ patell <- function(list_of_returns, event_start, event_end) {
     statistics <- rowSums(event_standardized_abnormal, na.rm = T) /
         sqrt(sum((delta - 2) / (delta - 4)))
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= cosnst_q1] <- "*"
-    significance[abs(statistics) >= cosnst_q2] <- "**"
-    significance[abs(statistics) >= cosnst_q3] <- "***"
+    significance[abs(statistics) >= const_q1] <- "*"
+    significance[abs(statistics) >= const_q2] <- "**"
+    significance[abs(statistics) >= const_q3] <- "***"
     result <- cbind(result, data.frame(pt_stat = statistics,
                                        pt_signif = significance))
     return(result)
