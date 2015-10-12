@@ -65,7 +65,6 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-    browser()
     # zoo objects of signs
     event_sign <- NULL
     full_sign <- NULL
