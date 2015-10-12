@@ -79,7 +79,7 @@ get_prices_form_tickers <- function(..., start, end,
             } else {
                 prices <- merge(prices, data.frame(date = time(current_prices),
                                                    prices =
-                                                      coredata(current_prices)),
+                                                zoo::coredata(current_prices)),
                                 by = "date")
             }
         }
