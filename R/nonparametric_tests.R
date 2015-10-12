@@ -1,3 +1,4 @@
+#' @export
 nonparametric_tests <- function(list_of_returns, event_start, event_end,
                                 all = T, tests) {
     if(all == T) {
@@ -10,7 +11,7 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
             result <- test(list_of_returns, event_start, event_end)
         } else {
             result <- merge(x = result, y = test(list_of_returns, event_start,
-                                                 event_end)[, c(1, 5, 6)],
+                                                 event_end)[, c(1, 4, 5)],
                             by = "date", all = T)
         }
     }
@@ -64,7 +65,7 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-
+    browser()
     # zoo objects of signs
     event_sign <- NULL
     full_sign <- NULL
@@ -83,17 +84,17 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 
         company_full_abnormal <- c(
             list_of_returns[[i]]$abnormal[
-                time(list_of_returns[[i]]$abnormal) >=
+                zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
-                time(list_of_returns[[i]]$abnormal) <=
+                zoo::index(list_of_returns[[i]]$abnormal) <=
                 list_of_returns[[i]]$estimation_end],
             list_of_returns[[i]]$abnormal[
-                time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end])
+                zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+                zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+                zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
 
         company_median <- median(zoo::coredata(company_full_abnormal))
         company_full_sign <- sign(company_full_abnormal - company_median)
@@ -116,8 +117,8 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 
     }
 
-    result <- data.frame(date = time(event_sign),
-                         weekday = weekdays(time(event_sign)),
+    result <- data.frame(date = zoo::index(event_sign),
+                         weekday = weekdays(zoo::index(event_sign)),
                          percentage = rowSums(!is.na(as.matrix(event_sign)),
                                               na.rm = T) /
                              ncol(event_sign) * 100)
@@ -212,20 +213,20 @@ binomial_sign_test <- function(list_of_returns, event_start, event_end) {
         }
 
         company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >=
+            zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
-                time(list_of_returns[[i]]$abnormal) <=
+                zoo::index(list_of_returns[[i]]$abnormal) <=
                 list_of_returns[[i]]$estimation_end]
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+                zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
 
         company_estimation_binary <- zoo::zoo(
             as.numeric(company_estimation_abnormal > 0),
-            time(company_estimation_abnormal))
+            zoo::index(company_estimation_abnormal))
 
         company_event_binary <- zoo::zoo(as.numeric(company_event_abnormal > 0),
-                                         time(company_event_abnormal))
+                                         zoo::index(company_event_abnormal))
 
         if(is.null(estimation_binary)) {
             estimation_binary <- company_estimation_binary
@@ -243,8 +244,8 @@ binomial_sign_test <- function(list_of_returns, event_start, event_end) {
 
     p_hat <- mean(as.matrix(estimation_binary), na.rm = F)
 
-    result <- data.frame(date = time(event_binary),
-                         weekday = weekdays(time(event_binary)),
+    result <- data.frame(date = zoo::index(event_binary),
+                         weekday = weekdays(zoo::index(event_binary)),
                          percentage = rowSums(!is.na(as.matrix(event_binary)),
                                               na.rm = T) /
                              ncol(event_binary) * 100)
@@ -321,7 +322,6 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    browser()
     full_rank <- NULL
     event_rank <- NULL
     delta_full <- numeric(length(list_of_returns))
@@ -340,21 +340,21 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 
         company_full_abnormal <- c(
             list_of_returns[[i]]$abnormal[
-                time(list_of_returns[[i]]$abnormal) >=
+                zoo::index(list_of_returns[[i]]$abnormal) >=
                     list_of_returns[[i]]$estimation_start &
-                    time(list_of_returns[[i]]$abnormal) <=
+                    zoo::index(list_of_returns[[i]]$abnormal) <=
                     list_of_returns[[i]]$estimation_end],
             list_of_returns[[i]]$abnormal[
-                time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end])
+                zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+                zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
-        company_full_rank <- zoo::zoo(rank(x = coredata(company_full_abnormal),
+        company_full_rank <- zoo::zoo(rank(x = zoo::coredata(company_full_abnormal),
                                            na.last = "keep",
                                            ties.method = "average"),
-                                      time(company_full_abnormal))
+                                      zoo::index(company_full_abnormal))
         company_event_rank <- company_full_rank[
-            time(company_full_rank) >= event_start &
-            time(company_full_rank) <= event_end]
+            zoo::index(company_full_rank) >= event_start &
+            zoo::index(company_full_rank) <= event_end]
 
         if(is.null(full_rank)) {
             full_rank <- company_full_rank
@@ -374,8 +374,8 @@ rank_test <- function(list_of_returns, event_start, event_end) {
     }
 
 
-    result <- data.frame(date = time(event_rank),
-                         weekday = weekdays(time(event_rank)),
+    result <- data.frame(date = zoo::index(event_rank),
+                         weekday = weekdays(zoo::index(event_rank)),
                          percentage = rowSums(!is.na(as.matrix(event_rank)),
                                               na.rm = T) /
                              ncol(event_rank) * 100)
@@ -461,7 +461,6 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    browser()
     full_rank_modif <- NULL
     event_rank_modif <- NULL
     delta_full <- numeric(length(list_of_returns))
@@ -479,23 +478,23 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 
         company_full_abnormal <- c(
             list_of_returns[[i]]$abnormal[
-                time(list_of_returns[[i]]$abnormal) >=
+                zoo::index(list_of_returns[[i]]$abnormal) >=
                     list_of_returns[[i]]$estimation_start &
-                    time(list_of_returns[[i]]$abnormal) <=
+                    zoo::index(list_of_returns[[i]]$abnormal) <=
                     list_of_returns[[i]]$estimation_end],
             list_of_returns[[i]]$abnormal[
-                time(list_of_returns[[i]]$abnormal) >= event_start &
-                    time(list_of_returns[[i]]$abnormal) <= event_end])
+                zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+                    zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
         company_full_rank_modif <- zoo::zoo(rank(x =
-                                                coredata(company_full_abnormal),
+                                                zoo::coredata(company_full_abnormal),
                                                 na.last = "keep",
                                                 ties.method = "average") /
                                     (1 + sum(!is.na(company_full_abnormal))),
-                                            time(company_full_abnormal))
+                                            zoo::index(company_full_abnormal))
         company_event_rank_modif <- company_full_rank_modif[
-            time(company_full_rank_modif) >= event_start &
-                time(company_full_rank_modif) <= event_end]
+            zoo::index(company_full_rank_modif) >= event_start &
+                zoo::index(company_full_rank_modif) <= event_end]
 
         if(is.null(full_rank_modif)) {
             full_rank_modif <- company_full_rank_modif
@@ -516,8 +515,8 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
     }
 
 
-    result <- data.frame(date = time(event_rank_modif),
-                         weekday = weekdays(time(event_rank_modif)),
+    result <- data.frame(date = zoo::index(event_rank_modif),
+                         weekday = weekdays(zoo::index(event_rank_modif)),
                          percentage = rowSums(
                              !is.na(as.matrix(event_rank_modif)), na.rm = T) /
                              ncol(event_rank_modif) * 100)
