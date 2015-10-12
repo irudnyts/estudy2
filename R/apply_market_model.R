@@ -278,20 +278,20 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
         k_qnorm <- qnorm(1 - 0.05/2)
         estimation_data <- rates[!is.na(rates)]
         estimation_data <- estimation_data[
-            time(estimation_data) >= estimation_start &
-            time(estimation_data) <= estimation_end]
+            zoo::index(estimation_data) >= estimation_start &
+            zoo::index(estimation_data) <= estimation_end]
         delta <- length(estimation_data)
         estimation_mean <- mean(estimation_data)
         estimation_sd <- sd(estimation_data)
 
         result <- list(observed = rates,
-                       predicted = zoo::zoo(estimation_mean, time(rates)),
+                       predicted = zoo::zoo(estimation_mean, zoo::index(rates)),
                        lower95CI = zoo::zoo(estimation_mean - k_qnorm /
                                             sqrt(delta) * estimation_sd,
-                                            time(rates)),
+                                            zoo::index(rates)),
                        upper95CI = zoo::zoo(estimation_mean + k_qnorm /
                                             sqrt(delta) * estimation_sd,
-                                            time(rates)),
+                                            zoo::index(rates)),
                        abnormal = rates - estimation_mean,
                        market_model = market_model,
                        full_name_market_model = "Mean adjusted market model",
@@ -302,8 +302,8 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
         data <- merge(rates, regressor)
         estimation_data <- data[complete.cases(data), ]
         estimation_data <- estimation_data[
-            time(estimation_data) >= estimation_start &
-            time(estimation_data) <= estimation_end]
+            zoo::index(estimation_data) >= estimation_start &
+            zoo::index(estimation_data) <= estimation_end]
         delta <- nrow(estimation_data)
         # two variables created, because predict is looking for the same
         # as in lm variables names
@@ -316,13 +316,13 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
                                 interval = c("confidence"), level = 0.95)
         result <- list(observed = data[, 1],
                        predicted = zoo::zoo(predicted[, 1],
-                                            time(data)),
+                                            zoo::index(data)),
                        lower95CI = zoo::zoo(predicted[, 2],
-                                            time(data)),
+                                            zoo::index(data)),
                        upper95CI = zoo::zoo(predicted[, 3],
-                                            time(data)),
+                                            zoo::index(data)),
                        abnormal = data[, 1] - zoo::zoo(predicted[, 1],
-                                                       time(data)),
+                                                       zoo::index(data)),
                        regressor = data[, 2],
                        market_model = market_model,
                        full_name_market_model = "Market Adjusted Market Model",
@@ -335,8 +335,8 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
             data <- merge(rates, regressor)
             estimation_data <- data[complete.cases(data), ]
             estimation_data <- estimation_data[
-                time(estimation_data) >= estimation_start &
-                time(estimation_data) <= estimation_end]
+                zoo::index(estimation_data) >= estimation_start &
+                zoo::index(estimation_data) <= estimation_end]
             delta <- nrow(estimation_data)
             # two variables created, because predict is looking for the same
             # as in lm variables names
@@ -348,13 +348,13 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
                                     interval = c("confidence"), level = 0.95)
             result <- list(observed = data[, 1],
                            predicted = zoo::zoo(predicted[, 1],
-                                                time(data)),
+                                                zoo::index(data)),
                            lower95CI = zoo::zoo(predicted[, 2],
-                                                time(data)),
+                                                zoo::index(data)),
                            upper95CI = zoo::zoo(predicted[, 3],
-                                                time(data)),
+                                                zoo::index(data)),
                            abnormal = data[, 1] - zoo::zoo(predicted[, 1],
-                                                           time(data)),
+                                                           zoo::index(data)),
                            regressor = data[, 2],
                            market_model = market_model,
                            full_name_market_model = "Single-Index Market Model",
