@@ -102,7 +102,6 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     estimation_abnormal <- NULL
     event_abnormal <- NULL
     delta <- numeric(length(list_of_returns))
-
     for(i in seq_along(list_of_returns)) {
 
         # check whether each element of list_of_returns is returns
@@ -114,15 +113,14 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
             message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
         }
-
         company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >=
+            zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
-                time(list_of_returns[[i]]$abnormal) <=
+            zoo::index(list_of_returns[[i]]$abnormal) <=
                 list_of_returns[[i]]$estimation_end]
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -139,8 +137,8 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
-    result <- data.frame(date = time(event_abnormal),
-                         weekday = weekdays(time(event_abnormal)),
+    result <- data.frame(date = zoo::index(event_abnormal),
+                         weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                                       ncol(event_abnormal) * 100,
@@ -227,13 +225,13 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
         }
 
         company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >=
+            zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
-                time(list_of_returns[[i]]$abnormal) <=
+            zoo::index(list_of_returns[[i]]$abnormal) <=
                 list_of_returns[[i]]$estimation_end]
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -251,8 +249,8 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
 
-    result <- data.frame(date = time(event_abnormal),
-                         weekday = weekdays(time(event_abnormal)),
+    result <- data.frame(date = zoo::index(event_abnormal),
+                         weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                              ncol(event_abnormal) * 100,
@@ -337,8 +335,8 @@ t_test <- function(list_of_returns, event_start, event_end) {
         }
 
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
 
         if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
@@ -350,8 +348,8 @@ t_test <- function(list_of_returns, event_start, event_end) {
 
     event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
 
-    result <- data.frame(date = time(event_abnormal),
-                         weekday = weekdays(time(event_abnormal)),
+    result <- data.frame(date = zoo::index(event_abnormal),
+                         weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = event_number_of_companies /
                              ncol(event_abnormal) * 100,
                          mean = rowMeans(event_abnormal, na.rm = T))
@@ -447,13 +445,13 @@ patell <- function(list_of_returns, event_start, event_end) {
         }
 
         company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >=
+            zoo::index(list_of_returns[[i]]$abnormal) >=
             list_of_returns[[i]]$estimation_start &
-            time(list_of_returns[[i]]$abnormal) <=
+            zoo::index(list_of_returns[[i]]$abnormal) <=
             list_of_returns[[i]]$estimation_end]
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >= event_start &
-            time(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -470,12 +468,12 @@ patell <- function(list_of_returns, event_start, event_end) {
 
 
         market_event <- list_of_returns[[i]]$regressor[
-            time(list_of_returns[[i]]$regressor) >= event_start &
-            time(list_of_returns[[i]]$regressor) <= event_end]
+            zoo::index(list_of_returns[[i]]$regressor) >= event_start &
+            zoo::index(list_of_returns[[i]]$regressor) <= event_end]
         market_estimation <- list_of_returns[[i]]$regressor[
-            time(list_of_returns[[i]]$regressor) >=
+            zoo::index(list_of_returns[[i]]$regressor) >=
             list_of_returns[[i]]$estimation_start &
-            time(list_of_returns[[i]]$regressor) <=
+            zoo::index(list_of_returns[[i]]$regressor) <=
             list_of_returns[[i]]$estimation_end]
         mean_market_estimation <- mean(market_estimation)
 
@@ -496,8 +494,8 @@ patell <- function(list_of_returns, event_start, event_end) {
 
     }
 
-    result <- data.frame(date = time(event_abnormal),
-                         weekday = weekdays(time(event_abnormal)),
+    result <- data.frame(date = zoo::index(event_abnormal),
+                         weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                              ncol(event_abnormal) * 100,
@@ -586,13 +584,13 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         }
 
         company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >=
+            zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
-                time(list_of_returns[[i]]$abnormal) <=
+            zoo::index(list_of_returns[[i]]$abnormal) <=
                 list_of_returns[[i]]$estimation_end]
         company_event_abnormal <- list_of_returns[[i]]$abnormal[
-            time(list_of_returns[[i]]$abnormal) >= event_start &
-                time(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -609,12 +607,12 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 
 
         market_event <- list_of_returns[[i]]$regressor[
-            time(list_of_returns[[i]]$regressor) >= event_start &
-                time(list_of_returns[[i]]$regressor) <= event_end]
+            zoo::index(list_of_returns[[i]]$regressor) >= event_start &
+            zoo::index(list_of_returns[[i]]$regressor) <= event_end]
         market_estimation <- list_of_returns[[i]]$regressor[
-            time(list_of_returns[[i]]$regressor) >=
+            zoo::index(list_of_returns[[i]]$regressor) >=
                 list_of_returns[[i]]$estimation_start &
-                time(list_of_returns[[i]]$regressor) <=
+            zoo::index(list_of_returns[[i]]$regressor) <=
                 list_of_returns[[i]]$estimation_end]
         mean_market_estimation <- mean(market_estimation)
 
@@ -635,8 +633,8 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     }
 
     event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
-    result <- data.frame(date = time(event_abnormal),
-                         weekday = weekdays(time(event_abnormal)),
+    result <- data.frame(date = zoo::index(event_abnormal),
+                         weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                              ncol(event_abnormal) * 100,
