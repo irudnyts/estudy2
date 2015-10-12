@@ -2,7 +2,7 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
                                 all = T, tests) {
     if(all == T) {
         tests <- list(corrado_sign_test, binomial_sign_test, rank_test,
-                      generalized_rank_test)
+                      modified_rank_test)
     }
     result <- NULL
     for(test in tests) {
