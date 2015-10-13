@@ -3,10 +3,12 @@
 #' Performs main nonparametric tests for each date in the event window and
 #' returns the table of statistics and significance of these tests.
 #'
-#' \code{nonparametric_tests} performs given tests among
-#' \code{corrado_sign_test}, \code{binomial_sign_test}, \code{rank_test}, and
-#' \code{modified_rank_test} and merge result to single table. If \code{all = T}
-#' (by default), the function ignores the value of \code{tests}.
+#' \code{nonparametric_tests} performs given tests among \code{\link{sign_test}},
+#' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+#' \code{\link{rank_test}}, \code{\link{modified_rank_test}},
+#' \code{\link{generalized_rank_test}}, \code{\link{wilcoxon_text}}, and merge
+#' result to single table. If \code{all = T} (by default), the function ignores
+#' the value of \code{tests}.
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
 #' of which is treated as a company (security).
@@ -41,10 +43,18 @@
 #' \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 #' Correlation of Abnormal Returns}. The Review of Financial Studies,
 #' 23(11):3996-4025, 2010.
+#' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
+#' Biometrics Bulletin 1(6):80-83, 1945
+#' \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks},
+#' San Francisco: Holden-Day, 1975.
+#' \item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods},
+#' New York: John Wiley & Sons, 1973.
 #' }
 #'
-#' @seealso \code{\link{corrado_sign_test}}, \code{\link{binomial_sign_test}},
-#' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}.
+#' @seealso \code{\link{sign_test}}, \code{\link{generalized_sign_test}},
+#' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
+#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+#' \code{\link{wilcoxon_text}}.
 #' @export
 nonparametric_tests <- function(list_of_returns, event_start, event_end,
                                 all = T, tests) {
@@ -65,25 +75,24 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
     return(result)
 }
 
-#' Binomial sign test for event study.
+#' Simple binomial sign test for event study.
 #'
 #' The binomial sign test which determines whether the frequency of positive
-#' abnormal returns in the event period is significantly different from one in
-#' the estimation period.
+#' abnormal returns in the event period is significantly different from one-half.
 #'
 #' This test is application of the simple binomial test to the event study,
 #' which indicates whether the cross-sectional frequency of positive abnormal
-#' returns is significantly different from the the expected. This test is stable
+#' returns is significantly different from 0.5. This test is stable
 #' to outliers, in other words allows to check if the result is driven by few
 #' companies with extremly large abnomal performance. For this test the
 #' estimation period and event period must not overlap, otherwise an error
-#' occurrs. This test instead of using naive value of expected frequency 0.5
-#' uses an estimate from the estimation period. The test statistic is assumed to
-#' have a normal distribution. Typically is used together with parametric tests.
-#' The test is well-specified for the case, when cross-sectional abnoral returns
-#' are not symmetric. Also this procedure is less sensative to extreme returns
-#' than the rank test. The significance levels of \eqn{\alpha} are 0.1, 0.05,
-#' and 0.01 (marked respectively by *, **, and ***).
+#' occurrs. The test statistic is assumed to have a normal distribution in
+#' approximation under null hypothesis, if the number of securities is large.
+#' Typically is used together with parametric tests. The test is well-specified
+#' for the case, when cross-sectional abnoral returns are not symmetric.
+#' Also this procedure is less sensative to extreme returns than the rank test.
+#' The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01
+#' (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
 #' of which is treated as a company.
@@ -93,18 +102,14 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #' (ending) date in the event window.
 #' @return The table of statistics and significances of the test.
 #'
-#' @references \itemize{
-#' \item McConnell J.J., Muscarella C.J. \emph{Capital expenditure plans and
-#' firm value} Journal of Financial Economics, 14:399-422, 1985.
-#' \item Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study methodology
-#' under conditions of event-induced variance}. Journal of Financial Economics,
-#' 30(2):253-272, 1991.
-#' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
-#' Quantitative Finance and Accounting, 2:343-358, 1992.
-#' }
+#' @references Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study
+#' methodology under conditions of event-induced variance}. Journal of Financial
+#' Economics, 30(2):253-272, 1991.
 #'
-#' @seealso \code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
-#' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}
+#' @seealso \code{\link{nonparametric_tests}}, \code{\link{generalized_sign_test}},
+#' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
+#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+#' \code{\link{wilcoxon_test}}.
 #' @export
 sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -176,7 +181,7 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' This test is application of the simple binomial test to the event study,
 #' which indicates whether the cross-sectional frequency of positive abnormal
-#' returns is significantly different from the the expected. This test is stable
+#' returns is significantly different from the expected. This test is stable
 #' to outliers, in other words allows to check if the result is driven by few
 #' companies with extremly large abnomal performance. For this test the
 #' estimation period and event period must not overlap, otherwise an error
@@ -199,15 +204,14 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #' @references \itemize{
 #' \item McConnell J.J., Muscarella C.J. \emph{Capital expenditure plans and
 #' firm value} Journal of Financial Economics, 14:399-422, 1985.
-#' \item Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study methodology
-#' under conditions of event-induced variance}. Journal of Financial Economics,
-#' 30(2):253-272, 1991.
 #' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 #' Quantitative Finance and Accounting, 2:343-358, 1992.
 #' }
 #'
-#' @seealso \code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
-#' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}
+#' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
+#' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
+#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+#' \code{\link{wilcoxon_test}}.
 #' @export
 generalized_sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -322,8 +326,10 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #' the Sign Test in Event Study Hypothesis Tests Using Daily Stock Returns}.
 #' Journal of Financial and Quantitative Analysis, 27(3):465-478, 1992.
 #'
-#' @seealso \code{\link{nonparametric_tests}}, \code{\link{binomial_sign_test}},
-#' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}
+#' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
+#' \code{\link{generalized_sign_test}}, \code{\link{rank_test}},
+#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+#' \code{\link{wilcoxon_test}}.
 #' @export
 corrado_sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -451,8 +457,10 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 #' }
 #'
-#' @seealso \code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
-#' \code{\link{binomial_sign_test}}, and \code{\link{modified_rank_test}}
+#' @seealso \code{\link{nonparametric_tests}},\code{\link{sign_test}},
+#' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+#' \code{\link{wilcoxon_test}}.
 #' @export
 rank_test <- function(list_of_returns, event_start, event_end) {
 
@@ -588,8 +596,10 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #' 23(11):3996-4025, 2010.
 #' }
 #'
-#' @seealso \code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
-#' \code{\link{binomial_sign_test}}, and \code{\link{rank_test}}
+#' @seealso \code{\link{nonparametric_tests}},\code{\link{sign_test}},
+#' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+#' \code{\link{rank_test}}, \code{\link{generalized_rank_test}}, and
+#' \code{\link{wilcoxon_test}}.
 #' @export
 modified_rank_test <- function(list_of_returns, event_start, event_end) {
     # Corrado Zivney 1992
@@ -692,10 +702,51 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 
 generalized_rank_test <- function() { }
 
-# event and estimation period could overlap
-# should be applied only for large N
+#' Wilcoxon signed rank test for event study.
+#'
+#' Performs Wilcoxon test on event period for abnormal returns (the latter are
+#' treted as differences).
+#'
+#' The estimation periods can overlap with event windows, because the procedure
+#' takes into account only abnormal returns from event windows. The test has the
+#' same algorithm as bulit-in \code{R} \code{\link{wilcox.test}}. The critical
+#' values are exact values, which are obtained from \code{\link{qsignrank}}. The
+#' algorithm is the following: for each day in event window the cross sectional
+#' abnormal returns treated as sample of differences (which actually is true).
+#' Firstly the absolute value of these differences are computed, and
+#' corresponding ranks of non-zero values are calculated. The test statistic is
+#' the sum of ranks, corresponoding to positive abnormal returns. The
+#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
+#' respectively by *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references \itemize{
+#' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
+#' Biometrics Bulletin 1(6):80-83, 1945
+#' \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
+#' Correlation of Abnormal Returns}. The Review of Financial Studies,
+#' 23(11):3996-4025, 2010.
+#' \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks},
+#' San Francisco: Holden-Day, 1975.
+#' \item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods},
+#' New York: John Wiley & Sons, 1973.
+#' }
+#'
+#' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
+#' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+#' \code{\link{rank_test}}, \code{\link{modified_rank_test}}, and
+#' \code{\link{generalized_rank_test}}
 #' @export
 wilcoxon_test <- function(list_of_returns, event_start, event_end) {
+    # event and estimation period could overlap
+    # should be applied only for large N
     # check event_start and event_end for class and value validity
     if(!inherits(event_start, "Date")) {
         stop("event_start must be an object of class Date.")
@@ -763,5 +814,4 @@ wilcoxon_test <- function(list_of_returns, event_start, event_end) {
     result <- cbind(result, data.frame(wlcx_stat = statistics,
                                        wlcx_signif = significance))
     return(result)
-
 }
