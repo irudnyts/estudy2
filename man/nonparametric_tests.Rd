@@ -30,10 +30,12 @@ Performs main nonparametric tests for each date in the event window and
 returns the table of statistics and significance of these tests.
 }
 \details{
-\code{nonparametric_tests} performs given tests among
-\code{corrado_sign_test}, \code{binomial_sign_test}, \code{rank_test}, and
-\code{modified_rank_test} and merge result to single table. If \code{all = T}
-(by default), the function ignores the value of \code{tests}.
+\code{nonparametric_tests} performs given tests among \code{\link{sign_test}},
+\code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+\code{\link{rank_test}}, \code{modified_rank_test},
+\code{\link{generalized_rank_test}}, \code{\link{wilcoxon_text}}, and merge
+result to single table. If \code{all = T} (by default), the function ignores
+the value of \code{tests}.
 }
 \references{
 \itemize{
@@ -57,10 +59,18 @@ Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 Correlation of Abnormal Returns}. The Review of Financial Studies,
 23(11):3996-4025, 2010.
+\item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
+Biometrics Bulletin 1(6):80-83, 1945
+\item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks},
+San Francisco: Holden-Day, 1975.
+\item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods},
+New York: John Wiley & Sons, 1973.
 }
 }
 \seealso{
-\code{\link{corrado_sign_test}}, \code{\link{binomial_sign_test}},
-\code{\link{rank_test}}, and \code{\link{modified_rank_test}}.
+\code{\link{sign_test}}, \code{\link{generalized_sign_test}},
+\code{\link{corrado_sign_test}}, \code{\link{rank_test}},
+\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}},
+\code{\link{wilcoxon_text}}
 }
 
