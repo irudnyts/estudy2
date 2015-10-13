@@ -113,14 +113,14 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
             message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
         }
-        company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
+        company_estimation_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$abnormal) <=
-                list_of_returns[[i]]$estimation_end]
-        company_event_abnormal <- list_of_returns[[i]]$abnormal[
+                list_of_returns[[i]]$estimation_end])
+        company_event_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
-            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -224,14 +224,14 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
                            " period overlaps with event period."))
         }
 
-        company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
+        company_estimation_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$abnormal) <=
-                list_of_returns[[i]]$estimation_end]
-        company_event_abnormal <- list_of_returns[[i]]$abnormal[
+                list_of_returns[[i]]$estimation_end])
+        company_event_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
-            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -334,9 +334,9 @@ t_test <- function(list_of_returns, event_start, event_end) {
                            " period overlaps with event period."))
         }
 
-        company_event_abnormal <- list_of_returns[[i]]$abnormal[
+        company_event_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
-            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
         if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
@@ -444,14 +444,14 @@ patell <- function(list_of_returns, event_start, event_end) {
                            " period overlaps with event period."))
         }
 
-        company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
+        company_estimation_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >=
             list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$abnormal) <=
-            list_of_returns[[i]]$estimation_end]
-        company_event_abnormal <- list_of_returns[[i]]$abnormal[
+            list_of_returns[[i]]$estimation_end])
+        company_event_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
-            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -467,14 +467,14 @@ patell <- function(list_of_returns, event_start, event_end) {
         }
 
 
-        market_event <- list_of_returns[[i]]$regressor[
+        market_event <- zoo::as.zoo(list_of_returns[[i]]$regressor[
             zoo::index(list_of_returns[[i]]$regressor) >= event_start &
-            zoo::index(list_of_returns[[i]]$regressor) <= event_end]
-        market_estimation <- list_of_returns[[i]]$regressor[
+            zoo::index(list_of_returns[[i]]$regressor) <= event_end])
+        market_estimation <- zoo::as.zoo(list_of_returns[[i]]$regressor[
             zoo::index(list_of_returns[[i]]$regressor) >=
             list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$regressor) <=
-            list_of_returns[[i]]$estimation_end]
+            list_of_returns[[i]]$estimation_end])
         mean_market_estimation <- mean(market_estimation)
 
         company_event_standardized <- company_event_abnormal /
@@ -583,14 +583,14 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                            " period overlaps with event period."))
         }
 
-        company_estimation_abnormal <- list_of_returns[[i]]$abnormal[
+        company_estimation_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >=
                 list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$abnormal) <=
-                list_of_returns[[i]]$estimation_end]
-        company_event_abnormal <- list_of_returns[[i]]$abnormal[
+                list_of_returns[[i]]$estimation_end])
+        company_event_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
-            zoo::index(list_of_returns[[i]]$abnormal) <= event_end]
+            zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
         if(is.null(estimation_abnormal)) {
             estimation_abnormal <- company_estimation_abnormal
@@ -606,14 +606,14 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         }
 
 
-        market_event <- list_of_returns[[i]]$regressor[
+        market_event <- zoo::as.zoo(list_of_returns[[i]]$regressor[
             zoo::index(list_of_returns[[i]]$regressor) >= event_start &
-            zoo::index(list_of_returns[[i]]$regressor) <= event_end]
-        market_estimation <- list_of_returns[[i]]$regressor[
+            zoo::index(list_of_returns[[i]]$regressor) <= event_end])
+        market_estimation <- zoo::as.zoo(list_of_returns[[i]]$regressor[
             zoo::index(list_of_returns[[i]]$regressor) >=
                 list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$regressor) <=
-                list_of_returns[[i]]$estimation_end]
+                list_of_returns[[i]]$estimation_end])
         mean_market_estimation <- mean(market_estimation)
 
         company_event_standardized <- company_event_abnormal /
