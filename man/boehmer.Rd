@@ -7,7 +7,7 @@
 boehmer(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
+\item{list_of_returns}{list of objects of S3 class \code{return}, each element
 of which is treated as a company.}
 
 \item{event_start}{the object of class \code{Date}, which represents the

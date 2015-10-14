@@ -7,7 +7,7 @@
 wilcoxon_test(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
+\item{list_of_returns}{list of objects of S3 class \code{return}, each element
 of which is treated as a company.}
 
 \item{event_start}{the object of class \code{Date}, which represents the
@@ -39,13 +39,13 @@ respectively by *, **, and ***).
 \references{
 \itemize{
 \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
-Biometrics Bulletin 1(6):80-83, 1945
+Biometrics Bulletin 1(6):80-83, 1945.
 \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 Correlation of Abnormal Returns}. The Review of Financial Studies,
 23(11):3996-4025, 2010.
-\item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks},
+\item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks}.
 San Francisco: Holden-Day, 1975.
-\item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods},
+\item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods}.
 New York: John Wiley & Sons, 1973.
 }
 }

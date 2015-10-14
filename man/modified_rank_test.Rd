@@ -7,7 +7,7 @@
 modified_rank_test(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
+\item{list_of_returns}{list of objects of S3 class \code{return}, each element
 of which is treated as a company.}
 
 \item{event_start}{the object of class \code{Date}, which represents the
@@ -46,7 +46,9 @@ Correlation of Abnormal Returns}. The Review of Financial Studies,
 }
 }
 \seealso{
-\code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
-\code{\link{binomial_sign_test}}, and \code{\link{rank_test}}
+\code{\link{nonparametric_tests}},\code{\link{sign_test}},
+\code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+\code{\link{rank_test}}, \code{\link{generalized_rank_test}}, and
+\code{\link{wilcoxon_test}}.
 }
 

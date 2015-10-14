@@ -6,20 +6,22 @@
 #' \code{nonparametric_tests} performs given tests among \code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 #' \code{\link{rank_test}}, \code{\link{modified_rank_test}},
-#' \code{\link{generalized_rank_test}}, \code{\link{wilcoxon_text}}, and merge
+#' \code{\link{generalized_rank_test}}, \code{\link{wilcoxon_test}}, and merge
 #' result to single table. If \code{all = T} (by default), the function ignores
 #' the value of \code{tests}.
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
-#' of which is treated as a company (security).
+#' @param list_of_returns list of objects of S3 class \code{return}, each
+#' element of which is treated as a company (security).
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
 #' @param event_end the object of class \code{Date}, which represents the last
 #' (ending) date in the event window.
 #' @param all a logical value indicating whether all tests should be performed.
-#' The default value is TRUE.
-#' @param tests the list of tests functions among \code{corrado_sign_test},
-#' \code{binomial_sign_test}, \code{rank_test}, and \code{modified_rank_test}.
+#' The default value is \code{TRUE}.
+#' @param tests the list of tests functions among \code{\link{sign_test}},
+#' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+#' \code{\link{rank_test}}, \code{\link{modified_rank_test}},
+#' \code{\link{generalized_rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @return The single table of statistics and significances of all tests.
 #'
 #' @references \itemize{
@@ -33,7 +35,7 @@
 #' 30(2):253-272, 1991.
 #' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 #' Quantitative Finance and Accounting, 2:343-358, 1992.
-#' \item Corrado C.J. \emph{A Nonparametric Test аor Abnormal Security-Price
+#' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
 #' Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
 #' 1989.
 #' \item Campbell C.J., Wasley C.E. \emph{Measuring Security Price Performance
@@ -44,17 +46,17 @@
 #' Correlation of Abnormal Returns}. The Review of Financial Studies,
 #' 23(11):3996-4025, 2010.
 #' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
-#' Biometrics Bulletin 1(6):80-83, 1945
-#' \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks},
+#' Biometrics Bulletin 1(6):80-83, 1945.
+#' \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks}.
 #' San Francisco: Holden-Day, 1975.
-#' \item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods},
+#' \item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods}.
 #' New York: John Wiley & Sons, 1973.
 #' }
 #'
 #' @seealso \code{\link{sign_test}}, \code{\link{generalized_sign_test}},
 #' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
 #' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-#' \code{\link{wilcoxon_text}}.
+#' \code{\link{wilcoxon_test}}.
 #' @export
 nonparametric_tests <- function(list_of_returns, event_start, event_end,
                                 all = T, tests) {
@@ -94,7 +96,7 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #' The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01
 #' (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -193,7 +195,7 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #' than the rank test. The significance levels of \eqn{\alpha} are 0.1, 0.05,
 #' and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -314,7 +316,7 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -437,7 +439,7 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -446,7 +448,7 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' @return The table of statistics and significances of the test.
 #'
 #' @references \itemize{
-#' \item Corrado C.J. \emph{A Nonparametric Test аor Abnormal Security-Price
+#' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
 #' Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
 #' 1989.
 #' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
@@ -579,7 +581,7 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #' test. The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -700,7 +702,7 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 }
 
 
-generalized_rank_test <- function() { }
+# generalized_rank_test <- function() { }
 
 #' Wilcoxon signed rank test for event study.
 #'
@@ -708,18 +710,17 @@ generalized_rank_test <- function() { }
 #' treted as differences).
 #'
 #' The estimation periods can overlap with event windows, because the procedure
-#' takes into account only abnormal returns from event windows. The test has the
+#' takes into account only abnormal returns from event window. The test has the
 #' same algorithm as bulit-in \code{R} \code{\link{wilcox.test}}. The critical
 #' values are exact values, which are obtained from \code{\link{qsignrank}}. The
-#' algorithm is the following: for each day in event window the cross sectional
-#' abnormal returns treated as sample of differences (which actually is true).
-#' Firstly the absolute value of these differences are computed, and
-#' corresponding ranks of non-zero values are calculated. The test statistic is
-#' the sum of ranks, corresponoding to positive abnormal returns. The
-#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
-#' respectively by *, **, and ***).
+#' algorithm is the following: for each day in event window the cross-sectional
+#' abnormal returns treated as sample of differences. Firstly the absolute value
+#' of these differences are computed, and corresponding ranks of non-zero values
+#' are calculated. The test statistic is the sum of ranks, corresponoding to
+#' positive abnormal returns. The significance levels of \eqn{\alpha} are 0.1,
+#' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -729,13 +730,13 @@ generalized_rank_test <- function() { }
 #'
 #' @references \itemize{
 #' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
-#' Biometrics Bulletin 1(6):80-83, 1945
+#' Biometrics Bulletin 1(6):80-83, 1945.
 #' \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 #' Correlation of Abnormal Returns}. The Review of Financial Studies,
 #' 23(11):3996-4025, 2010.
-#' \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks},
+#' \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks}.
 #' San Francisco: Holden-Day, 1975.
-#' \item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods},
+#' \item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods}.
 #' New York: John Wiley & Sons, 1973.
 #' }
 #'

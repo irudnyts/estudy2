@@ -8,14 +8,14 @@
 #' merge result to single table. If \code{all = T} (by default), the function
 #' ignores the value of \code{tests}.
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
 #' @param event_end the object of class \code{Date}, which represents the last
 #' (ending) date in the event window.
 #' @param all a logical value indicating whether all tests should be performed.
-#' The default value is TRUE.
+#' The default value is \code{TRUE}.
 #' @param tests the list of tests functions among \code{brown_warner_1980},
 #' \code{brown_warner_1985}, \code{t_test}, \code{patell}, and \code{boehmer}.
 #' @return The single table of statistics and significances of all tests.
@@ -71,7 +71,7 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
 #' measure monthly data: for daily data look at Brown and Warner 1985 paper and
 #' \code{brown_warner_1985}.
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -180,7 +180,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #' of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and
 #' ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -290,7 +290,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' @section Warning: This test strongly requires cross-sectional independence
 #' and sensative to the size of the sample.
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -393,7 +393,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.
@@ -532,7 +532,7 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' Student's t-distribution. The significance levels of \eqn{\alpha} are 0.1,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each elemnt
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
 #' @param event_start the object of class \code{Date}, which represents the
 #' first (starting) date of the event window.

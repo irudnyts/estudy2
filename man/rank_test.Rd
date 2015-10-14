@@ -7,7 +7,7 @@
 rank_test(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
+\item{list_of_returns}{list of objects of S3 class \code{return}, each element
 of which is treated as a company.}
 
 \item{event_start}{the object of class \code{Date}, which represents the
@@ -39,7 +39,7 @@ respectively by *, **, and ***).
 }
 \references{
 \itemize{
-\item Corrado C.J. \emph{A Nonparametric Test аor Abnormal Security-Price
+\item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
 Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
 1989.
 \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
@@ -51,7 +51,9 @@ Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 }
 }
 \seealso{
-\code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
-\code{\link{binomial_sign_test}}, and \code{\link{modified_rank_test}}
+\code{\link{nonparametric_tests}},\code{\link{sign_test}},
+\code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+\code{\link{wilcoxon_test}}.
 }
 

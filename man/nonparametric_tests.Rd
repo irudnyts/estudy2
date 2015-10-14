@@ -7,8 +7,8 @@
 nonparametric_tests(list_of_returns, event_start, event_end, all = T, tests)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
-of which is treated as a company (security).}
+\item{list_of_returns}{list of objects of S3 class \code{return}, each
+element of which is treated as a company (security).}
 
 \item{event_start}{the object of class \code{Date}, which represents the
 first (starting) date of the event window.}
@@ -17,10 +17,12 @@ first (starting) date of the event window.}
 (ending) date in the event window.}
 
 \item{all}{a logical value indicating whether all tests should be performed.
-The default value is TRUE.}
+The default value is \code{TRUE}.}
 
-\item{tests}{the list of tests functions among \code{corrado_sign_test},
-\code{binomial_sign_test}, \code{rank_test}, and \code{modified_rank_test}.}
+\item{tests}{the list of tests functions among \code{\link{sign_test}},
+\code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
+\code{\link{rank_test}}, \code{\link{modified_rank_test}},
+\code{\link{generalized_rank_test}}, and \code{\link{wilcoxon_test}}.}
 }
 \value{
 The single table of statistics and significances of all tests.
@@ -32,8 +34,8 @@ returns the table of statistics and significance of these tests.
 \details{
 \code{nonparametric_tests} performs given tests among \code{\link{sign_test}},
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
-\code{\link{rank_test}}, \code{modified_rank_test},
-\code{\link{generalized_rank_test}}, \code{\link{wilcoxon_text}}, and merge
+\code{\link{rank_test}}, \code{\link{modified_rank_test}},
+\code{\link{generalized_rank_test}}, \code{\link{wilcoxon_test}}, and merge
 result to single table. If \code{all = T} (by default), the function ignores
 the value of \code{tests}.
 }
@@ -49,7 +51,7 @@ under conditions of event-induced variance}. Journal of Financial Economics,
 30(2):253-272, 1991.
 \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 Quantitative Finance and Accounting, 2:343-358, 1992.
-\item Corrado C.J. \emph{A Nonparametric Test аor Abnormal Security-Price
+\item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
 Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
 1989.
 \item Campbell C.J., Wasley C.E. \emph{Measuring Security Price Performance
@@ -60,17 +62,17 @@ Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 Correlation of Abnormal Returns}. The Review of Financial Studies,
 23(11):3996-4025, 2010.
 \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
-Biometrics Bulletin 1(6):80-83, 1945
-\item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks},
+Biometrics Bulletin 1(6):80-83, 1945.
+\item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks}.
 San Francisco: Holden-Day, 1975.
-\item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods},
+\item Hollander M., Wolfe D.A. \emph{Nonparametric Statistical Methods}.
 New York: John Wiley & Sons, 1973.
 }
 }
 \seealso{
 \code{\link{sign_test}}, \code{\link{generalized_sign_test}},
 \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
-\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}},
-\code{\link{wilcoxon_text}}
+\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+\code{\link{wilcoxon_test}}.
 }
 

@@ -7,7 +7,7 @@
 generalized_sign_test(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
+\item{list_of_returns}{list of objects of S3 class \code{return}, each element
 of which is treated as a company.}
 
 \item{event_start}{the object of class \code{Date}, which represents the
@@ -27,7 +27,7 @@ the estimation period.
 \details{
 This test is application of the simple binomial test to the event study,
 which indicates whether the cross-sectional frequency of positive abnormal
-returns is significantly different from the the expected. This test is stable
+returns is significantly different from the expected. This test is stable
 to outliers, in other words allows to check if the result is driven by few
 companies with extremly large abnomal performance. For this test the
 estimation period and event period must not overlap, otherwise an error
@@ -43,15 +43,14 @@ and 0.01 (marked respectively by *, **, and ***).
 \itemize{
 \item McConnell J.J., Muscarella C.J. \emph{Capital expenditure plans and
 firm value} Journal of Financial Economics, 14:399-422, 1985.
-\item Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study methodology
-under conditions of event-induced variance}. Journal of Financial Economics,
-30(2):253-272, 1991.
 \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 Quantitative Finance and Accounting, 2:343-358, 1992.
 }
 }
 \seealso{
-\code{\link{nonparametric_tests}}, \code{\link{corrado_sign_test}},
-\code{\link{rank_test}}, and \code{\link{modified_rank_test}}
+\code{\link{nonparametric_tests}}, \code{\link{sign_test}},
+\code{\link{corrado_sign_test}}, \code{\link{rank_test}},
+\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+\code{\link{wilcoxon_test}}.
 }
 

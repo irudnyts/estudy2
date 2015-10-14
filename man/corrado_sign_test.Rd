@@ -7,7 +7,7 @@
 corrado_sign_test(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
+\item{list_of_returns}{list of objects of S3 class \code{return}, each element
 of which is treated as a company.}
 
 \item{event_start}{the object of class \code{Date}, which represents the
@@ -44,7 +44,9 @@ the Sign Test in Event Study Hypothesis Tests Using Daily Stock Returns}.
 Journal of Financial and Quantitative Analysis, 27(3):465-478, 1992.
 }
 \seealso{
-\code{\link{nonparametric_tests}}, \code{\link{binomial_sign_test}},
-\code{\link{rank_test}}, and \code{\link{modified_rank_test}}
+\code{\link{nonparametric_tests}}, \code{\link{sign_test}},
+\code{\link{generalized_sign_test}}, \code{\link{rank_test}},
+\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
+\code{\link{wilcoxon_test}}.
 }
 

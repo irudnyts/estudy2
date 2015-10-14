@@ -7,7 +7,7 @@
 parametric_tests(list_of_returns, event_start, event_end, all = T, tests)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each elemnt
+\item{list_of_returns}{list of objects of S3 class \code{return}, each element
 of which is treated as a company.}
 
 \item{event_start}{the object of class \code{Date}, which represents the
@@ -17,7 +17,7 @@ first (starting) date of the event window.}
 (ending) date in the event window.}
 
 \item{all}{a logical value indicating whether all tests should be performed.
-The default value is TRUE.}
+The default value is \code{TRUE}.}
 
 \item{tests}{the list of tests functions among \code{brown_warner_1980},
 \code{brown_warner_1985}, \code{t_test}, \code{patell}, and \code{boehmer}.}
