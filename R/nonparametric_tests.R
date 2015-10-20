@@ -227,7 +227,6 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-
     # zoo objects of abnormal returns
     estimation_binary <- NULL
     event_binary <- NULL
@@ -273,7 +272,7 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
         }
     }
 
-    p_hat <- mean(as.matrix(estimation_binary), na.rm = F)
+    p_hat <- mean(as.matrix(estimation_binary), na.rm = T)
 
     result <- data.frame(date = zoo::index(event_binary),
                          weekday = weekdays(zoo::index(event_binary)),
