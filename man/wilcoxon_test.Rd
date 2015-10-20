@@ -25,16 +25,15 @@ treted as differences).
 }
 \details{
 The estimation periods can overlap with event windows, because the procedure
-takes into account only abnormal returns from event windows. The test has the
+takes into account only abnormal returns from event window. The test has the
 same algorithm as bulit-in \code{R} \code{\link{wilcox.test}}. The critical
 values are exact values, which are obtained from \code{\link{qsignrank}}. The
-algorithm is the following: for each day in event window the cross sectional
-abnormal returns treated as sample of differences (which actually is true).
-Firstly the absolute value of these differences are computed, and
-corresponding ranks of non-zero values are calculated. The test statistic is
-the sum of ranks, corresponoding to positive abnormal returns. The
-significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
-respectively by *, **, and ***).
+algorithm is the following: for each day in event window the cross-sectional
+abnormal returns treated as sample of differences. Firstly the absolute value
+of these differences are computed, and corresponding ranks of non-zero values
+are calculated. The test statistic is the sum of ranks, corresponoding to
+positive abnormal returns. The significance levels of \eqn{\alpha} are 0.1,
+0.05, and 0.01 (marked respectively by *, **, and ***).
 }
 \references{
 \itemize{
