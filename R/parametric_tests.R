@@ -42,12 +42,16 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
     }
     result <- NULL
     for(test in tests) {
+        # browser()
         if(is.null(result)) {
             result <- test(list_of_returns, event_start, event_end)
         } else {
-            result <- merge(x = result, y = test(list_of_returns, event_start,
-                                                 event_end)[, c(1, 5, 6)],
-                            by = "date", all = T)
+            tryCatch(
+                result <- merge(x = result, y = test(list_of_returns,
+                                event_start, event_end)[, c(1, 5, 6)],
+                                by = "date", all = T),
+                error = function(x) warning(paste(x$message,
+                                                  "The test will be skip.")))
         }
     }
     return(result)
@@ -206,7 +210,6 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-    browser()
     # zoo objects of abnormal returns
     estimation_abnormal <- NULL
     event_abnormal <- NULL
@@ -432,7 +435,6 @@ patell <- function(list_of_returns, event_start, event_end) {
     event_abnormal <- NULL
     event_standardized_abnormal <- NULL
     delta <- numeric(length(list_of_returns))
-    browser()
     for(i in seq_along(list_of_returns)) {
 
         # check whether each element of list_of_returns is returns
@@ -443,6 +445,10 @@ patell <- function(list_of_returns, event_start, event_end) {
         if(list_of_returns[[i]]$estimation_end >= event_start) {
             message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
+        }
+
+        if(list_of_returns[[i]]$market_model != "sim") {
+            stop("Patell's test is applicable only for Single-Index market model.")
         }
 
         company_estimation_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
@@ -565,7 +571,6 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-    browser()
     # zoo objects of abnormal returns
     estimation_abnormal <- NULL
     event_abnormal <- NULL
@@ -582,6 +587,10 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         if(list_of_returns[[i]]$estimation_end >= event_start) {
             message(paste0("For ", as.character(i), "-th company estimation",
                            " period overlaps with event period."))
+        }
+
+        if(list_of_returns[[i]]$market_model != "sim") {
+            stop("Boehmer's test is applicable only for Single-Index market model.")
         }
 
         company_estimation_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
