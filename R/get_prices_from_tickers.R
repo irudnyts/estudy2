@@ -73,18 +73,15 @@ get_prices_from_tickers <- function(..., start, end,
                                                       provider = "yahoo",
                                                       compression = "d",
                                                       retclass = "zoo")
+            current_prices_df <- data.frame(date = zoo::index(current_prices),
+                                            prices = zoo::coredata(current_prices))
+            colnames(current_prices_df) <- c("date", ticker)
             if(is.null(prices)) {
-                prices <- data.frame(date = zoo::index(current_prices), prices =
-                                            zoo::coredata(current_prices))
+                prices <- current_prices_df
             } else {
-                prices <- merge(prices, data.frame(date =
-                                                     zoo::index(current_prices),
-                                                   prices =
-                                                zoo::coredata(current_prices)),
-                                by = "date")
+                prices <- merge(prices, current_prices_df, by = "date")
             }
         }
-        colnames(prices) <- c("date", tickers)
     }
     return(prices)
 }
