@@ -79,7 +79,7 @@ get_prices_from_tickers <- function(..., start, end,
             if(is.null(prices)) {
                 prices <- current_prices_df
             } else {
-                prices <- merge(prices, current_prices_df, by = "date")
+                prices <- merge(prices, current_prices_df, by = "date", all = T)
             }
         }
     }
