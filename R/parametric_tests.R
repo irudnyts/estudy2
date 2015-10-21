@@ -150,7 +150,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     mean_delta <- mean(delta)
 
     sd_estimation_period <- sqrt(sum(matrixStats::colVars(estimation_abnormal,
-                                                          na.rm = T))) /
+                                                          na.rm = T), na.rm = T)) /
         ncol(estimation_abnormal)
     statistics <- rowMeans(event_abnormal, na.rm = T) /
         sd_estimation_period
@@ -206,7 +206,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-
+    browser()
     # zoo objects of abnormal returns
     estimation_abnormal <- NULL
     event_abnormal <- NULL
@@ -261,7 +261,8 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 
     mean_delta <- mean(delta)
 
-    sd_estimation_period <- sqrt(var(rowMeans(estimation_abnormal, na.rm = T)))
+    sd_estimation_period <- sqrt(var(rowMeans(estimation_abnormal, na.rm = T),
+                                     na.rm = T))
     statistics <- rowMeans(event_abnormal, na.rm = T) / sd_estimation_period
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
@@ -431,7 +432,7 @@ patell <- function(list_of_returns, event_start, event_end) {
     event_abnormal <- NULL
     event_standardized_abnormal <- NULL
     delta <- numeric(length(list_of_returns))
-
+    browser()
     for(i in seq_along(list_of_returns)) {
 
         # check whether each element of list_of_returns is returns
@@ -475,13 +476,13 @@ patell <- function(list_of_returns, event_start, event_end) {
             list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$regressor) <=
             list_of_returns[[i]]$estimation_end])
-        mean_market_estimation <- mean(market_estimation)
+        mean_market_estimation <- mean(market_estimation, na.rm = T)
 
         company_event_standardized <- company_event_abnormal /
-            sd(company_estimation_abnormal) /
+            sd(company_estimation_abnormal, na.rm = T) /
             sqrt(1 + 1 / list_of_returns[[i]]$estimation_length +
                  (market_event - mean_market_estimation) ^ 2 /
-                 sum((market_estimation - mean_market_estimation) ^ 2))
+                 sum((market_estimation - mean_market_estimation) ^ 2, na.rm = T))
 
         if(is.null(event_standardized_abnormal)) {
             event_standardized_abnormal <- company_event_standardized
@@ -564,7 +565,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-
+    browser()
     # zoo objects of abnormal returns
     estimation_abnormal <- NULL
     event_abnormal <- NULL
@@ -614,13 +615,13 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                 list_of_returns[[i]]$estimation_start &
             zoo::index(list_of_returns[[i]]$regressor) <=
                 list_of_returns[[i]]$estimation_end])
-        mean_market_estimation <- mean(market_estimation)
+        mean_market_estimation <- mean(market_estimation, na.rm = T)
 
         company_event_standardized <- company_event_abnormal /
-            sd(company_estimation_abnormal) /
+            sd(company_estimation_abnormal, na.rm = T) /
             sqrt(1 + 1 / list_of_returns[[i]]$estimation_length +
                      (market_event - mean_market_estimation) ^ 2 /
-                     sum((market_estimation - mean_market_estimation) ^ 2))
+                     sum((market_estimation - mean_market_estimation) ^ 2, na.rm = T))
 
         if(is.null(event_standardized_abnormal)) {
             event_standardized_abnormal <- company_event_standardized
