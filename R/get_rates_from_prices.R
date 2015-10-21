@@ -67,13 +67,13 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     # coert list to data.frame and then to matrix
     prices_df <- NULL
     for(i in seq_along(prices)) {
+        prices_df_company <- data.frame(date = zoo::index(prices[[i]]),
+                                        prices = zoo::coredata(prices[[i]]))
+        colnames(prices_df_company) <- c("date", paste0("prices", i))
         if(is.null(prices_df)) {
-            prices_df <- data.frame(date = zoo::index(prices[[i]]),
-                                    prices = zoo::coredata(prices[[i]]))
+            prices_df <- prices_df_company
         } else {
-            prices_df <- merge(prices_df, data.frame(date = zoo::index(prices[[i]]),
-                                        prices = zoo::coredata(prices[[i]])),
-                               by = "date")
+            prices_df <- merge(prices_df, prices_df_company, by = "date")
         }
     }
 
@@ -155,20 +155,19 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
     prices_df <- NULL
     if(!is.null(ncol(prices))) {
         for(i in 1:ncol(prices)) {
+            prices_df_company <- data.frame(date = zoo::index(prices[, i]),
+                                            prices = zoo::coredata(prices[, i]))
+            colnames(prices_df_company) <- c("date", paste0("prices", i))
             if(is.null(prices_df)) {
-                prices_df <- data.frame(date = zoo::index(prices[, i]),
-                                        prices = zoo::coredata(prices[, i]))
+                prices_df <- prices_df_company
             } else {
-                prices_df <- merge(prices_df, data.frame(date = zoo::index(prices[, i]),
-                                            prices = zoo::coredata(prices[, i])),
-                                   by = "date")
+                prices_df <- merge(prices_df, prices_df_company, by = "date")
             }
         }
     } else {
         prices_df <- data.frame(data = zoo::index(prices[, i]),
                                 prices = zoo::coredata(prices))
     }
-
     # calling C++ function to compute rate of return
     if(multi_day) {
         rates <- getMultiDayRates(as.matrix(prices_df[, -1]), continuous, open)
