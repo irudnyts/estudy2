@@ -512,7 +512,11 @@ patell <- function(list_of_returns, event_start, event_end) {
     event_abnormal <- as.matrix(event_abnormal)
     event_standardized_abnormal <- as.matrix(event_standardized_abnormal)
 
-    statistics <- rowSums(event_standardized_abnormal, na.rm = T) /
+    # because by definition the sum of empty set is zero, which in the estudy
+    # case should be represented as NA, we use trick: mean * n = sum
+
+    statistics <- rowMeans(event_standardized_abnormal, na.rm = T) *
+        ncol(event_standardized_abnormal) /
         sqrt(sum((delta - 2) / (delta - 4)))
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
