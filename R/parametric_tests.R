@@ -141,12 +141,14 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
+    event_means <- rowMeans(event_abnormal, na.rm = T)
+    event_means[is.nan(event_means)] <- NA
     result <- data.frame(date = zoo::index(event_abnormal),
                          weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                                       ncol(event_abnormal) * 100,
-                         mean = rowMeans(event_abnormal, na.rm = T))
+                         mean = event_means)
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
@@ -252,13 +254,14 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 
         delta[i] <- list_of_returns[[i]]$estimation_length
     }
-
+    event_means <- rowMeans(event_abnormal, na.rm = T)
+    event_means[is.nan(event_means)] <- NA
     result <- data.frame(date = zoo::index(event_abnormal),
                          weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                              ncol(event_abnormal) * 100,
-                         mean = rowMeans(event_abnormal, na.rm = T))
+                         mean = event_means)
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
@@ -353,12 +356,13 @@ t_test <- function(list_of_returns, event_start, event_end) {
     }
 
     event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
-
+    event_means <- rowMeans(event_abnormal, na.rm = T)
+    event_means[is.nan(event_means)] <- NA
     result <- data.frame(date = zoo::index(event_abnormal),
                          weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = event_number_of_companies /
                              ncol(event_abnormal) * 100,
-                         mean = rowMeans(event_abnormal, na.rm = T))
+                         mean = event_means)
 
     event_abnormal <- as.matrix(event_abnormal)
 
@@ -502,13 +506,14 @@ patell <- function(list_of_returns, event_start, event_end) {
         delta[i] <- list_of_returns[[i]]$estimation_length
 
     }
-
+    event_means <- rowMeans(event_abnormal, na.rm = T)
+    event_means[is.nan(event_means)] <- NA
     result <- data.frame(date = zoo::index(event_abnormal),
                          weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                              ncol(event_abnormal) * 100,
-                         mean = rowMeans(event_abnormal, na.rm = T))
+                         mean = event_means)
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
@@ -648,14 +653,15 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         }
         # delta[i] <- list_of_returns[[i]]$estimation_length
     }
-
+    event_means <- rowMeans(event_abnormal, na.rm = T)
+    event_means[is.nan(event_means)] <- NA
     event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
     result <- data.frame(date = zoo::index(event_abnormal),
                          weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
                                               na.rm = T) /
                              ncol(event_abnormal) * 100,
-                         mean = rowMeans(event_abnormal, na.rm = T))
+                         mean = event_means)
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
