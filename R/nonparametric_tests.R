@@ -412,7 +412,7 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 
     statistics <- 1 / sqrt(rowSums(!is.na(event_sign), na.rm = T)) *
         rowSums(event_sign, na.rm = T) / sd_full
-
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
     significance[abs(statistics) >= const_q2] <- "**"
@@ -556,7 +556,7 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 
     statistics <- 1 / rowSums(!is.na(as.matrix(event_rank)), na.rm = T) *
         rowSums(event_rank - avg_rank_event, na.rm = T) / sd_full
-
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
     significance[abs(statistics) >= const_q2] <- "**"
@@ -695,7 +695,7 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
     statistics <- 1 / sqrt(rowSums(!is.na(as.matrix(event_rank_modif)),
                                    na.rm = T)) *
         rowSums(event_rank_modif - 0.5, na.rm = T) / sd_full
-
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
     significance[abs(statistics) >= const_q2] <- "**"
@@ -806,9 +806,7 @@ wilcoxon_test <- function(list_of_returns, event_start, event_end) {
     event_rank[event_abnormal < 0] <- 0
     N <- rowSums(!is.na(event_abs))
     statistics <- rowSums(event_rank, na.rm = T)
-
-
-
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[statistics >= qsignrank(1 - 0.1, n = N) |
             statistics <= N / (N + 1) - qsignrank(1 - 0.1 / 2, n = N)] <- "*"
