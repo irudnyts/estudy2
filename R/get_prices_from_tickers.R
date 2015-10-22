@@ -60,7 +60,8 @@ get_prices_from_tickers <- function(..., start, end,
                                                         quote = quote,
                                                         provider = "yahoo",
                                                         compression = "d",
-                                                        retclass = "zoo"))
+                                                        retclass = "zoo"),
+                                all = T)
             }
         }
         colnames(prices) <- tickers
