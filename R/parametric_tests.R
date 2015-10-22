@@ -101,7 +101,6 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-
     # zoo objects of abnormal returns
     estimation_abnormal <- NULL
     event_abnormal <- NULL
@@ -158,8 +157,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     sd_estimation_period <- sqrt(sum(matrixStats::colVars(estimation_abnormal,
                                                           na.rm = T), na.rm = T)) /
         ncol(estimation_abnormal)
-    statistics <- rowMeans(event_abnormal, na.rm = T) /
-        sd_estimation_period
+    statistics <- event_means / sd_estimation_period
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
@@ -167,6 +165,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
     result <- cbind(result, data.frame(bw_1980_stat = statistics,
                                        bw_1980_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -270,7 +269,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 
     sd_estimation_period <- sqrt(var(rowMeans(estimation_abnormal, na.rm = T),
                                      na.rm = T))
-    statistics <- rowMeans(event_abnormal, na.rm = T) / sd_estimation_period
+    statistics <- event_means / sd_estimation_period
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
@@ -278,6 +277,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
     result <- cbind(result, data.frame(bw_1985_stat = statistics,
                                        bw_1985_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -367,7 +367,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
     event_abnormal <- as.matrix(event_abnormal)
 
 
-    statistics <- rowMeans(event_abnormal, na.rm = T) /
+    statistics <- event_means /
                   matrixStats::rowSds(event_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
     statistics[is.nan(statistics)] <- NA
@@ -381,6 +381,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
                      qt(1 - 0.01/2, event_number_of_companies)] <- "***"
     result <- cbind(result, data.frame(t_test_stat = statistics,
                                        t_test_signif = significance))
+    rownames(result) <- NULL
     return(result)
 
 }
@@ -532,6 +533,7 @@ patell <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= const_q3] <- "***"
     result <- cbind(result, data.frame(pt_stat = statistics,
                                        pt_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -680,6 +682,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                      qt(1 - 0.01/2, event_number_of_companies)] <- "***"
     result <- cbind(result, data.frame(bh_stat = statistics,
                                        bh_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
