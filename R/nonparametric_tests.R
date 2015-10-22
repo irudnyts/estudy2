@@ -62,7 +62,7 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
                                 all = T, tests) {
     if(all == T) {
         tests <- list(sign_test, generalized_sign_test, corrado_sign_test,
-                      rank_test, modified_rank_test)
+                      rank_test, modified_rank_test, wilcoxon_test)
     }
     result <- NULL
     for(test in tests) {
@@ -172,6 +172,7 @@ sign_test <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= const_q3] <- "***"
     result <- cbind(result, data.frame(sign_stat = statistics,
                                        sign_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -293,6 +294,7 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= const_q3] <- "***"
     result <- cbind(result, data.frame(gsign_stat = statistics,
                                        gsign_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -416,6 +418,7 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= const_q3] <- "***"
     result <- cbind(result, data.frame(csign_stat = statistics,
                                        csign_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -559,6 +562,7 @@ rank_test <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= const_q3] <- "***"
     result <- cbind(result, data.frame(rank_stat = statistics,
                                        rank_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -697,6 +701,7 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= const_q3] <- "***"
     result <- cbind(result, data.frame(mrank_stat = statistics,
                                        mrank_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
 
@@ -813,5 +818,6 @@ wilcoxon_test <- function(list_of_returns, event_start, event_end) {
 
     result <- cbind(result, data.frame(wlcx_stat = statistics,
                                        wlcx_signif = significance))
+    rownames(result) <- NULL
     return(result)
 }
