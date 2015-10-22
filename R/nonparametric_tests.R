@@ -348,7 +348,6 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
     }
 
     # zoo objects of signs
-    browser()
     event_sign <- NULL
     full_sign <- NULL
     delta_full <- numeric(length(list_of_returns))
@@ -485,7 +484,6 @@ rank_test <- function(list_of_returns, event_start, event_end) {
         stop("event_start must be earlier than event_end.")
     }
 
-    browser()
     # zoo objects of abnormal returns
     full_rank <- NULL
     event_rank <- NULL
@@ -639,7 +637,6 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
     full_rank_modif <- NULL
     event_rank_modif <- NULL
     delta_full <- numeric(length(list_of_returns))
-    browser()
     for(i in seq_along(list_of_returns)) {
 
         # check whether each element of list_of_returns is returns
@@ -816,7 +813,6 @@ wilcoxon_test <- function(list_of_returns, event_start, event_end) {
                                               na.rm = T) /
                              ncol(event_abnormal) * 100)
 
-    browser()
     event_abnormal <- as.matrix(event_abnormal)
     event_abs <- abs(event_abnormal)
     event_abs[event_abs == 0] <- NA
