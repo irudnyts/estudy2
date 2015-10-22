@@ -153,19 +153,19 @@ sign_test <- function(list_of_returns, event_start, event_end) {
                                   all = T)
         }
     }
-
+    event_number_of_companies <- rowSums(!is.na(event_binary), na.rm = T)
+    event_binary_sums <- rowMeans(event_binary, na.rm = T) * ncol(event_binary)
+    event_binary_sums[is.nan(event_binary_sums)] <- NA
     result <- data.frame(date = zoo::index(event_binary),
                          weekday = weekdays(zoo::index(event_binary)),
-                         percentage = rowSums(!is.na(as.matrix(event_binary)),
-                                              na.rm = T) /
+                         percentage = event_number_of_companies /
                              ncol(event_binary) * 100)
-
     event_binary <- as.matrix(event_binary)
+    event_number_of_companies[event_number_of_companies == 0] <- NA
 
-    statistics <- (rowSums(event_binary, na.rm = T) -
-                       rowSums(!is.na(event_binary), na.rm = T) * 0.5) /
-        sqrt(rowSums(!is.na(event_binary), na.rm = T) * 0.25)
-
+    statistics <- (event_binary_sums - event_number_of_companies * 0.5) /
+        sqrt(event_number_of_companies * 0.25)
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
     significance[abs(statistics) >= const_q2] <- "**"
@@ -274,20 +274,21 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
     }
 
     p_hat <- mean(as.matrix(estimation_binary), na.rm = T)
-
+    event_number_of_companies <- rowSums(!is.na(event_binary), na.rm = T)
+    event_binary_sums <- rowMeans(event_binary, na.rm = T) * ncol(event_binary)
+    event_binary_sums[is.nan(event_binary_sums)] <- NA
     result <- data.frame(date = zoo::index(event_binary),
                          weekday = weekdays(zoo::index(event_binary)),
-                         percentage = rowSums(!is.na(as.matrix(event_binary)),
-                                              na.rm = T) /
+                         percentage = event_number_of_companies /
                              ncol(event_binary) * 100)
 
-    estimation_binary <- as.matrix(estimation_binary)
+    # estimation_binary <- as.matrix(estimation_binary)
     event_binary <- as.matrix(event_binary)
+    event_number_of_companies[event_number_of_companies == 0] <- NA
 
-    statistics <- (rowSums(event_binary, na.rm = T) -
-                       rowSums(!is.na(event_binary), na.rm = T) * p_hat) /
-        sqrt(rowSums(!is.na(event_binary), na.rm = T) * p_hat * (1 - p_hat))
-
+    statistics <- (event_binary_sums - event_number_of_companies * p_hat) /
+        sqrt(event_binary_sums * p_hat * (1 - p_hat))
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
     significance[abs(statistics) >= const_q2] <- "**"
