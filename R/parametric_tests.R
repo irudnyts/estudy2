@@ -354,7 +354,6 @@ t_test <- function(list_of_returns, event_start, event_end) {
                                     all = T)
         }
     }
-
     event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
     event_means <- rowMeans(event_abnormal, na.rm = T)
     event_means[is.nan(event_means)] <- NA
@@ -372,6 +371,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
                   sqrt(event_number_of_companies)
     statistics[is.nan(statistics)] <- NA
 
+    event_number_of_companies[event_number_of_companies == 0] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
                      qt(1 - 0.10/2, event_number_of_companies)] <- "*"
@@ -438,7 +438,7 @@ patell <- function(list_of_returns, event_start, event_end) {
 
 
     # zoo objects of abnormal returns
-    estimation_abnormal <- NULL
+    # estimation_abnormal <- NULL
     event_abnormal <- NULL
     event_standardized_abnormal <- NULL
     delta <- numeric(length(list_of_returns))
@@ -467,12 +467,12 @@ patell <- function(list_of_returns, event_start, event_end) {
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
             zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
-        if(is.null(estimation_abnormal)) {
-            estimation_abnormal <- company_estimation_abnormal
-        } else {
-            estimation_abnormal <- merge(estimation_abnormal,
-                                         company_estimation_abnormal, all = T)
-        }
+#         if(is.null(estimation_abnormal)) {
+#             estimation_abnormal <- company_estimation_abnormal
+#         } else {
+#             estimation_abnormal <- merge(estimation_abnormal,
+#                                          company_estimation_abnormal, all = T)
+#         }
         if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
         } else {
@@ -516,7 +516,7 @@ patell <- function(list_of_returns, event_start, event_end) {
                              ncol(event_abnormal) * 100,
                          mean = event_means)
 
-    estimation_abnormal <- as.matrix(estimation_abnormal)
+    # estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
     event_standardized_abnormal <- as.matrix(event_standardized_abnormal)
 
@@ -586,11 +586,10 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     }
 
     # zoo objects of abnormal returns
-    estimation_abnormal <- NULL
+    # estimation_abnormal <- NULL
     event_abnormal <- NULL
     event_standardized_abnormal <- NULL
     # delta <- numeric(length(list_of_returns))
-
     for(i in seq_along(list_of_returns)) {
 
         # check whether each element of list_of_returns is returns
@@ -616,12 +615,12 @@ boehmer <- function(list_of_returns, event_start, event_end) {
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
             zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
-        if(is.null(estimation_abnormal)) {
-            estimation_abnormal <- company_estimation_abnormal
-        } else {
-            estimation_abnormal <- merge(estimation_abnormal,
-                                         company_estimation_abnormal, all = T)
-        }
+#         if(is.null(estimation_abnormal)) {
+#             estimation_abnormal <- company_estimation_abnormal
+#         } else {
+#             estimation_abnormal <- merge(estimation_abnormal,
+#                                          company_estimation_abnormal, all = T)
+#         }
         if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
         } else {
@@ -660,12 +659,11 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     event_number_of_companies <- rowSums(!is.na(event_abnormal), na.rm = T)
     result <- data.frame(date = zoo::index(event_abnormal),
                          weekday = weekdays(zoo::index(event_abnormal)),
-                         percentage = rowSums(!is.na(as.matrix(event_abnormal)),
-                                              na.rm = T) /
+                         percentage = event_number_of_companies /
                              ncol(event_abnormal) * 100,
                          mean = event_means)
 
-    estimation_abnormal <- as.matrix(estimation_abnormal)
+    # estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
     event_standardized_abnormal <- as.matrix(event_standardized_abnormal)
 
@@ -673,6 +671,8 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                   matrixStats::rowSds(event_standardized_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
     statistics[is.nan(statistics)] <- NA
+
+    event_number_of_companies[event_number_of_companies == 0] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
                      qt(1 - 0.10/2, event_number_of_companies)] <- "*"
