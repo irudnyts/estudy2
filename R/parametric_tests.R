@@ -158,7 +158,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
         ncol(estimation_abnormal)
     statistics <- rowMeans(event_abnormal, na.rm = T) /
         sd_estimation_period
-    ststistics[is.nan(ststistics)] <- NA
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
     significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
@@ -268,7 +268,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     sd_estimation_period <- sqrt(var(rowMeans(estimation_abnormal, na.rm = T),
                                      na.rm = T))
     statistics <- rowMeans(event_abnormal, na.rm = T) / sd_estimation_period
-    ststistics[is.nan(ststistics)] <- NA
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
     significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
@@ -366,7 +366,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
     statistics <- rowMeans(event_abnormal, na.rm = T) /
                   matrixStats::rowSds(event_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
-    ststistics[is.nan(ststistics)] <- NA
+    statistics[is.nan(statistics)] <- NA
 
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
@@ -520,7 +520,7 @@ patell <- function(list_of_returns, event_start, event_end) {
     statistics <- rowMeans(event_standardized_abnormal, na.rm = T) *
         ncol(event_standardized_abnormal) /
         sqrt(sum((delta - 2) / (delta - 4)))
-    ststistics[is.nan(ststistics)] <- NA
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
     significance[abs(statistics) >= const_q2] <- "**"
@@ -664,7 +664,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     statistics <- rowMeans(event_standardized_abnormal, na.rm = T) /
                   matrixStats::rowSds(event_standardized_abnormal, na.rm = T) *
                   sqrt(event_number_of_companies)
-    ststistics[is.nan(ststistics)] <- NA
+    statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
                      qt(1 - 0.10/2, event_number_of_companies)] <- "*"
