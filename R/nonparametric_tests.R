@@ -162,7 +162,6 @@ sign_test <- function(list_of_returns, event_start, event_end) {
                              ncol(event_binary) * 100)
     event_binary <- as.matrix(event_binary)
     event_number_of_companies[event_number_of_companies == 0] <- NA
-
     statistics <- (event_binary_sums - event_number_of_companies * 0.5) /
         sqrt(event_number_of_companies * 0.25)
     statistics[is.nan(statistics)] <- NA
@@ -272,7 +271,6 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
                                     all = T)
         }
     }
-
     p_hat <- mean(as.matrix(estimation_binary), na.rm = T)
     event_number_of_companies <- rowSums(!is.na(event_binary))
     event_binary_sums <- rowMeans(event_binary, na.rm = T) * ncol(event_binary)
@@ -285,9 +283,8 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
     # estimation_binary <- as.matrix(estimation_binary)
     event_binary <- as.matrix(event_binary)
     event_number_of_companies[event_number_of_companies == 0] <- NA
-
     statistics <- (event_binary_sums - event_number_of_companies * p_hat) /
-        sqrt(event_binary_sums * p_hat * (1 - p_hat))
+        sqrt(event_number_of_companies * p_hat * (1 - p_hat))
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >= const_q1] <- "*"
