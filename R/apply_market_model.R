@@ -314,6 +314,7 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
         predicted <- predict.lm(object = lm_fit,
                                 newdata = data.frame(x = data[, 2]),
                                 interval = c("confidence"), level = 0.95)
+        rownames(predicted) <- NULL
         result <- list(observed = data[, 1],
                        predicted = zoo::zoo(predicted[, 1],
                                             zoo::index(data)),
@@ -346,6 +347,7 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
             predicted <- predict.lm(object = lm_fit,
                                     newdata = data.frame(x = data[, 2]),
                                     interval = c("confidence"), level = 0.95)
+            rownames(predicted) <- NULL
             result <- list(observed = data[, 1],
                            predicted = zoo::zoo(predicted[, 1],
                                                 zoo::index(data)),
@@ -437,6 +439,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
         predicted <- predict.lm(object = lm_fit,
                                 newdata = data.frame(x = data[, 3]),
                                 interval = c("confidence"), level = 0.95)
+        rownames(predicted) <- NULL
         result <- list(observed = zoo::zoo(data[, 2], data[, 1]),
                        predicted = zoo::zoo(predicted[, 1], data[, 1]),
                        lower95CI = zoo::zoo(predicted[, 2], data[, 1]),
@@ -466,6 +469,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             predicted <- predict.lm(object = lm_fit,
                                     newdata = data.frame(x = data[, 3]),
                                     interval = c("confidence"), level = 0.95)
+            rownames(predicted) <- NULL
             result <- list(observed = zoo::zoo(data[, 2], data[, 1]),
                            predicted = zoo::zoo(predicted[, 1], data[, 1]),
                            lower95CI = zoo::zoo(predicted[, 2], data[, 1]),
