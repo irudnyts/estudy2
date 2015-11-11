@@ -42,7 +42,6 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
     }
     result <- NULL
     for(test in tests) {
-        # browser()
         if(is.null(result)) {
             result <- test(list_of_returns, event_start, event_end)
         } else {
@@ -151,7 +150,6 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
-
     mean_delta <- mean(delta)
 
     sd_estimation_period <- sqrt(sum(matrixStats::colVars(estimation_abnormal,
@@ -160,9 +158,9 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     statistics <- event_means / sd_estimation_period
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
-    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
-    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
+    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta - 1)] <- "*"
+    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta - 1)] <- "**"
+    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta - 1)] <- "***"
     result <- cbind(result, data.frame(bw_1980_stat = statistics,
                                        bw_1980_signif = significance))
     rownames(result) <- NULL
@@ -264,7 +262,6 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 
     estimation_abnormal <- as.matrix(estimation_abnormal)
     event_abnormal <- as.matrix(event_abnormal)
-
     mean_delta <- mean(delta)
 
     sd_estimation_period <- sqrt(var(rowMeans(estimation_abnormal, na.rm = T),
@@ -272,9 +269,9 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     statistics <- event_means / sd_estimation_period
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta)] <- "*"
-    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta)] <- "**"
-    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta)] <- "***"
+    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta - 1)] <- "*"
+    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta - 1)] <- "**"
+    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta - 1)] <- "***"
     result <- cbind(result, data.frame(bw_1985_stat = statistics,
                                        bw_1985_signif = significance))
     rownames(result) <- NULL
@@ -374,11 +371,11 @@ t_test <- function(list_of_returns, event_start, event_end) {
     event_number_of_companies[event_number_of_companies == 0] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
-                     qt(1 - 0.10/2, event_number_of_companies)] <- "*"
+                     qt(1 - 0.10/2, event_number_of_companies - 1)] <- "*"
     significance[abs(statistics) >=
-                     qt(1 - 0.05/2, event_number_of_companies)] <- "**"
+                     qt(1 - 0.05/2, event_number_of_companies - 1)] <- "**"
     significance[abs(statistics) >=
-                     qt(1 - 0.01/2, event_number_of_companies)] <- "***"
+                     qt(1 - 0.01/2, event_number_of_companies - 1)] <- "***"
     result <- cbind(result, data.frame(t_test_stat = statistics,
                                        t_test_signif = significance))
     rownames(result) <- NULL
@@ -675,11 +672,11 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     event_number_of_companies[event_number_of_companies == 0] <- NA
     significance <- rep("", length(statistics))
     significance[abs(statistics) >=
-                     qt(1 - 0.10/2, event_number_of_companies)] <- "*"
+                     qt(1 - 0.10/2, event_number_of_companies - 1)] <- "*"
     significance[abs(statistics) >=
-                     qt(1 - 0.05/2, event_number_of_companies)] <- "**"
+                     qt(1 - 0.05/2, event_number_of_companies - 1)] <- "**"
     significance[abs(statistics) >=
-                     qt(1 - 0.01/2, event_number_of_companies)] <- "***"
+                     qt(1 - 0.01/2, event_number_of_companies - 1)] <- "***"
     result <- cbind(result, data.frame(bh_stat = statistics,
                                        bh_signif = significance))
     rownames(result) <- NULL
