@@ -368,14 +368,12 @@ t_test <- function(list_of_returns, event_start, event_end) {
                   sqrt(event_number_of_companies)
     statistics[is.nan(statistics)] <- NA
 
-    event_number_of_companies[event_number_of_companies == 0] <- NA
+    df <- event_number_of_companies - 1
+    df[df <= 0] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >=
-                     qt(1 - 0.10/2, event_number_of_companies - 1)] <- "*"
-    significance[abs(statistics) >=
-                     qt(1 - 0.05/2, event_number_of_companies - 1)] <- "**"
-    significance[abs(statistics) >=
-                     qt(1 - 0.01/2, event_number_of_companies - 1)] <- "***"
+    significance[abs(statistics) >= qt(1 - 0.10/2, df)] <- "*"
+    significance[abs(statistics) >= qt(1 - 0.05/2, df)] <- "**"
+    significance[abs(statistics) >= qt(1 - 0.01/2, df)] <- "***"
     result <- cbind(result, data.frame(t_test_stat = statistics,
                                        t_test_signif = significance))
     rownames(result) <- NULL
@@ -669,14 +667,12 @@ boehmer <- function(list_of_returns, event_start, event_end) {
                   sqrt(event_number_of_companies)
     statistics[is.nan(statistics)] <- NA
 
-    event_number_of_companies[event_number_of_companies == 0] <- NA
+    df <- event_number_of_companies - 1
+    df[df <= 0] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >=
-                     qt(1 - 0.10/2, event_number_of_companies - 1)] <- "*"
-    significance[abs(statistics) >=
-                     qt(1 - 0.05/2, event_number_of_companies - 1)] <- "**"
-    significance[abs(statistics) >=
-                     qt(1 - 0.01/2, event_number_of_companies - 1)] <- "***"
+    significance[abs(statistics) >= qt(1 - 0.10/2, df)] <- "*"
+    significance[abs(statistics) >= qt(1 - 0.05/2, df)] <- "**"
+    significance[abs(statistics) >= qt(1 - 0.01/2, df)] <- "***"
     result <- cbind(result, data.frame(bh_stat = statistics,
                                        bh_signif = significance))
     rownames(result) <- NULL
