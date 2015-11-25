@@ -679,3 +679,156 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
+#' Lamb's parametric test (1995). (REWRITE)
+#'
+#' Parametric test for event study, which is descibed in Patell's 1976
+#' paper.
+#'
+#' Performs the parametric test for event study, which is descibed in Patell's
+#' 1976 paper, which is called standardized-residuals method in Boehmer's 1991
+#' paper. The test assumptions are cross-sectional independence and
+#' insignificance of event-induced variance. The standardization smooths the
+#' effect of event-induced variance comparing to Brown and Warner tests. Also
+#' standardization incorporates the situation, when high volatility secturity
+#' dominates the test. The test examines the hypothesis whether the theoretical
+#' cross-sectional expected value for a given day is equal to zero. It
+#' calculates statistics even if event window and estimation period are
+#' overlapped (intersect). The critical values are standard normal. The
+#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
+#' respectively by *, **, and ***).
+#'
+#' @param list_of_returns list of objects of S3 class \code{return}, each element
+#' of which is treated as a company.
+#' @param event_start the object of class \code{Date}, which represents the
+#' first (starting) date of the event window.
+#' @param event_end the object of class \code{Date}, which represents the last
+#' (ending) date in the event window.
+#' @return The table of statistics and significances of the test.
+#'
+#' @references \itemize{
+#' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
+#' price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
+#' 276, 1976.
+#' \item Boehmer E., Musumeci J., Poulsen A.B. \emph{ Event-study methodology
+#' under conditions of event-induced variance}. Journal of Financial Economics,
+#' 30(2):253-272, 1991.}
+#'
+#' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
+#' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
+#' \code{\link{boehmer}}
+#' @export
+lamb <- function(list_of_returns, event_start, event_end) {
+    # check event_start and event_end for class and value validity
+    if(!inherits(event_start, "Date")) {
+        stop("event_start must be an object of class Date.")
+    }
+    if(!inherits(event_end, "Date")) {
+        stop("event_end must be an object of class Date.")
+    }
+    if(event_start > event_end) {
+        stop("event_start must be earlier than event_end.")
+    }
+
+
+    # zoo objects of abnormal returns
+    estimation_abnormal <- NULL
+    event_abnormal <- NULL
+    estimation_market <- NULL
+    event_market <- NULL
+    delta <- numeric(length(list_of_returns))
+
+    for(i in seq_along(list_of_returns)) {
+
+        # check whether each element of list_of_returns is returns
+        if(!inherits(list_of_returns[[i]], "returns")) {
+            stop("Each element of list_of_rates must have class returns.")
+        }
+
+        if(list_of_returns[[i]]$estimation_end >= event_start) {
+            message(paste0("For ", as.character(i), "-th company estimation",
+                           " period overlaps with event period."))
+        }
+
+        if(list_of_returns[[i]]$market_model != "sim") {
+            stop("Patell's test is applicable only for Single-Index market model.")
+        }
+
+        if(is.null(estimation_market)) {
+            estimation_market <- zoo::as.zoo(list_of_returns[[i]]$regressor[
+                             zoo::index(list_of_returns[[i]]$regressor) >=
+                                 list_of_returns[[i]]$estimation_start &
+                                 zoo::index(list_of_returns[[i]]$regressor) <=
+                                 list_of_returns[[i]]$estimation_end])
+        } else if (identical(estimation_market, list_of_returns[[i]]$regressor)) {
+            stop("regressor must be the same for all companies.")
+        }
+
+        if(is.null(event_market)) {
+            event_market <- zoo::as.zoo(list_of_returns[[i]]$regressor[
+                zoo::index(list_of_returns[[i]]$regressor) >= event_start &
+                zoo::index(list_of_returns[[i]]$regressor) <= event_end])
+        } else if (identical(event_market, list_of_returns[[i]]$regressor)) {
+            stop("regressor must be the same for all companies.")
+        }
+
+        company_estimation_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
+            zoo::index(list_of_returns[[i]]$abnormal) >=
+                list_of_returns[[i]]$estimation_start &
+                zoo::index(list_of_returns[[i]]$abnormal) <=
+                list_of_returns[[i]]$estimation_end])
+        company_event_abnormal <- zoo::as.zoo(list_of_returns[[i]]$abnormal[
+            zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
+                zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
+
+        if(is.null(estimation_abnormal)) {
+            estimation_abnormal <- company_estimation_abnormal
+        } else {
+        estimation_abnormal <- merge(estimation_abnormal,
+                                     company_estimation_abnormal, all = T)
+        }
+        if(is.null(event_abnormal)) {
+            event_abnormal <- company_event_abnormal
+        } else {
+            event_abnormal <- merge(event_abnormal, company_event_abnormal,
+                                    all = T)
+        }
+        delta[i] <- list_of_returns[[i]]$estimation_length
+    }
+
+    event_means <- rowMeans(event_abnormal, na.rm = T)
+    event_means[is.nan(event_means)] <- NA
+
+    estimation_means <- rowMeans(estimation_abnormal, na.rm = T)
+    estimation_means[is.nan(estimation_means)] <- NA
+
+    estimation_market_mean <- mean(estimation_market, na.rm = T)
+
+    sum_estimation_market <- sum((estimation_market - estimation_market_mean)^2,
+                                 na.rm = T)
+
+    result <- data.frame(date = zoo::index(event_abnormal),
+                         weekday = weekdays(zoo::index(event_abnormal)),
+                         percentage = rowSums(!is.na(as.matrix(event_abnormal)),
+                                              na.rm = T) /
+                             ncol(event_abnormal) * 100,
+                         mean = event_means)
+
+    estimation_abnormal <- as.matrix(estimation_abnormal)
+    event_abnormal <- as.matrix(event_abnormal)
+    mean_delta <- mean(delta)
+
+
+
+    sd <- sd(estimation_means, na.rm = T) * sqrt(1 + 1 / mean_delta +
+            (event_market - estimation_market_mean)^2 / sum_estimation_market)
+    statistics <- event_means / sd
+    statistics[is.nan(statistics)] <- NA
+    significance <- rep("", length(statistics))
+    significance[abs(statistics) >= const_q1] <- "*"
+    significance[abs(statistics) >= const_q2] <- "**"
+    significance[abs(statistics) >= const_q3] <- "***"
+    result <- cbind(result, data.frame(pt_stat = statistics,
+                                       pt_signif = significance))
+    rownames(result) <- NULL
+    return(result)
+}
