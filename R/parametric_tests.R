@@ -43,7 +43,7 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
                              tests) {
     if(all == T) {
         tests <- list(brown_warner_1980, brown_warner_1985, t_test, patell,
-                      boehmer)
+                      boehmer, lamb)
     }
     result <- NULL
     for(test in tests) {
