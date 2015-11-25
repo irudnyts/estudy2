@@ -46,7 +46,7 @@ under conditions of event-induced variance}. Journal of Financial Economics,
 }
 \seealso{
 \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-\code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
-\code{\link{patell}}
+\code{\link{brown_warner_1985}}, \code{\link{t_test}}, \code{\link{patell}},
+and \code{\link{lamb}}.
 }
 

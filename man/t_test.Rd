@@ -45,7 +45,7 @@ Economics, 30(2):253-272, 1991.
 }
 \seealso{
 \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-\code{\link{brown_warner_1985}}, \code{\link{patell}}, and
-\code{\link{boehmer}}
+\code{\link{brown_warner_1985}}, \code{\link{patell}}, \code{\link{boehmer}},
+and \code{\link{lamb}}.
 }
 

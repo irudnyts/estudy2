@@ -42,6 +42,7 @@ Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
 }
 \seealso{
 \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-\code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+\code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
+\code{\link{lamb}}.
 }
 

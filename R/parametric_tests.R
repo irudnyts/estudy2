@@ -4,9 +4,9 @@
 #' the table of statistics and significance.
 #'
 #' \code{parametric_tests} performs given tests among \code{brown_warner_1980},
-#' \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer} and
-#' merge result to single table. If \code{all = T} (by default), the function
-#' ignores the value of \code{tests}.
+#' \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer},
+#' \code{lamb} and merge result to single table. If \code{all = T} (by default),
+#' the function ignores the value of \code{tests}.
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
@@ -17,7 +17,8 @@
 #' @param all a logical value indicating whether all tests should be performed.
 #' The default value is \code{TRUE}.
 #' @param tests the list of tests functions among \code{brown_warner_1980},
-#' \code{brown_warner_1985}, \code{t_test}, \code{patell}, and \code{boehmer}.
+#' \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer}, and
+#' \code{lamb}.
 #' @return The single table of statistics and significances of all tests.
 #'
 #' @references \itemize{
@@ -29,10 +30,14 @@
 #' induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.
 #' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
 #' price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
-#' 276, 1976.}
+#' 276, 1976.
+#' \item Lamb R.P. \emph{An Exposure-Based Analysis of Property-Liability
+#' Insurer Stock Values around Hurricane Andrew}. Journal of Risk and Insurance,
+#' 62(1):111-123, 1995.}
 #'
 #' @seealso \code{\link{brown_warner_1980}}, \code{\link{brown_warner_1985}},
-#' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+#' \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
+#' \code{\link{lamb}}.
 #' @export
 parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
                              tests) {
@@ -86,7 +91,8 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = T,
 #' performance}. Journal of Financial Economics, 8:205-258, 1980.
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1985}},
-#' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+#' \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
+#' \code{\link{lamb}}.
 #' @export
 brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -196,7 +202,8 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #'  of Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-#' \code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+#' \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
+#' \code{\link{lamb}}.
 #' @export
 brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -309,8 +316,8 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' Economics, 30(2):253-272, 1991.
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-#' \code{\link{brown_warner_1985}}, \code{\link{patell}}, and
-#' \code{\link{boehmer}}
+#' \code{\link{brown_warner_1985}}, \code{\link{patell}}, \code{\link{boehmer}},
+#' and \code{\link{lamb}}.
 #' @export
 t_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -417,7 +424,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
-#' \code{\link{boehmer}}
+#' \code{\link{boehmer}}, and \code{\link{lamb}}.
 #' @export
 patell <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -565,8 +572,8 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' 30(2):253-272, 1991.}
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-#' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
-#' \code{\link{patell}}
+#' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, \code{\link{patell}},
+#' and \code{\link{lamb}}.
 #' @export
 boehmer <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -679,23 +686,21 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-#' Lamb's parametric test (1995). (REWRITE)
+#' Lamb's parametric test (1995).
 #'
-#' Parametric test for event study, which is descibed in Patell's 1976
+#' Parametric test for event study, which is descibed in Lamb's 1995
 #' paper.
 #'
-#' Performs the parametric test for event study, which is descibed in Patell's
-#' 1976 paper, which is called standardized-residuals method in Boehmer's 1991
-#' paper. The test assumptions are cross-sectional independence and
-#' insignificance of event-induced variance. The standardization smooths the
-#' effect of event-induced variance comparing to Brown and Warner tests. Also
-#' standardization incorporates the situation, when high volatility secturity
-#' dominates the test. The test examines the hypothesis whether the theoretical
-#' cross-sectional expected value for a given day is equal to zero. It
-#' calculates statistics even if event window and estimation period are
-#' overlapped (intersect). The critical values are standard normal. The
-#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
-#' respectively by *, **, and ***).
+#' Performs the parametric test for event study, which is descibed in Lamb's
+#' 1995 paper. The author refers to Warner and Brown's (1985) and Henderson's
+#' (1990) paper, however this test was not observed in niether papers. The test
+#' statistics are very close to the statistics produced by
+#' \code{brown_warner_1985} and typically has the same significance. The test
+#' examines the hypothesis whether the theoretical cross-sectional expected
+#' value for a given day is equal to zero. It calculates statistics even if
+#' event window and estimation period are overlapped (intersect). The critical
+#' values are standard normal. The significance levels of \eqn{\alpha} are 0.1,
+#' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
@@ -705,17 +710,13 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 #' (ending) date in the event window.
 #' @return The table of statistics and significances of the test.
 #'
-#' @references \itemize{
-#' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
-#' price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
-#' 276, 1976.
-#' \item Boehmer E., Musumeci J., Poulsen A.B. \emph{ Event-study methodology
-#' under conditions of event-induced variance}. Journal of Financial Economics,
-#' 30(2):253-272, 1991.}
+#' @references Lamb R.P. \emph{An Exposure-Based Analysis of Property-Liability
+#' Insurer Stock Values around Hurricane Andrew}. Journal of Risk and Insurance,
+#' 62(1):111-123, 1995.
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-#' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
-#' \code{\link{boehmer}}
+#' \code{\link{brown_warner_1985}}, \code{\link{t_test}},\code{\link{patell}}
+#' and \code{\link{boehmer}}
 #' @export
 lamb <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -827,8 +828,8 @@ lamb <- function(list_of_returns, event_start, event_end) {
     significance[abs(statistics) >= const_q1] <- "*"
     significance[abs(statistics) >= const_q2] <- "**"
     significance[abs(statistics) >= const_q3] <- "***"
-    result <- cbind(result, data.frame(pt_stat = statistics,
-                                       pt_signif = significance))
+    result <- cbind(result, data.frame(lmb_stat = statistics,
+                                       lmb_signif = significance))
     rownames(result) <- NULL
     return(result)
 }

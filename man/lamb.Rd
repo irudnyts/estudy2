@@ -2,7 +2,7 @@
 % Please edit documentation in R/parametric_tests.R
 \name{lamb}
 \alias{lamb}
-\title{Lamb's parametric test (1995). (REWRITE)}
+\title{Lamb's parametric test (1995).}
 \usage{
 lamb(list_of_returns, event_start, event_end)
 }
@@ -20,35 +20,29 @@ first (starting) date of the event window.}
 The table of statistics and significances of the test.
 }
 \description{
-Parametric test for event study, which is descibed in Patell's 1976
+Parametric test for event study, which is descibed in Lamb's 1995
 paper.
 }
 \details{
-Performs the parametric test for event study, which is descibed in Patell's
-1976 paper, which is called standardized-residuals method in Boehmer's 1991
-paper. The test assumptions are cross-sectional independence and
-insignificance of event-induced variance. The standardization smooths the
-effect of event-induced variance comparing to Brown and Warner tests. Also
-standardization incorporates the situation, when high volatility secturity
-dominates the test. The test examines the hypothesis whether the theoretical
-cross-sectional expected value for a given day is equal to zero. It
-calculates statistics even if event window and estimation period are
-overlapped (intersect). The critical values are standard normal. The
-significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
-respectively by *, **, and ***).
+Performs the parametric test for event study, which is descibed in Lamb's
+1995 paper. The author refers to Warner and Brown's (1985) and Henderson's
+(1990) paper, however this test was not observed in niether papers. The test
+statistics are very close to the statistics produced by
+\code{brown_warner_1985} and typically has the same significance. The test
+examines the hypothesis whether the theoretical cross-sectional expected
+value for a given day is equal to zero. It calculates statistics even if
+event window and estimation period are overlapped (intersect). The critical
+values are standard normal. The significance levels of \eqn{\alpha} are 0.1,
+0.05, and 0.01 (marked respectively by *, **, and ***).
 }
 \references{
-\itemize{
-\item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
-price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
-276, 1976.
-\item Boehmer E., Musumeci J., Poulsen A.B. \emph{ Event-study methodology
-under conditions of event-induced variance}. Journal of Financial Economics,
-30(2):253-272, 1991.}
+Lamb R.P. \emph{An Exposure-Based Analysis of Property-Liability
+Insurer Stock Values around Hurricane Andrew}. Journal of Risk and Insurance,
+62(1):111-123, 1995.
 }
 \seealso{
 \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
-\code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
-\code{\link{boehmer}}
+\code{\link{brown_warner_1985}}, \code{\link{t_test}},\code{\link{patell}}
+and \code{\link{boehmer}}
 }
 

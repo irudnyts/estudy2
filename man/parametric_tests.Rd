@@ -20,7 +20,8 @@ first (starting) date of the event window.}
 The default value is \code{TRUE}.}
 
 \item{tests}{the list of tests functions among \code{brown_warner_1980},
-\code{brown_warner_1985}, \code{t_test}, \code{patell}, and \code{boehmer}.}
+\code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer}, and
+\code{lamb}.}
 }
 \value{
 The single table of statistics and significances of all tests.
@@ -31,9 +32,9 @@ the table of statistics and significance.
 }
 \details{
 \code{parametric_tests} performs given tests among \code{brown_warner_1980},
-\code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer} and
-merge result to single table. If \code{all = T} (by default), the function
-ignores the value of \code{tests}.
+\code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer},
+\code{lamb} and merge result to single table. If \code{all = T} (by default),
+the function ignores the value of \code{tests}.
 }
 \references{
 \itemize{
@@ -45,10 +46,14 @@ Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
 induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.
 \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
 price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
-276, 1976.}
+276, 1976.
+\item Lamb R.P. \emph{An Exposure-Based Analysis of Property-Liability
+Insurer Stock Values around Hurricane Andrew}. Journal of Risk and Insurance,
+62(1):111-123, 1995.}
 }
 \seealso{
 \code{\link{brown_warner_1980}}, \code{\link{brown_warner_1985}},
-\code{\link{t_test}}, \code{\link{patell}}, and \code{\link{boehmer}}
+\code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
+\code{\link{lamb}}.
 }
 
