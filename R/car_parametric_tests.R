@@ -10,7 +10,6 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
                                                         daily_lamb_statistics[, 3] > 0, ]
     percentage <- mean(daily_lamb_statistics_tidy[, 3])
 
-    browser()
     statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = T) /
         sqrt(nrow(daily_lamb_statistics_tidy))
     significance <- ""
@@ -35,7 +34,6 @@ car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
                                                             daily_lamb_statistics[, 3] > 0, ]
     percentage <- mean(daily_lamb_statistics_tidy[, 3])
 
-    browser()
     statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = T) /
         sqrt(nrow(daily_lamb_statistics_tidy))
     significance <- ""
