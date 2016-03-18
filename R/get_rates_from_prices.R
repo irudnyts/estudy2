@@ -46,7 +46,6 @@ get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
     UseMethod("get_rates_from_prices")
 }
 
-#' @export
 get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
                                        multi_day = TRUE,
                                        compounding = c("discrete",
@@ -81,7 +80,7 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     if(multi_day) {
         rates <- getMultiDayRates(as.matrix(prices_df[, -1]), continuous, open)
     } else {
-        rates <- getSingleDayRates(as.matrix(prices_df[, -1]), continuous, open)
+        rates <- getSingleDayRates(as.matrix(prices_df[, -1]), continuous)
     }
     # variable for result list
     result <- list()
@@ -97,7 +96,6 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     return(result)
 }
 
-#' @export
 get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
                                              multi_day = TRUE,
                                              compounding = c("discrete",
@@ -119,7 +117,7 @@ get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
     if(multi_day) {
         rates <- getMultiDayRates(as.matrix(prices[, -1]), continuous, open)
     } else {
-        rates <- getSingleDayRates(as.matrix(prices[, -1]), continuous, open)
+        rates <- getSingleDayRates(as.matrix(prices[, -1]), continuous)
     }
 
     # bind with column for rates
@@ -133,7 +131,6 @@ get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
     return(rates)
 }
 
-#' @export
 get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
                                        multi_day = TRUE,
                                        compounding = c("discrete",
@@ -173,7 +170,7 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
     if(multi_day) {
         rates <- getMultiDayRates(as.matrix(prices_df[, -1]), continuous, open)
     } else {
-        rates <- getSingleDayRates(as.matrix(prices_df[, -1]), continuous, open)
+        rates <- getSingleDayRates(as.matrix(prices_df[, -1]), continuous)
     }
 
     if(open) {
