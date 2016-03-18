@@ -1,12 +1,23 @@
 Package: estudy2
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.8
-Date: 2015-07-01
-Author: Who wrote it
+Title: An Implemintation of Parametric and Nonparametric Event Study
+Version: 0.9
+Date: 2016-03-18
+Authors@R: c(
+    person("Iegor", "Rudnytskyi", , "iegor.rudnytskyi@unil.ch", c("aut", "cre")),
+    person("Joel", "Wagner", , "joel.wagner@unil.ch", "aut")
+    )
 Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Description: An implementation of a most commonly used event study methodology,
+    including both parametric and nonparametric tests. The package contains
+    variety aspects of the rate of return estimation (the core calculation is
+    done in C++), as well as three classical market models: mean adjusted
+    retruns, market adjusted returns and single-index market models. The package
+    provides 6 parametric and 6 nonparametric tests, which examin
+    cross-sectional daily abnormal return (see the documentation of the
+    functions for more information). Furthemore, the packege includes tests for
+    the cumulative abnormal returns.
+License: GPL-3
 LazyData: TRUE
 URL: http://github.com/irudnyts/estudy2
 BugReports: http://github.com/irudnyts/estudy2/issues
