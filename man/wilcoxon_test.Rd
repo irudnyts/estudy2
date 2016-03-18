@@ -51,6 +51,6 @@ New York: John Wiley & Sons, 1973.
 \seealso{
 \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
-\code{\link{rank_test}}, and \code{\link{modified_rank_test}}
+\code{\link{rank_test}}, and \code{\link{modified_rank_test}}.
 }
 

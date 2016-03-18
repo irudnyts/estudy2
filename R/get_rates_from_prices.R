@@ -46,6 +46,7 @@ get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
     UseMethod("get_rates_from_prices")
 }
 
+#' @export
 get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
                                        multi_day = TRUE,
                                        compounding = c("discrete",
@@ -96,6 +97,7 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
     return(result)
 }
 
+#' @export
 get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
                                              multi_day = TRUE,
                                              compounding = c("discrete",
@@ -131,6 +133,7 @@ get_rates_from_prices.data.frame <- function(prices, quote = c("Open", "Close"),
     return(rates)
 }
 
+#' @export
 get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
                                        multi_day = TRUE,
                                        compounding = c("discrete",
