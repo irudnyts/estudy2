@@ -4,7 +4,7 @@
 \alias{parametric_tests}
 \title{Returns the result of given parametric tests for event study.}
 \usage{
-parametric_tests(list_of_returns, event_start, event_end, all = T, tests)
+parametric_tests(list_of_returns, event_start, event_end, all = TRUE, tests)
 }
 \arguments{
 \item{list_of_returns}{list of objects of S3 class \code{return}, each element
@@ -33,7 +33,7 @@ the table of statistics and significance.
 \details{
 \code{parametric_tests} performs given tests among \code{brown_warner_1980},
 \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer},
-\code{lamb} and merge result to single table. If \code{all = T} (by default),
+\code{lamb} and merge result to single table. If \code{all = TRUE} (by default),
 the function ignores the value of \code{tests}.
 }
 \references{

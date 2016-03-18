@@ -4,8 +4,8 @@
 \alias{car_parametric_tests}
 \title{Returns the result of given parametric CAR tests for event study.}
 \usage{
-car_parametric_tests(list_of_returns, car_start, car_end, percentage, all = T,
-  tests)
+car_parametric_tests(list_of_returns, car_start, car_end, percentage,
+  all = TRUE, tests)
 }
 \arguments{
 \item{list_of_returns}{list of objects of S3 class \code{return}, each element
@@ -36,7 +36,7 @@ significantly differs from zero.
 \details{
 \code{car_parametric_tests} performs specified tests among
 \code{car_brown_warner_1985} and \code{lamb} and returns the list of these
-tests' results. If \code{all = T} (by default), the function ignores the
+tests' results. If \code{all = TRUE} (by default), the function ignores the
 value of \code{tests}.
 }
 \references{

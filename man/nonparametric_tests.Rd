@@ -4,7 +4,8 @@
 \alias{nonparametric_tests}
 \title{Returns the result for all nonparametric tests for event study.}
 \usage{
-nonparametric_tests(list_of_returns, event_start, event_end, all = T, tests)
+nonparametric_tests(list_of_returns, event_start, event_end, all = TRUE,
+  tests)
 }
 \arguments{
 \item{list_of_returns}{list of objects of S3 class \code{return}, each
@@ -36,7 +37,7 @@ returns the table of statistics and significance of these tests.
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 \code{\link{rank_test}}, \code{\link{modified_rank_test}},
 \code{\link{wilcoxon_test}}, and merge result to single table. If
-\code{all = T} (by default), the function ignores the value of \code{tests}.
+\code{all = TRUE} (by default), the function ignores the value of \code{tests}.
 }
 \references{
 \itemize{
