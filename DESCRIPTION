@@ -7,7 +7,6 @@ Authors@R: c(
     person("Iegor", "Rudnytskyi", , "iegor.rudnytskyi@unil.ch", c("aut", "cre")),
     person("Joel", "Wagner", , "joel.wagner@unil.ch", "aut")
     )
-Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: An implementation of a most commonly used event study methodology,
     including both parametric and nonparametric tests. The package contains
     variety aspects of the rate of return estimation (the core calculation is
