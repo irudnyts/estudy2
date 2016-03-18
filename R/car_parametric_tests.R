@@ -5,7 +5,7 @@
 #'
 #' \code{car_parametric_tests} performs specified tests among
 #' \code{car_brown_warner_1985} and \code{lamb} and returns the list of these
-#' tests' results. If \code{all = T} (by default), the function ignores the
+#' tests' results. If \code{all = TRUE} (by default), the function ignores the
 #' value of \code{tests}.
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each element
@@ -32,8 +32,8 @@
 #' @seealso \code{\link{car_brown_warner_1985}} and \code{\link{car_lamb}}.
 #' @export
 car_parametric_tests <- function(list_of_returns, car_start, car_end,
-                                 percentage, all = T, tests) {
-    if(all == T) {
+                                 percentage, all = TRUE, tests) {
+    if(all == TRUE) {
         tests <- list(car_lamb, car_brown_warner_1985)
     }
     result <- NULL
@@ -86,7 +86,7 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
                                                         daily_lamb_statistics[, 3] > 0, ]
     average_percentage <- mean(daily_lamb_statistics_tidy[, 3])
 
-    statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = T) /
+    statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = TRUE) /
         sqrt(nrow(daily_lamb_statistics_tidy))
     significance <- ""
     significance <- ifelse(test = abs(statistic) >= const_q1,
@@ -141,7 +141,7 @@ car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
                                                             daily_lamb_statistics[, 3] > 0, ]
     average_percentage <- mean(daily_lamb_statistics_tidy[, 3])
 
-    statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = T) /
+    statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = TRUE) /
         sqrt(nrow(daily_lamb_statistics_tidy))
     significance <- ""
     significance <- ifelse(test = abs(statistic) >= const_q1,

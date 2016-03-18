@@ -7,7 +7,7 @@
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 #' \code{\link{rank_test}}, \code{\link{modified_rank_test}},
 #' \code{\link{wilcoxon_test}}, and merge result to single table. If
-#' \code{all = T} (by default), the function ignores the value of \code{tests}.
+#' \code{all = TRUE} (by default), the function ignores the value of \code{tests}.
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each
 #' element of which is treated as a company (security).
@@ -57,8 +57,8 @@
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @export
 nonparametric_tests <- function(list_of_returns, event_start, event_end,
-                                all = T, tests) {
-    if(all == T) {
+                                all = TRUE, tests) {
+    if(all == TRUE) {
         tests <- list(sign_test, generalized_sign_test, corrado_sign_test,
                       rank_test, modified_rank_test, wilcoxon_test)
     }
@@ -69,7 +69,7 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
         } else {
             result <- merge(x = result, y = test(list_of_returns, event_start,
                                                  event_end)[, c(1, 4, 5)],
-                            by = "date", all = T)
+                            by = "date", all = TRUE)
         }
     }
     return(result)
@@ -147,11 +147,11 @@ sign_test <- function(list_of_returns, event_start, event_end) {
             event_binary <- company_event_binary
         } else {
             event_binary <- merge(event_binary, company_event_binary,
-                                  all = T)
+                                  all = TRUE)
         }
     }
     event_number_of_companies <- rowSums(!is.na(event_binary))
-    event_binary_sums <- rowMeans(event_binary, na.rm = T) * ncol(event_binary)
+    event_binary_sums <- rowMeans(event_binary, na.rm = TRUE) * ncol(event_binary)
     event_binary_sums[is.nan(event_binary_sums)] <- NA
     result <- data.frame(date = zoo::index(event_binary),
                          weekday = weekdays(zoo::index(event_binary)),
@@ -258,18 +258,18 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
             estimation_binary <- company_estimation_binary
         } else {
             estimation_binary <- merge(estimation_binary,
-                                       company_estimation_binary, all = T)
+                                       company_estimation_binary, all = TRUE)
         }
         if(is.null(event_binary)) {
             event_binary <- company_event_binary
         } else {
             event_binary <- merge(event_binary, company_event_binary,
-                                    all = T)
+                                    all = TRUE)
         }
     }
-    p_hat <- mean(as.matrix(estimation_binary), na.rm = T)
+    p_hat <- mean(as.matrix(estimation_binary), na.rm = TRUE)
     event_number_of_companies <- rowSums(!is.na(event_binary))
-    event_binary_sums <- rowMeans(event_binary, na.rm = T) * ncol(event_binary)
+    event_binary_sums <- rowMeans(event_binary, na.rm = TRUE) * ncol(event_binary)
     event_binary_sums[is.nan(event_binary_sums)] <- NA
     result <- data.frame(date = zoo::index(event_binary),
                          weekday = weekdays(zoo::index(event_binary)),
@@ -368,20 +368,20 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
                 zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
-        company_median <- median(zoo::coredata(company_full_abnormal), na.rm = T)
+        company_median <- median(zoo::coredata(company_full_abnormal), na.rm = TRUE)
         company_full_sign <- sign(company_full_abnormal - company_median)
         company_event_sign <- sign(company_event_abnormal - company_median)
 
         if(is.null(full_sign)) {
             full_sign <- company_full_sign
         } else {
-            full_sign <- merge(full_sign, company_full_sign, all = T)
+            full_sign <- merge(full_sign, company_full_sign, all = TRUE)
         }
 
         if(is.null(event_sign)) {
             event_sign <- company_event_sign
         } else {
-            event_sign <- merge(event_sign, company_event_sign, all = T)
+            event_sign <- merge(event_sign, company_event_sign, all = TRUE)
         }
 
         delta_full[i] <-
@@ -398,12 +398,12 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
     event_sign <- as.matrix(event_sign)
     number_of_companies <- rowSums(!is.na(full_sign))
     number_of_companies[number_of_companies == 0] <- NA
-    full_sign_sums <- rowMeans(full_sign, na.rm = T) * ncol(full_sign)
+    full_sign_sums <- rowMeans(full_sign, na.rm = TRUE) * ncol(full_sign)
     full_sign_sums[is.nan(full_sign_sums)] <- NA
-    sd_full <- sqrt(1 / mean(delta_full, na.rm = T) *
-                        sum((1 / sqrt(number_of_companies) * full_sign_sums)^2, na.rm = T))
+    sd_full <- sqrt(1 / mean(delta_full, na.rm = TRUE) *
+                        sum((1 / sqrt(number_of_companies) * full_sign_sums)^2, na.rm = TRUE))
 
-    event_sign_sums <- rowMeans(event_sign, na.rm = T) * ncol(event_sign)
+    event_sign_sums <- rowMeans(event_sign, na.rm = TRUE) * ncol(event_sign)
     event_sign_sums[is.nan(event_sign_sums)] <- NA
     event_number_of_companies[event_number_of_companies == 0] <- NA
     statistics <- 1 / sqrt(event_number_of_companies) *
@@ -513,18 +513,18 @@ rank_test <- function(list_of_returns, event_start, event_end) {
         if(is.null(full_rank)) {
             full_rank <- company_full_rank
         } else {
-            full_rank <- merge(full_rank, company_full_rank, all = T)
+            full_rank <- merge(full_rank, company_full_rank, all = TRUE)
         }
 
         if(is.null(event_rank)) {
             event_rank <- company_event_rank
         } else {
-            event_rank <- merge(event_rank, company_event_rank, all = T)
+            event_rank <- merge(event_rank, company_event_rank, all = TRUE)
         }
 
         delta_full[i] <-
             length(company_full_abnormal[!is.na(company_full_abnormal)])
-        avg_rank[i] <- mean(company_full_rank, na.rm = T)
+        avg_rank[i] <- mean(company_full_rank, na.rm = TRUE)
     }
 
     event_number_of_companies <- rowSums(!is.na(event_rank))
@@ -543,18 +543,18 @@ rank_test <- function(list_of_returns, event_start, event_end) {
     event_number_of_companies[event_number_of_companies == 0] <- NA
     avg_rank_full <- matrix(rep(avg_rank, nrow(full_rank)),
                               nrow = nrow(full_rank), ncol = ncol(full_rank),
-                              byrow = T)
+                              byrow = TRUE)
     avg_rank_event <- matrix(rep(avg_rank, nrow(event_rank)),
                              nrow = nrow(event_rank), ncol = ncol(event_rank),
-                             byrow = T)
+                             byrow = TRUE)
 
-    full_differences <- rowMeans(full_rank - avg_rank_full, na.rm = T) * ncol(full_rank)
+    full_differences <- rowMeans(full_rank - avg_rank_full, na.rm = TRUE) * ncol(full_rank)
     full_differences[is.nan(full_differences)] <- NA
 
-    event_differences <- rowMeans(event_rank - avg_rank_event, na.rm = T) * ncol(event_rank)
+    event_differences <- rowMeans(event_rank - avg_rank_event, na.rm = TRUE) * ncol(event_rank)
     event_differences[is.nan(event_differences)] <- NA
 
-    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / number_of_companies * full_differences)^2, na.rm = T))
+    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / number_of_companies * full_differences)^2, na.rm = TRUE))
 
     statistics <- 1 / event_number_of_companies * event_differences / sd_full
     statistics[is.nan(statistics)] <- NA
@@ -663,14 +663,14 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
             full_rank_modif <- company_full_rank_modif
         } else {
             full_rank_modif <- merge(full_rank_modif, company_full_rank_modif,
-                                     all = T)
+                                     all = TRUE)
         }
 
         if(is.null(event_rank_modif)) {
             event_rank_modif <- company_event_rank_modif
         } else {
             event_rank_modif <- merge(event_rank_modif,
-                                      company_event_rank_modif, all = T)
+                                      company_event_rank_modif, all = TRUE)
         }
 
         delta_full[i] <-
@@ -692,13 +692,13 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 
 
 
-    full_differences <- rowMeans(full_rank_modif - 0.5, na.rm = T) * ncol(full_rank_modif)
+    full_differences <- rowMeans(full_rank_modif - 0.5, na.rm = TRUE) * ncol(full_rank_modif)
     full_differences[is.nan(full_differences)] <- NA
 
-    event_differences <- rowMeans(event_rank_modif - 0.5, na.rm = T) * ncol(event_rank_modif)
+    event_differences <- rowMeans(event_rank_modif - 0.5, na.rm = TRUE) * ncol(event_rank_modif)
     event_differences[is.nan(event_differences)] <- NA
 
-    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / sqrt(number_of_companies) * full_differences)^2, na.rm = T))
+    sd_full <- sqrt(1 / mean(delta_full) * sum((1 / sqrt(number_of_companies) * full_differences)^2, na.rm = TRUE))
 
     statistics <- 1 / sqrt(event_number_of_companies) * event_differences / sd_full
     statistics[is.nan(statistics)] <- NA
@@ -791,13 +791,13 @@ wilcoxon_test <- function(list_of_returns, event_start, event_end) {
             event_abnormal <- company_event_abnormal
         } else {
             event_abnormal <- merge(event_abnormal, company_event_abnormal,
-                                    all = T)
+                                    all = TRUE)
         }
     }
     result <- data.frame(date = zoo::index(event_abnormal),
                          weekday = weekdays(zoo::index(event_abnormal)),
                          percentage = rowSums(!is.na(as.matrix(event_abnormal)),
-                                              na.rm = T) /
+                                              na.rm = TRUE) /
                              ncol(event_abnormal) * 100)
 
     event_abnormal <- as.matrix(event_abnormal)
@@ -808,7 +808,7 @@ wilcoxon_test <- function(list_of_returns, event_start, event_end) {
     event_rank[event_abnormal < 0] <- 0
     N <- rowSums(!is.na(event_abs))
     N[N == 0] <- NA
-    statistics <- rowMeans(event_rank, na.rm = T) * ncol(event_rank)
+    statistics <- rowMeans(event_rank, na.rm = TRUE) * ncol(event_rank)
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
     significance[statistics >= qsignrank(1 - 0.1, n = N) |

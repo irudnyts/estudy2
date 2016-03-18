@@ -73,7 +73,7 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
         if(is.null(prices_df)) {
             prices_df <- prices_df_company
         } else {
-            prices_df <- merge(prices_df, prices_df_company, by = "date", all = T)
+            prices_df <- merge(prices_df, prices_df_company, by = "date", all = TRUE)
         }
     }
 
@@ -93,7 +93,7 @@ get_rates_from_prices.list <- function(prices, quote = c("Open", "Close"),
             result[[i]] <- zoo::zoo(rates[, i], prices_df[2:nrow(prices_df), 1])
         }
     }
-    try(names(result) <- names(prices), T)
+    try(names(result) <- names(prices), TRUE)
     return(result)
 }
 
@@ -162,7 +162,7 @@ get_rates_from_prices.zoo <- function(prices, quote = c("Open", "Close"),
                 prices_df <- prices_df_company
             } else {
                 prices_df <- merge(prices_df, prices_df_company, by = "date",
-                                   all = T)
+                                   all = TRUE)
             }
         }
     } else {

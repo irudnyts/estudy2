@@ -299,7 +299,7 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
                        estimation_end = estimation_end,
                        estimation_length = delta)
     } else if(market_model == "mrkt_adj") {
-        data <- merge(rates, regressor, all = T)
+        data <- merge(rates, regressor, all = TRUE)
         estimation_data <- data[complete.cases(data), ]
         estimation_data <- estimation_data[
             zoo::index(estimation_data) >= estimation_start &
@@ -333,7 +333,7 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
 
     } else if(market_model == "sim") {
         if(estimation_method == "ols") {
-            data <- merge(rates, regressor, all = T)
+            data <- merge(rates, regressor, all = TRUE)
             estimation_data <- data[complete.cases(data), ]
             estimation_data <- estimation_data[
                 zoo::index(estimation_data) >= estimation_start &
@@ -424,7 +424,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                        estimation_end = estimation_end,
                        estimation_length = delta)
     } else if(market_model == "mrkt_adj") {
-        data <- merge(rates, regressor, by = "date", all = T)
+        data <- merge(rates, regressor, by = "date", all = TRUE)
         estimation_data <- data[complete.cases(data), ]
         estimation_data <- estimation_data[
             estimation_data[, 1] >= estimation_start &
@@ -455,7 +455,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
 
     } else if(market_model == "sim") {
         if(estimation_method == "ols") {
-            data <- merge(rates, regressor, by = "date", all = T)
+            data <- merge(rates, regressor, by = "date", all = TRUE)
             estimation_data <- data[complete.cases(data), ]
             estimation_data <- estimation_data[
                 estimation_data[, 1] >= estimation_start &

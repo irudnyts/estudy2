@@ -61,7 +61,7 @@ get_prices_from_tickers <- function(..., start, end,
                                                         provider = "yahoo",
                                                         compression = "d",
                                                         retclass = "zoo"),
-                                all = T)
+                                all = TRUE)
             }
         }
         colnames(prices) <- tickers
@@ -80,7 +80,7 @@ get_prices_from_tickers <- function(..., start, end,
             if(is.null(prices)) {
                 prices <- current_prices_df
             } else {
-                prices <- merge(prices, current_prices_df, by = "date", all = T)
+                prices <- merge(prices, current_prices_df, by = "date", all = TRUE)
             }
         }
     }
