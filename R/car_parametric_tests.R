@@ -1,7 +1,20 @@
 #' @export
-car_parametric_tests <- function() {
-
+car_parametric_tests <- function(list_of_returns, car_start, car_end,
+                                 percentage, all = T, tests) {
+    if(all == T) {
+        tests <- list(car_lamb, car_brown_warner_1985)
+    }
+    result <- NULL
+    for(i in seq_along(tests)) {
+        tryCatch(
+            result[i] <- tests[i](list_of_returns, car_start, car_end,
+                                  percentage),
+            error = function(x) warning(paste(x$message,
+                                              "The test will be skip.")))
+    }
+    return(result)
 }
+
 
 #' @export
 car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
