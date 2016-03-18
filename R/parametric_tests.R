@@ -1,4 +1,4 @@
-#' Returns the result for all parametric tests for event study.
+#' Returns the result of given parametric tests for event study.
 #'
 #' Performs main parametric tests for each date in the event window and returns
 #' the table of statistics and significance.
