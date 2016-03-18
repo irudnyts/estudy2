@@ -8,14 +8,14 @@ Authors@R: c(
     person("Joel", "Wagner", , "joel.wagner@unil.ch", "aut")
     )
 Description: An implementation of a most commonly used event study methodology,
-    including both parametric and nonparametric tests. The package contains
-    variety aspects of the rate of return estimation (the core calculation is
-    done in C++), as well as three classical market models: mean adjusted
-    retruns, market adjusted returns and single-index market models. The package
-    provides 6 parametric and 6 nonparametric tests, which examin
+    including both parametric and nonparametric tests. It contains variety
+    aspects of the rate of return estimation (the core calculation is done in
+    C++), as well as three classical market models: mean adjusted retruns,
+    market adjusted returns and single-index market models. There are 6
+    parametric and 6 nonparametric tests provided, which examin
     cross-sectional daily abnormal return (see the documentation of the
-    functions for more information). Furthemore, the packege includes tests for
-    the cumulative abnormal returns.
+    functions for more information). Furthemore, tests for the cumulative
+    abnormal returns are included.
 License: GPL-3
 LazyData: TRUE
 URL: http://github.com/irudnyts/estudy2
