@@ -2,7 +2,7 @@
 % Please edit documentation in R/parametric_tests.R
 \name{parametric_tests}
 \alias{parametric_tests}
-\title{Returns the result for all parametric tests for event study.}
+\title{Returns the result of given parametric tests for event study.}
 \usage{
 parametric_tests(list_of_returns, event_start, event_end, all = T, tests)
 }
