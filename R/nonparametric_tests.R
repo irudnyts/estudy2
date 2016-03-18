@@ -6,9 +6,8 @@
 #' \code{nonparametric_tests} performs given tests among \code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 #' \code{\link{rank_test}}, \code{\link{modified_rank_test}},
-#' \code{\link{generalized_rank_test}}, \code{\link{wilcoxon_test}}, and merge
-#' result to single table. If \code{all = T} (by default), the function ignores
-#' the value of \code{tests}.
+#' \code{\link{wilcoxon_test}}, and merge result to single table. If
+#' \code{all = T} (by default), the function ignores the value of \code{tests}.
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each
 #' element of which is treated as a company (security).
@@ -20,8 +19,8 @@
 #' The default value is \code{TRUE}.
 #' @param tests the list of tests functions among \code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
-#' \code{\link{rank_test}}, \code{\link{modified_rank_test}},
-#' \code{\link{generalized_rank_test}}, and \code{\link{wilcoxon_test}}.
+#' \code{\link{rank_test}}, \code{\link{modified_rank_test}}, and
+#' \code{\link{wilcoxon_test}}.
 #' @return The single table of statistics and significances of all tests.
 #'
 #' @references \itemize{
@@ -55,8 +54,7 @@
 #'
 #' @seealso \code{\link{sign_test}}, \code{\link{generalized_sign_test}},
 #' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
-#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-#' \code{\link{wilcoxon_test}}.
+#' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @export
 nonparametric_tests <- function(list_of_returns, event_start, event_end,
                                 all = T, tests) {
@@ -110,8 +108,7 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #'
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{generalized_sign_test}},
 #' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
-#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-#' \code{\link{wilcoxon_test}}.
+#' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @export
 sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -212,8 +209,7 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 #' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
-#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-#' \code{\link{wilcoxon_test}}.
+#' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @export
 generalized_sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -329,8 +325,7 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{rank_test}},
-#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-#' \code{\link{wilcoxon_test}}.
+#' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @export
 corrado_sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -465,8 +460,7 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{nonparametric_tests}},\code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
-#' \code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-#' \code{\link{wilcoxon_test}}.
+#' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @export
 rank_test <- function(list_of_returns, event_start, event_end) {
 
@@ -611,8 +605,7 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{nonparametric_tests}},\code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
-#' \code{\link{rank_test}}, \code{\link{generalized_rank_test}}, and
-#' \code{\link{wilcoxon_test}}.
+#' \code{\link{rank_test}}, and \code{\link{wilcoxon_test}}.
 #' @export
 modified_rank_test <- function(list_of_returns, event_start, event_end) {
     # Corrado Zivney 1992
@@ -720,8 +713,6 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 }
 
 
-# generalized_rank_test <- function() { }
-
 #' Wilcoxon signed rank test for event study.
 #'
 #' Performs Wilcoxon test on event period for abnormal returns (the latter are
@@ -760,8 +751,7 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
-#' \code{\link{rank_test}}, \code{\link{modified_rank_test}}, and
-#' \code{\link{generalized_rank_test}}
+#' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}.
 #' @export
 wilcoxon_test <- function(list_of_returns, event_start, event_end) {
     # event and estimation period could overlap

@@ -21,8 +21,8 @@ The default value is \code{TRUE}.}
 
 \item{tests}{the list of tests functions among \code{\link{sign_test}},
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
-\code{\link{rank_test}}, \code{\link{modified_rank_test}},
-\code{\link{generalized_rank_test}}, and \code{\link{wilcoxon_test}}.}
+\code{\link{rank_test}}, \code{\link{modified_rank_test}}, and
+\code{\link{wilcoxon_test}}.}
 }
 \value{
 The single table of statistics and significances of all tests.
@@ -35,9 +35,8 @@ returns the table of statistics and significance of these tests.
 \code{nonparametric_tests} performs given tests among \code{\link{sign_test}},
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 \code{\link{rank_test}}, \code{\link{modified_rank_test}},
-\code{\link{generalized_rank_test}}, \code{\link{wilcoxon_test}}, and merge
-result to single table. If \code{all = T} (by default), the function ignores
-the value of \code{tests}.
+\code{\link{wilcoxon_test}}, and merge result to single table. If
+\code{all = T} (by default), the function ignores the value of \code{tests}.
 }
 \references{
 \itemize{
@@ -72,7 +71,6 @@ New York: John Wiley & Sons, 1973.
 \seealso{
 \code{\link{sign_test}}, \code{\link{generalized_sign_test}},
 \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
-\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-\code{\link{wilcoxon_test}}.
+\code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 }
 

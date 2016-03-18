@@ -50,7 +50,6 @@ Quantitative Finance and Accounting, 2:343-358, 1992.
 \seealso{
 \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
-\code{\link{modified_rank_test}}, \code{\link{generalized_rank_test}}, and
-\code{\link{wilcoxon_test}}.
+\code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 }
 
