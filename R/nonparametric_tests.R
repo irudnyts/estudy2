@@ -55,6 +55,36 @@
 #' @seealso \code{\link{sign_test}}, \code{\link{generalized_sign_test}},
 #' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' nonparametric_tests(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 nonparametric_tests <- function(list_of_returns, event_start, event_end,
                                 all = TRUE, tests) {
@@ -109,6 +139,36 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{generalized_sign_test}},
 #' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' sign_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -210,6 +270,36 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 #' \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' generalized_sign_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 generalized_sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -326,6 +416,36 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{rank_test}},
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' corrado_sign_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 corrado_sign_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -461,6 +581,36 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{nonparametric_tests}},\code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' rank_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 rank_test <- function(list_of_returns, event_start, event_end) {
 
@@ -606,6 +756,36 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{nonparametric_tests}},\code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 #' \code{\link{rank_test}}, and \code{\link{wilcoxon_test}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' modified_rank_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 modified_rank_test <- function(list_of_returns, event_start, event_end) {
     # Corrado Zivney 1992
@@ -752,6 +932,36 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{nonparametric_tests}}, \code{\link{sign_test}},
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 #' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' wilcoxon_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 wilcoxon_test <- function(list_of_returns, event_start, event_end) {
     # event and estimation period could overlap
