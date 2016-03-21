@@ -30,6 +30,7 @@
 #' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
 #'                                   end = as.Date("2002-01-01"),
 #'                                   quote = "Close", retclass = "list")
+#'
 #' @export
 get_prices_from_tickers <- function(..., start, end,
                                     quote = c("Open", "Close"),

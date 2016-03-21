@@ -67,10 +67,13 @@ rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
 # Make the length of regressor and stocks to be the same
 rates_indx <- replicate(n = length(tickers), expr = rates_indx)
 # Apply Single Index market model
-returns <- apply_market_model (rates = rates, regressors = rates_indx,
-                               market_model = "sim",
-                               estimation_method = "ols",
-                               estimation_start = as.Date("2001-03-26"),
-                               estimation_end = as.Date("2001-09-10"))
+returns <- apply_market_model(rates = rates, regressors = rates_indx,
+                              market_model = "sim",
+                              estimation_method = "ols",
+                              estimation_start = as.Date("2001-03-26"),
+                              estimation_end = as.Date("2001-09-10"))
+}
+\seealso{
+\code{\link{returns}}
 }
 

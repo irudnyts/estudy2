@@ -38,6 +38,36 @@
 #' @seealso \code{\link{brown_warner_1980}}, \code{\link{brown_warner_1985}},
 #' \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
 #' \code{\link{lamb}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' parametric_tests(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE,
                              tests) {
@@ -93,6 +123,36 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1985}},
 #' \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
 #' \code{\link{lamb}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' brown_warner_1980(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -204,6 +264,36 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
 #' \code{\link{lamb}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' brown_warner_1985(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -318,6 +408,36 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{patell}}, \code{\link{boehmer}},
 #' and \code{\link{lamb}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' t_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 t_test <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -425,6 +545,36 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, and
 #' \code{\link{boehmer}}, and \code{\link{lamb}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' patell(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 patell <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -574,6 +724,36 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{t_test}}, \code{\link{patell}},
 #' and \code{\link{lamb}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' boehmer(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 boehmer <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
@@ -716,7 +896,37 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 #'
 #' @seealso \code{\link{parametric_tests}}, \code{\link{brown_warner_1980}},
 #' \code{\link{brown_warner_1985}}, \code{\link{t_test}},\code{\link{patell}}
-#' and \code{\link{boehmer}}
+#' and \code{\link{boehmer}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' lamb(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#'
 #' @export
 lamb <- function(list_of_returns, event_start, event_end) {
     # check event_start and event_end for class and value validity
