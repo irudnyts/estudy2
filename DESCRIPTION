@@ -1,6 +1,6 @@
 Package: estudy2
 Type: Package
-Title: An Implemintation of Parametric and Nonparametric Event Study
+Title: An Implementation of Parametric and Nonparametric Event Study
 Version: 0.9
 Date: 2016-03-18
 Authors@R: c(
@@ -10,11 +10,11 @@ Authors@R: c(
 Description: An implementation of a most commonly used event study methodology,
     including both parametric and nonparametric tests. It contains variety
     aspects of the rate of return estimation (the core calculation is done in
-    C++), as well as three classical market models: mean adjusted retruns,
+    C++), as well as three classical market models: mean adjusted returns,
     market adjusted returns and single-index market models. There are 6
-    parametric and 6 nonparametric tests provided, which examin
+    parametric and 6 nonparametric tests provided, which examine
     cross-sectional daily abnormal return (see the documentation of the
-    functions for more information). Furthemore, tests for the cumulative
+    functions for more information). Furthermore, tests for the cumulative
     abnormal returns are included.
 License: GPL-3
 LazyData: TRUE
