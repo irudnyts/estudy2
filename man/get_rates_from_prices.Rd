@@ -18,11 +18,11 @@ By default is "Open".}
 \item{multi_day}{logical, is rate of return between more than 1 day is
 allowed?}
 
-\item{compounding}{character, defines the type of compounting: "discrete" or
+\item{compounding}{character, defines the type of compounding: "discrete" or
 "continuous". By default is "continuous".}
 }
 \value{
-The rates of retunrs of the same class as prices.
+The rates of returns of the same class as prices.
 }
 \description{
 \code{get_rates_from_prices} is used for computing rates of returns from
@@ -34,10 +34,10 @@ The generic function, dispatched for such classes as \code{list},
 
 The calculation is made in C++ (\code{Rcpp}) for high performance.
 
-If \code{prices} is data.frmae, than the first column should be of the class
+If \code{prices} is data.frame, than the first column should be of the class
 Date and contains ordered dates of prices.
 
-The correspondens between dates and values of the rates depends on the quote,
+The correspondence between dates and values of the rates depends on the quote,
 which can be either Open or Close. If the quote is Open, than the value of
 rate belongs to the first date. Otherwise, to the last. This is also applied
 for the algorithm, if multiday is allowed: the value of the rate of return
@@ -45,12 +45,12 @@ is assigned to the last day in case of Close price, and to the first day in
 in case of Open quote.
 
 The \code{multi_day} parameter specifies what to do with missed values and
-handling of the weekend. If it is TRUE, the function ignores misseing values
+handling of the weekend. If it is TRUE, the function ignores missing values
 and the rates are calculated between non-missing prices. If it is FALSE, than
 only one-day period rates of return are computed (between two consecutive
 calendar dates).
 
-The function uses either continuous (by default) or descrete (periodic)
+The function uses either continuous (by default) or discrete (periodic)
 compounding.
 }
 \examples{

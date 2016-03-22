@@ -28,13 +28,13 @@ This test is application of the simple binomial test to the event study,
 which indicates whether the cross-sectional frequency of positive abnormal
 returns is significantly different from 0.5. This test is stable
 to outliers, in other words allows to check if the result is driven by few
-companies with extremly large abnomal performance. For this test the
+companies with extremely large abnormal performance. For this test the
 estimation period and event period must not overlap, otherwise an error
-occurrs. The test statistic is assumed to have a normal distribution in
+occurs. The test statistic is assumed to have a normal distribution in
 approximation under null hypothesis, if the number of securities is large.
 Typically is used together with parametric tests. The test is well-specified
-for the case, when cross-sectional abnoral returns are not symmetric.
-Also this procedure is less sensative to extreme returns than the rank test.
+for the case, when cross-sectional abnormal returns are not symmetric.
+Also this procedure is less sensitive to extreme returns than the rank test.
 The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01
 (marked respectively by *, **, and ***).
 }

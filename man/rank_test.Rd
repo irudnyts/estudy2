@@ -25,14 +25,14 @@ rank test.
 }
 \details{
 This procedure uses ranks of abnormal returns to examine significance of each
-day in event window. In order to get ranks of correspoding abnormal returns,
+day in event window. In order to get ranks of corresponding abnormal returns,
 the procedure uses regular R function \code{\link{rank}} with parameter
 \code{ties.method = "average"} and \code{na.last = "keep"}. For this test the
 estimation period and event period must not overlap, otherwise an error
-occurrs. The test statistic is assumed to have a normal distribution (as an
+occurs. The test statistic is assumed to have a normal distribution (as an
 approximation). The test is well-specified for the case, when cross-sectional
-abnoral returns are not symmetric. The test is stable to variance increase
-during event window. This test is more sensative to extreme values than sign
+abnormal returns are not symmetric. The test is stable to variance increase
+during event window. This test is more sensitive to extreme values than sign
 test. For data with missed data see the \code{\link{modified_rank_test}}. The
 significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 respectively by *, **, and ***).
@@ -69,12 +69,12 @@ rank_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
 \references{
 \itemize{
 \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
-Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
+Performance in Event Studies}. Journal of Financial Economics 23:385-395,
 1989.
 \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 Quantitative Finance and Accounting, 2:343-358, 1992.
 \item Campbell C.J., Wasley C.E. \emph{Measuring Security Price Performance
-Using Daily NASDAQ Retrurns}. Journal of Financial Economics 33:73-92, 1993.
+Using Daily NASDAQ Returns}. Journal of Financial Economics 33:73-92, 1993.
 \item Savickas R. \emph{Event-Induced Volatility and Tests for Abnormal
 Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 }

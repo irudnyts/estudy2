@@ -35,16 +35,16 @@
 #' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 #' Quantitative Finance and Accounting, 2:343-358, 1992.
 #' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
-#' Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
+#' Performance in Event Studies}. Journal of Financial Economics 23:385-395,
 #' 1989.
 #' \item Campbell C.J., Wasley C.E. \emph{Measuring Security Price Performance
-#' Using Daily NASDAQ Retrurns}. Journal of Financial Economics 33:73-92, 1993.
+#' Using Daily NASDAQ Returns}. Journal of Financial Economics 33:73-92, 1993.
 #' \item Savickas R. \emph{Event-Induced Volatility and Tests for Abnormal
 #' Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 #' \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 #' Correlation of Abnormal Returns}. The Review of Financial Studies,
 #' 23(11):3996-4025, 2010.
-#' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
+#' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Methods}.
 #' Biometrics Bulletin 1(6):80-83, 1945.
 #' \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks}.
 #' San Francisco: Holden-Day, 1975.
@@ -114,13 +114,13 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #' which indicates whether the cross-sectional frequency of positive abnormal
 #' returns is significantly different from 0.5. This test is stable
 #' to outliers, in other words allows to check if the result is driven by few
-#' companies with extremly large abnomal performance. For this test the
+#' companies with extremely large abnormal performance. For this test the
 #' estimation period and event period must not overlap, otherwise an error
-#' occurrs. The test statistic is assumed to have a normal distribution in
+#' occurs. The test statistic is assumed to have a normal distribution in
 #' approximation under null hypothesis, if the number of securities is large.
 #' Typically is used together with parametric tests. The test is well-specified
-#' for the case, when cross-sectional abnoral returns are not symmetric.
-#' Also this procedure is less sensative to extreme returns than the rank test.
+#' for the case, when cross-sectional abnormal returns are not symmetric.
+#' Also this procedure is less sensitive to extreme returns than the rank test.
 #' The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01
 #' (marked respectively by *, **, and ***).
 #'
@@ -242,13 +242,13 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #' which indicates whether the cross-sectional frequency of positive abnormal
 #' returns is significantly different from the expected. This test is stable
 #' to outliers, in other words allows to check if the result is driven by few
-#' companies with extremly large abnomal performance. For this test the
+#' companies with extremely large abnormal performance. For this test the
 #' estimation period and event period must not overlap, otherwise an error
-#' occurrs. This test instead of using naive value of expected frequency 0.5
+#' occurs. This test instead of using naive value of expected frequency 0.5
 #' uses an estimate from the estimation period. The test statistic is assumed to
 #' have a normal distribution. Typically is used together with parametric tests.
-#' The test is well-specified for the case, when cross-sectional abnoral returns
-#' are not symmetric. Also this procedure is less sensative to extreme returns
+#' The test is well-specified for the case, when cross-sectional abnormal returns
+#' are not symmetric. Also this procedure is less sensitive to extreme returns
 #' than the rank test. The significance levels of \eqn{\alpha} are 0.1, 0.05,
 #' and 0.01 (marked respectively by *, **, and ***).
 #'
@@ -387,13 +387,13 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #' The implementation of nonparametric test, described in Corrado and Zivney's
 #' 1992 paper.
 #'
-#' Performs the nonparametric test for event study, which is descibed in Corrado
+#' Performs the nonparametric test for event study, which is described in Corrado
 #' and Zivney's 1992 paper. This test is similar to procedure, described in
 #' Brown and Warner's paper 1985 (t-ratio), but instead of using abnormal
 #' returns, the test uses \eqn{G_{i,t} = sign(A_{i,t} - median(A_i))}.
 #' \code{sign} and \code{median} are ones, which have the same definition as R
 #' functions. For this test the estimation period and event period must not
-#' overlap, otherwise an error occurrs. The sign test procedure avoids the
+#' overlap, otherwise an error occurs. The sign test procedure avoids the
 #' misspecification of tests, which assume symmetry around zero of abnormal
 #' returns (the median equals to zero). For a single day the performance of this
 #' test is proven to be better than classical Brown and Warner's test (without
@@ -546,14 +546,14 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' rank test.
 #'
 #' This procedure uses ranks of abnormal returns to examine significance of each
-#' day in event window. In order to get ranks of correspoding abnormal returns,
+#' day in event window. In order to get ranks of corresponding abnormal returns,
 #' the procedure uses regular R function \code{\link{rank}} with parameter
 #' \code{ties.method = "average"} and \code{na.last = "keep"}. For this test the
 #' estimation period and event period must not overlap, otherwise an error
-#' occurrs. The test statistic is assumed to have a normal distribution (as an
+#' occurs. The test statistic is assumed to have a normal distribution (as an
 #' approximation). The test is well-specified for the case, when cross-sectional
-#' abnoral returns are not symmetric. The test is stable to variance increase
-#' during event window. This test is more sensative to extreme values than sign
+#' abnormal returns are not symmetric. The test is stable to variance increase
+#' during event window. This test is more sensitive to extreme values than sign
 #' test. For data with missed data see the \code{\link{modified_rank_test}}. The
 #' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
@@ -568,12 +568,12 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #'
 #' @references \itemize{
 #' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
-#' Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
+#' Performance in Event Studies}. Journal of Financial Economics 23:385-395,
 #' 1989.
 #' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 #' Quantitative Finance and Accounting, 2:343-358, 1992.
 #' \item Campbell C.J., Wasley C.E. \emph{Measuring Security Price Performance
-#' Using Daily NASDAQ Retrurns}. Journal of Financial Economics 33:73-92, 1993.
+#' Using Daily NASDAQ Returns}. Journal of Financial Economics 33:73-92, 1993.
 #' \item Savickas R. \emph{Event-Induced Volatility and Tests for Abnormal
 #' Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 #' }
@@ -723,16 +723,16 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #' Modified rank test for event study.
 #'
 #' This test, the modification of the original rank test, proposed by Corrado
-#' (1989), is abapted to missing values in abnormal returns.
+#' (1989), is adapted to missing values in abnormal returns.
 #'
-#' In addition to original rank test, the procedure devides corresponding ranks
+#' In addition to original rank test, the procedure divides corresponding ranks
 #' on number of nonmissing returns plus one for each security. This leads to
-#' order statistics with uniform destribution. In limit overall statistics under
-#' null hypothesis is aproximately noramly distributed. For this test the
+#' order statistics with uniform distribution. In limit overall statistics under
+#' null hypothesis is approximately normally distributed. For this test the
 #' estimation period and event period must not overlap, otherwise an error
-#' occurrs. The test is well-specified for the case, when cross-sectional
-#' abnoral returns are not symmetric. The test is stable to variance increase
-#' during event window. This test is more sensative to extreme values than sign
+#' occurs. The test is well-specified for the case, when cross-sectional
+#' abnormal returns are not symmetric. The test is stable to variance increase
+#' during event window. This test is more sensitive to extreme values than sign
 #' test. The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
 #'
@@ -896,16 +896,16 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #' Wilcoxon signed rank test for event study.
 #'
 #' Performs Wilcoxon test on event period for abnormal returns (the latter are
-#' treted as differences).
+#' treated as differences).
 #'
 #' The estimation periods can overlap with event windows, because the procedure
 #' takes into account only abnormal returns from event window. The test has the
-#' same algorithm as bulit-in \code{R} \code{\link{wilcox.test}}. The critical
+#' same algorithm as built-in \code{R} \code{\link{wilcox.test}}. The critical
 #' values are exact values, which are obtained from \code{\link{qsignrank}}. The
 #' algorithm is the following: for each day in event window the cross-sectional
 #' abnormal returns treated as sample of differences. Firstly the absolute value
 #' of these differences are computed, and corresponding ranks of non-zero values
-#' are calculated. The test statistic is the sum of ranks, corresponoding to
+#' are calculated. The test statistic is the sum of ranks, corresponding to
 #' positive abnormal returns. The significance levels of \eqn{\alpha} are 0.1,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
@@ -918,7 +918,7 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #' @return The table of statistics and significances of the test.
 #'
 #' @references \itemize{
-#' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
+#' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Methods}.
 #' Biometrics Bulletin 1(6):80-83, 1945.
 #' \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 #' Correlation of Abnormal Returns}. The Review of Financial Studies,

@@ -93,17 +93,17 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE
 
 #' Brown and Warner parametric test (1980).
 #'
-#' Parametric test for event study, which is descibed in Brown and Warner 1980
+#' Parametric test for event study, which is described in Brown and Warner 1980
 #' paper.
 #'
-#' Performs the parametric test for event study, which is descibed in Brown and
+#' Performs the parametric test for event study, which is described in Brown and
 #' Warner 1980 paper. The test assumes cross-sectional independence and
 #' insignificance of event-induced variance. The test examines the hypothesis
 #' whether the theoretical cross-sectional expected value for a given day is
 #' equal to zero. The standard deviation in statistics is calculated as the
 #' cross-sectional mean of companies' variances, estimated on estimation period.
 #' It calculates statistics even if event window and estimation period are
-#' overlapped (intersect). The critical values are Student's t-destributed (no
+#' overlapped (intersect). The critical values are Student's t-distributed (no
 #' approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***). It was designed to
 #' measure monthly data: for daily data look at Brown and Warner 1985 paper and
@@ -235,10 +235,10 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
 #' Brown and Warner parametric test (1985).
 #'
-#' Parametric test for event study, which is descibed in Brown and Warner 1985
+#' Parametric test for event study, which is described in Brown and Warner 1985
 #' paper.
 #'
-#' Performs the parametric test for event study, which is descibed in Brown and
+#' Performs the parametric test for event study, which is described in Brown and
 #' Warner 1985 paper, which is traditional event study approach. Assumes
 #' cross-sectional independence and non-robust to event-induced variance. The
 #' test examines the hypothesis whether the theoretical cross-sectional expected
@@ -246,7 +246,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #' is estimated as the cross-sectional standard deviation of companies' means,
 #' estimated on estimation period. It calculates statistics even if event window
 #' and estimation period are overlapped (intersect). The critical values are
-#' Student's t-destributed (no approximation in limit). The significance levels
+#' Student's t-distributed (no approximation in limit). The significance levels
 #' of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and
 #' ***).
 #'
@@ -381,12 +381,12 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #'
 #' Performs the t-test for event study. The procedure of this test is described
 #' in Boehmer 1991, sometimes is called cross-sectional test. Assumes
-#' independens of securities, however is stable to event-induced variance. This
+#' independence of securities, however is stable to event-induced variance. This
 #' test examines the equality of cross-sectional expected value to zero. The
 #' standard deviation, which is used in this test, is simply cross-section
 #' standard deviation for given day in the event window. It calculates
 #' statistics even if event window and estimation period are overlapped
-#' (intersect). The critical values are Student's t-destributed (no
+#' (intersect). The critical values are Student's t-distributed (no
 #' approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
@@ -510,15 +510,15 @@ t_test <- function(list_of_returns, event_start, event_end) {
 
 #' Patell's parametric test (1976).
 #'
-#' Parametric test for event study, which is descibed in Patell's 1976
+#' Parametric test for event study, which is described in Patell's 1976
 #' paper.
 #'
-#' Performs the parametric test for event study, which is descibed in Patell's
+#' Performs the parametric test for event study, which is described in Patell's
 #' 1976 paper, which is called standardized-residuals method in Boehmer's 1991
 #' paper. The test assumptions are cross-sectional independence and
 #' insignificance of event-induced variance. The standardization smooths the
 #' effect of event-induced variance comparing to Brown and Warner tests. Also
-#' standardization incorporates the situation, when high volatility secturity
+#' standardization incorporates the situation, when high volatility security
 #' dominates the test. The test examines the hypothesis whether the theoretical
 #' cross-sectional expected value for a given day is equal to zero. It
 #' calculates statistics even if event window and estimation period are
@@ -691,12 +691,12 @@ patell <- function(list_of_returns, event_start, event_end) {
 
 #' Boehmer's parametric test (1991).
 #'
-#' Parametric test for event study, which is descibed in Boehmer's 1991
+#' Parametric test for event study, which is described in Boehmer's 1991
 #' paper.
 #'
-#' Performs the parametric test for event study, which is descibed in Boehmer's
+#' Performs the parametric test for event study, which is described in Boehmer's
 #' 1991 paper, also called hybrid test or standardized cross-sectional test.
-#' This test performs t-test based on Patell's standardized resuduals. By
+#' This test performs t-test based on Patell's standardized residuals. By
 #' combining Patell's and t- tests this test allows event-induced variance
 #' changes, but still assumes cross-sectional independence. The test examines
 #' the hypothesis whether the theoretical cross-sectional expected value for a
@@ -868,12 +868,12 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 
 #' Lamb's parametric test (1995).
 #'
-#' Parametric test for event study, which is descibed in Lamb's 1995
+#' Parametric test for event study, which is described in Lamb's 1995
 #' paper.
 #'
-#' Performs the parametric test for event study, which is descibed in Lamb's
+#' Performs the parametric test for event study, which is described in Lamb's
 #' 1995 paper. The author refers to Warner and Brown's (1985) and Henderson's
-#' (1990) paper, however this test was not observed in niether papers. The test
+#' (1990) paper, however this test was not observed in neither papers. The test
 #' statistics are very close to the statistics produced by
 #' \code{brown_warner_1985} and typically has the same significance. The test
 #' examines the hypothesis whether the theoretical cross-sectional expected

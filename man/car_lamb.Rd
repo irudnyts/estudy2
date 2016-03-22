@@ -31,8 +31,8 @@ cumulative abnormal return (CAR) significantly differs from zero.
 \details{
 This function performs the test, proposed by Lamb (1995) to investigate
 whether CAR significantly differs from zero. This tests uses the variance,
-specified by Lamb (1995). The advantage of this test is allowence for
-correlated cross-sectional returns. Test statistic is close enogth to statistic,
+specified by Lamb (1995). The advantage of this test is allowance for
+correlated cross-sectional returns. Test statistic is close enough to statistic,
 produced by \code{\link{car_brown_warner_1985}}. The critical
 values are standard normal. The significance levels of \eqn{\alpha} are 0.1,
 0.05, and 0.01 (marked respectively by *, **, and ***).

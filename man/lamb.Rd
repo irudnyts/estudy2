@@ -20,13 +20,13 @@ first (starting) date of the event window.}
 The table of statistics and significances of the test.
 }
 \description{
-Parametric test for event study, which is descibed in Lamb's 1995
+Parametric test for event study, which is described in Lamb's 1995
 paper.
 }
 \details{
-Performs the parametric test for event study, which is descibed in Lamb's
+Performs the parametric test for event study, which is described in Lamb's
 1995 paper. The author refers to Warner and Brown's (1985) and Henderson's
-(1990) paper, however this test was not observed in niether papers. The test
+(1990) paper, however this test was not observed in neither papers. The test
 statistics are very close to the statistics produced by
 \code{brown_warner_1985} and typically has the same significance. The test
 examines the hypothesis whether the theoretical cross-sectional expected

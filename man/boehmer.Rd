@@ -20,13 +20,13 @@ first (starting) date of the event window.}
 The table of statistics and significances of the test.
 }
 \description{
-Parametric test for event study, which is descibed in Boehmer's 1991
+Parametric test for event study, which is described in Boehmer's 1991
 paper.
 }
 \details{
-Performs the parametric test for event study, which is descibed in Boehmer's
+Performs the parametric test for event study, which is described in Boehmer's
 1991 paper, also called hybrid test or standardized cross-sectional test.
-This test performs t-test based on Patell's standardized resuduals. By
+This test performs t-test based on Patell's standardized residuals. By
 combining Patell's and t- tests this test allows event-induced variance
 changes, but still assumes cross-sectional independence. The test examines
 the hypothesis whether the theoretical cross-sectional expected value for a

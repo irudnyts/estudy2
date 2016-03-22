@@ -21,17 +21,17 @@ The table of statistics and significances of the test.
 }
 \description{
 Performs Wilcoxon test on event period for abnormal returns (the latter are
-treted as differences).
+treated as differences).
 }
 \details{
 The estimation periods can overlap with event windows, because the procedure
 takes into account only abnormal returns from event window. The test has the
-same algorithm as bulit-in \code{R} \code{\link{wilcox.test}}. The critical
+same algorithm as built-in \code{R} \code{\link{wilcox.test}}. The critical
 values are exact values, which are obtained from \code{\link{qsignrank}}. The
 algorithm is the following: for each day in event window the cross-sectional
 abnormal returns treated as sample of differences. Firstly the absolute value
 of these differences are computed, and corresponding ranks of non-zero values
-are calculated. The test statistic is the sum of ranks, corresponoding to
+are calculated. The test statistic is the sum of ranks, corresponding to
 positive abnormal returns. The significance levels of \eqn{\alpha} are 0.1,
 0.05, and 0.01 (marked respectively by *, **, and ***).
 }
@@ -66,7 +66,7 @@ wilcoxon_test(returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
 }
 \references{
 \itemize{
-\item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
+\item Wilcoxon F. \emph{Individual Comparisons by Ranking Methods}.
 Biometrics Bulletin 1(6):80-83, 1945.
 \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 Correlation of Abnormal Returns}. The Review of Financial Studies,

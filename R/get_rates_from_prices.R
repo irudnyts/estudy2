@@ -8,10 +8,10 @@
 #'
 #' The calculation is made in C++ (\code{Rcpp}) for high performance.
 #'
-#' If \code{prices} is data.frmae, than the first column should be of the class
+#' If \code{prices} is data.frame, than the first column should be of the class
 #' Date and contains ordered dates of prices.
 #'
-#' The correspondens between dates and values of the rates depends on the quote,
+#' The correspondence between dates and values of the rates depends on the quote,
 #' which can be either Open or Close. If the quote is Open, than the value of
 #' rate belongs to the first date. Otherwise, to the last. This is also applied
 #' for the algorithm, if multiday is allowed: the value of the rate of return
@@ -19,12 +19,12 @@
 #' in case of Open quote.
 #'
 #' The \code{multi_day} parameter specifies what to do with missed values and
-#' handling of the weekend. If it is TRUE, the function ignores misseing values
+#' handling of the weekend. If it is TRUE, the function ignores missing values
 #' and the rates are calculated between non-missing prices. If it is FALSE, than
 #' only one-day period rates of return are computed (between two consecutive
 #' calendar dates).
 #'
-#' The function uses either continuous (by default) or descrete (periodic)
+#' The function uses either continuous (by default) or discrete (periodic)
 #' compounding.
 #'
 #' @param prices the object either of class \code{list}, or \code{data.frame},
@@ -34,9 +34,9 @@
 #' By default is "Open".
 #' @param multi_day logical, is rate of return between more than 1 day is
 #' allowed?
-#' @param compounding character, defines the type of compounting: "discrete" or
+#' @param compounding character, defines the type of compounding: "discrete" or
 #' "continuous". By default is "continuous".
-#' @return The rates of retunrs of the same class as prices.
+#' @return The rates of returns of the same class as prices.
 #'
 #' @examples
 #' # Download the historical prices for ten European insurance companies' stocks

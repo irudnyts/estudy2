@@ -21,17 +21,17 @@ The table of statistics and significances of the test.
 }
 \description{
 This test, the modification of the original rank test, proposed by Corrado
-(1989), is abapted to missing values in abnormal returns.
+(1989), is adapted to missing values in abnormal returns.
 }
 \details{
-In addition to original rank test, the procedure devides corresponding ranks
+In addition to original rank test, the procedure divides corresponding ranks
 on number of nonmissing returns plus one for each security. This leads to
-order statistics with uniform destribution. In limit overall statistics under
-null hypothesis is aproximately noramly distributed. For this test the
+order statistics with uniform distribution. In limit overall statistics under
+null hypothesis is approximately normally distributed. For this test the
 estimation period and event period must not overlap, otherwise an error
-occurrs. The test is well-specified for the case, when cross-sectional
-abnoral returns are not symmetric. The test is stable to variance increase
-during event window. This test is more sensative to extreme values than sign
+occurs. The test is well-specified for the case, when cross-sectional
+abnormal returns are not symmetric. The test is stable to variance increase
+during event window. This test is more sensitive to extreme values than sign
 test. The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 respectively by *, **, and ***).
 }

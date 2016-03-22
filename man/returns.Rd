@@ -9,7 +9,7 @@ returns(rates, regressor, market_model = c("mean_adj", "mrkt_adj", "sim"),
 }
 \arguments{
 \item{rates}{an object of class either \code{zoo} or \code{data.frame}
-giving observed rates of returns of secturity.}
+giving observed rates of returns of security.}
 
 \item{regressor}{an object of the same class as \code{rates} representing
 rates of returns of the market model, if needed.}
@@ -31,14 +31,14 @@ An object of S3 class \code{returns}, which contains the following
 fields:
 \itemize{
 \item observed: the object of class \code{zoo}, containing observed rates of
-retunrs.
+returns.
 \item predicted: the object of class \code{zoo}, containing predicted by
 market model rates of returns.
 \item lower95CI: the lower bound of the 95\% Confidence Interval for
 predicted rates of returns.
 \item upper95CI: the upper bound of the 95\% Confidence Interval for
 predicted rates of returns.
-\item abnormal: the object of class \code{zoo}, containing abnoraml returns.
+\item abnormal: the object of class \code{zoo}, containing abnormal returns.
 \item regressor: the object of class \code{zoo}, containing rates of
 regressor (typically market index).
 \item market_model: the code name of the market model.
@@ -47,7 +47,7 @@ regressor (typically market index).
 SIM).
 \item full_name_estimation_method: full name of estimation method (applied
 only for SIM).
-\item coefficients: coeffitients \eqn{\alpha} and \eqn{\beta} for SIM market model
+\item coefficients: coefficients \eqn{\alpha} and \eqn{\beta} for SIM market model
 (applied only for SIM).
 \item estimation_start: the end of estimation period.
 \item estimation_end: the end of estimation period.
@@ -55,19 +55,19 @@ only for SIM).
 }
 }
 \description{
-Constucts an \code{returns} class object with correspoding fields.
+Constructs an \code{returns} class object with corresponding fields.
 }
 \details{
 The constructor is the generic function, dispatched for classes \code{zoo}
 \code{data.frame}. Parameters \code{rates} and \code{regressor} should be
 objects of the same class (\code{zoo} or \code{data.frame}). There are three
 market model implemented. \code{mean_adj} stands for Mean Adjusted Market
-model, which is the avarage of returns during the estimation period.
+model, which is the average of returns during the estimation period.
 \code{mrkt_adj} represents Market Adjusted Market model: the securities' rate
 of returns are simply market index rates of returns (in terms of parameters -
 \code{regressor}). Finally, \code{sim} stands for the Single Index Market
 model. For this model only Ordinary Least Squares \code{estimation_method} is
-currently implemented. All models are desctibed in Brown and Warner (1985).
+currently implemented. All models are described in Brown and Warner (1985).
 }
 \examples{
 # Download the historical prices for ten European insurance companies' stocks

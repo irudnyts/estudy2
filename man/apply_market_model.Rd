@@ -12,7 +12,7 @@ apply_market_model(rates, regressors, market_model = c("mean_adj", "mrkt_adj",
 rates of returns of securities.}
 
 \item{regressors}{an object of the same class as \code{rates} containing
-regressors. Can be ommited, if market model is \code{mean_adj}.
+regressors. Can be omitted, if market model is \code{mean_adj}.
 \code{regressors} must have the same number of components as \code{rates}.}
 
 \item{market_model}{a character indicating the market model among

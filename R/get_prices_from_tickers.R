@@ -3,9 +3,9 @@
 #' Returns the daily Open or Close prices between \code{start} and \code{end}
 #' date for given tickers.
 #'
-#' This function uses the function \code{get.hist.quote} form packege
-#' \code{tseries}. The providor set automatically to Yahoo Finance. The function
-#' returns the data in different class-conrainers: list of zoo's, zoo, or
+#' This function uses the function \code{get.hist.quote} form package
+#' \code{tseries}. The provider set automatically to Yahoo Finance. The function
+#' returns the data in different class-containers: list of zoo's, zoo, or
 #' data.frame.
 #'
 #' @param ... character vectors indicating the tickers (should be valid in Yahoo

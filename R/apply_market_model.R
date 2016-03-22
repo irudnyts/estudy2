@@ -10,7 +10,7 @@
 #' @param rates \code{list}, \code{data.frame}, \code{zoo} object containing
 #' rates of returns of securities.
 #' @param regressors an object of the same class as \code{rates} containing
-#' regressors. Can be ommited, if market model is \code{mean_adj}.
+#' regressors. Can be omitted, if market model is \code{mean_adj}.
 #' \code{regressors} must have the same number of components as \code{rates}.
 #' @param market_model a character indicating the market model among
 #' \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.
@@ -231,21 +231,21 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
 
 #' Constructor for a S3 returns class object
 #'
-#' Constucts an \code{returns} class object with correspoding fields.
+#' Constructs an \code{returns} class object with corresponding fields.
 #'
 #' The constructor is the generic function, dispatched for classes \code{zoo}
 #' \code{data.frame}. Parameters \code{rates} and \code{regressor} should be
 #' objects of the same class (\code{zoo} or \code{data.frame}). There are three
 #' market model implemented. \code{mean_adj} stands for Mean Adjusted Market
-#' model, which is the avarage of returns during the estimation period.
+#' model, which is the average of returns during the estimation period.
 #' \code{mrkt_adj} represents Market Adjusted Market model: the securities' rate
 #' of returns are simply market index rates of returns (in terms of parameters -
 #' \code{regressor}). Finally, \code{sim} stands for the Single Index Market
 #' model. For this model only Ordinary Least Squares \code{estimation_method} is
-#' currently implemented. All models are desctibed in Brown and Warner (1985).
+#' currently implemented. All models are described in Brown and Warner (1985).
 #'
 #' @param rates an object of class either \code{zoo} or \code{data.frame}
-#' giving observed rates of returns of secturity.
+#' giving observed rates of returns of security.
 #' @param regressor an object of the same class as \code{rates} representing
 #' rates of returns of the market model, if needed.
 #' @param market_model a character indicating the market model among
@@ -260,14 +260,14 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
 #' fields:
 #' \itemize{
 #' \item observed: the object of class \code{zoo}, containing observed rates of
-#' retunrs.
+#' returns.
 #' \item predicted: the object of class \code{zoo}, containing predicted by
 #' market model rates of returns.
 #' \item lower95CI: the lower bound of the 95\% Confidence Interval for
 #' predicted rates of returns.
 #' \item upper95CI: the upper bound of the 95\% Confidence Interval for
 #' predicted rates of returns.
-#' \item abnormal: the object of class \code{zoo}, containing abnoraml returns.
+#' \item abnormal: the object of class \code{zoo}, containing abnormal returns.
 #' \item regressor: the object of class \code{zoo}, containing rates of
 #' regressor (typically market index).
 #' \item market_model: the code name of the market model.
@@ -276,7 +276,7 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
 #' SIM).
 #' \item full_name_estimation_method: full name of estimation method (applied
 #' only for SIM).
-#' \item coefficients: coeffitients \eqn{\alpha} and \eqn{\beta} for SIM market model
+#' \item coefficients: coefficients \eqn{\alpha} and \eqn{\beta} for SIM market model
 #' (applied only for SIM).
 #' \item estimation_start: the end of estimation period.
 #' \item estimation_end: the end of estimation period.

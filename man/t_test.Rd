@@ -25,12 +25,12 @@ Classical t-test, which examine each date in event window.
 \details{
 Performs the t-test for event study. The procedure of this test is described
 in Boehmer 1991, sometimes is called cross-sectional test. Assumes
-independens of securities, however is stable to event-induced variance. This
+independence of securities, however is stable to event-induced variance. This
 test examines the equality of cross-sectional expected value to zero. The
 standard deviation, which is used in this test, is simply cross-section
 standard deviation for given day in the event window. It calculates
 statistics even if event window and estimation period are overlapped
-(intersect). The critical values are Student's t-destributed (no
+(intersect). The critical values are Student's t-distributed (no
 approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
 0.05, and 0.01 (marked respectively by *, **, and ***).
 }

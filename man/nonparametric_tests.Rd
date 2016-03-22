@@ -81,16 +81,16 @@ under conditions of event-induced variance}. Journal of Financial Economics,
 \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
 Quantitative Finance and Accounting, 2:343-358, 1992.
 \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
-Performance in Event Studeis}. Journal of Financial Economics 23:385-395,
+Performance in Event Studies}. Journal of Financial Economics 23:385-395,
 1989.
 \item Campbell C.J., Wasley C.E. \emph{Measuring Security Price Performance
-Using Daily NASDAQ Retrurns}. Journal of Financial Economics 33:73-92, 1993.
+Using Daily NASDAQ Returns}. Journal of Financial Economics 33:73-92, 1993.
 \item Savickas R. \emph{Event-Induced Volatility and Tests for Abnormal
 Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 \item Kolari J.W., Pynnonen S. \emph{Event Study Testing with Cross-sectional
 Correlation of Abnormal Returns}. The Review of Financial Studies,
 23(11):3996-4025, 2010.
-\item Wilcoxon F. \emph{Individual Comparisons by Ranking Mathods}.
+\item Wilcoxon F. \emph{Individual Comparisons by Ranking Methods}.
 Biometrics Bulletin 1(6):80-83, 1945.
 \item Lehmann E.L, \emph{Nonparametrics: Statistical Methods Based on Ranks}.
 San Francisco: Holden-Day, 1975.

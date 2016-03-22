@@ -20,16 +20,16 @@ first (starting) date of the event window.}
 The table of statistics and significances of the test.
 }
 \description{
-Parametric test for event study, which is descibed in Patell's 1976
+Parametric test for event study, which is described in Patell's 1976
 paper.
 }
 \details{
-Performs the parametric test for event study, which is descibed in Patell's
+Performs the parametric test for event study, which is described in Patell's
 1976 paper, which is called standardized-residuals method in Boehmer's 1991
 paper. The test assumptions are cross-sectional independence and
 insignificance of event-induced variance. The standardization smooths the
 effect of event-induced variance comparing to Brown and Warner tests. Also
-standardization incorporates the situation, when high volatility secturity
+standardization incorporates the situation, when high volatility security
 dominates the test. The test examines the hypothesis whether the theoretical
 cross-sectional expected value for a given day is equal to zero. It
 calculates statistics even if event window and estimation period are

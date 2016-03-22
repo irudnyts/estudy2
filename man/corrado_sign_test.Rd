@@ -24,13 +24,13 @@ The implementation of nonparametric test, described in Corrado and Zivney's
 1992 paper.
 }
 \details{
-Performs the nonparametric test for event study, which is descibed in Corrado
+Performs the nonparametric test for event study, which is described in Corrado
 and Zivney's 1992 paper. This test is similar to procedure, described in
 Brown and Warner's paper 1985 (t-ratio), but instead of using abnormal
 returns, the test uses \eqn{G_{i,t} = sign(A_{i,t} - median(A_i))}.
 \code{sign} and \code{median} are ones, which have the same definition as R
 functions. For this test the estimation period and event period must not
-overlap, otherwise an error occurrs. The sign test procedure avoids the
+overlap, otherwise an error occurs. The sign test procedure avoids the
 misspecification of tests, which assume symmetry around zero of abnormal
 returns (the median equals to zero). For a single day the performance of this
 test is proven to be better than classical Brown and Warner's test (without
