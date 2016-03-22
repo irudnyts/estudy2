@@ -36,7 +36,7 @@ approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
 }
 \section{Warning}{
  This test strongly requires cross-sectional independence
-and sensative to the size of the sample.
+and sensitive to the size of the sample.
 }
 \examples{
 # Download the historical prices for ten European insurance companies' stocks

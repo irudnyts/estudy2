@@ -391,7 +391,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @section Warning: This test strongly requires cross-sectional independence
-#' and sensative to the size of the sample.
+#' and sensitive to the size of the sample.
 #'
 #' @param list_of_returns list of objects of S3 class \code{return}, each element
 #' of which is treated as a company.
