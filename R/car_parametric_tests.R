@@ -30,6 +30,39 @@
 #' 62(1):111-123, 1995.}
 #'
 #' @seealso \code{\link{car_brown_warner_1985}} and \code{\link{car_lamb}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' car_parametric_tests(list_of_returns = returns,
+#'                      car_start = as.Date("2001-09-11"),
+#'                      car_end = as.Date("2001-09-28"),
+#'                      percentage = 90)
+#'
 #' @export
 car_parametric_tests <- function(list_of_returns, car_start, car_end,
                                  percentage, all = TRUE, tests) {
@@ -78,6 +111,37 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
 #'
 #' @seealso \code{\link{car_brown_warner_1985}} and
 #' \code{\link{car_parametric_tests}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' car_lamb(list_of_returns = returns, car_start = as.Date("2001-09-11"),
+#'          car_end = as.Date("2001-09-28"), percentage = 90)
+#'
 #' @export
 car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
     daily_lamb_statistics <- lamb(list_of_returns, car_start, car_end)
@@ -132,6 +196,38 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
 #'
 #' @seealso \code{\link{car_lamb}} and
 #' \code{\link{car_parametric_tests}}.
+#'
+#' @examples
+#' # Download the historical prices for ten European insurance companies' stocks
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' # Estimate the rate of returns form prices
+#' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#'                                compounding = "continuous")
+#' # Download the prices and estimate the rates of market proxy (index
+#' # ESTX50 EUR P), which is regressor for the sim model
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close", retclass = "list")
+#' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#'                                     multi_day = TRUE,
+#'                                     compounding = "continuous")
+#' # Make the length of regressor and stocks to be the same
+#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
+#' # Apply Single Index market model
+#' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               market_model = "sim",
+#'                               estimation_method = "ols",
+#'                               estimation_start = as.Date("2001-03-26"),
+#'                               estimation_end = as.Date("2001-09-10"))
+#' car_brown_warner_1985(list_of_returns = returns,
+#'                       car_start = as.Date("2001-09-11"),
+#'                       car_end = as.Date("2001-09-28"), percentage = 90)
+#'
 #' @export
 car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
                                   percentage) {
