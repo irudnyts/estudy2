@@ -151,11 +151,11 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
 
     statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = TRUE) /
         sqrt(nrow(daily_lamb_statistics_tidy))
-    if(statistic >= const_q3) {
+    if(abs(statistic) >= const_q3) {
         significance <- "***"
-    } else if(statistic >= const_q2) {
+    } else if(abs(statistic) >= const_q2) {
         significance <- "**"
-    } else if(statistic >= const_q1) {
+    } else if(abs(statistic) >= const_q1) {
         significance <- "*"
     } else {
         significance <- ""
@@ -240,11 +240,11 @@ car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
 
     statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = TRUE) /
         sqrt(nrow(daily_lamb_statistics_tidy))
-    if(statistic >= const_q3) {
+    if(abs(statistic) >= const_q3) {
         significance <- "***"
-    } else if(statistic >= const_q2) {
+    } else if(abs(statistic) >= const_q2) {
         significance <- "**"
-    } else if(statistic >= const_q1) {
+    } else if(abs(statistic) >= const_q1) {
         significance <- "*"
     } else {
         significance <- ""
