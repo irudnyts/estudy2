@@ -238,13 +238,15 @@ car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
 
     statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = TRUE) /
         sqrt(nrow(daily_lamb_statistics_tidy))
-    significance <- ""
-    significance <- ifelse(test = abs(statistic) >= const_q1,
-                           yes = "*", no = "")
-    significance <- ifelse(test = abs(statistic) >= const_q2,
-                           yes = "**", no = "")
-    significance <- ifelse(test = abs(statistic) >= const_q3,
-                           yes = "***", no = "")
+    if(statistic >= const_q3) {
+        significance <- "***"
+    } else if(statistic >= const_q2) {
+        significance <- "**"
+    } else if(statistic >= const_q1) {
+        significance <- "*"
+    } else {
+        significance <- ""
+    }
     result <- list(car_start = car_start, car_end = car_end,
                    average_percentage = average_percentage,
                    statistic = statistic,
