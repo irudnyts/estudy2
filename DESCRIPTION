@@ -1,7 +1,7 @@
 Package: estudy2
 Type: Package
 Title: An Implementation of Parametric and Nonparametric Event Study
-Version: 0.8.1
+Version: 0.8.2
 Date: 2016-03-18
 Authors@R: c(
     person("Iegor", "Rudnytskyi", , "iegor.rudnytskyi@unil.ch", c("aut", "cre")),
