@@ -54,10 +54,9 @@
 #' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
 #'                                     multi_day = TRUE,
 #'                                     compounding = "continuous")
-#' # Make the length of regressor and stocks to be the same
-#' rates_indx <- replicate(n = length(tickers), expr = rates_indx)
 #' # Apply Single Index market model
 #' returns <- apply_market_model(rates = rates, regressors = rates_indx,
+#'                               same_regressor_for_all = TRUE,
 #'                               market_model = "sim",
 #'                               estimation_method = "ols",
 #'                               estimation_start = as.Date("2001-03-26"),
