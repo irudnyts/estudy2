@@ -4,7 +4,7 @@
 \alias{car_brown_warner_1985}
 \title{Brown and Warner (1985) CAR test.}
 \usage{
-car_brown_warner_1985(list_of_returns, car_start, car_end, percentage)
+car_brown_warner_1985(list_of_returns, car_start, car_end, percentage = 90)
 }
 \arguments{
 \item{list_of_returns}{list of objects of S3 class \code{return}, each element
@@ -17,7 +17,7 @@ first (starting) date of the time period, over which CAR will be estimated.}
 (ending) date of the time period, over which CAR will be estimated.}
 
 \item{percentage}{the lowest allowed percentage of non-missing observation
-for each day to be incorporated into CAR.}
+for each day to be incorporated into CAR. Defaule value is 90 percent.}
 }
 \value{
 The list of starting date, ending date, average percentage of

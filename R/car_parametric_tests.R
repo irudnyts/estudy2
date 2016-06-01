@@ -15,7 +15,7 @@
 #' @param car_end the object of class \code{Date}, which represents the last
 #' (ending) date of the time period, over which CAR will be estimated.
 #' @param percentage the lowest allowed percentage of non-missing observation
-#' for each day to be incorporated into CAR.
+#' for each day to be incorporated into CAR. Defaule value is 90 percent.
 #' @param all a logical value indicating whether all tests should be performed.
 #' The default value is \code{TRUE}.
 #' @param tests the list of tests functions among \code{car_brown_warner_1985}
@@ -112,7 +112,7 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
 #' @param car_end the object of class \code{Date}, which represents the last
 #' (ending) date of the time period, over which CAR will be estimated.
 #' @param percentage the lowest allowed percentage of non-missing observation
-#' for each day to be incorporated into CAR.
+#' for each day to be incorporated into CAR. Defaule value is 90 percent.
 #' @return The list of starting date, ending date, average percentage of
 #' non-missing observation over each day, the value of statistics, the length
 #' of the time period, and significance.
@@ -204,7 +204,7 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
 #' @param car_end the object of class \code{Date}, which represents the last
 #' (ending) date of the time period, over which CAR will be estimated.
 #' @param percentage the lowest allowed percentage of non-missing observation
-#' for each day to be incorporated into CAR.
+#' for each day to be incorporated into CAR. Defaule value is 90 percent.
 #' @return The list of starting date, ending date, average percentage of
 #' non-missing observation over each day, the value of statistics, the length
 #' of the time period, and significance.

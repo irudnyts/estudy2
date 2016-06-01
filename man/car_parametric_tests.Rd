@@ -4,7 +4,7 @@
 \alias{car_parametric_tests}
 \title{Returns the result of given parametric CAR tests for event study.}
 \usage{
-car_parametric_tests(list_of_returns, car_start, car_end, percentage,
+car_parametric_tests(list_of_returns, car_start, car_end, percentage = 90,
   all = TRUE, tests)
 }
 \arguments{
@@ -18,7 +18,7 @@ first (starting) date of the time period, over which CAR will be estimated.}
 (ending) date of the time period, over which CAR will be estimated.}
 
 \item{percentage}{the lowest allowed percentage of non-missing observation
-for each day to be incorporated into CAR.}
+for each day to be incorporated into CAR. Defaule value is 90 percent.}
 
 \item{all}{a logical value indicating whether all tests should be performed.
 The default value is \code{TRUE}.}
