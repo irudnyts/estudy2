@@ -49,6 +49,9 @@
 #' daily rates of returns of ESTX50 EUR P index from 2000-01-01 to 2002-01-01.
 #' The code for generatin this dataset can be seen in the example of
 #' \code{apply_market_model} function.
+#'
+#' @format A list of 1 zoo object.
+#'
 "rates_indx"
 
 #' Returns of 10 major insurance companies from 2000-01-01 to 2002-01-01

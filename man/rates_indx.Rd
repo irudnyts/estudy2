@@ -4,11 +4,7 @@
 \name{rates_indx}
 \alias{rates_indx}
 \title{Rates of returns of ESTX50 EUR P index from 2000-01-01 to 2002-01-01}
-\format{\preformatted{List of 1
- $ ^STOXX50E:‘zoo’ series from 2000-01-04 to 2001-12-31
-  Data: num [1:507] -0.04027 -0.02524 -0.00908 0.03226 0.01405 ...
-  Index:  Date[1:507], format: "2000-01-04" "2000-01-05" "2000-01-06" "2000-01-07" ...
-}}
+\format{A list of 1 zoo object.}
 \usage{
 rates_indx
 }
