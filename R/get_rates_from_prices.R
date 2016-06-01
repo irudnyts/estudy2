@@ -39,13 +39,14 @@
 #' @return The rates of returns of the same class as prices.
 #'
 #' @examples
-#' # Download the historical prices for ten European insurance companies' stocks
-#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#'                                   end = as.Date("2002-01-01"),
-#'                                   quote = "Close", retclass = "list")
-#' # Estimate the rate of returns form prices
+#' ## Download the historical prices for ten European insurance companies' stocks
+#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#' #                                   end = as.Date("2002-01-01"),
+#' #                                   quote = "Close", retclass = "list")
+#' data(prices)
+#' ## Estimate the rate of returns form prices
 #' rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
 #'                                compounding = "continuous")
 #'

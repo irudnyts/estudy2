@@ -38,12 +38,13 @@ returns the data in different class-containers: list of zoo's, zoo, or
 data.frame.
 }
 \examples{
-# Download the historical prices for ten European insurance companies' stocks
-tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-             "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-                                  end = as.Date("2002-01-01"),
-                                  quote = "Close", retclass = "list")
+## Download the historical prices for ten European insurance companies' stocks
+# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#                                   end = as.Date("2002-01-01"),
+#                                   quote = "Close", retclass = "list")
+data(prices)
 }
 \seealso{
 \code{\link[tseries]{get.hist.quote}}

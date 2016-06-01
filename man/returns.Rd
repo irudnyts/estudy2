@@ -70,35 +70,37 @@ model. For this model only Ordinary Least Squares \code{estimation_method} is
 currently implemented. All models are described in Brown and Warner (1985).
 }
 \examples{
-# Download the historical prices for ten European insurance companies' stocks
-tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-             "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-                                  end = as.Date("2002-01-01"),
-                                  quote = "Close", retclass = "list")
+## Download the historical prices for ten European insurance companies' stocks
+# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#                                   end = as.Date("2002-01-01"),
+#                                   quote = "Close", retclass = "list")
 # Estimate the rate of returns form prices
-rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-                               compounding = "continuous")
+# rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
+#                                compounding = "continuous")
 ### Mean-adjusted returns market model
-# Apply mean-adjusted returns market model for each company
-return <- returns(rates[[1]], market_model = "mean_adj",
-                  estimation_start = as.Date("2001-03-26"),
-                  estimation_end = as.Date("2001-09-10"))
+## Apply mean-adjusted returns market model for each company
+data(rates)
+single_return <- returns(rates[[1]], market_model = "mean_adj",
+                         estimation_start = as.Date("2001-03-26"),
+                         estimation_end = as.Date("2001-09-10"))
 ### Single Index market model
-# Download the prices and estimate the rates of market proxy (index
-# ESTX50 EUR P), which is regressor for the sim model
-prices_indx <- get_prices_from_tickers("^STOXX50E",
-                                       start = as.Date("2000-01-01"),
-                                       end = as.Date("2002-01-01"),
-                                       quote = "Close", retclass = "zoo")
-rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-                                    multi_day = TRUE,
-                                    compounding = "continuous")
-# Apply Single Index market model
-return <- returns(rates = rates[[1]], regressor = rates_indx,
-                  market_model = "sim", estimation_method = "ols",
-                  estimation_start = as.Date("2001-03-26"),
-                  estimation_end = as.Date("2001-09-10"))
+## Download the prices and estimate the rates of market proxy (index
+## ESTX50 EUR P), which is regressor for the sim model
+# prices_indx <- get_prices_from_tickers("^STOXX50E",
+#                                        start = as.Date("2000-01-01"),
+#                                        end = as.Date("2002-01-01"),
+#                                        quote = "Close", retclass = "list")
+# rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
+#                                     multi_day = TRUE,
+#                                     compounding = "continuous")
+data(rates_indx)
+## Apply Single Index market model
+single_return <- returns(rates = rates[[1]], regressor = rates_indx[[1]],
+                         market_model = "sim", estimation_method = "ols",
+                         estimation_start = as.Date("2001-03-26"),
+                         estimation_end = as.Date("2001-09-10"))
 }
 \references{
 Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
