@@ -4,8 +4,9 @@
 \alias{apply_market_model}
 \title{Apply market model and return the list of objects \code{returns}}
 \usage{
-apply_market_model(rates, regressors, market_model = c("mean_adj", "mrkt_adj",
-  "sim"), estimation_method = c("ols"), estimation_start, estimation_end)
+apply_market_model(rates, regressors, same_regressor_for_all = TRUE,
+  market_model = c("mean_adj", "mrkt_adj", "sim"),
+  estimation_method = c("ols"), estimation_start, estimation_end)
 }
 \arguments{
 \item{rates}{\code{list}, \code{data.frame}, \code{zoo} object containing
@@ -13,7 +14,11 @@ rates of returns of securities.}
 
 \item{regressors}{an object of the same class as \code{rates} containing
 regressors. Can be omitted, if market model is \code{mean_adj}.
-\code{regressors} must have the same number of components as \code{rates}.}
+\code{regressors} must have the same number of components as \code{rates}
+expept the cases when the same regressor used for all securities.}
+
+\item{same_regressor_for_all}{logical. Should the same regressor be used for
+each security? The default value is TRUE.}
 
 \item{market_model}{a character indicating the market model among
 \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.}
@@ -37,7 +42,9 @@ passed directly to the whole battery of tests.
 }
 \details{
 The generic function is dispatched for such classes as \code{list},
-\code{data.frame}, and \code{zoo}.
+\code{data.frame}, and \code{zoo}. If \code{same_regressor_for_all} is TRUE,
+and \code{regressors} has the length greater than one, the first element of
+\code{regressors} will be applied for each sequrity in \code{rates}.
 }
 \examples{
 # Download the historical prices for ten European insurance companies' stocks

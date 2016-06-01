@@ -5,13 +5,18 @@
 #' passed directly to the whole battery of tests.
 #'
 #' The generic function is dispatched for such classes as \code{list},
-#' \code{data.frame}, and \code{zoo}.
+#' \code{data.frame}, and \code{zoo}. If \code{same_regressor_for_all} is TRUE,
+#' and \code{regressors} has the length greater than one, the first element of
+#' \code{regressors} will be applied for each sequrity in \code{rates}.
 #'
 #' @param rates \code{list}, \code{data.frame}, \code{zoo} object containing
 #' rates of returns of securities.
 #' @param regressors an object of the same class as \code{rates} containing
 #' regressors. Can be omitted, if market model is \code{mean_adj}.
-#' \code{regressors} must have the same number of components as \code{rates}.
+#' \code{regressors} must have the same number of components as \code{rates}
+#' expept the cases when the same regressor used for all securities.
+#' @param same_regressor_for_all logical. Should the same regressor be used for
+#' each security? The default value is TRUE.
 #' @param market_model a character indicating the market model among
 #' \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.
 #' @param estimation_method a character, specifying the estimation method for
@@ -59,7 +64,7 @@
 #'                               estimation_end = as.Date("2001-09-10"))
 #'
 #' @export
-apply_market_model <- function(rates, regressors,
+apply_market_model <- function(rates, regressors, same_regressor_for_all = TRUE,
                                market_model = c("mean_adj", "mrkt_adj", "sim"),
                                estimation_method = c("ols"), estimation_start,
                                estimation_end) {
@@ -67,7 +72,9 @@ apply_market_model <- function(rates, regressors,
 }
 
 #' @export
-apply_market_model.list <- function(rates, regressors, market_model =
+apply_market_model.list <- function(rates, regressors, same_regressor_for_all =
+                                        TRUE,
+                                    market_model =
                                         c("mean_adj", "mrkt_adj", "sim"),
                                     estimation_method = c("ols"),
                                     estimation_start, estimation_end) {
@@ -80,15 +87,23 @@ apply_market_model.list <- function(rates, regressors, market_model =
             stop(paste("For market model", market_model, "specify the",
                        "regressors."))
         }
-        if(length(rates) != length(regressors)) {
+        if(!same_regressor_for_all && length(rates) != length(regressors)) {
             stop(paste("The number of regressors elements should be the same",
                        "as the number of rates elements"))
 
+        }
+        if(same_regressor_for_all && length(regressors) != 1) {
+            message("Only first element of regressors will be used")
         }
     }
 
     if(estimation_start >= estimation_end) {
         stop("estimation_start should be earlier than estimation_end")
+    }
+
+    if(market_model != "mean_adj" && same_regressor_for_all) {
+        first_element <- as.list(regressors[[1]])
+        regressors <- rep(first_element, length(rates))
     }
 
     list_of_returns <- list()
@@ -122,7 +137,9 @@ apply_market_model.list <- function(rates, regressors, market_model =
 }
 
 #' @export
-apply_market_model.data.frame <- function(rates, regressors, market_model =
+apply_market_model.data.frame <- function(rates, regressors,
+                                          same_regressor_for_all = TRUE,
+                                          market_model =
                                               c("mean_adj", "mrkt_adj", "sim"),
                                           estimation_method = c("ols"),
                                           estimation_start, estimation_end) {
@@ -135,14 +152,23 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
             stop(paste("For market model", market_model, "specify the",
                        "regressors."))
         }
-        if(ncol(rates) != ncol(regressors)) {
+        if(!same_regressor_for_all && ncol(rates) != ncol(regressors)) {
             stop(paste("The number of regressors columns should be the same",
                        "as the number of rates columns"))
+        }
+        if(same_regressor_for_all && ncol(regressors) > 2) {
+            message("Only second column of regressors will be used")
         }
     }
 
     if(estimation_start >= estimation_end) {
         stop("estimation_start should be earlier than estimation_end")
+    }
+
+    if(market_model != "mean_adj" && same_regressor_for_all) {
+        first_element <- regressors[, c(1, 2)]
+        regressors <- data.frame(date = first_element[, 1],
+                                 first_element[, rep(2, ncol(rates) - 1)])
     }
 
     list_of_returns <- list()
@@ -176,7 +202,9 @@ apply_market_model.data.frame <- function(rates, regressors, market_model =
 }
 
 #' @export
-apply_market_model.zoo <- function(rates, regressors, market_model =
+apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
+                                       TRUE,
+                                   market_model =
                                        c("mean_adj", "mrkt_adj", "sim"),
                                    estimation_method = c("ols"),
                                    estimation_start, estimation_end) {
@@ -188,15 +216,22 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
             stop(paste("For market model", market_model,
                        "specify the regressors."))
         }
-        if(ncol(rates) != ncol(regressors)) {
+        if(!same_regressor_for_all && ncol(rates) != ncol(regressors)) {
             stop(paste("The number of regressors columns should be the same",
                        "as the number of rates columns"))
         }
-
+        if(same_regressor_for_all && ncol(regressors) > 1) {
+            message("Only first column of regressors will be used")
+        }
     }
 
     if(estimation_start >= estimation_end) {
         stop("estimation_start should be earlier than estimation_end")
+    }
+
+    if(market_model != "mean_adj" && same_regressor_for_all) {
+        first_element <- regressors[, 1]
+        regressors <- first_element[, rep(1, ncol(rates))]
     }
 
     list_of_returns <- list()
@@ -309,7 +344,7 @@ apply_market_model.zoo <- function(rates, regressors, market_model =
 #' prices_indx <- get_prices_from_tickers("^STOXX50E",
 #'                                        start = as.Date("2000-01-01"),
 #'                                        end = as.Date("2002-01-01"),
-#'                                        quote = "Close", retclass = "zoo")
+#'                                        quote = "Close", retclass = "list")
 #' rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
 #'                                     multi_day = TRUE,
 #'                                     compounding = "continuous")
