@@ -68,9 +68,18 @@
 #'
 #' @export
 car_parametric_tests <- function(list_of_returns, car_start, car_end,
-                                 percentage, all = TRUE, tests) {
-    if(all == TRUE) {
-        tests <- list(car_lamb, car_brown_warner_1985)
+                                 percentage = 90, all = TRUE, tests) {
+    if(missing(tests)) {
+        if(all) {
+            tests <- list(car_lamb, car_brown_warner_1985)
+        } else {
+            stop("Specify at least one test.")
+        }
+    } else {
+        message("Argument all will be ignored.")
+        for(i in seq_along(tests)) {
+            tests[[i]] <- match.fun(tests[[i]])
+        }
     }
     result <- NULL
     for(i in seq_along(tests)) {
@@ -150,7 +159,7 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
 #'          car_end = as.Date("2001-09-28"), percentage = 90)
 #'
 #' @export
-car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
+car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
     daily_lamb_statistics <- lamb(list_of_returns, car_start, car_end)
     daily_lamb_statistics_tidy <- daily_lamb_statistics[daily_lamb_statistics[, 3] > percentage &
                                                         daily_lamb_statistics[, 3] > 0, ]
@@ -242,7 +251,7 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage) {
 #'
 #' @export
 car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
-                                  percentage) {
+                                  percentage = 90) {
     daily_lamb_statistics <- brown_warner_1985(list_of_returns, car_start, car_end)
     daily_lamb_statistics_tidy <- daily_lamb_statistics[daily_lamb_statistics[, 3] > percentage &
                                                             daily_lamb_statistics[, 3] > 0, ]

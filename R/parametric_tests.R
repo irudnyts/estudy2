@@ -75,9 +75,18 @@
 #' @export
 parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE,
                              tests) {
-    if(all == TRUE) {
-        tests <- list(brown_warner_1980, brown_warner_1985, t_test, patell,
-                      boehmer, lamb)
+    if(missing(tests)) {
+        if(all) {
+            tests <- list(brown_warner_1980, brown_warner_1985, t_test, patell,
+                          boehmer, lamb)
+        } else {
+            stop("Specify at least one test.")
+        }
+    } else {
+        message("Argument all will be ignored.")
+        for(i in seq_along(tests)) {
+            tests[[i]] <- match.fun(tests[[i]])
+        }
     }
     result <- NULL
     for(test in tests) {
