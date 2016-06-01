@@ -90,7 +90,7 @@ return <- returns(rates[[1]], market_model = "mean_adj",
 prices_indx <- get_prices_from_tickers("^STOXX50E",
                                        start = as.Date("2000-01-01"),
                                        end = as.Date("2002-01-01"),
-                                       quote = "Close", retclass = "list")
+                                       quote = "Close", retclass = "zoo")
 rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
                                     multi_day = TRUE,
                                     compounding = "continuous")
