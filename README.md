@@ -11,5 +11,6 @@ The package is not submitted to CRAN, and is located in a private repository. If
 
 ``` r
 # install.packages("devtools")
+# library("devtools")
 devtools::install_github("irudnyts/estudy2")
 ```

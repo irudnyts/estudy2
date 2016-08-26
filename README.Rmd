@@ -33,5 +33,6 @@ development version:
 
 ```{r, eval=FALSE}
 # install.packages("devtools")
+# library("devtools")
 devtools::install_github("irudnyts/estudy2")
 ```
