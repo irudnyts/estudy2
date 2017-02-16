@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 
 # estudy2
 
+[![Travis-CI Build Status](https://travis-ci.com/irudnyts/estudy2.svg?token=Spwopnmy37EZMsL4nDza&branch=master)](https://travis-ci.com/irudnyts/estudy2.svg?token=Spwopnmy37EZMsL4nDza&branch=master)
+
+## Overview
+
 An implementation of a most commonly used event study methodology,
 including both parametric and nonparametric tests. It contains variety
 aspects of the rate of return estimation (the core calculation is done in
