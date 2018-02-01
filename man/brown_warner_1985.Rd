@@ -79,4 +79,3 @@ Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
 \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
 \code{\link{lamb}}.
 }
-

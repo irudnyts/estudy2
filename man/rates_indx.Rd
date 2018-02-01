@@ -15,4 +15,3 @@ The code for generatin this dataset can be seen in the example of
 \code{apply_market_model} function.
 }
 \keyword{datasets}
-

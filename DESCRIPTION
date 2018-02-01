@@ -28,4 +28,4 @@ Imports:
     matrixStats (>= 0.14.2),
     Rcpp (>= 0.12.1)
 LinkingTo: Rcpp
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

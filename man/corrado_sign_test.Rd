@@ -82,4 +82,3 @@ Journal of Financial and Quantitative Analysis, 27(3):465-478, 1992.
 \code{\link{generalized_sign_test}}, \code{\link{rank_test}},
 \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 }
-

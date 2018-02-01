@@ -1,35 +1,38 @@
-#' Returns the daily prices for securities.
+#' Returns daily prices for securities.
 #'
-#' Returns the daily Open or Close prices between \code{start} and \code{end}
+#' Returns daily Open or Close prices between \code{start} and \code{end}
 #' date for given tickers.
 #'
-#' This function uses the function \code{get.hist.quote} form package
-#' \code{tseries}. The provider set automatically to Yahoo Finance. The function
-#' returns the data in different class-containers: list of zoo's, zoo, or
-#' data.frame.
+#' This function uses the function \code{get.hist.quote} form the package
+#' \code{tseries}. The provider is set automatically to Yahoo Finance. The
+#'  function returns the data in different class-containers: list of zoo's, zoo,
+#'  or data.frame.
 #'
-#' @param ... character vectors indicating the tickers (should be valid in Yahoo
+#' @param ... character vectors indicating tickers (should be valid in Yahoo
 #' Finance).
-#' @param start the object of the Date class, which specifies the first date of
+#' @param start an object of Date class, which specifies the first date of the
 #' observed time period.
-#' @param end the object of the Date class, which specifies the last date of
+#' @param end an object of Date class, which specifies the last date of the
 #' observed time period.
 #' @param quote a character indicating the type of the price (Open or Close).
-#' The default value is Open
-#' @param retclass a character specifying the return class. "list", "zoo"
-#' , or "data.frame", by default is "list"
-#' @return the data about prices in given class container: "list", "zoo",
-#'  or "data.frame".
+#' The default value is set to Open.
+#' @param retclass a character specifying the return class: "list", "zoo" or
+#' "data.frame". The default value is set to "list".
+#' @return Prices of securities as "list", "zoo" or "data.frame".
 #'
 #' @seealso \code{\link[tseries]{get.hist.quote}}
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
+#' ## Download the historical prices for ten European insurance companies'
+#' stocks:
+#' \dontrun{
+#' tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
+#'                                   end = as.Date("2002-01-01"),
+#'                                   quote = "Close", retclass = "list")
+#' }
+#' ## The result of the above code is stored in:
 #' data(prices)
 #'
 #' @export
@@ -84,13 +87,16 @@ get_prices_from_tickers <- function(..., start, end,
                                                       provider = "yahoo",
                                                       compression = "d",
                                                       retclass = "zoo")
-            current_prices_df <- data.frame(date = zoo::index(current_prices),
-                                            prices = zoo::coredata(current_prices))
+            current_prices_df <- data.frame(
+                date = zoo::index(current_prices),
+                prices = zoo::coredata(current_prices)
+            )
             colnames(current_prices_df) <- c("date", ticker)
             if(is.null(prices)) {
                 prices <- current_prices_df
             } else {
-                prices <- merge(prices, current_prices_df, by = "date", all = TRUE)
+                prices <- merge(prices, current_prices_df, by = "date",
+                                all = TRUE)
             }
         }
     }

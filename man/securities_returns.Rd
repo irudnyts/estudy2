@@ -28,4 +28,3 @@ can be seen in the example of \code{apply_market_model} function. The
 variables are as follows:
 }
 \keyword{datasets}
-

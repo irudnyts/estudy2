@@ -28,4 +28,3 @@ the example of \code{get_rates_from_prices} function. The variables are as
 follows:
 }
 \keyword{datasets}
-

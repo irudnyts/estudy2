@@ -27,4 +27,3 @@ dailty close stock prices of 10 major insurance companies from 2000-01-01 to
 \code{get_prices_from_tickers} function. The variables are as follows:
 }
 \keyword{datasets}
-

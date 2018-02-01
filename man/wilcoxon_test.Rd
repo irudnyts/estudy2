@@ -87,4 +87,3 @@ New York: John Wiley & Sons, 1973.
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 \code{\link{rank_test}}, and \code{\link{modified_rank_test}}.
 }
-

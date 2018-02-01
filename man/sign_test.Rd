@@ -81,4 +81,3 @@ Economics, 30(2):253-272, 1991.
 \code{\link{corrado_sign_test}}, \code{\link{rank_test}},
 \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 }
-

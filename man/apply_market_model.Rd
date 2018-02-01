@@ -90,4 +90,3 @@ securities_returns <- apply_market_model(rates = rates,
 \seealso{
 \code{\link{returns}}
 }
-

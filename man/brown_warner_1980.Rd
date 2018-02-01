@@ -80,4 +80,3 @@ performance}. Journal of Financial Economics, 8:205-258, 1980.
 \code{\link{t_test}}, \code{\link{patell}}, \code{\link{boehmer}}, and
 \code{\link{lamb}}.
 }
-

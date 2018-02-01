@@ -110,4 +110,3 @@ of Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
 \seealso{
 \code{\link{apply_market_model}}
 }
-

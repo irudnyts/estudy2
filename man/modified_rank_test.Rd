@@ -84,4 +84,3 @@ Correlation of Abnormal Returns}. The Review of Financial Studies,
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 \code{\link{rank_test}}, and \code{\link{wilcoxon_test}}.
 }
-

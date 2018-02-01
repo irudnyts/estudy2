@@ -66,4 +66,3 @@ rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
                                compounding = "continuous")
 
 }
-

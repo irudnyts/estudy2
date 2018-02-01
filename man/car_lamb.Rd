@@ -81,4 +81,3 @@ Insurer Stock Values around Hurricane Andrew}. Journal of Risk and Insurance,
 \code{\link{car_brown_warner_1985}} and
 \code{\link{car_parametric_tests}}.
 }
-

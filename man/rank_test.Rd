@@ -88,4 +88,3 @@ Performance}. The Journal of Financial Research, 26(2):156-178, 2003.
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 }
-

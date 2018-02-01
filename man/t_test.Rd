@@ -38,6 +38,7 @@ approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
  This test strongly requires cross-sectional independence
 and sensitive to the size of the sample.
 }
+
 \examples{
 ## Download the historical prices for ten European insurance companies' stocks
 # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
@@ -81,4 +82,3 @@ Economics, 30(2):253-272, 1991.
 \code{\link{brown_warner_1985}}, \code{\link{patell}}, \code{\link{boehmer}},
 and \code{\link{lamb}}.
 }
-

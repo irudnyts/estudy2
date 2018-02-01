@@ -80,4 +80,3 @@ of Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
 \code{\link{car_lamb}} and
 \code{\link{car_parametric_tests}}.
 }
-
