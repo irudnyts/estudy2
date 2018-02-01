@@ -3,11 +3,10 @@
 \docType{data}
 \name{securities_returns}
 \alias{securities_returns}
-\title{Returns of 10 major insurance companies from 2000-01-01 to 2002-01-01}
+\title{Returns of 9 major insurance companies from 2000-01-01 to 2002-01-01}
 \format{A list of 10 \code{zoo} elements:
 \itemize{
   \item ALV.DE
-  \item AML.L
   \item CS.PA
   \item ELE.PA
   \item G.MI
@@ -21,10 +20,10 @@
 securities_returns
 }
 \description{
-A list of length 10, elements of which are objects of the class
-\code{returns}. The list contains all necessary returns of 10 major insurance
+A list of length 9, elements of which are objects of the class
+\code{returns}. The list contains all necessary returns of 9 major insurance
 companies from 2000-01-01 to 2002-01-01. The code for generatin this dataset
-can be seen in the example of \code{apply_market_model} function. The
+can be seen in the documentation of \code{apply_market_model} function. The
 variables are as follows:
 }
 \keyword{datasets}

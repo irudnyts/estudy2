@@ -3,11 +3,10 @@
 \docType{data}
 \name{rates}
 \alias{rates}
-\title{Rates of returns of 10 major insurance companies from 2000-01-01 to 2002-01-01}
+\title{Rates of returns of 9 major insurance companies from 2000-01-01 to 2002-01-01}
 \format{A list of 10 \code{zoo} elements:
 \itemize{
   \item ALV.DE
-  \item AML.L
   \item CS.PA
   \item ELE.PA
   \item G.MI
@@ -21,10 +20,10 @@
 rates
 }
 \description{
-A list, which contains 10 elements, each of which is zoo object, containing
-dailty rates of returns of corresponding 10 major insurance companies from
-2000-01-01 to 2002-01-01. The code for generatin this dataset can be seen in
-the example of \code{get_rates_from_prices} function. The variables are as
-follows:
+A list, which contains 9 elements, each of which is \code{zoo} object,
+containing daily rates of returns of corresponding 9 major insurance
+companies from 2000-01-01 to 2002-01-01. The code for generatin this dataset
+can be seen in the documentation of \code{get_rates_from_prices} function.
+The variables are as follows:
 }
 \keyword{datasets}
