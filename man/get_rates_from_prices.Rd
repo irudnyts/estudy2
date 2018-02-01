@@ -8,45 +8,44 @@ get_rates_from_prices(prices, quote = c("Open", "Close"), multi_day = TRUE,
   compounding = c("discrete", "continuous"))
 }
 \arguments{
-\item{prices}{the object either of class \code{list}, or \code{data.frame},
-or \code{zoo}. Represents prices, from with the rates of returns will be
-calculated.}
+\item{prices}{an object containing prices of securities. Three classes are
+allowed: \code{list}, \code{data.frame}, and \code{zoo}.}
 
-\item{quote}{character, which specifies the type of quote: "Open" or "Close".
-By default is "Open".}
+\item{quote}{a character vector specifying the type of the quote:
+\code{"Open"} (default) or \code{"Close"}.}
 
-\item{multi_day}{logical, is rate of return between more than 1 day is
+\item{multi_day}{logical, is a rate of return between more than 1 day is
 allowed?}
 
-\item{compounding}{character, defines the type of compounding: "discrete" or
-"continuous". By default is "continuous".}
+\item{compounding}{a character vector defining the type of compounding:
+\code{"continuous"} (default) or \code{"discrete"}.}
 }
 \value{
-The rates of returns of the same class as prices.
+Rates of returns of the same class as prices.
 }
 \description{
-\code{get_rates_from_prices} is used for computing rates of returns from
+\code{get_rates_from_prices} is used for computing rates of return from
 prices for different classes.
 }
 \details{
-The generic function, dispatched for such classes as \code{list},
-\code{data.frame}, and \code{zoo}, which represent prices.
+This is a generic function, dispatched for such classes as \code{list},
+\code{data.frame}, and \code{zoo} that represent prices.
 
-The calculation is made in C++ (\code{Rcpp}) for high performance.
+The calculation is made in C++ (\code{Rcpp}) in favor of speed.
 
-If \code{prices} is data.frame, than the first column should be of the class
-Date and contains ordered dates of prices.
+If \code{prices} is a data frame, than the first column should be of the
+class \code{Date} and contain ordered dates of prices.
 
-The correspondence between dates and values of the rates depends on the quote,
-which can be either Open or Close. If the quote is Open, than the value of
-rate belongs to the first date. Otherwise, to the last. This is also applied
-for the algorithm, if multiday is allowed: the value of the rate of return
-is assigned to the last day in case of Close price, and to the first day in
-in case of Open quote.
+The correspondence between dates and values of the rates depends on the
+quote, which can be either Open or Close. If the quote is Open, than the
+value of rate belongs to the former date. Otherwise, to the latter one. This
+is also applied for the algorithm, if multiday is allowed: the value of the
+rate of return is assigned to the latter day in case of Close price, and to
+the former day in in case of Open quote.
 
-The \code{multi_day} parameter specifies what to do with missed values and
-handling of the weekend. If it is TRUE, the function ignores missing values
-and the rates are calculated between non-missing prices. If it is FALSE, than
+The \code{multi_day} parameter specifies how to handle missing values and
+weekends. If the value is TRUE, the function ignores missing values
+and the rates are calculated between non-missing prices. If it is FALSE, then
 only one-day period rates of return are computed (between two consecutive
 calendar dates).
 
@@ -54,15 +53,21 @@ The function uses either continuous (by default) or discrete (periodic)
 compounding.
 }
 \examples{
-## Download the historical prices for ten European insurance companies' stocks
-# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#                                   end = as.Date("2002-01-01"),
-#                                   quote = "Close", retclass = "list")
-data(prices)
-## Estimate the rate of returns form prices
-rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-                               compounding = "continuous")
+## Download historical prices of ten European insurance companies'
+## stocks and estimate rates of returns form prices:
+\dontrun{
+tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+             "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+rates <- tickers \%>\%
+   get_prices_from_tickers(start = as.Date("2000-01-01"),
+                           end = as.Date("2002-01-01"),
+                           quote = "Close",
+                           retclass = "list") \%>\%
+   get_rates_from_prices(quote = "Close",
+                         multi_day = TRUE,
+                         compounding = "continuous")
+}
+## The result of the above code is stored in:
+data(rates)
 
 }

@@ -3,10 +3,8 @@ Type: Package
 Title: An Implementation of Parametric and Nonparametric Event Study
 Version: 0.8.4
 Date: 2017-02-01
-Authors@R: c(
-    person("Iegor", "Rudnytskyi", , "iegor.rudnytskyi@gmail.com",
-    c("aut", "cre"))
-    )
+Authors@R:
+    person("Iegor", "Rudnytskyi", , "iegor.rudnytskyi@gmail.com", c("aut", "cre"))
 Description: An implementation of a most commonly used event study methodology,
     including both parametric and nonparametric tests. It contains variety
     aspects of the rate of return estimation (the core calculation is done in

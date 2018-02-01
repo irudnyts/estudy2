@@ -11,40 +11,43 @@ get_prices_from_tickers(..., start, end, quote = c("Open", "Close"),
 \item{...}{character vectors indicating tickers (should be valid in Yahoo
 Finance).}
 
-\item{start}{an object of Date class, which specifies the first date of the
+\item{start}{an object of \code{Date} class specifying the first date of the
 observed time period.}
 
-\item{end}{an object of Date class, which specifies the last date of the
+\item{end}{an object of \code{Date} class specifying the last date of the
 observed time period.}
 
-\item{quote}{a character indicating the type of the price (Open or Close).
-The default value is set to Open.}
+\item{quote}{a character indicating the type of the price: \code{"Open"}
+(default) or \code{"Close"}.}
 
-\item{retclass}{a character specifying the return class: "list", "zoo" or
-"data.frame". The default value is set to "list".}
+\item{retclass}{a character specifying the return class: \code{"list"}
+(default), \code{"zoo"} or \code{"data.frame"}.}
 }
 \value{
-Prices of securities as "list", "zoo" or "data.frame".
+Prices of securities as \code{"list"}, \code{"zoo"}, or
+\code{"data.frame"}.
 }
 \description{
 Returns daily Open or Close prices between \code{start} and \code{end}
 date for given tickers.
 }
 \details{
-This function uses the function \code{get.hist.quote} form the package
-\code{tseries}. The provider is set automatically to Yahoo Finance. The
- function returns the data in different class-containers: list of zoo's, zoo,
- or data.frame.
+This function uses the function \code{get.hist.quote} form the \code{tseries}
+package. The provider is set automatically to Yahoo Finance. The function
+returns the data in different class-containers: list of \code{zoo}'s,
+\code{zoo}, or \code{data.frame}.
 }
 \examples{
-## Download the historical prices for ten European insurance companies'
-stocks:
+## Download historical prices of ten European insurance companies'
+## stocks:
 \dontrun{
-tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
+tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-                                  end = as.Date("2002-01-01"),
-                                  quote = "Close", retclass = "list")
+prices <- tickers \%>\%
+   get_prices_from_tickers(start = as.Date("2000-01-01"),
+                           end = as.Date("2002-01-01"),
+                           quote = "Close",
+                           retclass = "list")
 }
 ## The result of the above code is stored in:
 data(prices)
