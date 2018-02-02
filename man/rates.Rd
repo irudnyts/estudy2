@@ -3,8 +3,9 @@
 \docType{data}
 \name{rates}
 \alias{rates}
-\title{Rates of returns of 9 major insurance companies from 2000-01-01 to 2002-01-01}
-\format{A list of 10 \code{zoo} elements:
+\title{Rates of returns of nine major insurance companies from 2000-01-04 to
+2002-01-01}
+\format{A \code{zoo} object of nine columns:
 \itemize{
   \item ALV.DE
   \item CS.PA
@@ -20,10 +21,9 @@
 rates
 }
 \description{
-A list, which contains 9 elements, each of which is \code{zoo} object,
-containing daily rates of returns of corresponding 9 major insurance
-companies from 2000-01-01 to 2002-01-01. The code for generatin this dataset
-can be seen in the documentation of \code{get_rates_from_prices} function.
-The variables are as follows:
+A \code{zoo} object of nine columns containing  daily rates of returns of
+nine major insurance companies from 2000-01-04 to 2002-01-01. The code for
+generatin this dataset can be seen in the documentation of
+\code{get_rates_from_prices} function.
 }
 \keyword{datasets}

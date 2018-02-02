@@ -3,15 +3,14 @@
 \docType{data}
 \name{rates_indx}
 \alias{rates_indx}
-\title{Rates of returns of ESTX50 EUR P index from 2000-01-01 to 2002-01-01}
-\format{A list of one \code{zoo} object.}
+\title{Rates of returns of ESTX50 EUR P index from 2000-01-04 to 2001-12-31}
+\format{A \code{zoo} object.}
 \usage{
 rates_indx
 }
 \description{
-A list of one element, which is presented by \code{zoo} class and contains
-daily rates of returns of ESTX50 EUR P index from 2000-01-01 to 2002-01-01.
-The code for generatin this dataset can be seen in the documentation of
-\code{apply_market_model} function.
+A \code{zoo} object containing daily rates of returns of ESTX50 EUR P index
+from 2000-01-04 to 2001-12-31. The code for generatin this dataset can be
+seen in the documentation of \code{get_rates_from_prices} function.
 }
 \keyword{datasets}
