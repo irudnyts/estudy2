@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_prices_from_tickers.R
 \name{get_prices_from_tickers}
 \alias{get_prices_from_tickers}
-\title{Returns daily prices for securities.}
+\title{Get daily prices of securities.}
 \usage{
 get_prices_from_tickers(..., start, end, quote = c("Open", "Close"),
   retclass = c("list", "zoo", "data.frame"))

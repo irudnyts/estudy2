@@ -1,73 +1,138 @@
-#' Apply market model and return the list of objects \code{returns}
+#' Apply a market model and return a list of \code{returns} objects
 #'
-#' The function applies given market model to securities' rates of returns and
-#' returns the list of objects \code{returns} for each security, which can be
-#' passed directly to the whole battery of tests.
+#' The function applies a given market model to securities' rates of returns and
+#' returns a list of \code{returns} objects for each security, which can be
+#' passed directly to a whole battery of tests.
 #'
 #' The generic function is dispatched for such classes as \code{list},
 #' \code{data.frame}, and \code{zoo}. If \code{same_regressor_for_all} is TRUE,
 #' and \code{regressors} has the length greater than one, the first element of
 #' \code{regressors} will be applied for each sequrity in \code{rates}.
 #'
-#' @param rates \code{list}, \code{data.frame}, \code{zoo} object containing
-#' rates of returns of securities.
+#' @param rates an object of \code{list}, \code{data.frame}, \code{zoo}
+#' containing rates of returns of securities.
 #' @param regressors an object of the same class as \code{rates} containing
-#' regressors. Can be omitted, if market model is \code{mean_adj}.
+#' regressors. The argument can be omitted, if market model is \code{mean_adj}.
 #' \code{regressors} must have the same number of components as \code{rates}
-#' expept the cases when the same regressor used for all securities.
+#' except cases when the same regressor is used for all securities.
 #' @param same_regressor_for_all logical. Should the same regressor be used for
 #' each security? The default value is TRUE.
 #' @param market_model a character indicating the market model among
 #' \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.
-#' @param estimation_method a character, specifying the estimation method for
-#' \code{sim} market model.
-#' @param estimation_start an object of class Data, giving the start date of
-#' estimation period.
-#' @param estimation_end an object of class Data, giving the start date of
-#' estimation period.
-#' @return A list of objects \code{returns}
+#' @param estimation_method a character specifying an estimation method for
+#' \code{sim} model.
+#' @param estimation_start an object of \code{Date} class giving the first date
+#' of the estimation period.
+#' @param estimation_end an object of \code{Date} class giving the last date of
+#' the estimation period.
+#' @return A list of \code{returns} objects.
+#'
+#' @references Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
+#' of Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
 #'
 #' @seealso \code{\link{returns}}
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ### Mean-adjusted returns market model
-#' ## Apply mean-adjusted returns market model for each company
+#' ## 1. Mean-adjusted-returns model
+#' \dontrun{
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' securities_returns <- get_prices_from_tickers(tickers,
+#'                                               start = as.Date("2000-01-01"),
+#'                                               end = as.Date("2002-01-01"),
+#'                                               quote = "Close",
+#'                                               retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(market_model = "mean_adj",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10"))
+#' }
+#' ## The code above is equivalent to:
 #' data(rates)
-#' securities_returns <- apply_market_model(rates, market_model = "mean_adj",
-#'                                          estimation_start =
-#'                                                        as.Date("2001-03-26"),
-#'                                          estimation_end =
-#'                                                        as.Date("2001-09-10"))
-#' ### Single Index market model
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' data(rates_indx)
-#' ## Apply Single Index market model
-#' securities_returns <- apply_market_model(rates = rates,
-#'                                          regressors = rates_indx,
-#'                                          same_regressor_for_all = TRUE,
-#'                                          market_model = "sim",
-#'                                          estimation_method = "ols",
-#'                                          estimation_start =
-#'                                                        as.Date("2001-03-26"),
-#'                                          estimation_end =
-#'                                                        as.Date("2001-09-10"))
+#' securities_returns <- apply_market_model(
+#'     rates,
+#'     market_model = "mean_adj",
+#'     estimation_start = as.Date("2001-03-26"),
+#'     estimation_end = as.Date("2001-09-10")
+#' )
+#'
+#' ## 2. Market-adjusted-returns model
+#' \dontrun{
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' securities_returns <- get_prices_from_tickers(tickers,
+#'                                               start = as.Date("2000-01-01"),
+#'                                               end = as.Date("2002-01-01"),
+#'                                               quote = "Close",
+#'                                               retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "mrkt_adj",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10"))
+#' }
+#' ## The code above is equivalent to:
+#' data(rates, rates_indx)
+#' securities_returns <- apply_market_model(
+#'     rates = rates,
+#'     regressor = rates_indx,
+#'     same_regressor_for_all = TRUE,
+#'     market_model = "mrkt_adj",
+#'     estimation_start = as.Date("2001-03-26"),
+#'     estimation_end = as.Date("2001-09-10")
+#' )
+#'
+#' ## 3. Single-index market model
+#' \dontrun{
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' securities_returns <- get_prices_from_tickers(tickers,
+#'                                               start = as.Date("2000-01-01"),
+#'                                               end = as.Date("2002-01-01"),
+#'                                               quote = "Close",
+#'                                               retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10"))
+#' }
+#' ## The code above is equivalent to:
+#' data(rates, rates_indx)
+#' securities_returns <- apply_market_model(
+#'     rates = rates,
+#'     regressor = rates_indx,
+#'     same_regressor_for_all = TRUE,
+#'     market_model = "sim",
+#'     estimation_method = "ols",
+#'     estimation_start = as.Date("2001-03-26"),
+#'     estimation_end = as.Date("2001-09-10")
+#' )
 #'
 #' @export
 apply_market_model <- function(rates, regressors, same_regressor_for_all = TRUE,
@@ -292,8 +357,8 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #' rates of returns of the market model, if needed.
 #' @param market_model a character indicating the market model among
 #' \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.
-#' @param estimation_method a character specifying the estimation method for
-#' \code{sim} market model.
+#' @param estimation_method a character specifying an estimation method for
+#' \code{sim} model.
 #' @param estimation_start an object of \code{Date} class giving the first date
 #' of the estimation period.
 #' @param estimation_end an object of \code{Date} class giving the last date of
@@ -331,7 +396,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #' @seealso \code{\link{apply_market_model}}
 #'
 #' @examples
-#' ## Mean-adjusted-returns model
+#' ## 1. Mean-adjusted-returns model
 #' \dontrun{
 #' single_return <- get_prices_from_tickers("ALV.DE",
 #'                                          start = as.Date("2000-01-01"),
@@ -352,7 +417,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #'                          estimation_start = as.Date("2001-03-26"),
 #'                          estimation_end = as.Date("2001-09-10"))
 #'
-#' ## Market-adjusted-returns model
+#' ## 2. Market-adjusted-returns model
 #' \dontrun{
 #' rates_indx <- get_prices_from_tickers("^STOXX50E",
 #'                                       start = as.Date("2000-01-01"),
@@ -385,7 +450,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #'                          estimation_start = as.Date("2001-03-26"),
 #'                          estimation_end = as.Date("2001-09-10"))
 #'
-#' ## Single-index market model
+#' ## 3. Single-index market model
 #' \dontrun{
 #' rates_indx <- get_prices_from_tickers("^STOXX50E",
 #'                                       start = as.Date("2000-01-01"),
@@ -445,14 +510,14 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
     }
     # Mean Adjusted Market Model
     if(market_model == "mean_adj") {
-        k_qnorm <- qnorm(1 - 0.05/2)
+        k_qnorm <- stats::qnorm(1 - 0.05/2)
         estimation_data <- rates[!is.na(rates)]
         estimation_data <- estimation_data[
             zoo::index(estimation_data) >= estimation_start &
             zoo::index(estimation_data) <= estimation_end]
         delta <- length(estimation_data)
         estimation_mean <- mean(estimation_data)
-        estimation_sd <- sd(estimation_data)
+        estimation_sd <- stats::sd(estimation_data)
 
         result <- list(observed = rates,
                        predicted = zoo::zoo(estimation_mean, zoo::index(rates)),
@@ -470,7 +535,7 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
                        estimation_length = delta)
     } else if(market_model == "mrkt_adj") {
         data <- zoo::merge.zoo(rates, regressor, all = TRUE)
-        estimation_data <- data[complete.cases(data), ]
+        estimation_data <- data[stats::complete.cases(data), ]
         estimation_data <- estimation_data[
             zoo::index(estimation_data) >= estimation_start &
             zoo::index(estimation_data) <= estimation_end]
@@ -479,9 +544,9 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
         # as in lm variables names
         y <- zoo::coredata(estimation_data[, 1])
         x <- zoo::coredata(estimation_data[, 2])
-        lm_fit <- lm(y ~ x)
+        lm_fit <- stats::lm(y ~ x)
         lm_fit$coefficients <- c(0, 1)
-        predicted <- predict.lm(object = lm_fit,
+        predicted <- stats::predict.lm(object = lm_fit,
                                 newdata = data.frame(x = data[, 2]),
                                 interval = c("confidence"), level = 0.95)
         rownames(predicted) <- NULL
@@ -504,7 +569,7 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
     } else if(market_model == "sim") {
         if(estimation_method == "ols") {
             data <- zoo::merge.zoo(rates, regressor, all = TRUE)
-            estimation_data <- data[complete.cases(data), ]
+            estimation_data <- data[stats::complete.cases(data), ]
             estimation_data <- estimation_data[
                 zoo::index(estimation_data) >= estimation_start &
                 zoo::index(estimation_data) <= estimation_end]
@@ -513,8 +578,8 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
             # as in lm variables names
             y <- zoo::coredata(estimation_data[, 1])
             x <- zoo::coredata(estimation_data[, 2])
-            lm_fit <- lm(y ~ x)
-            predicted <- predict.lm(object = lm_fit,
+            lm_fit <- stats::lm(y ~ x)
+            predicted <- stats::predict.lm(object = lm_fit,
                                     newdata = data.frame(x = data[, 2]),
                                     interval = c("confidence"), level = 0.95)
             rownames(predicted) <- NULL
@@ -565,14 +630,14 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
     }
     # Mean Adjusted Market Model
     if(market_model == "mean_adj") {
-        k_qnorm <- qnorm(1 - 0.05/2)
-        estimation_data <- rates[complete.cases(rates), ]
+        k_qnorm <- stats::qnorm(1 - 0.05/2)
+        estimation_data <- rates[stats::complete.cases(rates), ]
         estimation_data <- estimation_data[
             estimation_data[, 1] >= estimation_start &
             estimation_data[, 1] <= estimation_end, ]
         delta <- nrow(estimation_data)
         estimation_mean <- mean(estimation_data[, 2])
-        estimation_sd <- sd(estimation_data[, 2])
+        estimation_sd <- stats::sd(estimation_data[, 2])
 
         result <- list(observed = zoo::zoo(rates[, 2], rates[, 1]),
                        predicted = zoo::zoo(rep(estimation_mean, nrow(rates)),
@@ -595,7 +660,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                        estimation_length = delta)
     } else if(market_model == "mrkt_adj") {
         data <- merge(rates, regressor, by = "date", all = TRUE)
-        estimation_data <- data[complete.cases(data), ]
+        estimation_data <- data[stats::complete.cases(data), ]
         estimation_data <- estimation_data[
             estimation_data[, 1] >= estimation_start &
             estimation_data[, 1] <= estimation_end, ]
@@ -604,9 +669,9 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
         # as in lm variables names
         y <- estimation_data[, 2]
         x <- estimation_data[, 3]
-        lm_fit <- lm(y ~ x)
+        lm_fit <- stats::lm(y ~ x)
         lm_fit$coefficients <- c(0, 1)
-        predicted <- predict.lm(object = lm_fit,
+        predicted <- stats::predict.lm(object = lm_fit,
                                 newdata = data.frame(x = data[, 3]),
                                 interval = c("confidence"), level = 0.95)
         rownames(predicted) <- NULL
@@ -626,7 +691,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
     } else if(market_model == "sim") {
         if(estimation_method == "ols") {
             data <- merge(rates, regressor, by = "date", all = TRUE)
-            estimation_data <- data[complete.cases(data), ]
+            estimation_data <- data[stats::complete.cases(data), ]
             estimation_data <- estimation_data[
                 estimation_data[, 1] >= estimation_start &
                 estimation_data[, 1] <= estimation_end, ]
@@ -635,8 +700,8 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             # as in lm variables names
             y <- estimation_data[, 2]
             x <- estimation_data[, 3]
-            lm_fit <- lm(y ~ x)
-            predicted <- predict.lm(object = lm_fit,
+            lm_fit <- stats::lm(y ~ x)
+            predicted <- stats::predict.lm(object = lm_fit,
                                     newdata = data.frame(x = data[, 3]),
                                     interval = c("confidence"), level = 0.95)
             rownames(predicted) <- NULL

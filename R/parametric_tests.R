@@ -241,9 +241,9 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
     statistics <- event_means / sd_estimation_period
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta - 1)] <- "*"
-    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta - 1)] <- "**"
-    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta - 1)] <- "***"
+    significance[abs(statistics) >= stats::qt(1 - 0.10/2, mean_delta - 1)] <- "*"
+    significance[abs(statistics) >= stats::qt(1 - 0.05/2, mean_delta - 1)] <- "**"
+    significance[abs(statistics) >= stats::qt(1 - 0.01/2, mean_delta - 1)] <- "***"
     result <- cbind(result, data.frame(bw_1980_stat = statistics,
                                        bw_1980_signif = significance))
     rownames(result) <- NULL
@@ -382,14 +382,14 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     event_abnormal <- as.matrix(event_abnormal)
     mean_delta <- mean(delta)
 
-    sd_estimation_period <- sqrt(var(rowMeans(estimation_abnormal, na.rm = TRUE),
+    sd_estimation_period <- sqrt(stats::var(rowMeans(estimation_abnormal, na.rm = TRUE),
                                      na.rm = TRUE))
     statistics <- event_means / sd_estimation_period
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= qt(1 - 0.10/2, mean_delta - 1)] <- "*"
-    significance[abs(statistics) >= qt(1 - 0.05/2, mean_delta - 1)] <- "**"
-    significance[abs(statistics) >= qt(1 - 0.01/2, mean_delta - 1)] <- "***"
+    significance[abs(statistics) >= stats::qt(1 - 0.10/2, mean_delta - 1)] <- "*"
+    significance[abs(statistics) >= stats::qt(1 - 0.05/2, mean_delta - 1)] <- "**"
+    significance[abs(statistics) >= stats::qt(1 - 0.01/2, mean_delta - 1)] <- "***"
     result <- cbind(result, data.frame(bw_1985_stat = statistics,
                                        bw_1985_signif = significance))
     rownames(result) <- NULL
@@ -522,9 +522,9 @@ t_test <- function(list_of_returns, event_start, event_end) {
     df <- event_number_of_companies - 1
     df[df <= 0] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= qt(1 - 0.10/2, df)] <- "*"
-    significance[abs(statistics) >= qt(1 - 0.05/2, df)] <- "**"
-    significance[abs(statistics) >= qt(1 - 0.01/2, df)] <- "***"
+    significance[abs(statistics) >= stats::qt(1 - 0.10/2, df)] <- "*"
+    significance[abs(statistics) >= stats::qt(1 - 0.05/2, df)] <- "**"
+    significance[abs(statistics) >= stats::qt(1 - 0.01/2, df)] <- "***"
     result <- cbind(result, data.frame(t_test_stat = statistics,
                                        t_test_signif = significance))
     rownames(result) <- NULL
@@ -671,7 +671,7 @@ patell <- function(list_of_returns, event_start, event_end) {
         mean_market_estimation <- mean(market_estimation, na.rm = TRUE)
 
         company_event_standardized <- company_event_abnormal /
-            sd(company_estimation_abnormal, na.rm = TRUE) /
+            stats::sd(company_estimation_abnormal, na.rm = TRUE) /
             sqrt(1 + 1 / list_of_returns[[i]]$estimation_length +
                  (market_event - mean_market_estimation) ^ 2 /
                  sum((market_estimation - mean_market_estimation) ^ 2, na.rm = TRUE))
@@ -852,7 +852,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
         mean_market_estimation <- mean(market_estimation, na.rm = TRUE)
 
         company_event_standardized <- company_event_abnormal /
-            sd(company_estimation_abnormal, na.rm = TRUE) /
+            stats::sd(company_estimation_abnormal, na.rm = TRUE) /
             sqrt(1 + 1 / list_of_returns[[i]]$estimation_length +
                      (market_event - mean_market_estimation) ^ 2 /
                      sum((market_estimation - mean_market_estimation) ^ 2, na.rm = TRUE))
@@ -887,9 +887,9 @@ boehmer <- function(list_of_returns, event_start, event_end) {
     df <- event_number_of_companies - 1
     df[df <= 0] <- NA
     significance <- rep("", length(statistics))
-    significance[abs(statistics) >= qt(1 - 0.10/2, df)] <- "*"
-    significance[abs(statistics) >= qt(1 - 0.05/2, df)] <- "**"
-    significance[abs(statistics) >= qt(1 - 0.01/2, df)] <- "***"
+    significance[abs(statistics) >= stats::qt(1 - 0.10/2, df)] <- "*"
+    significance[abs(statistics) >= stats::qt(1 - 0.05/2, df)] <- "**"
+    significance[abs(statistics) >= stats::qt(1 - 0.01/2, df)] <- "***"
     result <- cbind(result, data.frame(bh_stat = statistics,
                                        bh_signif = significance))
     rownames(result) <- NULL
@@ -1063,7 +1063,7 @@ lamb <- function(list_of_returns, event_start, event_end) {
 
 
 
-    sd <- sd(estimation_means, na.rm = TRUE) * sqrt(1 + 1 / mean_delta +
+    sd <- stats::sd(estimation_means, na.rm = TRUE) * sqrt(1 + 1 / mean_delta +
             (event_market - estimation_market_mean)^2 / sum_estimation_market)
     statistics <- event_means / sd
     statistics[is.nan(statistics)] <- NA

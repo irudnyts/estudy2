@@ -512,7 +512,7 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
             zoo::index(list_of_returns[[i]]$abnormal) >= event_start &
                 zoo::index(list_of_returns[[i]]$abnormal) <= event_end])
 
-        company_median <- median(zoo::coredata(company_full_abnormal), na.rm = TRUE)
+        company_median <- stats::median(zoo::coredata(company_full_abnormal), na.rm = TRUE)
         company_full_sign <- sign(company_full_abnormal - company_median)
         company_event_sign <- sign(company_event_abnormal - company_median)
 
@@ -1056,12 +1056,12 @@ wilcoxon_test <- function(list_of_returns, event_start, event_end) {
     statistics <- rowMeans(event_rank, na.rm = TRUE) * ncol(event_rank)
     statistics[is.nan(statistics)] <- NA
     significance <- rep("", length(statistics))
-    significance[statistics >= qsignrank(1 - 0.1, n = N) |
-            statistics <= N * (N + 1) / 2 - qsignrank(1 - 0.1 / 2, n = N)] <- "*"
-    significance[statistics >= qsignrank(1 - 0.05, n = N) |
-            statistics <= N * (N + 1) / 2 - qsignrank(1 - 0.05 / 2, n = N)] <- "**"
-    significance[statistics >= qsignrank(1 - 0.01, n = N) |
-            statistics <= N * (N + 1) / 2 - qsignrank(1 - 0.01 / 2, n = N)] <- "***"
+    significance[statistics >= stats::qsignrank(1 - 0.1, n = N) |
+            statistics <= N * (N + 1) / 2 - stats::qsignrank(1 - 0.1 / 2, n = N)] <- "*"
+    significance[statistics >= stats::qsignrank(1 - 0.05, n = N) |
+            statistics <= N * (N + 1) / 2 - stats::qsignrank(1 - 0.05 / 2, n = N)] <- "**"
+    significance[statistics >= stats::qsignrank(1 - 0.01, n = N) |
+            statistics <= N * (N + 1) / 2 - stats::qsignrank(1 - 0.01 / 2, n = N)] <- "***"
 
     result <- cbind(result, data.frame(wlcx_stat = statistics,
                                        wlcx_signif = significance))

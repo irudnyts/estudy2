@@ -71,7 +71,7 @@ rates <- tickers \%>\%
 data(rates)
 
 ## Download historical prices of ESTX50 EUR P index and estimate rates of
-returns from prices:
+## returns from prices:
 \dontrun{
 rates_indx <- get_prices_from_tickers("^STOXX50E",
                                       start = as.Date("2000-01-01"),

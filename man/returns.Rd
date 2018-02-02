@@ -17,8 +17,8 @@ rates of returns of the market model, if needed.}
 \item{market_model}{a character indicating the market model among
 \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.}
 
-\item{estimation_method}{a character specifying the estimation method for
-\code{sim} market model.}
+\item{estimation_method}{a character specifying an estimation method for
+\code{sim} model.}
 
 \item{estimation_start}{an object of \code{Date} class giving the first date
 of the estimation period.}
@@ -71,7 +71,7 @@ market model For this model only Ordinary Least Squares
 in Brown and Warner (1985).
 }
 \examples{
-## Mean-adjusted-returns model
+## 1. Mean-adjusted-returns model
 \dontrun{
 single_return <- get_prices_from_tickers("ALV.DE",
                                          start = as.Date("2000-01-01"),
@@ -92,7 +92,7 @@ single_return <- returns(rates[, "ALV.DE", drop = FALSE],
                          estimation_start = as.Date("2001-03-26"),
                          estimation_end = as.Date("2001-09-10"))
 
-## Market-adjusted-returns model
+## 2. Market-adjusted-returns model
 \dontrun{
 rates_indx <- get_prices_from_tickers("^STOXX50E",
                                       start = as.Date("2000-01-01"),
@@ -125,7 +125,7 @@ single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
                          estimation_start = as.Date("2001-03-26"),
                          estimation_end = as.Date("2001-09-10"))
 
-## Single-index market model
+## 3. Single-index market model
 \dontrun{
 rates_indx <- get_prices_from_tickers("^STOXX50E",
                                       start = as.Date("2000-01-01"),
