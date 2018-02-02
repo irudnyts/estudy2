@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_market_model.R
 \name{returns}
 \alias{returns}
-\title{Constructor for a S3 returns class object}
+\title{Constructor of an object of S3 class \code{returns}}
 \usage{
 returns(rates, regressor, market_model = c("mean_adj", "mrkt_adj", "sim"),
   estimation_method = c("ols"), estimation_start, estimation_end)
@@ -17,88 +17,145 @@ rates of returns of the market model, if needed.}
 \item{market_model}{a character indicating the market model among
 \code{mean_adj}, \code{mrkt_adj}, and \code{sim}.}
 
-\item{estimation_method}{a character, specifying the estimation method for
+\item{estimation_method}{a character specifying the estimation method for
 \code{sim} market model.}
 
-\item{estimation_start}{an object of class Data, giving the start date of
-estimation period.}
+\item{estimation_start}{an object of \code{Date} class giving the first date
+of the estimation period.}
 
-\item{estimation_end}{an object of class Data, giving the start date of
-estimation period.}
+\item{estimation_end}{an object of \code{Date} class giving the last date of
+the estimation period.}
 }
 \value{
-An object of S3 class \code{returns}, which contains the following
+An object of S3 class \code{returns}, which contains following
 fields:
 \itemize{
-\item observed: the object of class \code{zoo}, containing observed rates of
+\item observed: an object of \code{zoo} class containing observed rates of
 returns.
-\item predicted: the object of class \code{zoo}, containing predicted by
+\item predicted: an object of \code{zoo} class containing predicted by a
 market model rates of returns.
-\item lower95CI: the lower bound of the 95\% Confidence Interval for
+\item lower95CI: a lower bound of the 95\% Confidence Interval for
 predicted rates of returns.
-\item upper95CI: the upper bound of the 95\% Confidence Interval for
+\item upper95CI: an upper bound of the 95\% Confidence Interval for
 predicted rates of returns.
-\item abnormal: the object of class \code{zoo}, containing abnormal returns.
-\item regressor: the object of class \code{zoo}, containing rates of
+\item abnormal: an object of \code{zoo} class containing abnormal returns.
+\item regressor: an object of \code{zoo} class containing rates of
 regressor (typically market index).
-\item market_model: the code name of the market model.
-\item full_name_market_model: full name of the market model.
-\item estimation_method: the code name of estimation method (applied only for
-SIM).
-\item full_name_estimation_method: full name of estimation method (applied
-only for SIM).
-\item coefficients: coefficients \eqn{\alpha} and \eqn{\beta} for SIM market model
+\item market_model: a code name of the market model.
+\item full_name_market_model: a full name of the market model.
+\item estimation_method: a code name of the estimation method (applied only
+for SIM).
+\item full_name_estimation_method: a full name of the estimation method
 (applied only for SIM).
-\item estimation_start: the end of estimation period.
-\item estimation_end: the end of estimation period.
-\item estimation_length: the length of the estimation period.
+\item coefficients: coefficients \eqn{\alpha} and \eqn{\beta} for SIM market
+model (applied only for SIM).
+\item estimation_start: a start date of the estimation period.
+\item estimation_end: an end date of the estimation period.
+\item estimation_length: a length of the estimation period.
 }
 }
 \description{
-Constructs an \code{returns} class object with corresponding fields.
+Constructs an object of S3 class \code{returns}.
 }
 \details{
-The constructor is the generic function, dispatched for classes \code{zoo}
+The constructor is a generic function, dispatched for classes \code{zoo}
 \code{data.frame}. Parameters \code{rates} and \code{regressor} should be
 objects of the same class (\code{zoo} or \code{data.frame}). There are three
-market model implemented. \code{mean_adj} stands for Mean Adjusted Market
+market model implemented. \code{mean_adj} stands for mean-adjusted-returns
 model, which is the average of returns during the estimation period.
-\code{mrkt_adj} represents Market Adjusted Market model: the securities' rate
-of returns are simply market index rates of returns (in terms of parameters -
-\code{regressor}). Finally, \code{sim} stands for the Single Index Market
-model. For this model only Ordinary Least Squares \code{estimation_method} is
-currently implemented. All models are described in Brown and Warner (1985).
+\code{mrkt_adj} represents market-adjusted-returns model: the securities'
+rates of returns are simply market index rates of returns (in terms of
+parameters - \code{regressor}). Finally, \code{sim} stands for single-index
+market model For this model only Ordinary Least Squares
+\code{estimation_method} is currently implemented. All models are described
+in Brown and Warner (1985).
 }
 \examples{
-## Download the historical prices for ten European insurance companies' stocks
-# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#                                   end = as.Date("2002-01-01"),
-#                                   quote = "Close", retclass = "list")
-# Estimate the rate of returns form prices
-# rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#                                compounding = "continuous")
-### Mean-adjusted returns market model
-## Apply mean-adjusted returns market model for each company
+## Mean-adjusted-returns model
+\dontrun{
+single_return <- get_prices_from_tickers("ALV.DE",
+                                         start = as.Date("2000-01-01"),
+                                         end = as.Date("2002-01-01"),
+                                         quote = "Close",
+                                         retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous") \%>\%
+    returns(market_model = "mean_adj",
+            estimation_start = as.Date("2001-03-26"),
+            estimation_end = as.Date("2001-09-10"))
+}
+## The code above is equivalent to:
 data(rates)
-single_return <- returns(rates[[1]], market_model = "mean_adj",
+single_return <- returns(rates[, "ALV.DE", drop = FALSE],
+                         market_model = "mean_adj",
                          estimation_start = as.Date("2001-03-26"),
                          estimation_end = as.Date("2001-09-10"))
-### Single Index market model
-## Download the prices and estimate the rates of market proxy (index
-## ESTX50 EUR P), which is regressor for the sim model
-# prices_indx <- get_prices_from_tickers("^STOXX50E",
-#                                        start = as.Date("2000-01-01"),
-#                                        end = as.Date("2002-01-01"),
-#                                        quote = "Close", retclass = "list")
-# rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#                                     multi_day = TRUE,
-#                                     compounding = "continuous")
-data(rates_indx)
-## Apply Single Index market model
-single_return <- returns(rates = rates[[1]], regressor = rates_indx[[1]],
-                         market_model = "sim", estimation_method = "ols",
+
+## Market-adjusted-returns model
+\dontrun{
+rates_indx <- get_prices_from_tickers("^STOXX50E",
+                                      start = as.Date("2000-01-01"),
+                                      end = as.Date("2002-01-01"),
+                                      quote = "Close",
+                                      retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous")
+
+single_return <- get_prices_from_tickers("ALV.DE",
+                                         start = as.Date("2000-01-01"),
+                                         end = as.Date("2002-01-01"),
+                                         quote = "Close",
+                                         retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous") \%>\%
+    returns(regressor = rates_indx,
+            market_model = "mrkt_adj",
+            estimation_start = as.Date("2001-03-26"),
+            estimation_end = as.Date("2001-09-10"))
+}
+## The code above is equivalent to:
+data(rates, rates_indx)
+single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
+                         regressor = rates_indx,
+                         market_model = "mrkt_adj",
+                         estimation_method = "ols",
+                         estimation_start = as.Date("2001-03-26"),
+                         estimation_end = as.Date("2001-09-10"))
+
+## Single-index market model
+\dontrun{
+rates_indx <- get_prices_from_tickers("^STOXX50E",
+                                      start = as.Date("2000-01-01"),
+                                      end = as.Date("2002-01-01"),
+                                      quote = "Close",
+                                      retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous")
+
+single_return <- get_prices_from_tickers("ALV.DE",
+                                         start = as.Date("2000-01-01"),
+                                         end = as.Date("2002-01-01"),
+                                         quote = "Close",
+                                         retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous") \%>\%
+    returns(regressor = rates_indx,
+            market_model = "sim",
+            estimation_method = "ols",
+            estimation_start = as.Date("2001-03-26"),
+            estimation_end = as.Date("2001-09-10"))
+}
+## The code above is equivalent to:
+data(rates, rates_indx)
+single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
+                         regressor = rates_indx,
+                         market_model = "sim",
+                         estimation_method = "ols",
                          estimation_start = as.Date("2001-03-26"),
                          estimation_end = as.Date("2001-09-10"))
 

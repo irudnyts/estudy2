@@ -24,19 +24,30 @@
 #' @seealso \code{\link[tseries]{get.hist.quote}}
 #'
 #' @examples
-#' ## Download historical prices of ten European insurance companies'
+#' ## Download historical prices of nine European insurance companies'
 #' ## stocks:
 #' \dontrun{
-#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
 #' prices <- tickers %>%
-#'    get_prices_from_tickers(start = as.Date("2000-01-01"),
-#'                            end = as.Date("2002-01-01"),
-#'                            quote = "Close",
-#'                            retclass = "list")
+#'     get_prices_from_tickers(start = as.Date("2000-01-01"),
+#'                             end = as.Date("2002-01-01"),
+#'                             quote = "Close",
+#'                             retclass = "zoo")
 #' }
 #' ## The result of the above code is stored in:
 #' data(prices)
+#'
+#' ## Download historical prices of ESTX50 EUR P index:
+#' \dontrun{
+#' prices_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                        start = as.Date("2000-01-01"),
+#'                                        end = as.Date("2002-01-01"),
+#'                                        quote = "Close",
+#'                                        retclass = "zoo")
+#' }
+#' ## The result of the above code is stored in:
+#' data(prices_indx)
 #'
 #' @export
 get_prices_from_tickers <- function(..., start, end,

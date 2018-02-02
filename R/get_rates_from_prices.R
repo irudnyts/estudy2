@@ -38,22 +38,37 @@
 #' @return Rates of returns of the same class as prices.
 #'
 #' @examples
-#' ## Download historical prices of ten European insurance companies'
+#' ## Download historical prices of nine European insurance companies'
 #' ## stocks and estimate rates of returns form prices:
 #' \dontrun{
-#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#'              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
 #' rates <- tickers %>%
-#'    get_prices_from_tickers(start = as.Date("2000-01-01"),
-#'                            end = as.Date("2002-01-01"),
-#'                            quote = "Close",
-#'                            retclass = "list") %>%
-#'    get_rates_from_prices(quote = "Close",
-#'                          multi_day = TRUE,
-#'                          compounding = "continuous")
+#'     get_prices_from_tickers(start = as.Date("2000-01-01"),
+#'                             end = as.Date("2002-01-01"),
+#'                             quote = "Close",
+#'                             retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
 #' }
 #' ## The result of the above code is stored in:
 #' data(rates)
+#'
+#' ## Download historical prices of ESTX50 EUR P index and estimate rates of
+#' returns from prices:
+#' \dontrun{
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' }
+#' ## The result of the above code is stored in:
+#' data(rates_indx)
 #'
 #' @export
 get_rates_from_prices <- function(prices, quote = c("Open", "Close"),
