@@ -56,6 +56,7 @@ compounding.
 ## Download historical prices of nine European insurance companies'
 ## stocks and estimate rates of returns form prices:
 \dontrun{
+library("magrittr")
 tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
              "MUV2.DE", "RSA.L", "TOP.CO")
 rates <- tickers \%>\%
@@ -73,6 +74,7 @@ data(rates)
 ## Download historical prices of ESTX50 EUR P index and estimate rates of
 ## returns from prices:
 \dontrun{
+library("magrittr")
 rates_indx <- get_prices_from_tickers("^STOXX50E",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),

@@ -35,6 +35,7 @@
 #' @examples
 #' ## 1. Mean-adjusted-returns model
 #' \dontrun{
+#' library("magrittr")
 #' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
 #'              "MUV2.DE", "RSA.L", "TOP.CO")
 #' securities_returns <- get_prices_from_tickers(tickers,
@@ -60,6 +61,7 @@
 #'
 #' ## 2. Market-adjusted-returns model
 #' \dontrun{
+#' library("magrittr")
 #' rates_indx <- get_prices_from_tickers("^STOXX50E",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
@@ -97,6 +99,7 @@
 #'
 #' ## 3. Single-index market model
 #' \dontrun{
+#' library("magrittr")
 #' rates_indx <- get_prices_from_tickers("^STOXX50E",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
@@ -406,6 +409,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #' @examples
 #' ## 1. Mean-adjusted-returns model
 #' \dontrun{
+#' library("magrittr")
 #' single_return <- get_prices_from_tickers("ALV.DE",
 #'                                          start = as.Date("2000-01-01"),
 #'                                          end = as.Date("2002-01-01"),
@@ -427,6 +431,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #'
 #' ## 2. Market-adjusted-returns model
 #' \dontrun{
+#' library("magrittr")
 #' rates_indx <- get_prices_from_tickers("^STOXX50E",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
@@ -460,6 +465,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #'
 #' ## 3. Single-index market model
 #' \dontrun{
+#' library("magrittr")
 #' rates_indx <- get_prices_from_tickers("^STOXX50E",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),

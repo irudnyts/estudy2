@@ -41,6 +41,7 @@ returns the data in different class-containers: list of \code{zoo}'s,
 ## Download historical prices of nine European insurance companies'
 ## stocks:
 \dontrun{
+library("magrittr")
 tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
              "MUV2.DE", "RSA.L", "TOP.CO")
 prices <- tickers \%>\%

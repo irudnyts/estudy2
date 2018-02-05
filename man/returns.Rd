@@ -73,6 +73,7 @@ in Brown and Warner (1985).
 \examples{
 ## 1. Mean-adjusted-returns model
 \dontrun{
+library("magrittr")
 single_return <- get_prices_from_tickers("ALV.DE",
                                          start = as.Date("2000-01-01"),
                                          end = as.Date("2002-01-01"),
@@ -94,6 +95,7 @@ single_return <- returns(rates[, "ALV.DE", drop = FALSE],
 
 ## 2. Market-adjusted-returns model
 \dontrun{
+library("magrittr")
 rates_indx <- get_prices_from_tickers("^STOXX50E",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
@@ -127,6 +129,7 @@ single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
 
 ## 3. Single-index market model
 \dontrun{
+library("magrittr")
 rates_indx <- get_prices_from_tickers("^STOXX50E",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
