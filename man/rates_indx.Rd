@@ -10,7 +10,7 @@ rates_indx
 }
 \description{
 A \code{zoo} object containing daily rates of returns of ESTX50 EUR P index
-from 2000-01-04 to 2001-12-31. The code for generatin this dataset can be
-seen in the documentation of \code{get_rates_from_prices} function.
+from 2000-01-04 to 2001-12-31. See examples of
+\code{\link{get_rates_from_prices}} for the dataset generation.
 }
 \keyword{datasets}

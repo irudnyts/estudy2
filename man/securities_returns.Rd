@@ -22,8 +22,7 @@ securities_returns
 \description{
 A list of length nine, elements of which are objects of the class
 \code{returns}. The list contains all necessary returns of nine major
-insurance companies from 2000-01-04 to 2001-12-29. The code for generatin
-this dataset can be seen in the documentation of \code{apply_market_model}
-function.
+insurance companies from 2000-01-04 to 2001-12-29. See examples of
+\code{\link{apply_market_model}} for the dataset generation.
 }
 \keyword{datasets}

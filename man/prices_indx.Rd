@@ -10,7 +10,7 @@ prices_indx
 }
 \description{
 A \code{zoo} object containing daily prices of ESTX50 EUR P index from
-2000-01-03 to 2001-12-31. The code for generatin this dataset can be seen in
-the documentation of \code{get_prices_from_tickers} function.
+2000-01-03 to 2001-12-31. See examples of
+\code{\link{get_prices_from_tickers}} for the dataset generation.
 }
 \keyword{datasets}

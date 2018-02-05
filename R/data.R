@@ -1,9 +1,9 @@
-#' Stock prices of nine major insurance companies from 2000-01-03 to 2002-01-01
+#' Stock prices of nine major European insurance companies from 2000-01-03 to
+#' 2002-01-01
 #'
 #' A \code{zoo} object of nine columns containing daily Close stock prices of
-#' nine major insurance companies from 2000-01-03 to 2002-01-01. The code for
-#' generatin this dataset can be seen in the documentation of
-#' \code{get_prices_from_tickers} function.
+#' nine major European insurance companies from 2000-01-03 to 2002-01-01. See
+#' examples of \code{\link{get_prices_from_tickers}} for the dataset generation.
 #'
 #' @format A \code{zoo} object of nine columns:
 #' \itemize{
@@ -22,19 +22,18 @@
 #' Prices of of ESTX50 EUR P index from 2000-01-03 to 2001-12-31
 #'
 #' A \code{zoo} object containing daily prices of ESTX50 EUR P index from
-#' 2000-01-03 to 2001-12-31. The code for generatin this dataset can be seen in
-#' the documentation of \code{get_prices_from_tickers} function.
+#' 2000-01-03 to 2001-12-31. See examples of
+#' \code{\link{get_prices_from_tickers}} for the dataset generation.
 #'
 #' @format A \code{zoo} object.
 "prices_indx"
 
-#' Rates of returns of nine major insurance companies from 2000-01-04 to
-#' 2002-01-01
+#' Rates of returns of nine major European insurance companies from 2000-01-04
+#' to 2002-01-01
 #'
 #' A \code{zoo} object of nine columns containing  daily rates of returns of
-#' nine major insurance companies from 2000-01-04 to 2002-01-01. The code for
-#' generatin this dataset can be seen in the documentation of
-#' \code{get_rates_from_prices} function.
+#' nine major European insurance companies from 2000-01-04 to 2002-01-01. See
+#' examples of \code{\link{get_rates_from_prices}} for the dataset generation.
 #'
 #' @format A \code{zoo} object of nine columns:
 #' \itemize{
@@ -53,8 +52,8 @@
 #' Rates of returns of ESTX50 EUR P index from 2000-01-04 to 2001-12-31
 #'
 #' A \code{zoo} object containing daily rates of returns of ESTX50 EUR P index
-#' from 2000-01-04 to 2001-12-31. The code for generatin this dataset can be
-#' seen in the documentation of \code{get_rates_from_prices} function.
+#' from 2000-01-04 to 2001-12-31. See examples of
+#' \code{\link{get_rates_from_prices}} for the dataset generation.
 #'
 #' @format A \code{zoo} object.
 "rates_indx"
@@ -63,9 +62,8 @@
 #'
 #' A list of length nine, elements of which are objects of the class
 #' \code{returns}. The list contains all necessary returns of nine major
-#' insurance companies from 2000-01-04 to 2001-12-29. The code for generatin
-#' this dataset can be seen in the documentation of \code{apply_market_model}
-#' function.
+#' insurance companies from 2000-01-04 to 2001-12-29. See examples of
+#' \code{\link{apply_market_model}} for the dataset generation.
 #'
 #' @format A list of nine \code{zoo} elements:
 #' \itemize{

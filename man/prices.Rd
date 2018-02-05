@@ -3,7 +3,8 @@
 \docType{data}
 \name{prices}
 \alias{prices}
-\title{Stock prices of nine major insurance companies from 2000-01-03 to 2002-01-01}
+\title{Stock prices of nine major European insurance companies from 2000-01-03 to
+2002-01-01}
 \format{A \code{zoo} object of nine columns:
 \itemize{
   \item ALV.DE
@@ -21,8 +22,7 @@ prices
 }
 \description{
 A \code{zoo} object of nine columns containing daily Close stock prices of
-nine major insurance companies from 2000-01-03 to 2002-01-01. The code for
-generatin this dataset can be seen in the documentation of
-\code{get_prices_from_tickers} function.
+nine major European insurance companies from 2000-01-03 to 2002-01-01. See
+examples of \code{\link{get_prices_from_tickers}} for the dataset generation.
 }
 \keyword{datasets}
