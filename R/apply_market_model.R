@@ -301,21 +301,27 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
     }
 
     if(market_model != "mean_adj" && same_regressor_for_all) {
-        first_element <- regressors[, 1]
-        regressors <- first_element[, rep(1, ncol(rates))]
+        regressors <- zoo::zoo(x = regressors[, rep(1, ncol(rates))],
+                               order.by = zoo::index(regressors))
+        # first_element <- regressors[, 1]
+        # regressors <- first_element[, rep(1, ncol(rates))]
     }
 
     list_of_returns <- list()
     if(market_model == "mean_adj") {
         for(i in 1:ncol(rates)) {
-            list_of_returns[[i]] <- returns(rates = rates[, i],
+            current_rates <- zoo::zoo(x = rates[, i],
+                                      order.by = zoo::index(rates))
+            list_of_returns[[i]] <- returns(rates = current_rates,
                                             market_model = market_model,
                                             estimation_start = estimation_start,
                                             estimation_end = estimation_end)
         }
     } else if(market_model == "mrkt_adj") {
         for(i in 1:ncol(rates)) {
-            list_of_returns[[i]] <- returns(rates = rates[, i],
+            current_rates <- zoo::zoo(x = rates[, i],
+                                      order.by = zoo::index(rates))
+            list_of_returns[[i]] <- returns(rates = current_rates,
                                             regressor = regressors[, i],
                                             market_model = market_model,
                                             estimation_start = estimation_start,
@@ -323,7 +329,9 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
         }
     } else if(market_model == "sim"){
         for(i in 1:ncol(rates)) {
-            list_of_returns[[i]] <- returns(rates = rates[, i],
+            current_rates <- zoo::zoo(x = rates[, i],
+                                      order.by = zoo::index(rates))
+            list_of_returns[[i]] <- returns(rates = current_rates,
                                             regressor = regressors[, i],
                                             market_model = market_model,
                                             estimation_method =
