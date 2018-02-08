@@ -1,25 +1,25 @@
-#' Returns the result of given parametric tests for event study.
+#' Returns the result of given event study parametric tests.
 #'
 #' Performs main parametric tests for each date in the event window and returns
-#' the table of statistics and significance.
+#' a data frame of their statistics and significance.
 #'
 #' \code{parametric_tests} performs given tests among \code{brown_warner_1980},
 #' \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer},
-#' \code{lamb} and merge result to single table. If \code{all = TRUE} (by default),
-#' the function ignores the value of \code{tests}.
+#' \code{lamb} and merge result to a single data frame. If \code{all = TRUE}
+#' (the default value), the function ignores the value of \code{tests}.
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @param all a logical value indicating whether all tests should be performed.
-#' The default value is \code{TRUE}.
-#' @param tests the list of tests functions among \code{brown_warner_1980},
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @param all a logical vector of length one indicating whether all tests should
+#' be performed. The default value is \code{TRUE}.
+#' @param tests a list of tests' functions among \code{brown_warner_1980},
 #' \code{brown_warner_1985}, \code{t_test}, \code{patell}, \code{boehmer}, and
 #' \code{lamb}.
-#' @return The single table of statistics and significances of all tests.
+#' @return A data frame containing all statistics and significances of tests.
 #'
 #' @references \itemize{
 #' \item Brown S.J., Warner J.B. \emph{Measuring security price performance}.
@@ -40,37 +40,40 @@
 #' \code{\link{lamb}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' nine_eleven_param <- get_prices_from_tickers(tickers,
+#'                                              start = as.Date("2000-01-01"),
+#'                                              end = as.Date("2002-01-01"),
+#'                                              quote = "Close",
+#'                                              retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     parametric_tests(event_start = as.Date("2001-09-11"),
+#'                      event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' parametric_tests(securities_returns, as.Date("2001-09-11"),
-#'                  as.Date("2001-09-28"))
+#' nine_eleven_param <- parametric_tests(list_of_returns = securities_returns,
+#'                                       event_start =  as.Date("2001-09-11"),
+#'                                       event_end = as.Date("2001-09-28"))
 #'
 #' @export
 parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE,

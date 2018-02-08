@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_market_model.R
 \name{returns}
 \alias{returns}
-\title{Constructor of an object of S3 class \code{returns}}
+\title{Constructor of an object of S3 class \code{returns}.}
 \usage{
 returns(rates, regressor, market_model = c("mean_adj", "mrkt_adj", "sim"),
   estimation_method = c("ols"), estimation_start, estimation_end)
@@ -86,7 +86,7 @@ single_return <- get_prices_from_tickers("ALV.DE",
             estimation_start = as.Date("2001-03-26"),
             estimation_end = as.Date("2001-09-10"))
 }
-## The code above is equivalent to:
+## The result of the code above is equivalent to:
 data(rates)
 single_return <- returns(rates[, "ALV.DE", drop = FALSE],
                          market_model = "mean_adj",
@@ -118,7 +118,7 @@ single_return <- get_prices_from_tickers("ALV.DE",
             estimation_start = as.Date("2001-03-26"),
             estimation_end = as.Date("2001-09-10"))
 }
-## The code above is equivalent to:
+## The result of the code above is equivalent to:
 data(rates, rates_indx)
 single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
                          regressor = rates_indx,
@@ -153,7 +153,7 @@ single_return <- get_prices_from_tickers("ALV.DE",
             estimation_start = as.Date("2001-03-26"),
             estimation_end = as.Date("2001-09-10"))
 }
-## The code above is equivalent to:
+## The result of the code above is equivalent to:
 data(rates, rates_indx)
 single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
                          regressor = rates_indx,

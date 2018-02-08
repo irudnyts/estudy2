@@ -1,4 +1,4 @@
-#' Apply a market model and return a list of \code{returns} objects
+#' Apply a market model and return a list of \code{returns} objects.
 #'
 #' The function applies a given market model to securities' rates of returns and
 #' returns a list of \code{returns} objects for each security, which can be
@@ -50,7 +50,7 @@
 #'                        estimation_start = as.Date("2001-03-26"),
 #'                        estimation_end = as.Date("2001-09-10"))
 #' }
-#' ## The code above is equivalent to:
+#' ## The result of the code above is equivalent to:
 #' data(rates)
 #' securities_returns <- apply_market_model(
 #'     rates,
@@ -86,7 +86,7 @@
 #'                        estimation_start = as.Date("2001-03-26"),
 #'                        estimation_end = as.Date("2001-09-10"))
 #' }
-#' ## The code above is equivalent to:
+#' ## The result of the code above is equivalent to:
 #' data(rates, rates_indx)
 #' securities_returns <- apply_market_model(
 #'     rates = rates,
@@ -125,7 +125,7 @@
 #'                        estimation_start = as.Date("2001-03-26"),
 #'                        estimation_end = as.Date("2001-09-10"))
 #' }
-#' ## The code above is equivalent to:
+#' ## The result of the code above is equivalent to:
 #' data(rates, rates_indx)
 #' securities_returns <- apply_market_model(
 #'     rates = rates,
@@ -346,7 +346,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
     return(list_of_returns)
 }
 
-#' Constructor of an object of S3 class \code{returns}
+#' Constructor of an object of S3 class \code{returns}.
 #'
 #' Constructs an object of S3 class \code{returns}.
 #'
@@ -422,7 +422,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #'             estimation_start = as.Date("2001-03-26"),
 #'             estimation_end = as.Date("2001-09-10"))
 #' }
-#' ## The code above is equivalent to:
+#' ## The result of the code above is equivalent to:
 #' data(rates)
 #' single_return <- returns(rates[, "ALV.DE", drop = FALSE],
 #'                          market_model = "mean_adj",
@@ -454,7 +454,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #'             estimation_start = as.Date("2001-03-26"),
 #'             estimation_end = as.Date("2001-09-10"))
 #' }
-#' ## The code above is equivalent to:
+#' ## The result of the code above is equivalent to:
 #' data(rates, rates_indx)
 #' single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
 #'                          regressor = rates_indx,
@@ -489,7 +489,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #'             estimation_start = as.Date("2001-03-26"),
 #'             estimation_end = as.Date("2001-09-10"))
 #' }
-#' ## The code above is equivalent to:
+#' ## The result of the code above is equivalent to:
 #' data(rates, rates_indx)
 #' single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
 #'                          regressor = rates_indx,

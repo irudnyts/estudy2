@@ -2,75 +2,79 @@
 % Please edit documentation in R/nonparametric_tests.R
 \name{nonparametric_tests}
 \alias{nonparametric_tests}
-\title{Returns the result for all nonparametric tests for event study.}
+\title{Returns the result of given event study nonparametric tests.}
 \usage{
 nonparametric_tests(list_of_returns, event_start, event_end, all = TRUE,
   tests)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each
-element of which is treated as a company (security).}
+\item{list_of_returns}{a list of objects of S3 class \code{returns}, each
+element of which is treated as a sequrity.}
 
-\item{event_start}{the object of class \code{Date}, which represents the
-first (starting) date of the event window.}
+\item{event_start}{an object of \code{Date} class giving the first date of
+the event period.}
 
-\item{event_end}{the object of class \code{Date}, which represents the last
-(ending) date in the event window.}
+\item{event_end}{an object of \code{Date} class giving the last date of the
+event period.}
 
-\item{all}{a logical value indicating whether all tests should be performed.
-The default value is \code{TRUE}.}
+\item{all}{a logical vector of length one indicating whether all tests should
+be performed. The default value is \code{TRUE}.}
 
-\item{tests}{the list of tests functions among \code{\link{sign_test}},
+\item{tests}{a list of tests' functions among \code{\link{sign_test}},
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 \code{\link{rank_test}}, \code{\link{modified_rank_test}}, and
 \code{\link{wilcoxon_test}}.}
 }
 \value{
-The single table of statistics and significances of all tests.
+A data frame containing all statistics and significances of tests.
 }
 \description{
 Performs main nonparametric tests for each date in the event window and
-returns the table of statistics and significance of these tests.
+returns a data frame of their statistics and significance.
 }
 \details{
 \code{nonparametric_tests} performs given tests among \code{\link{sign_test}},
 \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 \code{\link{rank_test}}, \code{\link{modified_rank_test}},
-\code{\link{wilcoxon_test}}, and merge result to single table. If
-\code{all = TRUE} (by default), the function ignores the value of \code{tests}.
+\code{\link{wilcoxon_test}}, and merge result to a single data frame. If
+\code{all = TRUE} (the default value), the function ignores the value of
+\code{tests}.
 }
 \examples{
-## Download the historical prices for ten European insurance companies' stocks
-# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#                                   end = as.Date("2002-01-01"),
-#                                   quote = "Close", retclass = "list")
-## Estimate the rate of returns form prices
-# rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#                                compounding = "continuous")
-## Download the prices and estimate the rates of market proxy (index
-## ESTX50 EUR P), which is regressor for the sim model
-# prices_indx <- get_prices_from_tickers("^STOXX50E",
-#                                        start = as.Date("2000-01-01"),
-#                                        end = as.Date("2002-01-01"),
-#                                        quote = "Close", retclass = "list")
-# rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#                                     multi_day = TRUE,
-#                                     compounding = "continuous")
-## Apply Single Index market model
-# securities_returns <- apply_market_model(rates = rates,
-#                                          regressors = rates_indx,
-#                                          same_regressor_for_all = TRUE,
-#                                          market_model = "sim",
-#                                          estimation_method = "ols",
-#                                          estimation_start =
-#                                                      as.Date("2001-03-26"),
-#                                          estimation_end =
-#                                                      as.Date("2001-09-10"))
+\dontrun{
+library("magrittr")
+rates_indx <- get_prices_from_tickers("^STOXX50E",
+                                      start = as.Date("2000-01-01"),
+                                      end = as.Date("2002-01-01"),
+                                      quote = "Close",
+                                      retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous")
+tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+             "MUV2.DE", "RSA.L", "TOP.CO")
+nine_eleven_nparam <- get_prices_from_tickers(tickers,
+                                              start = as.Date("2000-01-01"),
+                                              end = as.Date("2002-01-01"),
+                                              quote = "Close",
+                                              retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous") \%>\%
+    apply_market_model(regressor = rates_indx,
+                       same_regressor_for_all = TRUE,
+                       market_model = "sim",
+                       estimation_method = "ols",
+                       estimation_start = as.Date("2001-03-26"),
+                       estimation_end = as.Date("2001-09-10")) \%>\%
+    nonparametric_tests(event_start = as.Date("2001-09-11"),
+                        event_end = as.Date("2001-09-28"))
+}
+## The result of the code above is equivalent to:
 data(securities_returns)
-nonparametric_tests(securities_returns, as.Date("2001-09-11"),
-                    as.Date("2001-09-28"))
+nine_eleven_nparam <- nonparametric_tests(list_of_returns = securities_returns,
+                                          event_start =  as.Date("2001-09-11"),
+                                          event_end = as.Date("2001-09-28"))
 
 }
 \references{

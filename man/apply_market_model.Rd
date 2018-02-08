@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_market_model.R
 \name{apply_market_model}
 \alias{apply_market_model}
-\title{Apply a market model and return a list of \code{returns} objects}
+\title{Apply a market model and return a list of \code{returns} objects.}
 \usage{
 apply_market_model(rates, regressors, same_regressor_for_all = TRUE,
   market_model = c("mean_adj", "mrkt_adj", "sim"),
@@ -64,7 +64,7 @@ securities_returns <- get_prices_from_tickers(tickers,
                        estimation_start = as.Date("2001-03-26"),
                        estimation_end = as.Date("2001-09-10"))
 }
-## The code above is equivalent to:
+## The result of the code above is equivalent to:
 data(rates)
 securities_returns <- apply_market_model(
     rates,
@@ -100,7 +100,7 @@ securities_returns <- get_prices_from_tickers(tickers,
                        estimation_start = as.Date("2001-03-26"),
                        estimation_end = as.Date("2001-09-10"))
 }
-## The code above is equivalent to:
+## The result of the code above is equivalent to:
 data(rates, rates_indx)
 securities_returns <- apply_market_model(
     rates = rates,
@@ -139,7 +139,7 @@ securities_returns <- get_prices_from_tickers(tickers,
                        estimation_start = as.Date("2001-03-26"),
                        estimation_end = as.Date("2001-09-10"))
 }
-## The code above is equivalent to:
+## The result of the code above is equivalent to:
 data(rates, rates_indx)
 securities_returns <- apply_market_model(
     rates = rates,
