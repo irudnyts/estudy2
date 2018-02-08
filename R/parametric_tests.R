@@ -9,7 +9,7 @@
 #' (the default value), the function ignores the value of \code{tests}.
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param event_start an object of \code{Date} class giving the first date of
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
@@ -125,7 +125,7 @@ parametric_tests <- function(list_of_returns, event_start, event_end,
 #' Warner 1985 and \code{brown_warner_1985}.
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param event_start an object of \code{Date} class giving the first date of
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
@@ -272,7 +272,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #'  0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param event_start an object of \code{Date} class giving the first date of
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
@@ -422,7 +422,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' and sensitive to the size of the sample.
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param event_start an object of \code{Date} class giving the first date of
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
@@ -561,7 +561,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #' respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param event_start an object of \code{Date} class giving the first date of
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
@@ -747,7 +747,7 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param event_start an object of \code{Date} class giving the first date of
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
@@ -930,7 +930,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param event_start an object of \code{Date} class giving the first date of
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the

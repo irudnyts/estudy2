@@ -7,7 +7,7 @@
 #' The generic function is dispatched for such classes as \code{list},
 #' \code{data.frame}, and \code{zoo}. If \code{same_regressor_for_all} is TRUE,
 #' and \code{regressors} has the length greater than one, the first element of
-#' \code{regressors} will be applied for each sequrity in \code{rates}.
+#' \code{regressors} will be applied for each security in \code{rates}.
 #'
 #' @param rates an object of \code{list}, \code{data.frame}, \code{zoo}
 #' containing rates of returns of securities.

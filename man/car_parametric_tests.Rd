@@ -18,7 +18,7 @@ the CAR period.}
 CAR period.}
 
 \item{percentage}{a lowest allowed percentage of non-missing observation
-for each day to be incorporated into CAR. The defaule value is 90 percent.}
+for each day to be incorporated into CAR. The default value is 90 percent.}
 
 \item{all}{a logical value indicating whether all tests should be performed.
 The default value is \code{TRUE}.}

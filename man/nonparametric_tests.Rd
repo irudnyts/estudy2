@@ -9,7 +9,7 @@ nonparametric_tests(list_of_returns, event_start, event_end, all = TRUE,
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each
-element of which is treated as a sequrity.}
+element of which is treated as a security.}
 
 \item{event_start}{an object of \code{Date} class giving the first date of
 the event period.}

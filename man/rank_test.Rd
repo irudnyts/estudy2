@@ -8,7 +8,7 @@ rank_test(list_of_returns, event_start, event_end)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each
-element of which is treated as a sequrity.}
+element of which is treated as a security.}
 
 \item{event_start}{an object of \code{Date} class giving the first date of
 the event period.}
@@ -33,7 +33,7 @@ otherwise an error will be thrown. The test statistic is assumed to have a
 normal distribution (as an approximation). The test is well-specified for the
 case, when cross-sectional abnormal returns are not symmetric. The test is
 stable to variance increase during event window. This test is more sensitive
-to extreme values than sign test. For data with missed data see the
+to extreme values than sign test. For data with missing data see the
 \code{\link{modified_rank_test}}. The significance levels of \eqn{\alpha} are
 0.1, 0.05, and 0.01 (marked respectively by *, **, and ***).
 }
