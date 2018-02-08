@@ -73,7 +73,7 @@ nine_eleven_nparam <- get_prices_from_tickers(tickers,
 ## The result of the code above is equivalent to:
 data(securities_returns)
 nine_eleven_nparam <- nonparametric_tests(list_of_returns = securities_returns,
-                                          event_start =  as.Date("2001-09-11"),
+                                          event_start = as.Date("2001-09-11"),
                                           event_end = as.Date("2001-09-28"))
 
 }

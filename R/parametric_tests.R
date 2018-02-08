@@ -72,12 +72,12 @@
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' nine_eleven_param <- parametric_tests(list_of_returns = securities_returns,
-#'                                       event_start =  as.Date("2001-09-11"),
+#'                                       event_start = as.Date("2001-09-11"),
 #'                                       event_end = as.Date("2001-09-28"))
 #'
 #' @export
-parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE,
-                             tests) {
+parametric_tests <- function(list_of_returns, event_start, event_end,
+                             all = TRUE, tests) {
     if(missing(tests)) {
         if(all) {
             tests <- list(brown_warner_1980, brown_warner_1985, t_test, patell,
@@ -109,29 +109,28 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE
 
 #' Brown and Warner parametric test (1980).
 #'
-#' Parametric test for event study, which is described in Brown and Warner 1980
-#' paper.
+#' An event study parametric test described in Brown and Warner 1980.
 #'
-#' Performs the parametric test for event study, which is described in Brown and
-#' Warner 1980 paper. The test assumes cross-sectional independence and
-#' insignificance of event-induced variance. The test examines the hypothesis
-#' whether the theoretical cross-sectional expected value for a given day is
-#' equal to zero. The standard deviation in statistics is calculated as the
-#' cross-sectional mean of companies' variances, estimated on estimation period.
-#' It calculates statistics even if event window and estimation period are
-#' overlapped (intersect). The critical values are Student's t-distributed (no
-#' approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
-#' 0.05, and 0.01 (marked respectively by *, **, and ***). It was designed to
-#' measure monthly data: for daily data look at Brown and Warner 1985 paper and
-#' \code{brown_warner_1985}.
+#' Performs a parametric test for the event study, which is described in
+#' Brown and Warner 1980. The test assumes a cross-sectional independence
+#' and an insignificance of event-induced variance. The test examines the
+#' hypothesis whether the theoretical cross-sectional expected value for a given
+#' day is equal to zero. The standard deviation in statistics is calculated as
+#' the cross-sectional mean of companies' variances, estimated on the estimation
+#' period. It calculates statistics even if the event window and the estimation
+#' period are overlapped (intersect). The critical values are Student's
+#' t-distributed (no approximation in limit). The significance levels of
+#' \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and ***).
+#' It was designed to measure monthly data: for daily data look at Brown and
+#' Warner 1985 and \code{brown_warner_1985}.
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references Brown S.J., Warner J.B. \emph{Measuring security price
 #' performance}. Journal of Financial Economics, 8:205-258, 1980.
@@ -141,37 +140,40 @@ parametric_tests <- function(list_of_returns, event_start, event_end, all = TRUE
 #' \code{\link{lamb}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     brown_warner_1980(event_start = as.Date("2001-09-11"),
+#'                       event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' brown_warner_1980(securities_returns, as.Date("2001-09-11"),
-#'                   as.Date("2001-09-28"))
+#' brown_warner_1980(list_of_returns = securities_returns,
+#'                   event_start = as.Date("2001-09-11"),
+#'                   event_end = as.Date("2001-09-28"))
 #'
 #' @export
 brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
@@ -255,28 +257,27 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 
 #' Brown and Warner parametric test (1985).
 #'
-#' Parametric test for event study, which is described in Brown and Warner 1985
-#' paper.
+#' An event study parametric test described in Brown and Warner 1985.
 #'
-#' Performs the parametric test for event study, which is described in Brown and
-#' Warner 1985 paper, which is traditional event study approach. Assumes
-#' cross-sectional independence and non-robust to event-induced variance. The
-#' test examines the hypothesis whether the theoretical cross-sectional expected
-#' value for a given day is equal to zero. The standard deviation in statistics
-#' is estimated as the cross-sectional standard deviation of companies' means,
-#' estimated on estimation period. It calculates statistics even if event window
-#' and estimation period are overlapped (intersect). The critical values are
-#' Student's t-distributed (no approximation in limit). The significance levels
-#' of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and
-#' ***).
+#' Performs a parametric test for event study, which is described in Brown and
+#' Warner 1985, which is a traditional event study approach. Assumes
+#' cross-sectional independence and is non-robust to an event-induced variance.
+#' The test examines the hypothesis whether the theoretical cross-sectional
+#' expected value for a given day is equal to zero. The standard deviation in
+#' statistics is estimated as the cross-sectional standard deviation of
+#' companies' means, estimated on the estimation period. It calculates
+#' statistics even if event window and estimation period are overlapped
+#' (intersect). The critical values are Student's t-distributed
+#' (no approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
+#'  0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
 #'  of Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
@@ -286,37 +287,40 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #' \code{\link{lamb}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     brown_warner_1985(event_start = as.Date("2001-09-11"),
+#'                       event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' brown_warner_1985(securities_returns, as.Date("2001-09-11"),
-#'                   as.Date("2001-09-28"))
+#' brown_warner_1985(list_of_returns = securities_returns,
+#'                   event_start = as.Date("2001-09-11"),
+#'                   event_end = as.Date("2001-09-28"))
 #'
 #' @export
 brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
@@ -399,31 +403,31 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-#' t-test for event study.
+#' An event study t-test.
 #'
-#' Classical t-test, which examine each date in event window.
+#' A classical t-test that examines each date in the event window.
 #'
-#' Performs the t-test for event study. The procedure of this test is described
-#' in Boehmer 1991, sometimes is called cross-sectional test. Assumes
-#' independence of securities, however is stable to event-induced variance. This
-#' test examines the equality of cross-sectional expected value to zero. The
-#' standard deviation, which is used in this test, is simply cross-section
-#' standard deviation for given day in the event window. It calculates
-#' statistics even if event window and estimation period are overlapped
-#' (intersect). The critical values are Student's t-distributed (no
+#' Performs a t-test for the event study. The procedure of this test is
+#' described in Boehmer 1991, sometimes is called a cross-sectional test.
+#' Assumes independence of securities, however is stable to event-induced
+#' variance. This test examines the equality of the cross-sectional expected
+#' value to zero. The standard deviation, which is used in this test, is simply
+#' a cross-sectional standard deviation for a given day in the event window. It
+#' calculates statistics even if event window and estimation period are
+#' overlapped (intersect). The critical values are Student's t-distributed (no
 #' approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @section Warning: This test strongly requires cross-sectional independence
 #' and sensitive to the size of the sample.
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study
 #' methodology under conditions of event-induced variance}. Journal of Financial
@@ -434,36 +438,40 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' and \code{\link{lamb}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     t_test(event_start = as.Date("2001-09-11"),
+#'            event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' t_test(securities_returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#' t_test(list_of_returns = securities_returns,
+#'        event_start = as.Date("2001-09-11"),
+#'        event_end = as.Date("2001-09-28"))
 #'
 #' @export
 t_test <- function(list_of_returns, event_start, event_end) {
@@ -537,29 +545,28 @@ t_test <- function(list_of_returns, event_start, event_end) {
 
 #' Patell's parametric test (1976).
 #'
-#' Parametric test for event study, which is described in Patell's 1976
-#' paper.
+#' An event study parametric test described in Patell 1976.
 #'
-#' Performs the parametric test for event study, which is described in Patell's
-#' 1976 paper, which is called standardized-residuals method in Boehmer's 1991
-#' paper. The test assumptions are cross-sectional independence and
-#' insignificance of event-induced variance. The standardization smooths the
-#' effect of event-induced variance comparing to Brown and Warner tests. Also
-#' standardization incorporates the situation, when high volatility security
-#' dominates the test. The test examines the hypothesis whether the theoretical
-#' cross-sectional expected value for a given day is equal to zero. It
-#' calculates statistics even if event window and estimation period are
+#' Performs a parametric test for event study, which is described in Patell
+#' 1976, which is called standardized-residuals method in Boehmer 1991.
+#' Test's assumptions are a cross-sectional independence and an
+#' insignificance of an event-induced variance. The standardization smooths the
+#' effect of the event-induced variance comparing to Brown and Warner tests.
+#' Also standardization incorporates the situation, when a highly volatile
+#' security dominates the test. The test examines the hypothesis whether the
+#' theoretical cross-sectional expected value for a given day is equal to zero.
+#' It calculates statistics even if event window and estimation period are
 #' overlapped (intersect). The critical values are standard normal. The
 #' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references \itemize{
 #' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
@@ -574,36 +581,40 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #' \code{\link{boehmer}}, and \code{\link{lamb}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     patell(event_start = as.Date("2001-09-11"),
+#'            event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' patell(securities_returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#' patell(list_of_returns = securities_returns,
+#'        event_start =  as.Date("2001-09-11"),
+#'        event_end = as.Date("2001-09-28"))
 #'
 #' @export
 patell <- function(list_of_returns, event_start, event_end) {
@@ -653,7 +664,8 @@ patell <- function(list_of_returns, event_start, event_end) {
 #             estimation_abnormal <- company_estimation_abnormal
 #         } else {
 #             estimation_abnormal <- merge(estimation_abnormal,
-#                                          company_estimation_abnormal, all = TRUE)
+#                                          company_estimation_abnormal,
+#                                           all = TRUE)
 #         }
         if(is.null(event_abnormal)) {
             event_abnormal <- company_event_abnormal
@@ -721,13 +733,12 @@ patell <- function(list_of_returns, event_start, event_end) {
 
 #' Boehmer's parametric test (1991).
 #'
-#' Parametric test for event study, which is described in Boehmer's 1991
-#' paper.
+#' An event study parametric test described in Boehmer 1991.
 #'
-#' Performs the parametric test for event study, which is described in Boehmer's
-#' 1991 paper, also called hybrid test or standardized cross-sectional test.
+#' Performs a parametric test for event study, which is described in Boehmer
+#' 1991. Also called hybrid test or standardized cross-sectional test.
 #' This test performs t-test based on Patell's standardized residuals. By
-#' combining Patell's and t- tests this test allows event-induced variance
+#' combining Patell's and t-tests, this test allows for event-induced variance
 #' changes, but still assumes cross-sectional independence. The test examines
 #' the hypothesis whether the theoretical cross-sectional expected value for a
 #' given day is equal to zero. It calculates statistics even if event window and
@@ -735,13 +746,13 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' Student's t-distribution. The significance levels of \eqn{\alpha} are 0.1,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references \itemize{
 #' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
@@ -756,36 +767,40 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' and \code{\link{lamb}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     boehmer(event_start = as.Date("2001-09-11"),
+#'             event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' boehmer(securities_returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#' boehmer(list_of_returns = securities_returns,
+#'         event_start =  as.Date("2001-09-11"),
+#'         event_end = as.Date("2001-09-28"))
 #'
 #' @export
 boehmer <- function(list_of_returns, event_start, event_end) {
@@ -901,12 +916,11 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 
 #' Lamb's parametric test (1995).
 #'
-#' Parametric test for event study, which is described in Lamb's 1995
-#' paper.
+#' An event study parametric test described in Lamb 1995.
 #'
-#' Performs the parametric test for event study, which is described in Lamb's
-#' 1995 paper. The author refers to Warner and Brown's (1985) and Henderson's
-#' (1990) paper, however this test was not observed in neither papers. The test
+#' Performs a parametric test for the event study, which is described in Lamb
+#' 1995. The author refers to Warner and Brown 1985 and Henderson
+#' 1990. However, this test was not observed in neither papers. The test
 #' statistics are very close to the statistics produced by
 #' \code{brown_warner_1985} and typically has the same significance. The test
 #' examines the hypothesis whether the theoretical cross-sectional expected
@@ -915,13 +929,13 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 #' values are standard normal. The significance levels of \eqn{\alpha} are 0.1,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references Lamb R.P. \emph{An Exposure-Based Analysis of Property-Liability
 #' Insurer Stock Values around Hurricane Andrew}. Journal of Risk and Insurance,
@@ -932,36 +946,40 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 #' and \code{\link{boehmer}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     lamb(event_start = as.Date("2001-09-11"),
+#'          event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' lamb(securities_returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#' lamb(list_of_returns = securities_returns,
+#'      event_start =  as.Date("2001-09-11"),
+#'      event_end = as.Date("2001-09-28"))
 #'
 #' @export
 lamb <- function(list_of_returns, event_start, event_end) {

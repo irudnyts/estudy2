@@ -90,7 +90,7 @@
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' nine_eleven_nparam <- nonparametric_tests(list_of_returns = securities_returns,
-#'                                           event_start =  as.Date("2001-09-11"),
+#'                                           event_start = as.Date("2001-09-11"),
 #'                                           event_end = as.Date("2001-09-28"))
 #'
 #' @export
@@ -122,32 +122,33 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
     return(result)
 }
 
-#' Simple binomial sign test for event study.
+#' An event study simple binomial sign test.
 #'
-#' The binomial sign test which determines whether the frequency of positive
-#' abnormal returns in the event period is significantly different from one-half.
+#' A binomial sign test which determines whether the frequency of positive
+#' abnormal returns in the event period is significantly different from
+#' one-half.
 #'
 #' This test is application of the simple binomial test to the event study,
 #' which indicates whether the cross-sectional frequency of positive abnormal
 #' returns is significantly different from 0.5. This test is stable
-#' to outliers, in other words allows to check if the result is driven by few
-#' companies with extremely large abnormal performance. For this test the
-#' estimation period and event period must not overlap, otherwise an error
-#' occurs. The test statistic is assumed to have a normal distribution in
-#' approximation under null hypothesis, if the number of securities is large.
-#' Typically is used together with parametric tests. The test is well-specified
-#' for the case, when cross-sectional abnormal returns are not symmetric.
-#' Also this procedure is less sensitive to extreme returns than the rank test.
-#' The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01
-#' (marked respectively by *, **, and ***).
+#' to outliers, in other words allows for checking if the result is driven by
+#' few companies with extremely large abnormal performance. For this test the
+#' estimation period and the event period must not overlap, otherwise an error
+#' will be thrown. The test statistic is assumed to have a normal distribution
+#' in approximation under a null hypothesis, if the number of securities is
+#' large. Typically the test is used together with parametric tests.
+#' The test is well-specified for the case, when cross-sectional abnormal
+#' returns are not symmetric. Also this procedure is less sensitive to extreme
+#' returns than the rank test. The significance levels of \eqn{\alpha} are 0.1,
+#' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study
 #' methodology under conditions of event-induced variance}. Journal of Financial
@@ -158,36 +159,40 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     sign_test(event_start = as.Date("2001-09-11"),
+#'               event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' sign_test(securities_returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#' sign_test(list_of_returns = securities_returns,
+#'           event_start =  as.Date("2001-09-11"),
+#'           event_end = as.Date("2001-09-28"))
 #'
 #' @export
 sign_test <- function(list_of_returns, event_start, event_end) {
@@ -252,33 +257,34 @@ sign_test <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-#' Binomial sign test for event study.
+#' An event study binomial sign test.
 #'
-#' The binomial sign test which determines whether the frequency of positive
-#' abnormal returns in the event period is significantly different from one in
-#' the estimation period.
+#' A binomial sign test which determines whether the frequency of positive
+#' abnormal returns in the event period is significantly different from the
+#' frequency in the estimation period.
 #'
-#' This test is application of the simple binomial test to the event study,
+#' This test is application of the binomial test to the event study,
 #' which indicates whether the cross-sectional frequency of positive abnormal
 #' returns is significantly different from the expected. This test is stable
-#' to outliers, in other words allows to check if the result is driven by few
-#' companies with extremely large abnormal performance. For this test the
-#' estimation period and event period must not overlap, otherwise an error
-#' occurs. This test instead of using naive value of expected frequency 0.5
-#' uses an estimate from the estimation period. The test statistic is assumed to
-#' have a normal distribution. Typically is used together with parametric tests.
-#' The test is well-specified for the case, when cross-sectional abnormal returns
-#' are not symmetric. Also this procedure is less sensitive to extreme returns
-#' than the rank test. The significance levels of \eqn{\alpha} are 0.1, 0.05,
-#' and 0.01 (marked respectively by *, **, and ***).
+#' to outliers, in other words allows for checking if the result is driven by
+#' few companies with extremely large abnormal performance. For this test the
+#' estimation period and the event period must not overlap, otherwise an error
+#' will be thrown. This test uses an estimate from the estimation period instead
+#' of using naive value of expected frequency 0.5. The test statistic is assumed
+#' to have a normal distribution. Typically the test is used together with
+#' parametric tests. The test is well-specified for the case, when
+#' cross-sectional abnormal returns are not symmetric. Also this procedure is
+#' less sensitive to extreme returns than the rank test. The significance levels
+#' of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and
+#' ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references \itemize{
 #' \item McConnell J.J., Muscarella C.J. \emph{Capital expenditure plans and
@@ -292,37 +298,40 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     generalized_sign_test(event_start = as.Date("2001-09-11"),
+#'                           event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' generalized_sign_test(securities_returns, as.Date("2001-09-11"),
-#'                       as.Date("2001-09-28"))
+#' generalized_sign_test(list_of_returns = securities_returns,
+#'                       event_start =  as.Date("2001-09-11"),
+#'                       event_end = as.Date("2001-09-28"))
 #'
 #' @export
 generalized_sign_test <- function(list_of_returns, event_start, event_end) {
@@ -408,30 +417,29 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 
 #' Corrado's sign test (1992).
 #'
-#' The implementation of nonparametric test, described in Corrado and Zivney's
-#' 1992 paper.
+#' An event study nonparametric test described in Corrado and Zivney 1992.
 #'
-#' Performs the nonparametric test for event study, which is described in Corrado
-#' and Zivney's 1992 paper. This test is similar to procedure, described in
-#' Brown and Warner's paper 1985 (t-ratio), but instead of using abnormal
+#' Performs a nonparametric test for the event study, which is described in
+#' Corrado and Zivney 1992. This test is similar to procedure, described in
+#' Brown and Warner 1985 (t-ratio), but instead of using abnormal
 #' returns, the test uses \eqn{G_{i,t} = sign(A_{i,t} - median(A_i))}.
 #' \code{sign} and \code{median} are ones, which have the same definition as R
-#' functions. For this test the estimation period and event period must not
-#' overlap, otherwise an error occurs. The sign test procedure avoids the
-#' misspecification of tests, which assume symmetry around zero of abnormal
+#' functions. For this test the estimation period and the event period must not
+#' overlap, otherwise an error will be thrown. The sign test procedure avoids
+#' the misspecification of tests, which assumes symmetry around zero of abnormal
 #' returns (the median equals to zero). For a single day the performance of this
 #' test is proven to be better than classical Brown and Warner's test (without
 #' event-induced variance). This test is dominated by rank test. The
 #' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 #' respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references Corrado C.J., Zivney T.L. \emph{The Specification and Power of
 #' the Sign Test in Event Study Hypothesis Tests Using Daily Stock Returns}.
@@ -442,37 +450,40 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     corrado_sign_test(event_start = as.Date("2001-09-11"),
+#'                       event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' corrado_sign_test(securities_returns, as.Date("2001-09-11"),
-#'                   as.Date("2001-09-28"))
+#' corrado_sign_test(list_of_returns = securities_returns,
+#'                   event_start =  as.Date("2001-09-11"),
+#'                   event_end = as.Date("2001-09-28"))
 #'
 #' @export
 corrado_sign_test <- function(list_of_returns, event_start, event_end) {
@@ -567,32 +578,31 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-
-#' Rank test for event study.
+#' An event study rank test.
 #'
-#' The original rank test for event study, which is based on Wilcoxon (1945)
-#' rank test.
+#' An original rank test applied to an event study, which is based on
+#' Wilcoxon (1945) rank test.
 #'
 #' This procedure uses ranks of abnormal returns to examine significance of each
-#' day in event window. In order to get ranks of corresponding abnormal returns,
-#' the procedure uses regular R function \code{\link{rank}} with parameter
-#' \code{ties.method = "average"} and \code{na.last = "keep"}. For this test the
-#' estimation period and event period must not overlap, otherwise an error
-#' occurs. The test statistic is assumed to have a normal distribution (as an
-#' approximation). The test is well-specified for the case, when cross-sectional
-#' abnormal returns are not symmetric. The test is stable to variance increase
-#' during event window. This test is more sensitive to extreme values than sign
-#' test. For data with missed data see the \code{\link{modified_rank_test}}. The
-#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
-#' respectively by *, **, and ***).
+#' day in the event window. In order to get ranks of corresponding abnormal
+#' returns, the procedure uses regular R function \code{\link{rank}} with
+#' parameter \code{ties.method = "average"} and \code{na.last = "keep"}. For
+#' this test the estimation period and the event period must not overlap,
+#' otherwise an error will be thrown. The test statistic is assumed to have a
+#' normal distribution (as an approximation). The test is well-specified for the
+#' case, when cross-sectional abnormal returns are not symmetric. The test is
+#' stable to variance increase during event window. This test is more sensitive
+#' to extreme values than sign test. For data with missed data see the
+#' \code{\link{modified_rank_test}}. The significance levels of \eqn{\alpha} are
+#' 0.1, 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references \itemize{
 #' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
@@ -611,36 +621,40 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' \code{\link{modified_rank_test}}, and \code{\link{wilcoxon_test}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     rank_test(event_start = as.Date("2001-09-11"),
+#'               event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' rank_test(securities_returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+#' rank_test(list_of_returns = securities_returns,
+#'           event_start =  as.Date("2001-09-11"),
+#'           event_end = as.Date("2001-09-28"))
 #'
 #' @export
 rank_test <- function(list_of_returns, event_start, event_end) {
@@ -749,31 +763,29 @@ rank_test <- function(list_of_returns, event_start, event_end) {
     return(result)
 }
 
-
-
-#' Modified rank test for event study.
+#' An event study modified rank test.
 #'
-#' This test, the modification of the original rank test, proposed by Corrado
-#' (1989), is adapted to missing values in abnormal returns.
+#' The test is the modification of the original rank test, proposed by Corrado
+#' 1989. This test is adapted to missing values in abnormal returns.
 #'
-#' In addition to original rank test, the procedure divides corresponding ranks
-#' on number of nonmissing returns plus one for each security. This leads to
-#' order statistics with uniform distribution. In limit overall statistics under
-#' null hypothesis is approximately normally distributed. For this test the
-#' estimation period and event period must not overlap, otherwise an error
-#' occurs. The test is well-specified for the case, when cross-sectional
-#' abnormal returns are not symmetric. The test is stable to variance increase
-#' during event window. This test is more sensitive to extreme values than sign
-#' test. The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
-#' respectively by *, **, and ***).
+#' In addition to the original rank test, the procedure divides corresponding
+#' ranks by the number of nonmissing returns plus one for each security. This
+#' leads to order statistics with uniform distribution. In limit overall
+#' statistics under a null hypothesis is approximately normally distributed. For
+#' this test the estimation period and the event period must not overlap,
+#' otherwise an error will be thrown. The test is well-specified for the case,
+#' when cross-sectional abnormal returns are not symmetric. The test is stable
+#' to variance increase during the event window. This test is more sensitive to
+#' extreme values than the sign test. The significance levels of \eqn{\alpha}
+#' are 0.1, 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references \itemize{
 #' \item Corrado C.J., Zivney T.L. \emph{The Specification and Power of
@@ -789,37 +801,40 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #' \code{\link{rank_test}}, and \code{\link{wilcoxon_test}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     modified_rank_test(event_start = as.Date("2001-09-11"),
+#'                        event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' modified_rank_test(securities_returns, as.Date("2001-09-11"),
-#'                    as.Date("2001-09-28"))
+#' modified_rank_test(list_of_returns = securities_returns,
+#'                    event_start =  as.Date("2001-09-11"),
+#'                    event_end = as.Date("2001-09-28"))
 #'
 #' @export
 modified_rank_test <- function(list_of_returns, event_start, event_end) {
@@ -928,29 +943,30 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 }
 
 
-#' Wilcoxon signed rank test for event study.
+#' An event study Wilcoxon signed rank test.
 #'
-#' Performs Wilcoxon test on event period for abnormal returns (the latter are
-#' treated as differences).
+#' Performs Wilcoxon test on the event period for abnormal returns
+#' (abnormal returns are considered as differences).
 #'
 #' The estimation periods can overlap with event windows, because the procedure
-#' takes into account only abnormal returns from event window. The test has the
-#' same algorithm as built-in \code{R} \code{\link{wilcox.test}}. The critical
-#' values are exact values, which are obtained from \code{\link{qsignrank}}. The
-#' algorithm is the following: for each day in event window the cross-sectional
-#' abnormal returns treated as sample of differences. Firstly the absolute value
-#' of these differences are computed, and corresponding ranks of non-zero values
-#' are calculated. The test statistic is the sum of ranks, corresponding to
-#' positive abnormal returns. The significance levels of \eqn{\alpha} are 0.1,
-#' 0.05, and 0.01 (marked respectively by *, **, and ***).
+#' takes into account only abnormal returns from the event window. The test has
+#' the same algorithm as built-in \code{R} \code{\link{wilcox.test}}. The
+#' critical values are exact values, which are obtained from
+#' \code{\link{qsignrank}}. The algorithm is the following: for each day in
+#' event window the cross-sectional abnormal returns treated as sample of
+#' differences. Firstly the absolute value of these differences are computed,
+#' and corresponding ranks of non-zero values are calculated. The test statistic
+#' is the sum of ranks, corresponding to positive abnormal returns. The
+#' significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
+#' respectively by *, **, and ***).
 #'
-#' @param list_of_returns list of objects of S3 class \code{return}, each element
-#' of which is treated as a company.
-#' @param event_start the object of class \code{Date}, which represents the
-#' first (starting) date of the event window.
-#' @param event_end the object of class \code{Date}, which represents the last
-#' (ending) date in the event window.
-#' @return The table of statistics and significances of the test.
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a sequrity.
+#' @param event_start an object of \code{Date} class giving the first date of
+#' the event period.
+#' @param event_end an object of \code{Date} class giving the last date of the
+#' event period.
+#' @return A data frame of test's statistics and significances.
 #'
 #' @references \itemize{
 #' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Methods}.
@@ -969,37 +985,40 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #' \code{\link{rank_test}}, and \code{\link{modified_rank_test}}.
 #'
 #' @examples
-#' ## Download the historical prices for ten European insurance companies' stocks
-#' # tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#' #              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-#' # prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#' #                                   end = as.Date("2002-01-01"),
-#' #                                   quote = "Close", retclass = "list")
-#' ## Estimate the rate of returns form prices
-#' # rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#' #                                compounding = "continuous")
-#' ## Download the prices and estimate the rates of market proxy (index
-#' ## ESTX50 EUR P), which is regressor for the sim model
-#' # prices_indx <- get_prices_from_tickers("^STOXX50E",
-#' #                                        start = as.Date("2000-01-01"),
-#' #                                        end = as.Date("2002-01-01"),
-#' #                                        quote = "Close", retclass = "list")
-#' # rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#' #                                     multi_day = TRUE,
-#' #                                     compounding = "continuous")
-#' ## Apply Single Index market model
-#' # securities_returns <- apply_market_model(rates = rates,
-#' #                                          regressors = rates_indx,
-#' #                                          same_regressor_for_all = TRUE,
-#' #                                          market_model = "sim",
-#' #                                          estimation_method = "ols",
-#' #                                          estimation_start =
-#' #                                                      as.Date("2001-03-26"),
-#' #                                          estimation_end =
-#' #                                                      as.Date("2001-09-10"))
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     wilcoxon_test(event_start = as.Date("2001-09-11"),
+#'                   event_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' wilcoxon_test(securities_returns, as.Date("2001-09-11"),
-#'               as.Date("2001-09-28"))
+#' wilcoxon_test(list_of_returns = securities_returns,
+#'               event_start =  as.Date("2001-09-11"),
+#'               event_end = as.Date("2001-09-28"))
 #'
 #' @export
 wilcoxon_test <- function(list_of_returns, event_start, event_end) {

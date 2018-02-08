@@ -2,71 +2,74 @@
 % Please edit documentation in R/nonparametric_tests.R
 \name{modified_rank_test}
 \alias{modified_rank_test}
-\title{Modified rank test for event study.}
+\title{An event study modified rank test.}
 \usage{
 modified_rank_test(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each element
-of which is treated as a company.}
+\item{list_of_returns}{a list of objects of S3 class \code{returns}, each
+element of which is treated as a sequrity.}
 
-\item{event_start}{the object of class \code{Date}, which represents the
-first (starting) date of the event window.}
+\item{event_start}{an object of \code{Date} class giving the first date of
+the event period.}
 
-\item{event_end}{the object of class \code{Date}, which represents the last
-(ending) date in the event window.}
+\item{event_end}{an object of \code{Date} class giving the last date of the
+event period.}
 }
 \value{
-The table of statistics and significances of the test.
+A data frame of test's statistics and significances.
 }
 \description{
-This test, the modification of the original rank test, proposed by Corrado
-(1989), is adapted to missing values in abnormal returns.
+The test is the modification of the original rank test, proposed by Corrado
+1989. This test is adapted to missing values in abnormal returns.
 }
 \details{
-In addition to original rank test, the procedure divides corresponding ranks
-on number of nonmissing returns plus one for each security. This leads to
-order statistics with uniform distribution. In limit overall statistics under
-null hypothesis is approximately normally distributed. For this test the
-estimation period and event period must not overlap, otherwise an error
-occurs. The test is well-specified for the case, when cross-sectional
-abnormal returns are not symmetric. The test is stable to variance increase
-during event window. This test is more sensitive to extreme values than sign
-test. The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
-respectively by *, **, and ***).
+In addition to the original rank test, the procedure divides corresponding
+ranks by the number of nonmissing returns plus one for each security. This
+leads to order statistics with uniform distribution. In limit overall
+statistics under a null hypothesis is approximately normally distributed. For
+this test the estimation period and the event period must not overlap,
+otherwise an error will be thrown. The test is well-specified for the case,
+when cross-sectional abnormal returns are not symmetric. The test is stable
+to variance increase during the event window. This test is more sensitive to
+extreme values than the sign test. The significance levels of \eqn{\alpha}
+are 0.1, 0.05, and 0.01 (marked respectively by *, **, and ***).
 }
 \examples{
-## Download the historical prices for ten European insurance companies' stocks
-# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#                                   end = as.Date("2002-01-01"),
-#                                   quote = "Close", retclass = "list")
-## Estimate the rate of returns form prices
-# rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#                                compounding = "continuous")
-## Download the prices and estimate the rates of market proxy (index
-## ESTX50 EUR P), which is regressor for the sim model
-# prices_indx <- get_prices_from_tickers("^STOXX50E",
-#                                        start = as.Date("2000-01-01"),
-#                                        end = as.Date("2002-01-01"),
-#                                        quote = "Close", retclass = "list")
-# rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#                                     multi_day = TRUE,
-#                                     compounding = "continuous")
-## Apply Single Index market model
-# securities_returns <- apply_market_model(rates = rates,
-#                                          regressors = rates_indx,
-#                                          same_regressor_for_all = TRUE,
-#                                          market_model = "sim",
-#                                          estimation_method = "ols",
-#                                          estimation_start =
-#                                                      as.Date("2001-03-26"),
-#                                          estimation_end =
-#                                                      as.Date("2001-09-10"))
+\dontrun{
+library("magrittr")
+rates_indx <- get_prices_from_tickers("^STOXX50E",
+                                      start = as.Date("2000-01-01"),
+                                      end = as.Date("2002-01-01"),
+                                      quote = "Close",
+                                      retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous")
+tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+             "MUV2.DE", "RSA.L", "TOP.CO")
+get_prices_from_tickers(tickers,
+                        start = as.Date("2000-01-01"),
+                        end = as.Date("2002-01-01"),
+                        quote = "Close",
+                        retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous") \%>\%
+    apply_market_model(regressor = rates_indx,
+                       same_regressor_for_all = TRUE,
+                       market_model = "sim",
+                       estimation_method = "ols",
+                       estimation_start = as.Date("2001-03-26"),
+                       estimation_end = as.Date("2001-09-10")) \%>\%
+    modified_rank_test(event_start = as.Date("2001-09-11"),
+                       event_end = as.Date("2001-09-28"))
+}
+## The result of the code above is equivalent to:
 data(securities_returns)
-modified_rank_test(securities_returns, as.Date("2001-09-11"),
-                   as.Date("2001-09-28"))
+modified_rank_test(list_of_returns = securities_returns,
+                   event_start =  as.Date("2001-09-11"),
+                   event_end = as.Date("2001-09-28"))
 
 }
 \references{

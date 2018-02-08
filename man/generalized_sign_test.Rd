@@ -2,75 +2,79 @@
 % Please edit documentation in R/nonparametric_tests.R
 \name{generalized_sign_test}
 \alias{generalized_sign_test}
-\title{Binomial sign test for event study.}
+\title{An event study binomial sign test.}
 \usage{
 generalized_sign_test(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each element
-of which is treated as a company.}
+\item{list_of_returns}{a list of objects of S3 class \code{returns}, each
+element of which is treated as a sequrity.}
 
-\item{event_start}{the object of class \code{Date}, which represents the
-first (starting) date of the event window.}
+\item{event_start}{an object of \code{Date} class giving the first date of
+the event period.}
 
-\item{event_end}{the object of class \code{Date}, which represents the last
-(ending) date in the event window.}
+\item{event_end}{an object of \code{Date} class giving the last date of the
+event period.}
 }
 \value{
-The table of statistics and significances of the test.
+A data frame of test's statistics and significances.
 }
 \description{
-The binomial sign test which determines whether the frequency of positive
-abnormal returns in the event period is significantly different from one in
-the estimation period.
+A binomial sign test which determines whether the frequency of positive
+abnormal returns in the event period is significantly different from the
+frequency in the estimation period.
 }
 \details{
-This test is application of the simple binomial test to the event study,
+This test is application of the binomial test to the event study,
 which indicates whether the cross-sectional frequency of positive abnormal
 returns is significantly different from the expected. This test is stable
-to outliers, in other words allows to check if the result is driven by few
-companies with extremely large abnormal performance. For this test the
-estimation period and event period must not overlap, otherwise an error
-occurs. This test instead of using naive value of expected frequency 0.5
-uses an estimate from the estimation period. The test statistic is assumed to
-have a normal distribution. Typically is used together with parametric tests.
-The test is well-specified for the case, when cross-sectional abnormal returns
-are not symmetric. Also this procedure is less sensitive to extreme returns
-than the rank test. The significance levels of \eqn{\alpha} are 0.1, 0.05,
-and 0.01 (marked respectively by *, **, and ***).
+to outliers, in other words allows for checking if the result is driven by
+few companies with extremely large abnormal performance. For this test the
+estimation period and the event period must not overlap, otherwise an error
+will be thrown. This test uses an estimate from the estimation period instead
+of using naive value of expected frequency 0.5. The test statistic is assumed
+to have a normal distribution. Typically the test is used together with
+parametric tests. The test is well-specified for the case, when
+cross-sectional abnormal returns are not symmetric. Also this procedure is
+less sensitive to extreme returns than the rank test. The significance levels
+of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked respectively by *, **, and
+***).
 }
 \examples{
-## Download the historical prices for ten European insurance companies' stocks
-# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#                                   end = as.Date("2002-01-01"),
-#                                   quote = "Close", retclass = "list")
-## Estimate the rate of returns form prices
-# rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#                                compounding = "continuous")
-## Download the prices and estimate the rates of market proxy (index
-## ESTX50 EUR P), which is regressor for the sim model
-# prices_indx <- get_prices_from_tickers("^STOXX50E",
-#                                        start = as.Date("2000-01-01"),
-#                                        end = as.Date("2002-01-01"),
-#                                        quote = "Close", retclass = "list")
-# rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#                                     multi_day = TRUE,
-#                                     compounding = "continuous")
-## Apply Single Index market model
-# securities_returns <- apply_market_model(rates = rates,
-#                                          regressors = rates_indx,
-#                                          same_regressor_for_all = TRUE,
-#                                          market_model = "sim",
-#                                          estimation_method = "ols",
-#                                          estimation_start =
-#                                                      as.Date("2001-03-26"),
-#                                          estimation_end =
-#                                                      as.Date("2001-09-10"))
+\dontrun{
+library("magrittr")
+rates_indx <- get_prices_from_tickers("^STOXX50E",
+                                      start = as.Date("2000-01-01"),
+                                      end = as.Date("2002-01-01"),
+                                      quote = "Close",
+                                      retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous")
+tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+             "MUV2.DE", "RSA.L", "TOP.CO")
+get_prices_from_tickers(tickers,
+                        start = as.Date("2000-01-01"),
+                        end = as.Date("2002-01-01"),
+                        quote = "Close",
+                        retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous") \%>\%
+    apply_market_model(regressor = rates_indx,
+                       same_regressor_for_all = TRUE,
+                       market_model = "sim",
+                       estimation_method = "ols",
+                       estimation_start = as.Date("2001-03-26"),
+                       estimation_end = as.Date("2001-09-10")) \%>\%
+    generalized_sign_test(event_start = as.Date("2001-09-11"),
+                          event_end = as.Date("2001-09-28"))
+}
+## The result of the code above is equivalent to:
 data(securities_returns)
-generalized_sign_test(securities_returns, as.Date("2001-09-11"),
-                      as.Date("2001-09-28"))
+generalized_sign_test(list_of_returns = securities_returns,
+                      event_start =  as.Date("2001-09-11"),
+                      event_end = as.Date("2001-09-28"))
 
 }
 \references{

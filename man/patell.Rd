@@ -7,67 +7,70 @@
 patell(list_of_returns, event_start, event_end)
 }
 \arguments{
-\item{list_of_returns}{list of objects of S3 class \code{return}, each element
-of which is treated as a company.}
+\item{list_of_returns}{a list of objects of S3 class \code{returns}, each
+element of which is treated as a sequrity.}
 
-\item{event_start}{the object of class \code{Date}, which represents the
-first (starting) date of the event window.}
+\item{event_start}{an object of \code{Date} class giving the first date of
+the event period.}
 
-\item{event_end}{the object of class \code{Date}, which represents the last
-(ending) date in the event window.}
+\item{event_end}{an object of \code{Date} class giving the last date of the
+event period.}
 }
 \value{
-The table of statistics and significances of the test.
+A data frame of test's statistics and significances.
 }
 \description{
-Parametric test for event study, which is described in Patell's 1976
-paper.
+An event study parametric test described in Patell 1976.
 }
 \details{
-Performs the parametric test for event study, which is described in Patell's
-1976 paper, which is called standardized-residuals method in Boehmer's 1991
-paper. The test assumptions are cross-sectional independence and
-insignificance of event-induced variance. The standardization smooths the
-effect of event-induced variance comparing to Brown and Warner tests. Also
-standardization incorporates the situation, when high volatility security
-dominates the test. The test examines the hypothesis whether the theoretical
-cross-sectional expected value for a given day is equal to zero. It
-calculates statistics even if event window and estimation period are
+Performs a parametric test for event study, which is described in Patell
+1976, which is called standardized-residuals method in Boehmer 1991.
+Test's assumptions are a cross-sectional independence and an
+insignificance of an event-induced variance. The standardization smooths the
+effect of the event-induced variance comparing to Brown and Warner tests.
+Also standardization incorporates the situation, when a highly volatile
+security dominates the test. The test examines the hypothesis whether the
+theoretical cross-sectional expected value for a given day is equal to zero.
+It calculates statistics even if event window and estimation period are
 overlapped (intersect). The critical values are standard normal. The
 significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01 (marked
 respectively by *, **, and ***).
 }
 \examples{
-## Download the historical prices for ten European insurance companies' stocks
-# tickers <- c("ALV.DE", "AML.L", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA",
-#              "HSX.L", "MUV2.DE", "RSA.L", "TOP.CO" )
-# prices <- get_prices_from_tickers(tickers, start = as.Date("2000-01-01"),
-#                                   end = as.Date("2002-01-01"),
-#                                   quote = "Close", retclass = "list")
-## Estimate the rate of returns form prices
-# rates <- get_rates_from_prices(prices, quote = "Close", multi_day = TRUE,
-#                                compounding = "continuous")
-## Download the prices and estimate the rates of market proxy (index
-## ESTX50 EUR P), which is regressor for the sim model
-# prices_indx <- get_prices_from_tickers("^STOXX50E",
-#                                        start = as.Date("2000-01-01"),
-#                                        end = as.Date("2002-01-01"),
-#                                        quote = "Close", retclass = "list")
-# rates_indx <- get_rates_from_prices(prices_indx, quote = "Close",
-#                                     multi_day = TRUE,
-#                                     compounding = "continuous")
-## Apply Single Index market model
-# securities_returns <- apply_market_model(rates = rates,
-#                                          regressors = rates_indx,
-#                                          same_regressor_for_all = TRUE,
-#                                          market_model = "sim",
-#                                          estimation_method = "ols",
-#                                          estimation_start =
-#                                                      as.Date("2001-03-26"),
-#                                          estimation_end =
-#                                                      as.Date("2001-09-10"))
+\dontrun{
+library("magrittr")
+rates_indx <- get_prices_from_tickers("^STOXX50E",
+                                      start = as.Date("2000-01-01"),
+                                      end = as.Date("2002-01-01"),
+                                      quote = "Close",
+                                      retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous")
+tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
+             "MUV2.DE", "RSA.L", "TOP.CO")
+get_prices_from_tickers(tickers,
+                        start = as.Date("2000-01-01"),
+                        end = as.Date("2002-01-01"),
+                        quote = "Close",
+                        retclass = "zoo") \%>\%
+    get_rates_from_prices(quote = "Close",
+                          multi_day = TRUE,
+                          compounding = "continuous") \%>\%
+    apply_market_model(regressor = rates_indx,
+                       same_regressor_for_all = TRUE,
+                       market_model = "sim",
+                       estimation_method = "ols",
+                       estimation_start = as.Date("2001-03-26"),
+                       estimation_end = as.Date("2001-09-10")) \%>\%
+    patell(event_start = as.Date("2001-09-11"),
+           event_end = as.Date("2001-09-28"))
+}
+## The result of the code above is equivalent to:
 data(securities_returns)
-patell(securities_returns, as.Date("2001-09-11"), as.Date("2001-09-28"))
+patell(list_of_returns = securities_returns,
+       event_start =  as.Date("2001-09-11"),
+       event_end = as.Date("2001-09-28"))
 
 }
 \references{
