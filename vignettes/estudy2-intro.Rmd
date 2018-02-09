@@ -74,7 +74,7 @@ prices_indx <- get_prices_from_tickers("^STOXX50E",
 ```
 
 ## Computing rates of returns from prices
-Now we need to compute rates of returns form companies' prices. For this purpose the function `get_rates_from_prices` is used, which is an S3 generic function dispatched on `prices` argument allowing for `list`, `zoo`, and `data.frame` (the same classes which `get_prices_from_tickers` returns). The function computes rates of returns of given prices using either continuous or discrete compounding depending on `compounding` argument value. Furthermore, setting `multi_day` to `TRUE` allows for rates of returns between non-consecutive days (for instance, Friday - Monday rate of return). We calculate rates of reutrns of companies and the index by:
+Now we need to compute rates of returns form companies' prices. For this purpose the function `get_rates_from_prices` is used, which is an S3 generic function dispatched on `prices` argument allowing for `list`, `zoo`, and `data.frame` (the same classes which `get_prices_from_tickers` returns). The function computes rates of returns of given prices using either continuous or discrete compounding depending on `compounding` argument value. Furthermore, setting `multi_day` to `TRUE` allows for rates of returns between non-consecutive days (for instance, Friday - Monday rate of return). We calculate rates of returns of companies and the index by:
 
 ```{r}
 rates <- get_rates_from_prices(prices,
@@ -90,7 +90,7 @@ rates_indx <- get_rates_from_prices(prices_indx,
 
 ## Applying a market model
 
-To calculate expeceted rates of returns during the event period we need to train a market model based on date from the estimation period. `apply_market_model` goes over each company (column) in `rates` and clibrates a chosen model. The function returns a list of S3 `returns` class objects, which can be passed to `parametric_tests` and `nonparametric_tests`. For our case we use the single-index market model:
+To calculate expected rates of returns during the event period we need to train a market model based on date from the estimation period. `apply_market_model` goes over each company (column) in `rates` and calibrates a chosen model. The function returns a list of S3 `returns` class objects, which can be passed to `parametric_tests` and `nonparametric_tests`. For our case we use the single-index market model:
 
 ```{r}
 securities_returns <- apply_market_model(
@@ -106,7 +106,7 @@ securities_returns <- apply_market_model(
 
 ## Tests
 
-The event study utilizes both parametric and nonparametric tests. Parametric tests are Brown and Warner (1980), Brown and Warner (1985), t-test, Patell (1976), Boehmer (1991), and Lamb (1995) tests. To avoid calling all these tests separately, one can call `parametric_tests` with `all = TRUE`. The same applies to nonparametric tests, i.e. simple binomial sign, binomial sign, Corrado (1992), rank, modified rank, and Wilcoxon signed rank tests can be called all at once by specifying `all = TRUE` in `nonparametric_tests`. These tests are also availible separately. Both functions return data frames with statistics and significance for each date in the event period. See `?parametric_tests` and `?nonparametric_tests` for references and more details.
+The event study utilizes both parametric and nonparametric tests. Parametric tests are Brown and Warner (1980), Brown and Warner (1985), t-test, Patell (1976), Boehmer (1991), and Lamb (1995) tests. To avoid calling all these tests separately, one can call `parametric_tests` with `all = TRUE`. The same applies to nonparametric tests, i.e. simple binomial sign, binomial sign, Corrado (1992), rank, modified rank, and Wilcoxon signed rank tests can be called all at once by specifying `all = TRUE` in `nonparametric_tests`. These tests are also available separately. Both functions return data frames with statistics and significance for each date in the event period. See `?parametric_tests` and `?nonparametric_tests` for references and more details.
 
 ```{r}
 parametric_tests(list_of_returns = securities_returns,
@@ -121,7 +121,7 @@ nonparametric_tests(list_of_returns = securities_returns,
 
 ## Using `magrittr`
 
-One can notice that the result of the previous function is passed to the next function. In oredr to avoid naming all the intermidiate objects or using a function composition, it possible to utilize a power of the pipe operator from `magrittr`. The above code can be rewritten with: 
+One can notice that the result of the previous function is passed to the next function. In order to avoid naming all the intermediate objects or using a function composition, it possible to utilize a power of the pipe operator from `magrittr`. The above code can be rewritten with: 
 
 ```{r, message=FALSE, warning=FALSE}
 library(magrittr)
