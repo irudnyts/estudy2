@@ -68,7 +68,8 @@ get_prices_from_tickers <- function(..., start, end,
                                                         quote = quote,
                                                         provider = "yahoo",
                                                         compression = "d",
-                                                        retclass = "zoo")
+                                                        retclass = "zoo",
+                                                        quiet = TRUE)
         }
     } else if(retclass == "zoo") {
         prices <- NULL
@@ -79,7 +80,8 @@ get_prices_from_tickers <- function(..., start, end,
                                                   end = end, quote = quote,
                                                   provider = "yahoo",
                                                   compression = "d",
-                                                  retclass = "zoo")
+                                                  retclass = "zoo",
+                                                  quiet = TRUE)
             } else {
                 prices <- merge(prices,
                                 tseries::get.hist.quote(instrument = ticker,
@@ -88,7 +90,8 @@ get_prices_from_tickers <- function(..., start, end,
                                                         quote = quote,
                                                         provider = "yahoo",
                                                         compression = "d",
-                                                        retclass = "zoo"),
+                                                        retclass = "zoo",
+                                                        quiet = TRUE),
                                 all = TRUE)
             }
         }
@@ -101,7 +104,8 @@ get_prices_from_tickers <- function(..., start, end,
                                                       quote = quote,
                                                       provider = "yahoo",
                                                       compression = "d",
-                                                      retclass = "zoo")
+                                                      retclass = "zoo",
+                                                      quiet = TRUE)
             current_prices_df <- data.frame(
                 date = zoo::index(current_prices),
                 prices = zoo::coredata(current_prices)
