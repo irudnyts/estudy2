@@ -31,9 +31,8 @@ functions for more information). Furthermore, tests for the cumulative
 abnormal returns are included.
 
 ## Instalation
-The package is not submitted to CRAN, and is located in a private repository.
-If one has an access to the github repo, it is possible to install the last 
-development version:
+The package is not submitted to CRAN and is located in a GitHub repository.
+To install the development version of estudy2 use:
 
 ```{r, eval=FALSE}
 # install.packages("devtools")

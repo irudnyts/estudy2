@@ -12,7 +12,7 @@ An implementation of a most commonly used event study methodology, including bot
 Instalation
 -----------
 
-The package is not submitted to CRAN, and is located in a private repository. If one has an access to the github repo, it is possible to install the last development version:
+The package is not submitted to CRAN and is located in a GitHub repository. To install the development version of estudy2 use:
 
 ``` r
 # install.packages("devtools")
