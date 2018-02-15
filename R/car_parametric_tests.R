@@ -9,7 +9,7 @@
 #' value of \code{tests}.
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param car_start an object of \code{Date} class giving the first date of
 #' the CAR period.
 #' @param car_end an object of \code{Date} class giving the last date of the
@@ -109,7 +109,7 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
 #' 0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param car_start an object of \code{Date} class giving the first date of
 #' the CAR period.
 #' @param car_end an object of \code{Date} class giving the last date of the
@@ -205,7 +205,7 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
 #' 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
-#' element of which is treated as a sequrity.
+#' element of which is treated as a security.
 #' @param car_start an object of \code{Date} class giving the first date of
 #' the CAR period.
 #' @param car_end an object of \code{Date} class giving the last date of the
