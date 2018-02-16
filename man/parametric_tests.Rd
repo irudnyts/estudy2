@@ -79,8 +79,9 @@ nine_eleven_param <- parametric_tests(list_of_returns = securities_returns,
 Journal of Financial Economics, 8:205-258, 1980.
 \item Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case of
 Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
-\item Boehmer, E. \emph{Event-study methodology under conditions of event-
-induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.
+\item Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study methodology
+under conditions of event-induced variance}. Journal of Financial Economics,
+30(2):253-272, 1991.
 \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
 price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
 276, 1976.

@@ -26,8 +26,9 @@
 #' Journal of Financial Economics, 8:205-258, 1980.
 #' \item Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case of
 #' Event Studies}. Journal of Financial Economics, 14:3-31, 1985.
-#' \item Boehmer, E. \emph{Event-study methodology under conditions of event-
-#' induced variance}. Journal of Financial Economics, 30(2):253-272, 1991.
+#' \item Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study methodology
+#' under conditions of event-induced variance}. Journal of Financial Economics,
+#' 30(2):253-272, 1991.
 #' \item Patell J.M. \emph{Corporate forecasts of earnings per share and stock
 #' price behavior: empirical tests}. Journal of Accounting Research, 14(2):246-
 #' 276, 1976.
@@ -408,7 +409,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' A classical t-test that examines each date in the event window.
 #'
 #' Performs a t-test for the event study. The procedure of this test is
-#' described in Boehmer 1991, sometimes is called a cross-sectional test.
+#' described in Boehmer et al. 1991, sometimes is called a cross-sectional test.
 #' Assumes independence of securities, however is stable to event-induced
 #' variance. This test examines the equality of the cross-sectional expected
 #' value to zero. The standard deviation, which is used in this test, is simply

@@ -24,7 +24,7 @@ A classical t-test that examines each date in the event window.
 }
 \details{
 Performs a t-test for the event study. The procedure of this test is
-described in Boehmer 1991, sometimes is called a cross-sectional test.
+described in Boehmer et al. 1991, sometimes is called a cross-sectional test.
 Assumes independence of securities, however is stable to event-induced
 variance. This test examines the equality of the cross-sectional expected
 value to zero. The standard deviation, which is used in this test, is simply
