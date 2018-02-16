@@ -16,6 +16,8 @@ There are currently no downstream dependencies for this package.
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Fix the date of the package in DESCRIPTION
+* Fixed the date of the package in DESCRIPTION
 
-* Include references with doi to Description filed in DESCRIPTION
+* Included references with doi to Description filed in DESCRIPTION
+
+* Fixed invalid DOI
