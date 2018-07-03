@@ -3,7 +3,7 @@
 #' Returns daily Open or Close prices between \code{start} and \code{end}
 #' date for given tickers.
 #'
-#' This function uses the function \code{get.hist.quote} form the \code{tseries}
+#' This function uses the function \code{getSymbols} form the \code{quantmod}
 #' package. The provider is set automatically to Yahoo Finance. The function
 #' returns the data in different class-containers: list of \code{zoo}'s,
 #' \code{zoo}, or \code{data.frame}.
@@ -21,15 +21,15 @@
 #' @return Prices of securities as \code{"list"}, \code{"zoo"}, or
 #' \code{"data.frame"}.
 #'
-#' @seealso \code{\link[tseries]{get.hist.quote}}
+#' @seealso \code{\link[getSymbols]{quantmod}}
 #'
 #' @examples
 #' ## Download historical prices of nine European insurance companies'
 #' ## stocks:
 #' \dontrun{
 #' library("magrittr")
-#' tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
-#'              "MUV2.DE", "RSA.L", "TOP.CO")
+#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
+#'              "RSA.L", "TOP.CO")
 #' prices <- tickers %>%
 #'     get_prices_from_tickers(start = as.Date("2000-01-01"),
 #'                             end = as.Date("2002-01-01"),
@@ -62,50 +62,65 @@ get_prices_from_tickers <- function(..., start, end,
     if(retclass == "list") {
         prices <- list()
         for(ticker in tickers) {
-            prices[[ticker]] <- tseries::get.hist.quote(instrument = ticker,
-                                                        start = start,
-                                                        end = end,
-                                                        quote = quote,
-                                                        provider = "yahoo",
-                                                        compression = "d",
-                                                        retclass = "zoo",
-                                                        quiet = TRUE)
+            prices[[ticker]] <- quantmod::getSymbols(Symbols = ticker,
+                                                     verbose = FALSE,
+                                                     warnings = FALSE,
+                                                     auto.assign = FALSE,
+                                                     from = start,
+                                                     to = end,
+                                                     src = "yahoo",
+                                                     return.class = "zoo")
+            colnames(prices[[ticker]]) <- sub(".*\\.",
+                                              "",
+                                              colnames(prices[[ticker]]))
+            prices[[ticker]] <- prices[[ticker]][, quote, drop = FALSE]
         }
     } else if(retclass == "zoo") {
         prices <- NULL
         for(ticker in tickers) {
             if(is.null(prices)) {
-                prices <- tseries::get.hist.quote(instrument = ticker,
-                                                  start = start,
-                                                  end = end, quote = quote,
-                                                  provider = "yahoo",
-                                                  compression = "d",
-                                                  retclass = "zoo",
-                                                  quiet = TRUE)
+                prices <- quantmod::getSymbols(Symbols = ticker,
+                                               verbose = FALSE,
+                                               warnings = FALSE,
+                                               auto.assign = FALSE,
+                                               from = start,
+                                               to = end,
+                                               src = "yahoo",
+                                               return.class = "zoo")
+                colnames(prices) <- sub(".*\\.", "", colnames(prices))
+                prices <- prices[, quote, drop = FALSE]
             } else {
-                prices <- merge(prices,
-                                tseries::get.hist.quote(instrument = ticker,
-                                                        start = start,
-                                                        end = end,
-                                                        quote = quote,
-                                                        provider = "yahoo",
-                                                        compression = "d",
-                                                        retclass = "zoo",
-                                                        quiet = TRUE),
-                                all = TRUE)
+                current_prices <- quantmod::getSymbols(Symbols = ticker,
+                                                       verbose = FALSE,
+                                                       warnings = FALSE,
+                                                       auto.assign = FALSE,
+                                                       from = start,
+                                                       to = end,
+                                                       src = "yahoo",
+                                                       return.class = "zoo")
+                colnames(current_prices) <- sub(".*\\.",
+                                                "",
+                                                colnames(current_prices))
+                current_prices <- current_prices[, quote, drop = FALSE]
+                prices <- merge(prices, current_prices, all = TRUE)
             }
         }
         colnames(prices) <- tickers
     } else if(retclass == "data.frame") {
         prices <- NULL
         for(ticker in tickers) {
-            current_prices <- tseries::get.hist.quote(instrument = ticker,
-                                                      start = start, end = end,
-                                                      quote = quote,
-                                                      provider = "yahoo",
-                                                      compression = "d",
-                                                      retclass = "zoo",
-                                                      quiet = TRUE)
+            current_prices <- quantmod::getSymbols(Symbols = ticker,
+                                                   verbose = FALSE,
+                                                   warnings = FALSE,
+                                                   auto.assign = FALSE,
+                                                   from = start,
+                                                   to = end,
+                                                   src = "yahoo",
+                                                   return.class = "zoo")
+            colnames(current_prices) <- sub(".*\\.",
+                                            "",
+                                            colnames(current_prices))
+            current_prices <- current_prices[, quote, drop = FALSE]
             current_prices_df <- data.frame(
                 date = zoo::index(current_prices),
                 prices = zoo::coredata(current_prices)

@@ -3,13 +3,12 @@
 \docType{data}
 \name{rates}
 \alias{rates}
-\title{Rates of returns of nine major European insurance companies from 2000-01-04
+\title{Rates of returns of eight major European insurance companies from 2000-01-04
 to 2002-01-01}
-\format{A \code{zoo} object of nine columns:
+\format{A \code{zoo} object of eight columns:
 \itemize{
   \item ALV.DE
   \item CS.PA
-  \item ELE.PA
   \item G.MI
   \item HNR1.HA
   \item HSX.L
@@ -21,8 +20,8 @@ to 2002-01-01}
 rates
 }
 \description{
-A \code{zoo} object of nine columns containing  daily rates of returns of
-nine major European insurance companies from 2000-01-04 to 2002-01-01. See
+A \code{zoo} object of eight columns containing  daily rates of returns of
+eight major European insurance companies from 2000-01-04 to 2002-01-01. See
 examples of \code{\link{get_rates_from_prices}} for the dataset generation.
 }
 \keyword{datasets}

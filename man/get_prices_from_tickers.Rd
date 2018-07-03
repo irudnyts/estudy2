@@ -32,7 +32,7 @@ Returns daily Open or Close prices between \code{start} and \code{end}
 date for given tickers.
 }
 \details{
-This function uses the function \code{get.hist.quote} form the \code{tseries}
+This function uses the function \code{getSymbols} form the \code{quantmod}
 package. The provider is set automatically to Yahoo Finance. The function
 returns the data in different class-containers: list of \code{zoo}'s,
 \code{zoo}, or \code{data.frame}.
@@ -42,8 +42,8 @@ returns the data in different class-containers: list of \code{zoo}'s,
 ## stocks:
 \dontrun{
 library("magrittr")
-tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
-             "MUV2.DE", "RSA.L", "TOP.CO")
+tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
+             "RSA.L", "TOP.CO")
 prices <- tickers \%>\%
     get_prices_from_tickers(start = as.Date("2000-01-01"),
                             end = as.Date("2002-01-01"),
@@ -66,5 +66,5 @@ data(prices_indx)
 
 }
 \seealso{
-\code{\link[tseries]{get.hist.quote}}
+\code{\link[getSymbols]{quantmod}}
 }

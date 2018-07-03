@@ -3,13 +3,12 @@
 \docType{data}
 \name{prices}
 \alias{prices}
-\title{Stock prices of nine major European insurance companies from 2000-01-03 to
+\title{Stock prices of eight major European insurance companies from 2000-01-03 to
 2002-01-01}
-\format{A \code{zoo} object of nine columns:
+\format{A \code{zoo} object of eight columns:
 \itemize{
   \item ALV.DE
   \item CS.PA
-  \item ELE.PA
   \item G.MI
   \item HNR1.HA
   \item HSX.L
@@ -21,8 +20,8 @@
 prices
 }
 \description{
-A \code{zoo} object of nine columns containing daily Close stock prices of
-nine major European insurance companies from 2000-01-03 to 2002-01-01. See
+A \code{zoo} object of eight columns containing daily Close stock prices of
+eight major European insurance companies from 2000-01-03 to 2002-01-01. See
 examples of \code{\link{get_prices_from_tickers}} for the dataset generation.
 }
 \keyword{datasets}

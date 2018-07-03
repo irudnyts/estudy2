@@ -3,12 +3,11 @@
 \docType{data}
 \name{securities_returns}
 \alias{securities_returns}
-\title{Returns of nine major insurance companies from 2000-01-04 to 2001-12-29}
-\format{A list of nine \code{zoo} elements:
+\title{Returns of eight major insurance companies from 2000-01-04 to 2001-12-29}
+\format{A list of eight \code{zoo} elements:
 \itemize{
   \item ALV.DE
   \item CS.PA
-  \item ELE.PA
   \item G.MI
   \item HNR1.HA
   \item HSX.L
@@ -20,8 +19,8 @@
 securities_returns
 }
 \description{
-A list of length nine, elements of which are objects of the class
-\code{returns}. The list contains all necessary returns of nine major
+A list of length eight, elements of which are objects of the class
+\code{returns}. The list contains all necessary returns of eight major
 insurance companies from 2000-01-04 to 2001-12-29. See examples of
 \code{\link{apply_market_model}} for the dataset generation.
 }
