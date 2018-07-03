@@ -21,7 +21,7 @@
 #' @return Prices of securities as \code{"list"}, \code{"zoo"}, or
 #' \code{"data.frame"}.
 #'
-#' @seealso \code{\link[getSymbols]{quantmod}}
+#' @seealso \code{\link[quantmod]{getSymbols}}
 #'
 #' @examples
 #' ## Download historical prices of nine European insurance companies'

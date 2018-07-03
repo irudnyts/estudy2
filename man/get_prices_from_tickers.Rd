@@ -66,5 +66,5 @@ data(prices_indx)
 
 }
 \seealso{
-\code{\link[getSymbols]{quantmod}}
+\code{\link[quantmod]{getSymbols}}
 }
