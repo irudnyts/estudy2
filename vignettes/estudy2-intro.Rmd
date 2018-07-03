@@ -46,16 +46,16 @@ The `estudy2` package provides a set of functions to cover these steps. Function
 
 The package is designed to work with one of the data types, namely `zoo`, `list`, or `data.frame` depending on user preference.
 
-The purpose of this vignette is to provide a brief introduction of how to use this package. The illustrative example is the analysis of the impact of 9/11 terrorist attacks on World Trading Center on nine European insurance companies.
+The purpose of this vignette is to provide a brief introduction of how to use this package. The illustrative example is the analysis of the impact of 9/11 terrorist attacks on World Trading Center on eight European insurance companies.
 
 ## Obtaining prices of companies' stocks
 
-We select nine European insurance companies, tickers of which are listed in the code snippet below. The starting and ending date are set to `"2000-01-01"` and `"2002-01-01"`, respectively, in order to include both the estimation and the event periods. Then, prices of securities should be downloaded. The function `get_prices_from_tickers` downloads prices for companies' tickers between `start` and `end` date. Under the hood, this function is a wrapper around `get.hist.quote` from `tseries`. The function can return either Open or Close quote (`quote` argument). Also one has to choose the returning class among `"list"`, `"zoo"`, and `"data.frame"`. Further in the vignette we use `zoo` objects. We download historical prices of companies with:
+We select eight European insurance companies, tickers of which are listed in the code snippet below. The starting and ending date are set to `"2000-01-01"` and `"2002-01-01"`, respectively, in order to include both the estimation and the event periods. Then, prices of securities should be downloaded. The function `get_prices_from_tickers` downloads prices for companies' tickers between `start` and `end` date. Under the hood, this function is a wrapper around `get.hist.quote` from `tseries`. The function can return either Open or Close quote (`quote` argument). Also one has to choose the returning class among `"list"`, `"zoo"`, and `"data.frame"`. Further in the vignette we use `zoo` objects. We download historical prices of companies with:
 
 ```{r, message=FALSE, warning=FALSE}
 library(estudy2)
-tickers <- c("ALV.DE", "CS.PA", "ELE.PA", "G.MI", "HNR1.HA", "HSX.L",
-             "MUV2.DE", "RSA.L", "TOP.CO")
+tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE", "RSA.L",
+             "TOP.CO")
 prices <- get_prices_from_tickers(tickers, 
                                   start = as.Date("2000-01-01"),
                                   end = as.Date("2002-01-01"),

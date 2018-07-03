@@ -16,8 +16,6 @@ There are currently no downstream dependencies for this package.
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Fixed the date of the package in DESCRIPTION
+* Fix errors of vignette generation from 2018-07-03
 
-* Included references with doi to Description filed in DESCRIPTION
-
-* Fixed invalid DOI
+* Updated version and dependencies
