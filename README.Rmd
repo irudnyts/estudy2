@@ -32,7 +32,14 @@ functions for more information). Furthermore, tests for the cumulative
 abnormal returns are included.
 
 ## Instalation
-The package is not submitted to CRAN and is located in a GitHub repository.
+
+To install a current stable release from CRAN use: 
+
+```{r, eval=FALSE}
+install.packages("estudy2")
+```
+
+
 To install the development version of estudy2 use:
 
 ```{r, eval=FALSE}

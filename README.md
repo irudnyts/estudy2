@@ -22,8 +22,13 @@ abnormal returns are included.
 Instalation
 -----------
 
-The package is not submitted to CRAN and is located in a GitHub
-repository. To install the development version of estudy2 use:
+To install a current stable release from CRAN use:
+
+``` r
+install.packages("estudy2")
+```
+
+To install the development version of estudy2 use:
 
 ``` r
 # install.packages("devtools")
