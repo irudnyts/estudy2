@@ -20,9 +20,18 @@ CAR period.}
 for each day to be incorporated into CAR. The default value is 90 percent.}
 }
 \value{
-A list of fist date, last date, average percentage of
-non-missing observation over each day, the value of statistics, the length
-of the time period, and the significance.
+A data frame of the following columns:
+\itemize{
+    \item \code{name}: a name of the test, i.e. \code{"car_lamb"}
+    \item \code{car_start}: the first date of the CAR period
+    \item \code{car_end}: the last date of the CAR period
+    \item \code{average_percentage}: an average share of non-missing
+          observations over the CAR period
+    \item \code{car_mean}: an average abnormal return over the CAR period
+    \item \code{statistic}: a test's statistic
+    \item \code{number_of_days}: the number of days in the CAR period
+    \item \code{significance}: a significance of the statistic
+}
 }
 \description{
 A parametric test proposed by Lamb 1995 that examines whether or not

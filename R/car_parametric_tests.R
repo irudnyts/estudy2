@@ -20,7 +20,18 @@
 #' The default value is \code{TRUE}.
 #' @param tests a list of tests' functions among \code{car_brown_warner_1985}
 #' and \code{car_lamb}.
-#' @return A list of results of given tests.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{name}: a name of the test
+#'     \item \code{car_start}: the first date of the CAR period
+#'     \item \code{car_end}: the last date of the CAR period
+#'     \item \code{average_percentage}: an average share of non-missing
+#'           observations over the CAR period
+#'     \item \code{car_mean}: an average abnormal return over the CAR period
+#'     \item \code{statistic}: a test's statistic
+#'     \item \code{number_of_days}: the number of days in the CAR period
+#'     \item \code{significance}: a significance of the statistic
+#' }
 #'
 #' @references \itemize{
 #' \item Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case of
@@ -124,9 +135,18 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
 #' CAR period.
 #' @param percentage a lowest allowed percentage of non-missing observation
 #' for each day to be incorporated into CAR. The default value is 90 percent.
-#' @return A list of fist date, last date, average percentage of
-#' non-missing observation over each day, the value of statistics, the length
-#' of the time period, and the significance.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{name}: a name of the test, i.e. \code{"car_lamb"}
+#'     \item \code{car_start}: the first date of the CAR period
+#'     \item \code{car_end}: the last date of the CAR period
+#'     \item \code{average_percentage}: an average share of non-missing
+#'           observations over the CAR period
+#'     \item \code{car_mean}: an average abnormal return over the CAR period
+#'     \item \code{statistic}: a test's statistic
+#'     \item \code{number_of_days}: the number of days in the CAR period
+#'     \item \code{significance}: a significance of the statistic
+#' }
 #'
 #' @references Lamb R.P. \emph{An Exposure-Based Analysis of Property-Liability
 #' Insurer Stock Values around Hurricane Andrew}. Journal of Risk and Insurance,
@@ -225,9 +245,18 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
 #' CAR period.
 #' @param percentage a lowest allowed percentage of non-missing observation
 #' for each day to be incorporated into CAR. The default value is 90 percent.
-#' @return A list of fist date, last date, average percentage of
-#' non-missing observation over each day, the value of statistics, the length
-#' of the time period, and the significance.
+#' \itemize{
+#'     \item \code{name}: a name of the test, i.e.
+#'     \code{"car_brown_warner_1985"}
+#'     \item \code{car_start}: the first date of the CAR period
+#'     \item \code{car_end}: the last date of the CAR period
+#'     \item \code{average_percentage}: an average share of non-missing
+#'           observations over the CAR period
+#'     \item \code{car_mean}: an average abnormal return over the CAR period
+#'     \item \code{statistic}: a test's statistic
+#'     \item \code{number_of_days}: the number of days in the CAR period
+#'     \item \code{significance}: a significance of the statistic
+#' }
 #'
 #' @references Brown S.J., Warner J.B. \emph{Using Daily Stock Returns, The Case
 #' of Event Studies}. Journal of Financial Economics, 14:3-31, 1985.

@@ -27,7 +27,18 @@ The default value is \code{TRUE}.}
 and \code{car_lamb}.}
 }
 \value{
-A list of results of given tests.
+A data frame of the following columns:
+\itemize{
+    \item \code{name}: a name of the test
+    \item \code{car_start}: the first date of the CAR period
+    \item \code{car_end}: the last date of the CAR period
+    \item \code{average_percentage}: an average share of non-missing
+          observations over the CAR period
+    \item \code{car_mean}: an average abnormal return over the CAR period
+    \item \code{statistic}: a test's statistic
+    \item \code{number_of_days}: the number of days in the CAR period
+    \item \code{significance}: a significance of the statistic
+}
 }
 \description{
 Performs given tests to examine whether cumulative abnormal return (CAR)
