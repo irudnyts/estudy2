@@ -86,11 +86,19 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
     }
     result <- NULL
     for(i in seq_along(tests)) {
-        tryCatch(
-            result[[i]] <- tests[[i]](list_of_returns, car_start, car_end,
-                                  percentage),
-            error = function(x) warning(paste(x$message,
-                                              "The test will be skip.")))
+        if(is.null(result)) {
+            result <- tests[[i]](list_of_returns, car_start, car_end,
+                                 percentage)
+        } else {
+            tryCatch(
+                result <- rbind(
+                    result,
+                    tests[[i]](list_of_returns, car_start, car_end,
+                               percentage)
+                ),
+                error = function(x) warning(paste(x$message,
+                                                  "The test will be skip.")))
+        }
     }
     return(result)
 }
@@ -171,6 +179,7 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
     daily_lamb_statistics_tidy <- daily_lamb_statistics[daily_lamb_statistics[, 3] > percentage &
                                                         daily_lamb_statistics[, 3] > 0, ]
     average_percentage <- mean(daily_lamb_statistics_tidy[, 3])
+    car_mean <- mean(daily_lamb_statistics_tidy[, 4], na.rm = TRUE)
 
     statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = TRUE) /
         sqrt(nrow(daily_lamb_statistics_tidy))
@@ -183,11 +192,14 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
     } else {
         significance <- ""
     }
-    result <- list(car_start = car_start, car_end = car_end,
-                   average_percentage = average_percentage,
-                   statistic = statistic,
-                   number_of_days = nrow(daily_lamb_statistics_tidy),
-                   significance = significance)
+    result <- data.frame(name = "car_lamb",
+                         car_start = car_start,
+                         car_end = car_end,
+                         average_percentage = average_percentage,
+                         car_mean = car_mean,
+                         statistic = statistic,
+                         number_of_days = nrow(daily_lamb_statistics_tidy),
+                         significance = significance)
     return(result)
 }
 
@@ -270,6 +282,7 @@ car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
             daily_brown_warner_1985_statistics[, 3] > percentage &
                 daily_brown_warner_1985_statistics[, 3] > 0, ]
     average_percentage <- mean(daily_brown_warner_1985_statistics_tidy[, 3])
+    car_mean <- mean(daily_brown_warner_1985_statistics_tidy[, 4], na.rm = TRUE)
 
     statistic <- sum(daily_brown_warner_1985_statistics_tidy[, 5], na.rm = TRUE) /
         sqrt(nrow(daily_brown_warner_1985_statistics_tidy))
@@ -282,10 +295,13 @@ car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
     } else {
         significance <- ""
     }
-    result <- list(car_start = car_start, car_end = car_end,
-                   average_percentage = average_percentage,
-                   statistic = statistic,
-                   number_of_days = nrow(daily_brown_warner_1985_statistics_tidy),
-                   significance = significance)
+    result <- data.frame(name = "car_brown_warner_1985",
+                         car_start = car_start,
+                         car_end = car_end,
+                         average_percentage = average_percentage,
+                         car_mean = car_mean,
+                         statistic = statistic,
+                         number_of_days = nrow(daily_brown_warner_1985_statistics_tidy),
+                         significance = significance)
     return(result)
 }
