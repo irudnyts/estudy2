@@ -31,11 +31,11 @@ or not cumulative abnormal return (CAR) significantly differs from zero.
 \details{
 This function performs a test proposed by Brown and Warner 1985 to
 investigate whether CAR significantly differs from zero. This tests uses the
-variance, specified by Lamb 1995. The advantage of this test is allowance
-for correlated cross-sectional returns. The test statistic is close enough to
-statistic, produced by \code{\link{car_lamb}}. The critical values are
-standard normal. The significance levels of \eqn{\alpha} are 0.1, 0.05, and
-0.01 (marked respectively by *, **, and ***).
+variance, specified by Brown and Warner 1985. The advantage of this test is
+allowance for correlated cross-sectional returns. The test statistic is close
+ enough to statistic, produced by \code{\link{car_lamb}}. The critical values
+ are standard normal. The significance levels of \eqn{\alpha} are 0.1, 0.05,
+and 0.01 (marked respectively by *, **, and ***).
 }
 \examples{
 \dontrun{

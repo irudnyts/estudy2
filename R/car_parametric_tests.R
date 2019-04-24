@@ -198,11 +198,11 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
 #'
 #' This function performs a test proposed by Brown and Warner 1985 to
 #' investigate whether CAR significantly differs from zero. This tests uses the
-#' variance, specified by Lamb 1995. The advantage of this test is allowance
-#' for correlated cross-sectional returns. The test statistic is close enough to
-#' statistic, produced by \code{\link{car_lamb}}. The critical values are
-#' standard normal. The significance levels of \eqn{\alpha} are 0.1, 0.05, and
-#' 0.01 (marked respectively by *, **, and ***).
+#' variance, specified by Brown and Warner 1985. The advantage of this test is
+#' allowance for correlated cross-sectional returns. The test statistic is close
+#'  enough to statistic, produced by \code{\link{car_lamb}}. The critical values
+#'  are standard normal. The significance levels of \eqn{\alpha} are 0.1, 0.05,
+#' and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
 #' element of which is treated as a security.
@@ -263,13 +263,15 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
 #' @export
 car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
                                   percentage = 90) {
-    daily_lamb_statistics <- brown_warner_1985(list_of_returns, car_start, car_end)
-    daily_lamb_statistics_tidy <- daily_lamb_statistics[daily_lamb_statistics[, 3] > percentage &
-                                                            daily_lamb_statistics[, 3] > 0, ]
-    average_percentage <- mean(daily_lamb_statistics_tidy[, 3])
+    daily_brown_warner_1985_statistics <- brown_warner_1985(list_of_returns, car_start, car_end)
+    daily_brown_warner_1985_statistics_tidy <-
+        daily_brown_warner_1985_statistics[
+            daily_brown_warner_1985_statistics[, 3] > percentage &
+                daily_brown_warner_1985_statistics[, 3] > 0, ]
+    average_percentage <- mean(daily_brown_warner_1985_statistics_tidy[, 3])
 
-    statistic <- sum(daily_lamb_statistics_tidy[, 5], na.rm = TRUE) /
-        sqrt(nrow(daily_lamb_statistics_tidy))
+    statistic <- sum(daily_brown_warner_1985_statistics_tidy[, 5], na.rm = TRUE) /
+        sqrt(nrow(daily_brown_warner_1985_statistics_tidy))
     if(abs(statistic) >= const_q3) {
         significance <- "***"
     } else if(abs(statistic) >= const_q2) {
@@ -282,7 +284,7 @@ car_brown_warner_1985 <- function(list_of_returns, car_start, car_end,
     result <- list(car_start = car_start, car_end = car_end,
                    average_percentage = average_percentage,
                    statistic = statistic,
-                   number_of_days = nrow(daily_lamb_statistics_tidy),
+                   number_of_days = nrow(daily_brown_warner_1985_statistics_tidy),
                    significance = significance)
     return(result)
 }
