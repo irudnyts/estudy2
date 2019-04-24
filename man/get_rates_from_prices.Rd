@@ -4,8 +4,8 @@
 \alias{get_rates_from_prices}
 \title{Calculate rates of return for given prices.}
 \usage{
-get_rates_from_prices(prices, quote = c("Open", "Close"), multi_day = TRUE,
-  compounding = c("discrete", "continuous"))
+get_rates_from_prices(prices, quote = c("Open", "Close"),
+  multi_day = TRUE, compounding = c("discrete", "continuous"))
 }
 \arguments{
 \item{prices}{an object containing prices of securities. Three classes are

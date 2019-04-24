@@ -17,7 +17,15 @@ the event period.}
 event period.}
 }
 \value{
-A data frame of test's statistics and significances.
+A data frame of the following columns:
+\itemize{
+    \item \code{date}: a calendar date
+    \item \code{weekday}: a day of the week
+    \item \code{percentage}: a share of non-missing observations for a given
+          day
+    \item \code{csign_stat}: a Corrado's sign test statistic
+    \item \code{csign_signif}: a significance of the statistic
+}
 }
 \description{
 An event study nonparametric test described in Corrado and Zivney 1992.

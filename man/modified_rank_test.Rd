@@ -17,7 +17,15 @@ the event period.}
 event period.}
 }
 \value{
-A data frame of test's statistics and significances.
+A data frame of the following columns:
+\itemize{
+    \item \code{date}: a calendar date
+    \item \code{weekday}: a day of the week
+    \item \code{percentage}: a share of non-missing observations for a given
+          day
+    \item \code{mrank_stat}: a modified rank test statistic
+    \item \code{mrank_signif}: a significance of the statistic
+}
 }
 \description{
 The test is the modification of the original rank test, proposed by Corrado

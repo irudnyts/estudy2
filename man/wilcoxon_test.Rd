@@ -17,7 +17,15 @@ the event period.}
 event period.}
 }
 \value{
-A data frame of test's statistics and significances.
+A data frame of the following columns:
+\itemize{
+    \item \code{date}: a calendar date
+    \item \code{weekday}: a day of the week
+    \item \code{percentage}: a share of non-missing observations for a given
+          day
+    \item \code{wlcx_stat}: a Wilcoxon signed rank test statistic
+    \item \code{wlcx_signif}: a significance of the statistic
+}
 }
 \description{
 Performs Wilcoxon test on the event period for abnormal returns

@@ -4,8 +4,8 @@
 \alias{car_parametric_tests}
 \title{Returns the result of given event study parametric CAR tests.}
 \usage{
-car_parametric_tests(list_of_returns, car_start, car_end, percentage = 90,
-  all = TRUE, tests)
+car_parametric_tests(list_of_returns, car_start, car_end,
+  percentage = 90, all = TRUE, tests)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each

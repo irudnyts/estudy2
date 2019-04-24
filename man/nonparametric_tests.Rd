@@ -26,7 +26,14 @@ be performed. The default value is \code{TRUE}.}
 \code{\link{wilcoxon_test}}.}
 }
 \value{
-A data frame containing all statistics and significances of tests.
+A data frame of the following columns:
+\itemize{
+    \item \code{date}: a calendar date
+    \item \code{weekday}: a day of the week
+    \item \code{percentage}: a share of non-missing observations for a given
+          day
+    \item Various tests' statistics and significances
+}
 }
 \description{
 Performs main nonparametric tests for each date in the event window and

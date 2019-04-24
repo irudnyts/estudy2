@@ -22,7 +22,14 @@
 #' \code{\link{generalized_sign_test}}, \code{\link{corrado_sign_test}},
 #' \code{\link{rank_test}}, \code{\link{modified_rank_test}}, and
 #' \code{\link{wilcoxon_test}}.
-#' @return A data frame containing all statistics and significances of tests.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{date}: a calendar date
+#'     \item \code{weekday}: a day of the week
+#'     \item \code{percentage}: a share of non-missing observations for a given
+#'           day
+#'     \item Various tests' statistics and significances
+#' }
 #'
 #' @references \itemize{
 #' \item Corrado C.J., Zivney T.L. \emph{The Specification and Power of
@@ -148,7 +155,15 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
 #' event period.
-#' @return A data frame of test's statistics and significances.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{date}: a calendar date
+#'     \item \code{weekday}: a day of the week
+#'     \item \code{percentage}: a share of non-missing observations for a given
+#'           day
+#'     \item \code{sign_stat}: a sign test statistic
+#'     \item \code{sign_signif}: a significance of the statistic
+#' }
 #'
 #' @references Boehmer E., Musumeci J., Poulsen A.B. \emph{Event-study
 #' methodology under conditions of event-induced variance}. Journal of Financial
@@ -284,7 +299,15 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
 #' event period.
-#' @return A data frame of test's statistics and significances.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{date}: a calendar date
+#'     \item \code{weekday}: a day of the week
+#'     \item \code{percentage}: a share of non-missing observations for a given
+#'           day
+#'     \item \code{gsign_stat}: a generalized sign test statistic
+#'     \item \code{gsign_signif}: a significance of the statistic
+#' }
 #'
 #' @references \itemize{
 #' \item McConnell J.J., Muscarella C.J. \emph{Capital expenditure plans and
@@ -439,7 +462,15 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
 #' event period.
-#' @return A data frame of test's statistics and significances.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{date}: a calendar date
+#'     \item \code{weekday}: a day of the week
+#'     \item \code{percentage}: a share of non-missing observations for a given
+#'           day
+#'     \item \code{csign_stat}: a Corrado's sign test statistic
+#'     \item \code{csign_signif}: a significance of the statistic
+#' }
 #'
 #' @references Corrado C.J., Zivney T.L. \emph{The Specification and Power of
 #' the Sign Test in Event Study Hypothesis Tests Using Daily Stock Returns}.
@@ -602,7 +633,15 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
 #' event period.
-#' @return A data frame of test's statistics and significances.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{date}: a calendar date
+#'     \item \code{weekday}: a day of the week
+#'     \item \code{percentage}: a share of non-missing observations for a given
+#'           day
+#'     \item \code{rank_stat}: a rank test statistic
+#'     \item \code{rank_signif}: a significance of the statistic
+#' }
 #'
 #' @references \itemize{
 #' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
@@ -785,7 +824,15 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
 #' event period.
-#' @return A data frame of test's statistics and significances.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{date}: a calendar date
+#'     \item \code{weekday}: a day of the week
+#'     \item \code{percentage}: a share of non-missing observations for a given
+#'           day
+#'     \item \code{mrank_stat}: a modified rank test statistic
+#'     \item \code{mrank_signif}: a significance of the statistic
+#' }
 #'
 #' @references \itemize{
 #' \item Corrado C.J., Zivney T.L. \emph{The Specification and Power of
@@ -966,7 +1013,15 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #' the event period.
 #' @param event_end an object of \code{Date} class giving the last date of the
 #' event period.
-#' @return A data frame of test's statistics and significances.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{date}: a calendar date
+#'     \item \code{weekday}: a day of the week
+#'     \item \code{percentage}: a share of non-missing observations for a given
+#'           day
+#'     \item \code{wlcx_stat}: a Wilcoxon signed rank test statistic
+#'     \item \code{wlcx_signif}: a significance of the statistic
+#' }
 #'
 #' @references \itemize{
 #' \item Wilcoxon F. \emph{Individual Comparisons by Ranking Methods}.

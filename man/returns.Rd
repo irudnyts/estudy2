@@ -4,8 +4,8 @@
 \alias{returns}
 \title{Constructor of an object of S3 class \code{returns}.}
 \usage{
-returns(rates, regressor, market_model = c("mean_adj", "mrkt_adj", "sim"),
-  estimation_method = c("ols"), estimation_start, estimation_end)
+returns(rates, regressor, market_model = c("mean_adj", "mrkt_adj",
+  "sim"), estimation_method = c("ols"), estimation_start, estimation_end)
 }
 \arguments{
 \item{rates}{an object of class either \code{zoo} or \code{data.frame}

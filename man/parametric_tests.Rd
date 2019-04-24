@@ -4,7 +4,8 @@
 \alias{parametric_tests}
 \title{Returns the result of given event study parametric tests.}
 \usage{
-parametric_tests(list_of_returns, event_start, event_end, all = TRUE, tests)
+parametric_tests(list_of_returns, event_start, event_end, all = TRUE,
+  tests)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each
@@ -24,7 +25,15 @@ be performed. The default value is \code{TRUE}.}
 \code{lamb}.}
 }
 \value{
-A data frame containing all statistics and significances of tests.
+A data frame of the following columns:
+\itemize{
+    \item \code{date}: a calendar date
+    \item \code{weekday}: a day of the week
+    \item \code{percentage}: a share of non-missing observations for a given
+          day
+    \item \code{mean}: an average abnormal return
+    \item Various tests' statistics and significances
+}
 }
 \description{
 Performs main parametric tests for each date in the event window and returns

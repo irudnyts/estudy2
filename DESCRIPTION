@@ -39,8 +39,9 @@ Imports:
     matrixStats (>= 0.53.1),
     Rcpp (>= 0.12.17)
 LinkingTo: Rcpp
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: knitr,
     rmarkdown,
     magrittr
 VignetteBuilder: knitr
+Encoding: UTF-8
