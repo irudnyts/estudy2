@@ -261,15 +261,15 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #' An event study parametric test described in Brown and Warner 1985.
 #'
 #' Performs a parametric test for event study, which is described in Brown and
-#' Warner 1985, which is a traditional event study approach. Assumes
-#' cross-sectional independence and is non-robust to an event-induced variance.
-#' The test examines the hypothesis whether the theoretical cross-sectional
-#' expected value for a given day is equal to zero. The standard deviation in
-#' statistics is estimated as the cross-sectional standard deviation of
-#' companies' means, estimated on the estimation period. It calculates
-#' statistics even if event window and estimation period are overlapped
-#' (intersect). The critical values are Student's t-distributed
-#' (no approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
+#' Warner 1985, which is a traditional event study approach. This test does not
+#' require cross-sectional independence but is non-robust to an event-induced
+#' variance. The test examines the hypothesis whether the theoretical
+#' cross-sectional expected value for a given day is equal to zero. The standard
+#'  deviation in statistics is estimated as the cross-sectional standard
+#' deviation of companies' means, estimated on the estimation period. It
+#' calculates statistics even if event window and estimation period are
+#' overlapped (intersect). The critical values are Student's t-distributed (no
+#' approximation in limit). The significance levels of \eqn{\alpha} are 0.1,
 #'  0.05, and 0.01 (marked respectively by *, **, and ***).
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
