@@ -67,7 +67,10 @@ car_rank_test <- function(list_of_returns, car_start, car_end,
     event_number_of_companies <- rowSums(!is.na(event_rank))
     event_number_of_companies[event_number_of_companies == 0] <- NA
     event_percentages <- event_number_of_companies / ncol(event_rank) * 100
-    average_percentage <- mean(event_percentages[event_percentages > percentage])
+    average_percentage <- mean(
+        event_percentages[event_percentages > percentage],
+        na.rm = TRUE
+    )
 
     number_of_companies <- rowSums(!is.na(full_rank))
     number_of_companies[number_of_companies == 0] <- NA
@@ -93,7 +96,6 @@ car_rank_test <- function(list_of_returns, car_start, car_end,
     } else {
         significance <- ""
     }
-    browser()
 
     result <- data.frame(name = "car_rank_test",
                          car_start = car_start,
