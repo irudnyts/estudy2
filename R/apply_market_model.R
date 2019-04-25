@@ -530,6 +530,11 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
             zoo::index(estimation_data) >= estimation_start &
             zoo::index(estimation_data) <= estimation_end]
         delta <- length(estimation_data)
+        if(delta == 0) {
+            stop(paste0("The estimation window contains no data. Check ",
+                        paste(names(rates), collapse = " and "),
+                        " for missing values."))
+        }
         estimation_mean <- mean(estimation_data)
         estimation_sd <- stats::sd(estimation_data)
 
@@ -554,6 +559,11 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
             zoo::index(estimation_data) >= estimation_start &
             zoo::index(estimation_data) <= estimation_end]
         delta <- nrow(estimation_data)
+        if(delta == 0) {
+            stop(paste0("The estimation window contains no data. Check ",
+                        paste(names(estimation_data), collapse = " and "),
+                        " for missing values."))
+        }
         # two variables created, because predict is looking for the same
         # as in lm variables names
         y <- zoo::coredata(estimation_data[, 1])
@@ -588,6 +598,11 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
                 zoo::index(estimation_data) >= estimation_start &
                 zoo::index(estimation_data) <= estimation_end]
             delta <- nrow(estimation_data)
+            if(delta == 0) {
+                stop(paste0("The estimation window contains no data. Check ",
+                            paste(names(estimation_data), collapse = " and "),
+                            " for missing values."))
+            }
             # two variables created, because predict is looking for the same
             # as in lm variables names
             y <- zoo::coredata(estimation_data[, 1])
@@ -650,6 +665,11 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             estimation_data[, 1] >= estimation_start &
             estimation_data[, 1] <= estimation_end, ]
         delta <- nrow(estimation_data)
+        if(delta == 0) {
+            stop(paste0("The estimation window contains no data. Check ",
+                        paste(names(estimation_data)[-1], collapse = " and "),
+                        " for missing values."))
+        }
         estimation_mean <- mean(estimation_data[, 2])
         estimation_sd <- stats::sd(estimation_data[, 2])
 
@@ -679,6 +699,11 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             estimation_data[, 1] >= estimation_start &
             estimation_data[, 1] <= estimation_end, ]
         delta <- nrow(estimation_data)
+        if(delta == 0) {
+            stop(paste0("The estimation window contains no data. Check ",
+                        paste(names(estimation_data)[-1], collapse = " and "),
+                        " for missing values."))
+        }
         # two variables created, because predict is looking for the same
         # as in lm variables names
         y <- estimation_data[, 2]
@@ -710,6 +735,11 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                 estimation_data[, 1] >= estimation_start &
                 estimation_data[, 1] <= estimation_end, ]
             delta <- nrow(estimation_data)
+            if(delta == 0) {
+                stop(paste0("The estimation window contains no data. Check ",
+                            paste(names(estimation_data)[-1], collapse = " and "),
+                            " for missing values."))
+            }
             # two variables created, because predict is looking for the same
             # as in lm variables names
             y <- estimation_data[, 2]
