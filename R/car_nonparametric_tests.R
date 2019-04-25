@@ -1,3 +1,207 @@
+#' Returns the result of given event study nonparametric CAR tests.
+#'
+#' Performs given tests to examine the statistical significance of the CAR of a
+#' given period.
+#'
+#' Currently, \code{car_nonparametric_tests} performs only \code{car_rank_test}
+#' test. This function was developed for the sake of completeness and can be
+#' used for future extenssions of the package.
+#'
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a security.
+#' @param car_start an object of \code{Date} class giving the first date of
+#' the CAR period.
+#' @param car_end an object of \code{Date} class giving the last date of the
+#' CAR period.
+#' @param percentage a lowest allowed percentage of non-missing observation
+#' for each day to be incorporated into CAR. The default value is 90 percent.
+#' @param all a logical value indicating whether all tests should be performed.
+#' The default value is \code{TRUE}. Note, only \code{car_rank_test} will be
+#' performed.
+#' @param tests a list of tests' functions. Currently, only \code{car_rank_test}
+#'  is allowed.
+#' @return A data frame of the following columns:
+#' \itemize{
+#'     \item \code{name}: a name of the test
+#'     \item \code{car_start}: the first date of the CAR period
+#'     \item \code{car_end}: the last date of the CAR period
+#'     \item \code{average_percentage}: an average share of non-missing
+#'           observations over the CAR period
+#'     \item \code{statistic}: a test's statistic
+#'     \item \code{number_of_days}: the number of days in the CAR period
+#'     \item \code{significance}: a significance of the statistic
+#' }
+#'
+#' @references \itemize{
+#' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
+#' Performance in Event Studies}. Journal of Financial Economics 23:385-395,
+#' 1989.
+#' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
+#' Quantitative Finance and Accounting, 2:343-358, 1992.
+#' }
+#'
+#' @seealso \code{\link{car_rank_test}}.
+#'
+#' @examples
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
+#'              "RSA.L", "TOP.CO")
+#' nine_eleven_car_param <- get_prices_from_tickers(tickers,
+#'                                                  start = as.Date("2000-01-01"),
+#'                                                  end = as.Date("2002-01-01"),
+#'                                                  quote = "Close",
+#'                                                  retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     car_nonparametric_tests(car_start = as.Date("2001-09-11"),
+#'                             car_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
+#' data(securities_returns)
+#' nine_eleven_car_param <- car_nonparametric_tests(
+#'     list_of_returns = securities_returns,
+#'     car_start = as.Date("2001-09-11"),
+#'     car_end = as.Date("2001-09-28")
+#' )
+#'
+#' @export
+car_nonparametric_tests <- function(list_of_returns, car_start, car_end,
+                                    percentage = 90, all = TRUE, tests) {
+    if(missing(tests)) {
+        if(all) {
+            tests <- list(car_rank_test)
+        } else {
+            stop("Specify at least one test.")
+        }
+    } else {
+        message("Argument all will be ignored.")
+        for(i in seq_along(tests)) {
+            tests[[i]] <- match.fun(tests[[i]])
+        }
+    }
+    result <- NULL
+    for(i in seq_along(tests)) {
+        if(is.null(result)) {
+            result <- tests[[i]](list_of_returns, car_start, car_end,
+                                 percentage)
+        } else {
+            tryCatch(
+                result <- rbind(
+                    result,
+                    tests[[i]](list_of_returns, car_start, car_end,
+                               percentage)
+                ),
+                error = function(x) warning(paste(x$message,
+                                                  "The test will be skip.")))
+        }
+    }
+    return(result)
+}
+
+#' Cowan's CAR test.
+#'
+#' A nonparametric test proposed by Cowan 1992 as an extenssion of the rank test
+#'  proposed by Corrado 1989.
+#'
+#' This function performs a test proposed by Cowan 1992 to investigate the
+#' significance of the CAR for a given period. In order to get ranks of
+#' corresponding abnormal returns, the procedure uses regular R function
+#' \code{\link{rank}} with parameter \code{ties.method = "average"} and
+#' \code{na.last = "keep"}. For this test the estimation period and the event
+#' period must not overlap, otherwise an error will be thrown. The test
+#' statistic is assumed to have a normal distribution (as an approximation). The
+#'  test is well-specified for the case, when cross-sectional abnormal returns
+#' are not symmetric. The test is stable to variance increase during given
+#' period. This test ignores the dependence of abnormal returns' ranks of
+#' different days (i.e., a serial dependence). The critical values are standard
+#' normal. The significance levels of \eqn{\alpha} are 0.1, 0.05, and 0.01
+#' (marked respectively by *, **, and ***).
+#'
+#' @param list_of_returns a list of objects of S3 class \code{returns}, each
+#' element of which is treated as a security.
+#' @param car_start an object of \code{Date} class giving the first date of
+#' the CAR period.
+#' @param car_end an object of \code{Date} class giving the last date of the
+#' CAR period.
+#' @param percentage a lowest allowed percentage of non-missing observation
+#' for each day to be incorporated into CAR. The default value is 90 percent.
+#' \itemize{
+#'     \item \code{name}: a name of the test, i.e.
+#'     \code{"car_brown_warner_1985"}
+#'     \item \code{car_start}: the first date of the CAR period
+#'     \item \code{car_end}: the last date of the CAR period
+#'     \item \code{average_percentage}: an average share of non-missing
+#'           observations over the CAR period
+#'     \item \code{statistic}: a test's statistic
+#'     \item \code{number_of_days}: the number of days in the CAR period
+#'     \item \code{significance}: a significance of the statistic
+#' }
+#'
+#' @references \itemize{
+#' \item Corrado C.J. \emph{A Nonparametric Test for Abnormal Security-Price
+#' Performance in Event Studies}. Journal of Financial Economics 23:385-395,
+#' 1989.
+#' \item Cowan A.R. \emph{Nonparametric Event Study Tests}. Review of
+#' Quantitative Finance and Accounting, 2:343-358, 1992.
+#' }
+#'
+#' @seealso \code{\link{car_nonparametric_tests}}.
+#'
+#' @examples
+#' \dontrun{
+#' library("magrittr")
+#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#'                                       start = as.Date("2000-01-01"),
+#'                                       end = as.Date("2002-01-01"),
+#'                                       quote = "Close",
+#'                                       retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous")
+#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
+#'              "RSA.L", "TOP.CO")
+#' get_prices_from_tickers(tickers,
+#'                         start = as.Date("2000-01-01"),
+#'                         end = as.Date("2002-01-01"),
+#'                         quote = "Close",
+#'                         retclass = "zoo") %>%
+#'     get_rates_from_prices(quote = "Close",
+#'                           multi_day = TRUE,
+#'                           compounding = "continuous") %>%
+#'     apply_market_model(regressor = rates_indx,
+#'                        same_regressor_for_all = TRUE,
+#'                        market_model = "sim",
+#'                        estimation_method = "ols",
+#'                        estimation_start = as.Date("2001-03-26"),
+#'                        estimation_end = as.Date("2001-09-10")) %>%
+#'     car_rank_test(car_start = as.Date("2001-09-11"),
+#'                   car_end = as.Date("2001-09-28"))
+#' }
+#' ## The result of the code above is equivalent to:
+#' data(securities_returns)
+#' car_rank_test(
+#'     list_of_returns = securities_returns,
+#'     car_start = as.Date("2001-09-11"),
+#'     car_end = as.Date("2001-09-28")
+#' )
+#'
+#' @export
 car_rank_test <- function(list_of_returns, car_start, car_end,
                           percentage = 90) {
 
