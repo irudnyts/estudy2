@@ -47,7 +47,7 @@ given period.
 \details{
 Currently, \code{car_nonparametric_tests} performs only \code{car_rank_test}
 test. This function was developed for the sake of completeness and can be
-used for future extenssions of the package.
+used for future extensions of the package.
 }
 \examples{
 \dontrun{

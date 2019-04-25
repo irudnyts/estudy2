@@ -28,7 +28,7 @@
 #'     \item \code{weekday}: a day of the week
 #'     \item \code{percentage}: a share of non-missing observations for a given
 #'           day
-#'     \item Various tests' statistics and significances
+#'     \item Various tests' statistics and significance
 #' }
 #'
 #' @references \itemize{

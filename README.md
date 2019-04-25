@@ -19,8 +19,8 @@ cross-sectional daily abnormal return (see the documentation of the
 functions for more information). Furthermore, tests for the cumulative
 abnormal returns are included.
 
-Instalation
------------
+Installation
+------------
 
 To install a current stable release from CRAN use:
 

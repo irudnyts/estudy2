@@ -32,7 +32,7 @@ A data frame of the following columns:
     \item \code{percentage}: a share of non-missing observations for a given
           day
     \item \code{mean}: an average abnormal return
-    \item Various tests' statistics and significances
+    \item Various tests' statistics and significance
 }
 }
 \description{

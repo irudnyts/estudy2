@@ -31,7 +31,7 @@ for each day to be incorporated into CAR. The default value is 90 percent.
 }}
 }
 \description{
-A nonparametric test proposed by Cowan 1992 as an extenssion of the rank test
+A nonparametric test proposed by Cowan 1992 as an extension of the rank test
  proposed by Corrado 1989.
 }
 \details{

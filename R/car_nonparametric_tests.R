@@ -5,7 +5,7 @@
 #'
 #' Currently, \code{car_nonparametric_tests} performs only \code{car_rank_test}
 #' test. This function was developed for the sake of completeness and can be
-#' used for future extenssions of the package.
+#' used for future extensions of the package.
 #'
 #' @param list_of_returns a list of objects of S3 class \code{returns}, each
 #' element of which is treated as a security.
@@ -116,7 +116,7 @@ car_nonparametric_tests <- function(list_of_returns, car_start, car_end,
 
 #' Cowan's CAR test.
 #'
-#' A nonparametric test proposed by Cowan 1992 as an extenssion of the rank test
+#' A nonparametric test proposed by Cowan 1992 as an extension of the rank test
 #'  proposed by Corrado 1989.
 #'
 #' This function performs a test proposed by Cowan 1992 to investigate the
