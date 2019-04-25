@@ -1,7 +1,7 @@
 ## Test environments
 
-* local MacOS 10.13.3, R 3.5.0
-* local Ubuntu 18.04, R 3.5.0
+* local MacOS 10.14.1, R 3.5.3
+* local Ubuntu 18.04.2, R 3.5.3
 * win-builder (devel)
 
 ## R CMD check results
@@ -16,6 +16,8 @@ There are currently no downstream dependencies for this package.
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Fixed errors of vignette generation from 2018-07-03
+* Updated documentation
 
-* Updated version and dependencies
+* Improved validation of arguments
+
+* Implemented new nonparametric tests 
