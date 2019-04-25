@@ -2,7 +2,7 @@
 
 * local MacOS 10.14.1, R 3.5.3
 * local Ubuntu 18.04.2, R 3.5.3 (warning)
-* win-builder (release)
+* win-builder (release, devel)
 * R-hub
     * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
     * Fedora Linux, R-devel, clang, gfortran
