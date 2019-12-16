@@ -4,8 +4,7 @@
 \alias{car_brown_warner_1985}
 \title{Brown and Warner (1985) CAR test.}
 \usage{
-car_brown_warner_1985(list_of_returns, car_start, car_end,
-  percentage = 90)
+car_brown_warner_1985(list_of_returns, car_start, car_end, percentage = 90)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each

@@ -4,8 +4,13 @@
 \alias{get_prices_from_tickers}
 \title{Get daily prices of securities.}
 \usage{
-get_prices_from_tickers(..., start, end, quote = c("Open", "Close"),
-  retclass = c("list", "zoo", "data.frame"))
+get_prices_from_tickers(
+  ...,
+  start,
+  end,
+  quote = c("Open", "Close"),
+  retclass = c("list", "zoo", "data.frame")
+)
 }
 \arguments{
 \item{...}{character vectors indicating tickers (should be valid in Yahoo

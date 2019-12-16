@@ -4,8 +4,14 @@
 \alias{returns}
 \title{Constructor of an object of S3 class \code{returns}.}
 \usage{
-returns(rates, regressor, market_model = c("mean_adj", "mrkt_adj",
-  "sim"), estimation_method = c("ols"), estimation_start, estimation_end)
+returns(
+  rates,
+  regressor,
+  market_model = c("mean_adj", "mrkt_adj", "sim"),
+  estimation_method = c("ols"),
+  estimation_start,
+  estimation_end
+)
 }
 \arguments{
 \item{rates}{an object of class either \code{zoo} or \code{data.frame}
@@ -89,7 +95,7 @@ single_return <- get_prices_from_tickers("ALV.DE",
 }
 ## The result of the code above is equivalent to:
 data(rates)
-single_return <- returns(rates[, "ALV.DE", drop = FALSE],
+single_return <- returns(rates[, "ALV.DE"],
                          market_model = "mean_adj",
                          estimation_start = as.Date("2001-03-26"),
                          estimation_end = as.Date("2001-09-10"))
