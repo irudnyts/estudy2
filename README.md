@@ -7,6 +7,8 @@ Status](https://travis-ci.org/irudnyts/estudy2.svg?branch=master)](https://travi
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/irudnyts/estudy2?branch=master&svg=true)](https://ci.appveyor.com/project/irudnyts/estudy2)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/estudy2)](https://cran.r-project.org/package=estudy2)
+[![CRAN
+Downloads](http://cranlogs.r-pkg.org/badges/grand-total/estudy2?color=brightgreen)](http://cranlogs.r-pkg.org/badges/grand-total/estudy2?color=brightgreen)
 
 Overview
 --------
