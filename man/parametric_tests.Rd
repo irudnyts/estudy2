@@ -4,7 +4,8 @@
 \alias{parametric_tests}
 \title{Returns the result of given event study parametric tests.}
 \usage{
-parametric_tests(list_of_returns, event_start, event_end, all = TRUE, tests)
+parametric_tests(list_of_returns, event_start, event_end, all = TRUE,
+  tests)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each

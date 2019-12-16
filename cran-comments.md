@@ -1,22 +1,20 @@
 ## Test environments
 
-* local MacOS 10.14.1, R 3.5.3
-* local Ubuntu 18.04.2, R 3.5.3 (warning)
-* win-builder (release, devel)
+* local MacOS 10.15.1, R 3.6.1
+* local MacOS 10.15.1, R 4.0.0 (R-devel)
+* Ubuntu 16.04 (on Travis-CI), R 3.6.0
+* Windows (on AppVayor), R-release
+* win-builder (R-release, R-devel)
 * R-hub
     * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+    * Ubuntu Linux 16.04 LTS, R-release, GCC
     * Fedora Linux, R-devel, clang, gfortran
-    * Debian Linux, R-devel, GCC ASAN/UBSAN
-    * Ubuntu Linux 16.04 LTS, R-release, GCC (warning, note)
+    * Debian Linux, R-release, GCC
 
 ## R CMD check results
 
-0 errors | 1 warnings | 1 notes
+0 errors | 0 warnings | 1 notes
 
-* checking compilation flags used ... WARNING
-Compilation used the following non-portable flag(s):
-  ‘-Wdate-time’ ‘-Werror=format-security’ ‘-Wformat’
-  
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: ‘Iegor Rudnytskyi <iegor.rudnytskyi@gmail.com>’
 
@@ -39,8 +37,6 @@ Found the following (possibly) invalid DOIs:
 ### Comments:    
     
 * DOI are correct and accessible.
-* Warning is related to compilation flag. According to (this thread)[https://stat.ethz.ch/pipermail/r-package-devel/2018q3/002878.html] I ignored this warning.
-
 
 ## Downstream dependencies
 
@@ -49,6 +45,4 @@ There are currently no downstream dependencies for this package.
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Updated documentation
-* Improved validation of arguments
-* Implemented new nonparametric tests 
+* Fix a bug in documentation related to implicit coercion

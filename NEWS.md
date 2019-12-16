@@ -1,3 +1,7 @@
+# estudy2 0.9.1
+
+* Fix a bug in examples of `returns()`
+
 # estudy2 0.9.0
 
 * Fix documentation for `brown_warner_1985()`

@@ -4,7 +4,8 @@
 \alias{nonparametric_tests}
 \title{Returns the result of given event study nonparametric tests.}
 \usage{
-nonparametric_tests(list_of_returns, event_start, event_end, all = TRUE, tests)
+nonparametric_tests(list_of_returns, event_start, event_end, all = TRUE,
+  tests)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each
