@@ -10,6 +10,7 @@
     * Ubuntu Linux 16.04 LTS, R-release, GCC
     * Fedora Linux, R-devel, clang, gfortran
     * Debian Linux, R-release, GCC
+    * Debian Linux, R-devel, GCC ASAN/UBSAN
 
 ## R CMD check results
 
