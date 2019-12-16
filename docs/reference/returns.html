@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">estudy2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -221,34 +221,37 @@ of Event Studies</em>. Journal of Financial Economics, 14:3-31, 1985.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## 1. Mean-adjusted-returns model</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"zoo"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘zoo’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    as.Date, as.Date.numeric</span></div><div class='input'><span class='co'>## 1. Mean-adjusted-returns model</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"magrittr"</span>)
 <span class='no'>single_return</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"ALV.DE"</span>,
-                                         <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                         <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
+                                         <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
+                                         <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
                                          <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
                                          <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
                           <span class='kw'>multi_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                           <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>returns</span>(<span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"mean_adj"</span>,
-            <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-            <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
+            <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
+            <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
 }
 <span class='co'>## The result of the code above is equivalent to:</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>rates</span>)
-<span class='no'>single_return</span> <span class='kw'>&lt;-</span> <span class='fu'>returns</span>(<span class='no'>rates</span>[, <span class='st'>"ALV.DE"</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>],
+<span class='no'>single_return</span> <span class='kw'>&lt;-</span> <span class='fu'>returns</span>(<span class='no'>rates</span>[, <span class='st'>"ALV.DE"</span>],
                          <span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"mean_adj"</span>,
-                         <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-                         <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
+                         <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
+                         <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
 
 <span class='co'>## 2. Market-adjusted-returns model</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"magrittr"</span>)
 <span class='no'>rates_indx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"^STOXX50E"</span>,
-                                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                      <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
+                                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
+                                      <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
                                       <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
                                       <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
@@ -256,8 +259,8 @@ of Event Studies</em>. Journal of Financial Economics, 14:3-31, 1985.</p>
                           <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>)
 
 <span class='no'>single_return</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"ALV.DE"</span>,
-                                         <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                         <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
+                                         <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
+                                         <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
                                          <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
                                          <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
@@ -265,8 +268,8 @@ of Event Studies</em>. Journal of Financial Economics, 14:3-31, 1985.</p>
                           <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>returns</span>(<span class='kw'>regressor</span> <span class='kw'>=</span> <span class='no'>rates_indx</span>,
             <span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"mrkt_adj"</span>,
-            <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-            <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
+            <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
+            <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
 }
 <span class='co'>## The result of the code above is equivalent to:</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>rates</span>, <span class='no'>rates_indx</span>)
@@ -274,15 +277,15 @@ of Event Studies</em>. Journal of Financial Economics, 14:3-31, 1985.</p>
                          <span class='kw'>regressor</span> <span class='kw'>=</span> <span class='no'>rates_indx</span>,
                          <span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"mrkt_adj"</span>,
                          <span class='kw'>estimation_method</span> <span class='kw'>=</span> <span class='st'>"ols"</span>,
-                         <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-                         <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
+                         <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
+                         <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
 
 <span class='co'>## 3. Single-index market model</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"magrittr"</span>)
 <span class='no'>rates_indx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"^STOXX50E"</span>,
-                                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                      <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
+                                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
+                                      <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
                                       <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
                                       <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
@@ -290,8 +293,8 @@ of Event Studies</em>. Journal of Financial Economics, 14:3-31, 1985.</p>
                           <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>)
 
 <span class='no'>single_return</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"ALV.DE"</span>,
-                                         <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                         <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
+                                         <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
+                                         <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
                                          <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
                                          <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
@@ -300,8 +303,8 @@ of Event Studies</em>. Journal of Financial Economics, 14:3-31, 1985.</p>
     <span class='fu'>returns</span>(<span class='kw'>regressor</span> <span class='kw'>=</span> <span class='no'>rates_indx</span>,
             <span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"sim"</span>,
             <span class='kw'>estimation_method</span> <span class='kw'>=</span> <span class='st'>"ols"</span>,
-            <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-            <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
+            <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
+            <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))
 }
 <span class='co'>## The result of the code above is equivalent to:</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>rates</span>, <span class='no'>rates_indx</span>)
@@ -309,8 +312,8 @@ of Event Studies</em>. Journal of Financial Economics, 14:3-31, 1985.</p>
                          <span class='kw'>regressor</span> <span class='kw'>=</span> <span class='no'>rates_indx</span>,
                          <span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"sim"</span>,
                          <span class='kw'>estimation_method</span> <span class='kw'>=</span> <span class='st'>"ols"</span>,
-                         <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-                         <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))</div></pre>
+                         <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
+                         <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/zoo/man/yearmon.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
