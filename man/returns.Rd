@@ -71,6 +71,7 @@ market model For this model only Ordinary Least Squares
 in Brown and Warner (1985).
 }
 \examples{
+library("zoo")
 ## 1. Mean-adjusted-returns model
 \dontrun{
 library("magrittr")

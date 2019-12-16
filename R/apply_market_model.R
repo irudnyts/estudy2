@@ -407,6 +407,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #' @seealso \code{\link{apply_market_model}}
 #'
 #' @examples
+#' library("zoo")
 #' ## 1. Mean-adjusted-returns model
 #' \dontrun{
 #' library("magrittr")
