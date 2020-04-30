@@ -66,7 +66,7 @@ prices <- get_prices_from_tickers(tickers,
 For using a single-index market model we also need to download prices of an index (proxy):
 
 ```{r, message=FALSE, warning=FALSE}
-prices_indx <- get_prices_from_tickers("^STOXX50E",
+prices_indx <- get_prices_from_tickers("^N100",
                                        start = as.Date("2000-01-01"),
                                        end = as.Date("2002-01-01"),
                                        quote = "Close",
@@ -126,7 +126,7 @@ One can notice that the result of the previous function is passed to the next fu
 ```{r, message=FALSE, warning=FALSE}
 library(magrittr)
 
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",

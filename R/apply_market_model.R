@@ -62,7 +62,7 @@
 #' ## 2. Market-adjusted-returns model
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -100,7 +100,7 @@
 #' ## 3. Single-index market model
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -433,7 +433,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #' ## 2. Market-adjusted-returns model
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -467,7 +467,7 @@ apply_market_model.zoo <- function(rates, regressors, same_regressor_for_all =
 #' ## 3. Single-index market model
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",

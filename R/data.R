@@ -18,9 +18,9 @@
 #' }
 "prices"
 
-#' Prices of of ESTX50 EUR P index from 2000-01-03 to 2001-12-31
+#' Prices of of EURONEXT 100 index from 2000-01-03 to 2001-12-31
 #'
-#' A \code{zoo} object containing daily prices of ESTX50 EUR P index from
+#' A \code{zoo} object containing daily prices of EURONEXT 100 index from
 #' 2000-01-03 to 2001-12-31. See examples of
 #' \code{\link{get_prices_from_tickers}} for the dataset generation.
 #'
@@ -47,9 +47,9 @@
 #' }
 "rates"
 
-#' Rates of returns of ESTX50 EUR P index from 2000-01-04 to 2001-12-31
+#' Rates of returns of EURONEXT 100 index from 2000-01-04 to 2001-12-31
 #'
-#' A \code{zoo} object containing daily rates of returns of ESTX50 EUR P index
+#' A \code{zoo} object containing daily rates of returns of EURONEXT 100 index
 #' from 2000-01-04 to 2001-12-31. See examples of
 #' \code{\link{get_rates_from_prices}} for the dataset generation.
 #'

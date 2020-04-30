@@ -4,8 +4,7 @@
 \alias{parametric_tests}
 \title{Returns the result of given event study parametric tests.}
 \usage{
-parametric_tests(list_of_returns, event_start, event_end, all = TRUE,
-  tests)
+parametric_tests(list_of_returns, event_start, event_end, all = TRUE, tests)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each
@@ -48,7 +47,7 @@ a data frame of their statistics and significance.
 \examples{
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",

@@ -8,23 +8,29 @@
 
 <title>Lamb's parametric test (1995). — lamb • estudy2</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Lamb's parametric test (1995). — lamb" />
 
+<meta property="og:title" content="Lamb's parametric test (1995). — lamb" />
 <meta property="og:description" content="An event study parametric test described in Lamb 1995." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -52,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -66,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">estudy2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.2</span>
       </span>
     </div>
 
@@ -97,10 +103,9 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/irudnyts/estudy2">
+  <a href="http://github.com/irudnyts/estudy2/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -119,18 +124,16 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Lamb's parametric test (1995).</h1>
-    <small class="dont-index">Source: <a href='https://github.com/irudnyts/estudy2/blob/master/R/parametric_tests.R'><code>R/parametric_tests.R</code></a></small>
+    <small class="dont-index">Source: <a href='http://github.com/irudnyts/estudy2/blob/master/R/parametric_tests.R'><code>R/parametric_tests.R</code></a></small>
     <div class="hidden name"><code>lamb.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>An event study parametric test described in Lamb 1995.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>lamb</span>(<span class='no'>list_of_returns</span>, <span class='no'>event_start</span>, <span class='no'>event_end</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -150,7 +153,7 @@ the event period.</p></td>
 event period.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of the following columns:</p><ul>
@@ -163,7 +166,6 @@ event period.</p></td>
 <li><p><code>lmb_signif</code>: a significance of the statistic</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Performs a parametric test for the event study, which is described in Lamb
@@ -176,24 +178,21 @@ value for a given day is equal to zero. It calculates statistics even if
 event window and estimation period are overlapped (intersect). The critical
 values are standard normal. The significance levels of \(\alpha\) are 0.1,
 0.05, and 0.01 (marked respectively by *, **, and ***).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Lamb R.P. <em>An Exposure-Based Analysis of Property-Liability
 Insurer Stock Values around Hurricane Andrew</em>. Journal of Risk and Insurance,
 62(1):111-123, 1995.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='parametric_tests.html'>parametric_tests</a></code>, <code><a href='brown_warner_1980.html'>brown_warner_1980</a></code>,
 <code><a href='brown_warner_1985.html'>brown_warner_1985</a></code>, <code><a href='t_test.html'>t_test</a></code>,<code><a href='patell.html'>patell</a></code>
 and <code><a href='boehmer.html'>boehmer</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"magrittr"</span>)
-<span class='no'>rates_indx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"^STOXX50E"</span>,
+<span class='no'>rates_indx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"^N100"</span>,
                                       <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
                                       <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
                                       <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
@@ -224,39 +223,27 @@ and <code><a href='boehmer.html'>boehmer</a></code>.</p></div>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>securities_returns</span>)
 <span class='fu'>lamb</span>(<span class='kw'>list_of_returns</span> <span class='kw'>=</span> <span class='no'>securities_returns</span>,
      <span class='kw'>event_start</span> <span class='kw'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-11"</span>),
-     <span class='kw'>event_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-28"</span>))</div><div class='output co'>#&gt;          date   weekday percentage         mean    lmb_stat lmb_signif
-#&gt; 1  2001-09-11   Tuesday        100 -0.070310766  -8.3398273        ***
-#&gt; 2  2001-09-12 Wednesday        100 -0.050417895  -6.4967073        ***
-#&gt; 3  2001-09-13  Thursday        100  0.004065211   0.5245677           
-#&gt; 4  2001-09-14    Friday        100 -0.026200595  -3.1282615        ***
-#&gt; 5  2001-09-17    Monday        100 -0.004221486  -0.5298223           
-#&gt; 6  2001-09-18   Tuesday        100 -0.016655690  -2.1548547         **
-#&gt; 7  2001-09-19 Wednesday        100 -0.002715794  -0.3463359           
-#&gt; 8  2001-09-20  Thursday        100 -0.099439820 -12.3423564        ***
-#&gt; 9  2001-09-21    Friday        100 -0.041236146  -5.2337855        ***
-#&gt; 10 2001-09-24    Monday        100  0.034900198   4.1355087        ***
-#&gt; 11 2001-09-25   Tuesday        100  0.050934143   6.5758189        ***
-#&gt; 12 2001-09-26 Wednesday        100  0.017198700   2.2049847         **
-#&gt; 13 2001-09-27  Thursday        100  0.008473701   1.0911784           
-#&gt; 14 2001-09-28    Friday         75  0.010468462   1.3255244           </div><div class='input'>
+     <span class='kw'>event_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-28"</span>))</div><div class='output co'>#&gt;          date   weekday percentage          mean    lmb_stat lmb_signif
+#&gt; 1  2001-09-11   Tuesday        100 -0.1034808908 -14.1976044        ***
+#&gt; 2  2001-09-12 Wednesday        100 -0.0345902954  -4.7209590        ***
+#&gt; 3  2001-09-13  Thursday          0            NA          NA           
+#&gt; 4  2001-09-14    Friday        100 -0.0340256202  -4.4303298        ***
+#&gt; 5  2001-09-17    Monday        100  0.0180458400   2.4758486         **
+#&gt; 6  2001-09-18   Tuesday        100 -0.0007609145  -0.1018215           
+#&gt; 7  2001-09-19 Wednesday        100 -0.0048350600  -0.6562277           
+#&gt; 8  2001-09-20  Thursday        100 -0.0974285486 -12.6889753        ***
+#&gt; 9  2001-09-21    Friday        100 -0.0412253278  -5.5420783        ***
+#&gt; 10 2001-09-24    Monday        100  0.0369475589   4.6442996        ***
+#&gt; 11 2001-09-25   Tuesday        100  0.0467385257   6.3597086        ***
+#&gt; 12 2001-09-26 Wednesday        100  0.0188989270   2.5732042         **
+#&gt; 13 2001-09-27  Thursday        100  0.0112991782   1.5466368           
+#&gt; 14 2001-09-28    Friday         75  0.0124532411   1.6751766          *</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -267,7 +254,7 @@ and <code><a href='boehmer.html'>boehmer</a></code>.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

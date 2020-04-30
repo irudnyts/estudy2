@@ -3,13 +3,15 @@
 \docType{data}
 \name{prices_indx}
 \alias{prices_indx}
-\title{Prices of of ESTX50 EUR P index from 2000-01-03 to 2001-12-31}
-\format{A \code{zoo} object.}
+\title{Prices of of EURONEXT 100 index from 2000-01-03 to 2001-12-31}
+\format{
+A \code{zoo} object.
+}
 \usage{
 prices_indx
 }
 \description{
-A \code{zoo} object containing daily prices of ESTX50 EUR P index from
+A \code{zoo} object containing daily prices of EURONEXT 100 index from
 2000-01-03 to 2001-12-31. See examples of
 \code{\link{get_prices_from_tickers}} for the dataset generation.
 }

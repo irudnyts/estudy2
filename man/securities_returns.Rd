@@ -4,7 +4,8 @@
 \name{securities_returns}
 \alias{securities_returns}
 \title{Returns of eight major insurance companies from 2000-01-04 to 2001-12-29}
-\format{A list of eight \code{zoo} elements:
+\format{
+A list of eight \code{zoo} elements:
 \itemize{
   \item ALV.DE
   \item CS.PA
@@ -14,7 +15,8 @@
   \item MUV2.DE
   \item RSA.L
   \item TOP.CO
-}}
+}
+}
 \usage{
 securities_returns
 }

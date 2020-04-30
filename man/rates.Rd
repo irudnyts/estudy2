@@ -5,7 +5,8 @@
 \alias{rates}
 \title{Rates of returns of eight major European insurance companies from 2000-01-04
 to 2002-01-01}
-\format{A \code{zoo} object of eight columns:
+\format{
+A \code{zoo} object of eight columns:
 \itemize{
   \item ALV.DE
   \item CS.PA
@@ -15,7 +16,8 @@ to 2002-01-01}
   \item MUV2.DE
   \item RSA.L
   \item TOP.CO
-}}
+}
+}
 \usage{
 rates
 }

@@ -4,8 +4,13 @@
 \alias{get_prices_from_tickers}
 \title{Get daily prices of securities.}
 \usage{
-get_prices_from_tickers(..., start, end, quote = c("Open", "Close"),
-  retclass = c("list", "zoo", "data.frame"))
+get_prices_from_tickers(
+  ...,
+  start,
+  end,
+  quote = c("Open", "Close"),
+  retclass = c("list", "zoo", "data.frame")
+)
 }
 \arguments{
 \item{...}{character vectors indicating tickers (should be valid in Yahoo
@@ -55,7 +60,7 @@ data(prices)
 
 ## Download historical prices of ESTX50 EUR P index:
 \dontrun{
-prices_indx <- get_prices_from_tickers("^STOXX50E",
+prices_indx <- get_prices_from_tickers("^N100",
                                        start = as.Date("2000-01-01"),
                                        end = as.Date("2002-01-01"),
                                        quote = "Close",

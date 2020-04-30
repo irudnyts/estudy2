@@ -4,8 +4,14 @@
 \alias{car_parametric_tests}
 \title{Returns the result of given event study parametric CAR tests.}
 \usage{
-car_parametric_tests(list_of_returns, car_start, car_end,
-  percentage = 90, all = TRUE, tests)
+car_parametric_tests(
+  list_of_returns,
+  car_start,
+  car_end,
+  percentage = 90,
+  all = TRUE,
+  tests
+)
 }
 \arguments{
 \item{list_of_returns}{a list of objects of S3 class \code{returns}, each
@@ -53,7 +59,7 @@ value of \code{tests}.
 \examples{
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",

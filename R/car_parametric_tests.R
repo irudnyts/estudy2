@@ -45,7 +45,7 @@
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -158,7 +158,7 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -267,7 +267,7 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",

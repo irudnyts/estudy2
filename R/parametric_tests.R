@@ -51,7 +51,7 @@
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -160,7 +160,7 @@ parametric_tests <- function(list_of_returns, event_start, event_end,
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -316,7 +316,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -476,7 +476,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -628,7 +628,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -814,7 +814,7 @@ patell <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",
@@ -994,7 +994,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^STOXX50E",
+#' rates_indx <- get_prices_from_tickers("^N100",
 #'                                       start = as.Date("2000-01-01"),
 #'                                       end = as.Date("2002-01-01"),
 #'                                       quote = "Close",

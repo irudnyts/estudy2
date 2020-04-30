@@ -4,9 +4,15 @@
 \alias{apply_market_model}
 \title{Apply a market model and return a list of \code{returns} objects.}
 \usage{
-apply_market_model(rates, regressors, same_regressor_for_all = TRUE,
+apply_market_model(
+  rates,
+  regressors,
+  same_regressor_for_all = TRUE,
   market_model = c("mean_adj", "mrkt_adj", "sim"),
-  estimation_method = c("ols"), estimation_start, estimation_end)
+  estimation_method = c("ols"),
+  estimation_start,
+  estimation_end
+)
 }
 \arguments{
 \item{rates}{an object of \code{list}, \code{data.frame}, \code{zoo}
@@ -76,7 +82,7 @@ securities_returns <- apply_market_model(
 ## 2. Market-adjusted-returns model
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",
@@ -114,7 +120,7 @@ securities_returns <- apply_market_model(
 ## 3. Single-index market model
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",

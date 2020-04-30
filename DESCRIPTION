@@ -1,8 +1,8 @@
 Package: estudy2
 Type: Package
 Title: An Implementation of Parametric and Nonparametric Event Study
-Version: 0.9.1
-Date: 2019-12-16
+Version: 0.9.2
+Date: 2020-04-27
 Authors@R:
     person("Iegor", "Rudnytskyi", , "iegor.rudnytskyi@gmail.com", c("aut", "cre"))
 Description: An implementation of a most commonly used event study methodology,
@@ -39,7 +39,7 @@ Imports:
     matrixStats (>= 0.54.0),
     Rcpp (>= 1.0.1)
 LinkingTo: Rcpp
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Suggests: knitr,
     rmarkdown,
     magrittr

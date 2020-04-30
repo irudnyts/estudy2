@@ -4,8 +4,14 @@
 \alias{returns}
 \title{Constructor of an object of S3 class \code{returns}.}
 \usage{
-returns(rates, regressor, market_model = c("mean_adj", "mrkt_adj",
-  "sim"), estimation_method = c("ols"), estimation_start, estimation_end)
+returns(
+  rates,
+  regressor,
+  market_model = c("mean_adj", "mrkt_adj", "sim"),
+  estimation_method = c("ols"),
+  estimation_start,
+  estimation_end
+)
 }
 \arguments{
 \item{rates}{an object of class either \code{zoo} or \code{data.frame}
@@ -97,7 +103,7 @@ single_return <- returns(rates[, "ALV.DE"],
 ## 2. Market-adjusted-returns model
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",
@@ -131,7 +137,7 @@ single_return <- returns(rates = rates[, "ALV.DE", drop = FALSE],
 ## 3. Single-index market model
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",

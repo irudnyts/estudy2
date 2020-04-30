@@ -1,3 +1,7 @@
+# estudy2 0.9.2
+
+* Fix a bug in the vignette and examples
+
 # estudy2 0.9.1
 
 * Fix a bug in examples of `returns()`

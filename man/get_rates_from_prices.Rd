@@ -4,8 +4,12 @@
 \alias{get_rates_from_prices}
 \title{Calculate rates of return for given prices.}
 \usage{
-get_rates_from_prices(prices, quote = c("Open", "Close"),
-  multi_day = TRUE, compounding = c("discrete", "continuous"))
+get_rates_from_prices(
+  prices,
+  quote = c("Open", "Close"),
+  multi_day = TRUE,
+  compounding = c("discrete", "continuous")
+)
 }
 \arguments{
 \item{prices}{an object containing prices of securities. Three classes are
@@ -75,7 +79,7 @@ data(rates)
 ## returns from prices:
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^STOXX50E",
+rates_indx <- get_prices_from_tickers("^N100",
                                       start = as.Date("2000-01-01"),
                                       end = as.Date("2002-01-01"),
                                       quote = "Close",
