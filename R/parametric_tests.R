@@ -60,7 +60,7 @@
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' nine_eleven_param <- get_prices_from_tickers(tickers,
 #'                                              start = as.Date("2000-01-01"),
 #'                                              end = as.Date("2002-01-01"),
@@ -169,7 +169,7 @@ parametric_tests <- function(list_of_returns, event_start, event_end,
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' get_prices_from_tickers(tickers,
 #'                         start = as.Date("2000-01-01"),
 #'                         end = as.Date("2002-01-01"),
@@ -325,7 +325,7 @@ brown_warner_1980 <- function(list_of_returns, event_start, event_end) {
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' get_prices_from_tickers(tickers,
 #'                         start = as.Date("2000-01-01"),
 #'                         end = as.Date("2002-01-01"),
@@ -485,7 +485,7 @@ brown_warner_1985 <- function(list_of_returns, event_start, event_end) {
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' get_prices_from_tickers(tickers,
 #'                         start = as.Date("2000-01-01"),
 #'                         end = as.Date("2002-01-01"),
@@ -637,7 +637,7 @@ t_test <- function(list_of_returns, event_start, event_end) {
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' get_prices_from_tickers(tickers,
 #'                         start = as.Date("2000-01-01"),
 #'                         end = as.Date("2002-01-01"),
@@ -823,7 +823,7 @@ patell <- function(list_of_returns, event_start, event_end) {
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' get_prices_from_tickers(tickers,
 #'                         start = as.Date("2000-01-01"),
 #'                         end = as.Date("2002-01-01"),
@@ -1003,7 +1003,7 @@ boehmer <- function(list_of_returns, event_start, event_end) {
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' get_prices_from_tickers(tickers,
 #'                         start = as.Date("2000-01-01"),
 #'                         end = as.Date("2002-01-01"),

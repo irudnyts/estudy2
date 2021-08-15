@@ -43,7 +43,7 @@
 #' \dontrun{
 #' library("magrittr")
 #' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "RSA.L", "TOP.CO")
+#'              "TOP.CO")
 #' rates <- tickers %>%
 #'     get_prices_from_tickers(start = as.Date("2000-01-01"),
 #'                             end = as.Date("2002-01-01"),
