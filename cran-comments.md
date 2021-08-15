@@ -1,7 +1,8 @@
 ## Test environments
 
-* local MacOS 10.15.3, R 3.6.3
-* local MacOS 10.15.3, R 4.0.0
+* local MacOS 11.4, R 3.6.2
+* local MacOS 11.4, R 3.0.4
+* local MacOS 11.4, R 4.1.1
 * Ubuntu 16.04 (on Travis-CI), R-release
 * Windows (on AppVayor), R-release
 * win-builder (R-release, R-devel)
