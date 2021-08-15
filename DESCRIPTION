@@ -29,8 +29,8 @@ Description: An implementation of a most commonly used event study methodology,
     are included.
 License: GPL-3
 LazyData: TRUE
-URL: http://github.com/irudnyts/estudy2, http://irudnyts.github.io/estudy2/
-BugReports: http://github.com/irudnyts/estudy2/issues
+URL: https://github.com/irudnyts/estudy2, https://irudnyts.github.io/estudy2/
+BugReports: https://github.com/irudnyts/estudy2/issues
 Depends:
     R (>= 3.6.0)
 Imports:
