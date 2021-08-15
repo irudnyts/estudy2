@@ -14,7 +14,6 @@ A \code{zoo} object of eight columns:
   \item HNR1.HA
   \item HSX.L
   \item MUV2.DE
-  \item RSA.L
   \item TOP.CO
 }
 }

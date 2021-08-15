@@ -13,7 +13,6 @@
 #'   \item HNR1.HA
 #'   \item HSX.L
 #'   \item MUV2.DE
-#'   \item RSA.L
 #'   \item TOP.CO
 #' }
 "prices"
@@ -42,7 +41,6 @@
 #'   \item HNR1.HA
 #'   \item HSX.L
 #'   \item MUV2.DE
-#'   \item RSA.L
 #'   \item TOP.CO
 #' }
 "rates"
@@ -71,7 +69,6 @@
 #'   \item HNR1.HA
 #'   \item HSX.L
 #'   \item MUV2.DE
-#'   \item RSA.L
 #'   \item TOP.CO
 #' }
 "securities_returns"
