@@ -81,7 +81,7 @@ given period." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -107,7 +107,7 @@ given period." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://github.com/irudnyts/estudy2/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,14 +134,14 @@ given period." />
 given period.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>car_nonparametric_tests</span>(
-  <span class='no'>list_of_returns</span>,
-  <span class='no'>car_start</span>,
-  <span class='no'>car_end</span>,
-  <span class='kw'>percentage</span> <span class='kw'>=</span> <span class='fl'>90</span>,
-  <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>tests</span>
-)</pre>
+    <pre class="usage"><span class='fu'>car_nonparametric_tests</span><span class='op'>(</span>
+  <span class='va'>list_of_returns</span>,
+  <span class='va'>car_start</span>,
+  <span class='va'>car_end</span>,
+  percentage <span class='op'>=</span> <span class='fl'>90</span>,
+  all <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>tests</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,42 +213,44 @@ Quantitative Finance and Accounting, 2:343-358, 1992.</p></li>
     <div class='dont-index'><p><code><a href='car_rank_test.html'>car_rank_test</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"magrittr"</span>)
-<span class='no'>rates_indx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"^N100"</span>,
-                                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                      <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
-                                      <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                                      <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                          <span class='kw'>multi_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                          <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>)
-<span class='no'>tickers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ALV.DE"</span>, <span class='st'>"CS.PA"</span>, <span class='st'>"G.MI"</span>, <span class='st'>"HNR1.HA"</span>, <span class='st'>"HSX.L"</span>, <span class='st'>"MUV2.DE"</span>,
-             <span class='st'>"RSA.L"</span>, <span class='st'>"TOP.CO"</span>)
-<span class='no'>nine_eleven_car_param</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='no'>tickers</span>,
-                                                 <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                                 <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
-                                                 <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                                                 <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                          <span class='kw'>multi_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                          <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='apply_market_model.html'>apply_market_model</a></span>(<span class='kw'>regressor</span> <span class='kw'>=</span> <span class='no'>rates_indx</span>,
-                       <span class='kw'>same_regressor_for_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                       <span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"sim"</span>,
-                       <span class='kw'>estimation_method</span> <span class='kw'>=</span> <span class='st'>"ols"</span>,
-                       <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-                       <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'>car_nonparametric_tests</span>(<span class='kw'>car_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-11"</span>),
-                            <span class='kw'>car_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-28"</span>))
-}
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://magrittr.tidyverse.org'>"magrittr"</a></span><span class='op'>)</span>
+<span class='va'>rates_indx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span><span class='op'>(</span><span class='st'>"^N100"</span>,
+                                      start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2000-01-01"</span><span class='op'>)</span>,
+                                      end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2002-01-01"</span><span class='op'>)</span>,
+                                      quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                                      retclass <span class='op'>=</span> <span class='st'>"zoo"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span><span class='op'>(</span>quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                          multi_day <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                          compounding <span class='op'>=</span> <span class='st'>"continuous"</span><span class='op'>)</span>
+<span class='va'>tickers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ALV.DE"</span>, <span class='st'>"CS.PA"</span>, <span class='st'>"G.MI"</span>, <span class='st'>"HNR1.HA"</span>, <span class='st'>"HSX.L"</span>, <span class='st'>"MUV2.DE"</span>,
+             <span class='st'>"TOP.CO"</span><span class='op'>)</span>
+<span class='va'>nine_eleven_car_param</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span><span class='op'>(</span><span class='va'>tickers</span>,
+                                                 start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2000-01-01"</span><span class='op'>)</span>,
+                                                 end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2002-01-01"</span><span class='op'>)</span>,
+                                                 quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                                                 retclass <span class='op'>=</span> <span class='st'>"zoo"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span><span class='op'>(</span>quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                          multi_day <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                          compounding <span class='op'>=</span> <span class='st'>"continuous"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='apply_market_model.html'>apply_market_model</a></span><span class='op'>(</span>regressor <span class='op'>=</span> <span class='va'>rates_indx</span>,
+                       same_regressor_for_all <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                       market_model <span class='op'>=</span> <span class='st'>"sim"</span>,
+                       estimation_method <span class='op'>=</span> <span class='st'>"ols"</span>,
+                       estimation_start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-03-26"</span><span class='op'>)</span>,
+                       estimation_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-10"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>car_nonparametric_tests</span><span class='op'>(</span>car_start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-11"</span><span class='op'>)</span>,
+                            car_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-28"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 <span class='co'>## The result of the code above is equivalent to:</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>securities_returns</span>)
-<span class='no'>nine_eleven_car_param</span> <span class='kw'>&lt;-</span> <span class='fu'>car_nonparametric_tests</span>(
-    <span class='kw'>list_of_returns</span> <span class='kw'>=</span> <span class='no'>securities_returns</span>,
-    <span class='kw'>car_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-11"</span>),
-    <span class='kw'>car_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-28"</span>)
-)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>securities_returns</span><span class='op'>)</span>
+<span class='va'>nine_eleven_car_param</span> <span class='op'>&lt;-</span> <span class='fu'>car_nonparametric_tests</span><span class='op'>(</span>
+    list_of_returns <span class='op'>=</span> <span class='va'>securities_returns</span>,
+    car_start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-11"</span><span class='op'>)</span>,
+    car_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-28"</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -264,7 +266,7 @@ Quantitative Finance and Accounting, 2:343-358, 1992.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

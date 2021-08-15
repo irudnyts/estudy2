@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://github.com/irudnyts/estudy2/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,7 +132,7 @@
     <p>An event study parametric test described in Brown and Warner 1985.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>brown_warner_1985</span>(<span class='no'>list_of_returns</span>, <span class='no'>event_start</span>, <span class='no'>event_end</span>)</pre>
+    <pre class="usage"><span class='fu'>brown_warner_1985</span><span class='op'>(</span><span class='va'>list_of_returns</span>, <span class='va'>event_start</span>, <span class='va'>event_end</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,54 +190,55 @@ approximation in limit). The significance levels of \(\alpha\) are 0.1,
 <code><a href='lamb.html'>lamb</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"magrittr"</span>)
-<span class='no'>rates_indx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='st'>"^N100"</span>,
-                                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                                      <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
-                                      <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                                      <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                          <span class='kw'>multi_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                          <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>)
-<span class='no'>tickers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ALV.DE"</span>, <span class='st'>"CS.PA"</span>, <span class='st'>"G.MI"</span>, <span class='st'>"HNR1.HA"</span>, <span class='st'>"HSX.L"</span>, <span class='st'>"MUV2.DE"</span>,
-             <span class='st'>"RSA.L"</span>, <span class='st'>"TOP.CO"</span>)
-<span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span>(<span class='no'>tickers</span>,
-                        <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2000-01-01"</span>),
-                        <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2002-01-01"</span>),
-                        <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                        <span class='kw'>retclass</span> <span class='kw'>=</span> <span class='st'>"zoo"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span>(<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"Close"</span>,
-                          <span class='kw'>multi_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                          <span class='kw'>compounding</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='apply_market_model.html'>apply_market_model</a></span>(<span class='kw'>regressor</span> <span class='kw'>=</span> <span class='no'>rates_indx</span>,
-                       <span class='kw'>same_regressor_for_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                       <span class='kw'>market_model</span> <span class='kw'>=</span> <span class='st'>"sim"</span>,
-                       <span class='kw'>estimation_method</span> <span class='kw'>=</span> <span class='st'>"ols"</span>,
-                       <span class='kw'>estimation_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-03-26"</span>),
-                       <span class='kw'>estimation_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-10"</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'>brown_warner_1985</span>(<span class='kw'>event_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-11"</span>),
-                      <span class='kw'>event_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-28"</span>))
-}
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://magrittr.tidyverse.org'>"magrittr"</a></span><span class='op'>)</span>
+<span class='va'>rates_indx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span><span class='op'>(</span><span class='st'>"^N100"</span>,
+                                      start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2000-01-01"</span><span class='op'>)</span>,
+                                      end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2002-01-01"</span><span class='op'>)</span>,
+                                      quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                                      retclass <span class='op'>=</span> <span class='st'>"zoo"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span><span class='op'>(</span>quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                          multi_day <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                          compounding <span class='op'>=</span> <span class='st'>"continuous"</span><span class='op'>)</span>
+<span class='va'>tickers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ALV.DE"</span>, <span class='st'>"CS.PA"</span>, <span class='st'>"G.MI"</span>, <span class='st'>"HNR1.HA"</span>, <span class='st'>"HSX.L"</span>, <span class='st'>"MUV2.DE"</span>,
+             <span class='st'>"TOP.CO"</span><span class='op'>)</span>
+<span class='fu'><a href='get_prices_from_tickers.html'>get_prices_from_tickers</a></span><span class='op'>(</span><span class='va'>tickers</span>,
+                        start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2000-01-01"</span><span class='op'>)</span>,
+                        end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2002-01-01"</span><span class='op'>)</span>,
+                        quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                        retclass <span class='op'>=</span> <span class='st'>"zoo"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='get_rates_from_prices.html'>get_rates_from_prices</a></span><span class='op'>(</span>quote <span class='op'>=</span> <span class='st'>"Close"</span>,
+                          multi_day <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                          compounding <span class='op'>=</span> <span class='st'>"continuous"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='apply_market_model.html'>apply_market_model</a></span><span class='op'>(</span>regressor <span class='op'>=</span> <span class='va'>rates_indx</span>,
+                       same_regressor_for_all <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                       market_model <span class='op'>=</span> <span class='st'>"sim"</span>,
+                       estimation_method <span class='op'>=</span> <span class='st'>"ols"</span>,
+                       estimation_start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-03-26"</span><span class='op'>)</span>,
+                       estimation_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-10"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>brown_warner_1985</span><span class='op'>(</span>event_start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-11"</span><span class='op'>)</span>,
+                      event_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-28"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 <span class='co'>## The result of the code above is equivalent to:</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>securities_returns</span>)
-<span class='fu'>brown_warner_1985</span>(<span class='kw'>list_of_returns</span> <span class='kw'>=</span> <span class='no'>securities_returns</span>,
-                  <span class='kw'>event_start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-11"</span>),
-                  <span class='kw'>event_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2001-09-28"</span>))</div><div class='output co'>#&gt;          date   weekday percentage          mean bw_1985_stat bw_1985_signif
-#&gt; 1  2001-09-11   Tuesday        100 -0.1034808908  -14.2627399            ***
-#&gt; 2  2001-09-12 Wednesday        100 -0.0345902954   -4.7675700            ***
-#&gt; 3  2001-09-13  Thursday          0            NA           NA               
-#&gt; 4  2001-09-14    Friday        100 -0.0340256202   -4.6897409            ***
-#&gt; 5  2001-09-17    Monday        100  0.0180458400    2.4872527             **
-#&gt; 6  2001-09-18   Tuesday        100 -0.0007609145   -0.1048766               
-#&gt; 7  2001-09-19 Wednesday        100 -0.0048350600   -0.6664149               
-#&gt; 8  2001-09-20  Thursday        100 -0.0974285486  -13.4285474            ***
-#&gt; 9  2001-09-21    Friday        100 -0.0412253278   -5.6820745            ***
-#&gt; 10 2001-09-24    Monday        100  0.0369475589    5.0924709            ***
-#&gt; 11 2001-09-25   Tuesday        100  0.0467385257    6.4419569            ***
-#&gt; 12 2001-09-26 Wednesday        100  0.0188989270    2.6048334             **
-#&gt; 13 2001-09-27  Thursday        100  0.0112991782    1.5573623               
-#&gt; 14 2001-09-28    Friday         75  0.0124532411    1.7164265              *</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>securities_returns</span><span class='op'>)</span>
+<span class='fu'>brown_warner_1985</span><span class='op'>(</span>list_of_returns <span class='op'>=</span> <span class='va'>securities_returns</span>,
+                  event_start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-11"</span><span class='op'>)</span>,
+                  event_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2001-09-28"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          date   weekday percentage         mean bw_1985_stat bw_1985_signif
+#&gt; 1  2001-09-11   Tuesday        100 -0.095267547  -12.8932767            ***
+#&gt; 2  2001-09-12 Wednesday        100 -0.031384102   -4.2474476            ***
+#&gt; 3  2001-09-13  Thursday          0           NA           NA               
+#&gt; 4  2001-09-14    Friday        100 -0.037994921   -5.1421397            ***
+#&gt; 5  2001-09-17    Monday        100  0.023717979    3.2099332            ***
+#&gt; 6  2001-09-18   Tuesday        100 -0.004574035   -0.6190387               
+#&gt; 7  2001-09-19 Wednesday        100 -0.004380471   -0.5928423               
+#&gt; 8  2001-09-20  Thursday        100 -0.097628194  -13.2127608            ***
+#&gt; 9  2001-09-21    Friday        100 -0.039622894   -5.3624656            ***
+#&gt; 10 2001-09-24    Monday        100  0.031556552    4.2707865            ***
+#&gt; 11 2001-09-25   Tuesday        100  0.041640460    5.6355179            ***
+#&gt; 12 2001-09-26 Wednesday        100  0.022896229    3.0987196            ***
+#&gt; 13 2001-09-27  Thursday        100  0.020423192    2.7640248            ***
+#&gt; 14 2001-09-28    Friday        100  0.005078339    0.6872899               </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -254,7 +255,7 @@ approximation in limit). The significance levels of \(\alpha\) are 0.1,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

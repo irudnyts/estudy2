@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -65,7 +65,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="http://github.com/irudnyts/estudy2/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -79,13 +79,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="estudy2-intro_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to estudy2</h1>
                         <h4 class="author">Iegor Rudnytskyi</h4>
             
-            <h4 class="date">2020-04-30</h4>
+            <h4 class="date">2021-08-15</h4>
       
       <small class="dont-index">Source: <a href="http://github.com/irudnyts/estudy2/blob/master/vignettes/estudy2-intro.Rmd"><code>vignettes/estudy2-intro.Rmd</code></a></small>
       <div class="hidden name"><code>estudy2-intro.Rmd</code></div>
@@ -121,185 +121,190 @@
 <h2 class="hasAnchor">
 <a href="#obtaining-prices-of-companies-stocks" class="anchor"></a>Obtaining prices of companies’ stocks</h2>
 <p>We select eight European insurance companies, tickers of which are listed in the code snippet below. The starting and ending date are set to <code>"2000-01-01"</code> and <code>"2002-01-01"</code>, respectively, in order to include both the estimation and the event periods. Then, prices of securities should be downloaded. The function <code>get_prices_from_tickers</code> downloads prices for companies’ tickers between <code>start</code> and <code>end</code> date. Under the hood, this function is a wrapper around <code>get.hist.quote</code> from <code>tseries</code>. The function can return either Open or Close quote (<code>quote</code> argument). Also one has to choose the returning class among <code>"list"</code>, <code>"zoo"</code>, and <code>"data.frame"</code>. Further in the vignette we use <code>zoo</code> objects. We download historical prices of companies with:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">estudy2</span>)
-<span class="no">tickers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ALV.DE"</span>, <span class="st">"CS.PA"</span>, <span class="st">"G.MI"</span>, <span class="st">"HNR1.HA"</span>, <span class="st">"HSX.L"</span>, <span class="st">"MUV2.DE"</span>, <span class="st">"RSA.L"</span>,
-             <span class="st">"TOP.CO"</span>)
-<span class="no">prices</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span>(<span class="no">tickers</span>,
-                                  <span class="kw">start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2000-01-01"</span>),
-                                  <span class="kw">end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2002-01-01"</span>),
-                                  <span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                                  <span class="kw">retclass</span> <span class="kw">=</span> <span class="st">"zoo"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/irudnyts/estudy2">estudy2</a></span><span class="op">)</span>
+<span class="va">tickers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ALV.DE"</span>, <span class="st">"CS.PA"</span>, <span class="st">"G.MI"</span>, <span class="st">"HNR1.HA"</span>, <span class="st">"HSX.L"</span>, <span class="st">"MUV2.DE"</span>, <span class="st">"TOP.CO"</span><span class="op">)</span>
+<span class="va">prices</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="va">tickers</span>, 
+                                  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
+                                  end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+                                  quote <span class="op">=</span> <span class="st">"Close"</span>,
+                                  retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span></code></pre></div>
 <p>For using a single-index market model we also need to download prices of an index (proxy):</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">prices_indx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span>(<span class="st">"^N100"</span>,
-                                       <span class="kw">start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2000-01-01"</span>),
-                                       <span class="kw">end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2002-01-01"</span>),
-                                       <span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                                       <span class="kw">retclass</span> <span class="kw">=</span> <span class="st">"zoo"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prices_indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="st">"^N100"</span>,
+                                       start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
+                                       end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+                                       quote <span class="op">=</span> <span class="st">"Close"</span>,
+                                       retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="computing-rates-of-returns-from-prices" class="section level2">
 <h2 class="hasAnchor">
 <a href="#computing-rates-of-returns-from-prices" class="anchor"></a>Computing rates of returns from prices</h2>
 <p>Now we need to compute rates of returns form companies’ prices. For this purpose the function <code>get_rates_from_prices</code> is used, which is an S3 generic function dispatched on <code>prices</code> argument allowing for <code>list</code>, <code>zoo</code>, and <code>data.frame</code> (the same classes which <code>get_prices_from_tickers</code> returns). The function computes rates of returns of given prices using either continuous or discrete compounding depending on <code>compounding</code> argument value. Furthermore, setting <code>multi_day</code> to <code>TRUE</code> allows for rates of returns between non-consecutive days (for instance, Friday - Monday rate of return). We calculate rates of returns of companies and the index by:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">rates</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span>(<span class="no">prices</span>,
-                               <span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                               <span class="kw">multi_day</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                               <span class="kw">compounding</span> <span class="kw">=</span> <span class="st">"continuous"</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span><span class="va">prices</span>,
+                               quote <span class="op">=</span> <span class="st">"Close"</span>,
+                               multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
+                               compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span>
 
-<span class="no">rates_indx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span>(<span class="no">prices_indx</span>,
-                                    <span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                                    <span class="kw">multi_day</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                                    <span class="kw">compounding</span> <span class="kw">=</span> <span class="st">"continuous"</span>)</pre></body></html></div>
+<span class="va">rates_indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span><span class="va">prices_indx</span>, 
+                                    quote <span class="op">=</span> <span class="st">"Close"</span>,
+                                    multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
+                                    compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="applying-a-market-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#applying-a-market-model" class="anchor"></a>Applying a market model</h2>
 <p>To calculate expected rates of returns during the event period we need to train a market model based on date from the estimation period. <code>apply_market_model</code> goes over each company (column) in <code>rates</code> and calibrates a chosen model. The function returns a list of S3 <code>returns</code> class objects, which can be passed to <code>parametric_tests</code> and <code>nonparametric_tests</code>. For our case we use the single-index market model:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">securities_returns</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/apply_market_model.html">apply_market_model</a></span>(
-    <span class="kw">rates</span> <span class="kw">=</span> <span class="no">rates</span>,
-    <span class="kw">regressor</span> <span class="kw">=</span> <span class="no">rates_indx</span>,
-    <span class="kw">same_regressor_for_all</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-    <span class="kw">market_model</span> <span class="kw">=</span> <span class="st">"sim"</span>,
-    <span class="kw">estimation_method</span> <span class="kw">=</span> <span class="st">"ols"</span>,
-    <span class="kw">estimation_start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-03-26"</span>),
-    <span class="kw">estimation_end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-10"</span>)
-)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">securities_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/apply_market_model.html">apply_market_model</a></span><span class="op">(</span>
+    rates <span class="op">=</span> <span class="va">rates</span>,
+    regressor <span class="op">=</span> <span class="va">rates_indx</span>,
+    same_regressor_for_all <span class="op">=</span> <span class="cn">TRUE</span>,
+    market_model <span class="op">=</span> <span class="st">"sim"</span>,
+    estimation_method <span class="op">=</span> <span class="st">"ols"</span>,
+    estimation_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-03-26"</span><span class="op">)</span>,
+    estimation_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-10"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 </div>
 <div id="tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tests" class="anchor"></a>Tests</h2>
 <p>The event study utilizes both parametric and nonparametric tests. Parametric tests are Brown and Warner (1980), Brown and Warner (1985), t-test, Patell (1976), Boehmer (1991), and Lamb (1995) tests. To avoid calling all these tests separately, one can call <code>parametric_tests</code> with <code>all = TRUE</code>. The same applies to nonparametric tests, i.e. simple binomial sign, binomial sign, Corrado (1992), rank, modified rank, and Wilcoxon signed rank tests can be called all at once by specifying <code>all = TRUE</code> in <code>nonparametric_tests</code>. These tests are also available separately. Both functions return data frames with statistics and significance for each date in the event period. See <code><a href="../reference/parametric_tests.html">?parametric_tests</a></code> and <code><a href="../reference/nonparametric_tests.html">?nonparametric_tests</a></code> for references and more details.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/parametric_tests.html">parametric_tests</a></span>(<span class="kw">list_of_returns</span> <span class="kw">=</span> <span class="no">securities_returns</span>,
-                 <span class="kw">event_start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-11"</span>),
-                 <span class="kw">event_end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-28"</span>))
-<span class="co">#&gt;          date   weekday percentage          mean bw_1980_stat bw_1980_signif</span>
-<span class="co">#&gt; 1  2001-09-11   Tuesday        100 -0.1034808908  -15.4849746            ***</span>
-<span class="co">#&gt; 2  2001-09-12 Wednesday        100 -0.0345902954   -5.1761233            ***</span>
-<span class="co">#&gt; 3  2001-09-13  Thursday          0            NA           NA               </span>
-<span class="co">#&gt; 4  2001-09-14    Friday        100 -0.0340256202   -5.0916248            ***</span>
-<span class="co">#&gt; 5  2001-09-17    Monday        100  0.0180458400    2.7003959            ***</span>
-<span class="co">#&gt; 6  2001-09-18   Tuesday        100 -0.0007609145   -0.1138639               </span>
-<span class="co">#&gt; 7  2001-09-19 Wednesday        100 -0.0048350600   -0.7235228               </span>
-<span class="co">#&gt; 8  2001-09-20  Thursday        100 -0.0974285486  -14.5792966            ***</span>
-<span class="co">#&gt; 9  2001-09-21    Friday        100 -0.0412253278   -6.1689955            ***</span>
-<span class="co">#&gt; 10 2001-09-24    Monday        100  0.0369475589    5.5288663            ***</span>
-<span class="co">#&gt; 11 2001-09-25   Tuesday        100  0.0467385257    6.9939955            ***</span>
-<span class="co">#&gt; 12 2001-09-26 Wednesday        100  0.0188989270    2.8280526            ***</span>
-<span class="co">#&gt; 13 2001-09-27  Thursday        100  0.0112991782    1.6908193              *</span>
-<span class="co">#&gt; 14 2001-09-28    Friday         75  0.0124532411    1.8635143              *</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/parametric_tests.html">parametric_tests</a></span><span class="op">(</span>list_of_returns <span class="op">=</span> <span class="va">securities_returns</span>,
+                 event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-11"</span><span class="op">)</span>,
+                 event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-28"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;          date   weekday percentage         mean bw_1980_stat bw_1980_signif</span>
+<span class="co">#&gt; 1  2001-09-11   Tuesday        100 -0.095267547  -14.1375931            ***</span>
+<span class="co">#&gt; 2  2001-09-12 Wednesday        100 -0.031384102   -4.6573643            ***</span>
+<span class="co">#&gt; 3  2001-09-13  Thursday          0           NA           NA               </span>
+<span class="co">#&gt; 4  2001-09-14    Friday        100 -0.037994921   -5.6384021            ***</span>
+<span class="co">#&gt; 5  2001-09-17    Monday        100  0.023717979    3.5197204            ***</span>
+<span class="co">#&gt; 6  2001-09-18   Tuesday        100 -0.004574035   -0.6787815               </span>
+<span class="co">#&gt; 7  2001-09-19 Wednesday        100 -0.004380471   -0.6500568               </span>
+<span class="co">#&gt; 8  2001-09-20  Thursday        100 -0.097628194  -14.4879104            ***</span>
+<span class="co">#&gt; 9  2001-09-21    Friday        100 -0.039622894   -5.8799914            ***</span>
+<span class="co">#&gt; 10 2001-09-24    Monday        100  0.031556552    4.6829556            ***</span>
+<span class="co">#&gt; 11 2001-09-25   Tuesday        100  0.041640460    6.1793958            ***</span>
+<span class="co">#&gt; 12 2001-09-26 Wednesday        100  0.022896229    3.3977737            ***</span>
+<span class="co">#&gt; 13 2001-09-27  Thursday        100  0.020423192    3.0307779            ***</span>
+<span class="co">#&gt; 14 2001-09-28    Friday        100  0.005078339    0.7536195               </span>
 <span class="co">#&gt;    bw_1985_stat bw_1985_signif t_test_stat t_test_signif      pt_stat pt_signif</span>
-<span class="co">#&gt; 1   -14.2627399            *** -5.42771049           *** -16.87675545       ***</span>
-<span class="co">#&gt; 2    -4.7675700            *** -1.28556739                -3.70431859       ***</span>
+<span class="co">#&gt; 1   -12.8932767            ***  -4.8342919           *** -15.93199210       ***</span>
+<span class="co">#&gt; 2    -4.2474476            ***  -1.0197160                -3.02501512       ***</span>
 <span class="co">#&gt; 3            NA                         NA                         NA          </span>
-<span class="co">#&gt; 4    -4.6897409            *** -1.40722618                -5.56853580       ***</span>
-<span class="co">#&gt; 5     2.4872527             **  0.76664601                 4.17125705       ***</span>
-<span class="co">#&gt; 6    -0.1048766                -0.03058958                -0.13316188          </span>
-<span class="co">#&gt; 7    -0.6664149                -0.26399890                -0.07188815          </span>
-<span class="co">#&gt; 8   -13.4285474            *** -2.70161687            ** -13.51138444       ***</span>
-<span class="co">#&gt; 9    -5.6820745            *** -3.00443389            **  -5.97096266       ***</span>
-<span class="co">#&gt; 10    5.0924709            ***  2.10171156             *   5.08237801       ***</span>
-<span class="co">#&gt; 11    6.4419569            ***  2.48824735            **   6.76015529       ***</span>
-<span class="co">#&gt; 12    2.6048334             **  3.05631241            **   2.88119980       ***</span>
-<span class="co">#&gt; 13    1.5573623                 0.83948590                 2.22161248        **</span>
-<span class="co">#&gt; 14    1.7164265              *  2.19578010             *   1.87196090         *</span>
-<span class="co">#&gt;        bh_stat bh_signif    lmb_stat lmb_signif</span>
-<span class="co">#&gt; 1  -4.45409291       *** -14.1976044        ***</span>
-<span class="co">#&gt; 2  -0.98762098            -4.7209590        ***</span>
-<span class="co">#&gt; 3           NA                    NA           </span>
-<span class="co">#&gt; 4  -1.42803620            -4.4303298        ***</span>
-<span class="co">#&gt; 5   1.14070051             2.4758486         **</span>
-<span class="co">#&gt; 6  -0.03168897            -0.1018215           </span>
-<span class="co">#&gt; 7  -0.02820835            -0.6562277           </span>
-<span class="co">#&gt; 8  -3.03467540        ** -12.6889753        ***</span>
-<span class="co">#&gt; 9  -2.75369055        **  -5.5420783        ***</span>
-<span class="co">#&gt; 10  1.91033095         *   4.6442996        ***</span>
-<span class="co">#&gt; 11  2.61279384        **   6.3597086        ***</span>
-<span class="co">#&gt; 12  3.49544565        **   2.5732042         **</span>
-<span class="co">#&gt; 13  1.06757580             1.5466368           </span>
-<span class="co">#&gt; 14  2.33716388         *   1.6751766          *</span>
+<span class="co">#&gt; 4    -5.1421397            ***  -1.3785596                -6.04629140       ***</span>
+<span class="co">#&gt; 5     3.2099332            ***   0.9005395                 4.87549214       ***</span>
+<span class="co">#&gt; 6    -0.6190387                 -0.1608414                -0.72885915          </span>
+<span class="co">#&gt; 7    -0.5928423                 -0.2072312                -0.01540181          </span>
+<span class="co">#&gt; 8   -13.2127608            ***  -2.3475394             * -13.28950663       ***</span>
+<span class="co">#&gt; 9    -5.3624656            ***  -2.5106293            **  -6.18660223       ***</span>
+<span class="co">#&gt; 10    4.2707865            ***   1.8657907                 4.66791310       ***</span>
+<span class="co">#&gt; 11    5.6355179            ***   1.9867341             *   6.22810566       ***</span>
+<span class="co">#&gt; 12    3.0987196            ***   4.3498111           ***   3.48075345       ***</span>
+<span class="co">#&gt; 13    2.7640248            ***   1.8165741                 3.32642949       ***</span>
+<span class="co">#&gt; 14    0.6872899                  1.1444937                 1.02097492          </span>
+<span class="co">#&gt;         bh_stat bh_signif    lmb_stat lmb_signif</span>
+<span class="co">#&gt; 1  -4.033246415       *** -12.8350529        ***</span>
+<span class="co">#&gt; 2  -0.757624918            -4.2061350        ***</span>
+<span class="co">#&gt; 3            NA                    NA           </span>
+<span class="co">#&gt; 4  -1.443639802            -4.8579285        ***</span>
+<span class="co">#&gt; 5   1.271626024             3.1953793        ***</span>
+<span class="co">#&gt; 6  -0.159962572            -0.6010351           </span>
+<span class="co">#&gt; 7  -0.005548115            -0.5838091           </span>
+<span class="co">#&gt; 8  -2.800280643        ** -12.4856495        ***</span>
+<span class="co">#&gt; 9  -2.298184877         *  -5.2306013        ***</span>
+<span class="co">#&gt; 10  1.809375759             3.8950964        ***</span>
+<span class="co">#&gt; 11  2.231357971         *   5.5638463        ***</span>
+<span class="co">#&gt; 12  5.554167758       ***   3.0612478        ***</span>
+<span class="co">#&gt; 13  1.953042855         *   2.7451289        ***</span>
+<span class="co">#&gt; 14  1.228737963             0.6708057</span>
 
-<span class="fu"><a href="../reference/nonparametric_tests.html">nonparametric_tests</a></span>(<span class="kw">list_of_returns</span> <span class="kw">=</span> <span class="no">securities_returns</span>,
-                    <span class="kw">event_start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-11"</span>),
-                    <span class="kw">event_end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-28"</span>))
+<span class="fu"><a href="../reference/nonparametric_tests.html">nonparametric_tests</a></span><span class="op">(</span>list_of_returns <span class="op">=</span> <span class="va">securities_returns</span>,
+                    event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-11"</span><span class="op">)</span>,
+                    event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-28"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;          date   weekday percentage  sign_stat sign_signif gsign_stat</span>
-<span class="co">#&gt; 1  2001-09-11   Tuesday        100 -2.8284271         *** -2.8130468</span>
-<span class="co">#&gt; 2  2001-09-12 Wednesday        100 -1.4142136             -1.3988122</span>
+<span class="co">#&gt; 1  2001-09-11   Tuesday        100 -2.6457513         *** -2.5877375</span>
+<span class="co">#&gt; 2  2001-09-12 Wednesday        100 -1.1338934             -1.0755080</span>
 <span class="co">#&gt; 3  2001-09-13  Thursday          0         NA                     NA</span>
-<span class="co">#&gt; 4  2001-09-14    Friday        100 -1.4142136             -1.3988122</span>
-<span class="co">#&gt; 5  2001-09-17    Monday        100  0.7071068              0.7225397</span>
-<span class="co">#&gt; 6  2001-09-18   Tuesday        100  0.7071068              0.7225397</span>
-<span class="co">#&gt; 7  2001-09-19 Wednesday        100 -0.7071068             -0.6916949</span>
-<span class="co">#&gt; 8  2001-09-20  Thursday        100 -2.8284271         *** -2.8130468</span>
-<span class="co">#&gt; 9  2001-09-21    Friday        100 -1.4142136             -1.3988122</span>
-<span class="co">#&gt; 10 2001-09-24    Monday        100  2.1213203          **  2.1367743</span>
-<span class="co">#&gt; 11 2001-09-25   Tuesday        100  0.7071068              0.7225397</span>
-<span class="co">#&gt; 12 2001-09-26 Wednesday        100  2.1213203          **  2.1367743</span>
-<span class="co">#&gt; 13 2001-09-27  Thursday        100  0.7071068              0.7225397</span>
-<span class="co">#&gt; 14 2001-09-28    Friday         75  1.9051587           *  1.9185432</span>
+<span class="co">#&gt; 4  2001-09-14    Friday        100 -1.1338934             -1.0755080</span>
+<span class="co">#&gt; 5  2001-09-17    Monday        100  1.1338934              1.1928362</span>
+<span class="co">#&gt; 6  2001-09-18   Tuesday        100  0.3779645              0.4367214</span>
+<span class="co">#&gt; 7  2001-09-19 Wednesday        100 -0.3779645             -0.3193933</span>
+<span class="co">#&gt; 8  2001-09-20  Thursday        100 -2.6457513         *** -2.5877375</span>
+<span class="co">#&gt; 9  2001-09-21    Friday        100 -1.1338934             -1.0755080</span>
+<span class="co">#&gt; 10 2001-09-24    Monday        100  1.8898224           *  1.9489509</span>
+<span class="co">#&gt; 11 2001-09-25   Tuesday        100  0.3779645              0.4367214</span>
+<span class="co">#&gt; 12 2001-09-26 Wednesday        100  2.6457513         ***  2.7050657</span>
+<span class="co">#&gt; 13 2001-09-27  Thursday        100  1.1338934              1.1928362</span>
+<span class="co">#&gt; 14 2001-09-28    Friday        100 -0.3779645             -0.3193933</span>
 <span class="co">#&gt;    gsign_signif csign_stat csign_signif  rank_stat rank_signif mrank_stat</span>
-<span class="co">#&gt; 1           *** -2.3671082           ** -3.4789774         *** -3.5177510</span>
-<span class="co">#&gt; 2               -1.1835541              -1.3572036             -1.3993558</span>
+<span class="co">#&gt; 1           *** -2.2292016           ** -3.4115930         *** -3.4115930</span>
+<span class="co">#&gt; 2               -0.9553721              -1.0640921             -1.0640921</span>
 <span class="co">#&gt; 3                       NA                      NA                     NA</span>
-<span class="co">#&gt; 4               -1.1835541              -1.6059633             -1.6018168</span>
-<span class="co">#&gt; 5                0.5917770               0.6987221              0.6857532</span>
-<span class="co">#&gt; 6                0.5917770               0.9767476              0.9658669</span>
-<span class="co">#&gt; 7               -0.5917770              -0.3621648             -0.3612366</span>
-<span class="co">#&gt; 8           *** -2.3671082           ** -3.4716610         *** -3.5153340</span>
-<span class="co">#&gt; 9               -1.1835541              -2.0230016          ** -2.0272555</span>
-<span class="co">#&gt; 10           **  1.7753311            *  2.4766222          **  2.5139614</span>
-<span class="co">#&gt; 11               0.5917770               1.7157102           *  1.7309480</span>
-<span class="co">#&gt; 12           **  1.7753311            *  2.2132296          **  2.2574440</span>
-<span class="co">#&gt; 13               0.5917770               0.8962665              0.8696880</span>
-<span class="co">#&gt; 14            *  0.9111004               2.0486092          **  1.7806711</span>
+<span class="co">#&gt; 4               -0.9553721              -1.6083224             -1.6083224</span>
+<span class="co">#&gt; 5                0.9553721               1.1128291              1.1128291</span>
+<span class="co">#&gt; 6                0.3184574               0.6741958              0.6741958</span>
+<span class="co">#&gt; 7               -0.3184574              -0.2274395             -0.2274395</span>
+<span class="co">#&gt; 8           *** -2.2292016           ** -3.4115930         *** -3.4115930</span>
+<span class="co">#&gt; 9               -0.9553721              -1.7707792           * -1.7707792</span>
+<span class="co">#&gt; 10            *  1.5922868               2.2987639          **  2.2987639</span>
+<span class="co">#&gt; 11               0.3184574               1.3808829              1.3808829</span>
+<span class="co">#&gt; 12          ***  2.2292016           **  2.7211516         ***  2.7211516</span>
+<span class="co">#&gt; 13               0.6369147               1.4296199              1.4296199</span>
+<span class="co">#&gt; 14              -0.3184574               0.5604760              0.5604760</span>
 <span class="co">#&gt;    mrank_signif wlcx_stat wlcx_signif</span>
 <span class="co">#&gt; 1           ***         0         ***</span>
-<span class="co">#&gt; 2                      10            </span>
+<span class="co">#&gt; 2                       9            </span>
 <span class="co">#&gt; 3                      NA            </span>
-<span class="co">#&gt; 4                       7            </span>
-<span class="co">#&gt; 5                      24            </span>
-<span class="co">#&gt; 6                      23            </span>
-<span class="co">#&gt; 7                      14            </span>
+<span class="co">#&gt; 4                       5            </span>
+<span class="co">#&gt; 5                      20            </span>
+<span class="co">#&gt; 6                      16            </span>
+<span class="co">#&gt; 7                      12            </span>
 <span class="co">#&gt; 8           ***         0         ***</span>
-<span class="co">#&gt; 9            **         3          **</span>
-<span class="co">#&gt; 10           **        30          **</span>
-<span class="co">#&gt; 11            *        30          **</span>
-<span class="co">#&gt; 12           **        33          **</span>
-<span class="co">#&gt; 13                     23            </span>
-<span class="co">#&gt; 14            *        24         ***</span></pre></body></html></div>
+<span class="co">#&gt; 9             *         3          **</span>
+<span class="co">#&gt; 10           **        22           *</span>
+<span class="co">#&gt; 11                     22           *</span>
+<span class="co">#&gt; 12          ***        28         ***</span>
+<span class="co">#&gt; 13                     23           *</span>
+<span class="co">#&gt; 14                     18</span></code></pre></div>
 </div>
 <div id="using-magrittr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-magrittr" class="anchor"></a>Using <code>magrittr</code>
 </h2>
 <p>One can notice that the result of the previous function is passed to the next function. In order to avoid naming all the intermediate objects or using a function composition, it possible to utilize a power of the pipe operator from <code>magrittr</code>. The above code can be rewritten with:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 
-<span class="no">rates_indx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span>(<span class="st">"^N100"</span>,
-                                      <span class="kw">start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2000-01-01"</span>),
-                                      <span class="kw">end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2002-01-01"</span>),
-                                      <span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                                      <span class="kw">retclass</span> <span class="kw">=</span> <span class="st">"zoo"</span>) <span class="kw">%&gt;%</span>
-    <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span>(<span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                          <span class="kw">multi_day</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                          <span class="kw">compounding</span> <span class="kw">=</span> <span class="st">"continuous"</span>)
+<span class="va">rates_indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="st">"^N100"</span>,
+                                      start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
+                                      end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+                                      quote <span class="op">=</span> <span class="st">"Close"</span>,
+                                      retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="st">"Close"</span>,
+                          multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
+                          compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span>
 
-<span class="no">tickers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ALV.DE"</span>, <span class="st">"CS.PA"</span>, <span class="st">"G.MI"</span>, <span class="st">"HNR1.HA"</span>, <span class="st">"HSX.L"</span>, <span class="st">"MUV2.DE"</span>, <span class="st">"RSA.L"</span>,
-             <span class="st">"TOP.CO"</span>)
-<span class="no">nine_eleven_param</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span>(<span class="no">tickers</span>,
-                                             <span class="kw">start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2000-01-01"</span>),
-                                             <span class="kw">end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2002-01-01"</span>),
-                                             <span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                                             <span class="kw">retclass</span> <span class="kw">=</span> <span class="st">"zoo"</span>) <span class="kw">%&gt;%</span>
-    <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span>(<span class="kw">quote</span> <span class="kw">=</span> <span class="st">"Close"</span>,
-                          <span class="kw">multi_day</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                          <span class="kw">compounding</span> <span class="kw">=</span> <span class="st">"continuous"</span>) <span class="kw">%&gt;%</span>
-    <span class="fu"><a href="../reference/apply_market_model.html">apply_market_model</a></span>(<span class="kw">regressor</span> <span class="kw">=</span> <span class="no">rates_indx</span>,
-                       <span class="kw">same_regressor_for_all</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                       <span class="kw">market_model</span> <span class="kw">=</span> <span class="st">"sim"</span>,
-                       <span class="kw">estimation_method</span> <span class="kw">=</span> <span class="st">"ols"</span>,
-                       <span class="kw">estimation_start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-03-26"</span>),
-                       <span class="kw">estimation_end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-10"</span>)) <span class="kw">%&gt;%</span>
-    <span class="fu"><a href="../reference/parametric_tests.html">parametric_tests</a></span>(<span class="kw">event_start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-11"</span>),
-                     <span class="kw">event_end</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2001-09-28"</span>))</pre></body></html></div>
+<span class="va">tickers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ALV.DE"</span>, <span class="st">"CS.PA"</span>, <span class="st">"G.MI"</span>, <span class="st">"HNR1.HA"</span>, <span class="st">"HSX.L"</span>, <span class="st">"MUV2.DE"</span>, <span class="st">"TOP.CO"</span><span class="op">)</span>
+
+<span class="va">nine_eleven_param</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="va">tickers</span>,
+                                             start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
+                                             end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+                                             quote <span class="op">=</span> <span class="st">"Close"</span>,
+                                             retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="st">"Close"</span>,
+                          multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
+                          compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="../reference/apply_market_model.html">apply_market_model</a></span><span class="op">(</span>regressor <span class="op">=</span> <span class="va">rates_indx</span>,
+                       same_regressor_for_all <span class="op">=</span> <span class="cn">TRUE</span>,
+                       market_model <span class="op">=</span> <span class="st">"sim"</span>,
+                       estimation_method <span class="op">=</span> <span class="st">"ols"</span>,
+                       estimation_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-03-26"</span><span class="op">)</span>,
+                       estimation_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-10"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="../reference/parametric_tests.html">parametric_tests</a></span><span class="op">(</span>event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-11"</span><span class="op">)</span>,
+                     event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-28"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -318,7 +323,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
