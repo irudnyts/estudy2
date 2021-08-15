@@ -39,7 +39,7 @@ Imports:
     matrixStats (>= 0.54.0),
     Rcpp (>= 1.0.1)
 LinkingTo: Rcpp
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: knitr,
     rmarkdown,
     magrittr

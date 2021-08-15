@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // getMultiDayRates
 NumericMatrix getMultiDayRates(NumericMatrix prices, bool continuous, bool Open);
 RcppExport SEXP _estudy2_getMultiDayRates(SEXP pricesSEXP, SEXP continuousSEXP, SEXP OpenSEXP) {
