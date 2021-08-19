@@ -9,11 +9,12 @@
 #' @export
 run_app <- function() {
 
-    if (!requireNamespace("shiny", quietly = TRUE)) {
+    if (!requireNamespace("shiny", quietly = TRUE) ||
+        !requireNamespace("shinyWidgets", quietly = TRUE)) {
         stop(
             paste(
-                "Package {shiny} is needed for this function to work.",
-                "Please install it."
+                "Packages {shiny}, {shinyWidgets} are needed for this function",
+                "to work. Please install it."
             ),
             call. = FALSE
         )
