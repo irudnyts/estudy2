@@ -10,11 +10,12 @@
 run_app <- function() {
 
     if (!requireNamespace("shiny", quietly = TRUE) ||
-        !requireNamespace("shinyWidgets", quietly = TRUE)) {
+        !requireNamespace("shinyWidgets", quietly = TRUE) ||
+        !requireNamespace("bslib", quietly = TRUE)) {
         stop(
             paste(
-                "Packages {shiny}, {shinyWidgets} are needed for this function",
-                "to work. Please install it."
+                "Packages {shiny}, {shinyWidgets}, and {bslib} are needed for",
+                "this function to work. Please install it."
             ),
             call. = FALSE
         )

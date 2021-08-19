@@ -45,6 +45,7 @@ Suggests:
     rmarkdown,
     magrittr (>= 2.0.1),
     shiny (>= 1.6.0),
-    shinyWidgets (>= 0.6.0)
+    shinyWidgets (>= 0.6.0),
+    bslib (>= 0.2.5.1)
 VignetteBuilder: knitr
 Encoding: UTF-8
