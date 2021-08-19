@@ -37,7 +37,8 @@ Imports:
     quantmod (>= 0.4.17),
     zoo (>= 1.8.7),
     matrixStats (>= 0.56.0),
-    Rcpp (>= 1.0.4.6)
+    Rcpp (>= 1.0.4.6),
+    shiny (>= 1.6.0)
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
 Suggests: knitr,
