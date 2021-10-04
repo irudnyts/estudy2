@@ -1,5 +1,7 @@
 ui <- shiny::fluidPage(
 
+    titlePanel("Event study"),
+
     theme = bslib::bs_theme(version = 4, bootswatch = "solar"),
 
     shiny::sidebarLayout(
@@ -96,6 +98,18 @@ ui <- shiny::fluidPage(
         ),
 
         mainPanel(
+
+            shiny::tabsetPanel(
+                shiny::tabPanel(
+                    title = "Parametric test"
+                ),
+                shiny::tabPanel(
+                    title = "Nonparametric test"
+                ),
+                shiny::tabPanel(
+                    title = "Plots"
+                )
+            )
 
         )
     )
