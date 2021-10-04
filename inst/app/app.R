@@ -8,13 +8,13 @@ ui <- shiny::fluidPage(
 
             shiny::textInput(
                 "tickers",
-                "Please list tickers separated by comma:",
+                "List tickers separated by comma:",
                 placeholder = "AAPL, MSFT, AMZN, FB, GOOGL, NVDA"
             ),
 
             shiny::dateRangeInput(
                 "date_range",
-                "Please select start and end date:",
+                "Select start and end date:",
                 start = "2019-01-01",
                 end = "2021-01-01"
             ),
@@ -43,7 +43,55 @@ ui <- shiny::fluidPage(
                     "Yes" = TRUE,
                     "No" = FALSE
                 )
+            ),
+
+            shiny::tags$hr(),
+
+            shinyWidgets::awesomeRadio(
+                "model",
+                "Select the market model",
+                choices = c(
+                    "Mean-adjusted returns model" = "mean_adj",
+                    "Market-adjusted returns model" = "mrkt_adj",
+                    "Single index market\n model" = "sim"
+                )
+            ),
+
+            shiny::conditionalPanel(
+                condition = "input.model == 'mrkt_adj' | input.model == 'sim'",
+                shiny::tags$hr(),
+                shiny::textInput(
+                    "index",
+                    "Type the ticker of the index",
+                    placeholder = "NDXT"
+                ),
+            ),
+
+            shiny::tags$hr(),
+
+            shiny::dateRangeInput(
+                "estmation_window",
+                "Select start and end date:",
+                start = "2019-01-01",
+                end = "2021-01-01"
+            ),
+
+            shiny::dateRangeInput(
+                "event_window",
+                "Select the event window:",
+                start = "2019-01-01",
+                end = "2021-01-01"
+            ),
+
+            shiny::tags$hr(),
+
+            shiny::column(
+                width = 12,
+                shiny::actionButton(inputId = "compute", label = "Calculate!"),
+                align = "center"
             )
+
+
 
         ),
 
@@ -54,6 +102,7 @@ ui <- shiny::fluidPage(
 )
 
 server <- function(input, output) {
+
 
 
 
