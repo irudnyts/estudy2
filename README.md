@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# estudy2
+# estudy2 <img src="man/figures/logo.png" align="right" width="120" />
 
 [![Travis-CI Build
 Status](https://api.travis-ci.org/irudnyts/estudy2.svg?branch=master)](https://api.travis-ci.org/irudnyts/estudy2.svg?branch=master)

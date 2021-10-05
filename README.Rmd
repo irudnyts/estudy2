@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# estudy2
+# estudy2 <img src="man/figures/logo.png" align="right" width="120" />
 
 [![Travis-CI Build Status](https://api.travis-ci.org/irudnyts/estudy2.svg?branch=master)](https://api.travis-ci.org/irudnyts/estudy2.svg?branch=master)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/irudnyts/estudy2?branch=master&svg=true)](https://ci.appveyor.com/project/irudnyts/estudy2)
