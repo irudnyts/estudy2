@@ -1,6 +1,14 @@
 ui <- shiny::fluidPage(
 
-    titlePanel("Event study"),
+    shinyjs::useShinyjs(),
+
+    shiny::titlePanel(
+        title = shiny::div(
+            "Event study", shiny::img(src = "https://github.com/irudnyts/estudy2/blob/app/man/figures/logo.png?raw=true", height = 50, align = "right")
+        )
+    ),
+
+    shiny::tags$hr(),
 
     theme = bslib::bs_theme(version = 4, bootswatch = "solar"),
 
@@ -110,7 +118,6 @@ ui <- shiny::fluidPage(
                     title = "Plots"
                 )
             )
-
         )
     )
 )
