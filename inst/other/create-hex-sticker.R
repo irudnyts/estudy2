@@ -36,3 +36,17 @@ sticker(
     p_color = "#859596",
     h_fill = "#092b36"
 )
+
+sticker(
+    p,
+    package = "estudy2",
+    p_size = 20,
+    s_x = 1,
+    s_y = .75,
+    s_width = 1.5,
+    s_height = 1.2,
+    filename = "inst/app/www/logo.png",
+    h_color = "#b58900",
+    p_color = "#859596",
+    h_fill = "#092b36"
+)
