@@ -4,7 +4,7 @@ ui <- shiny::fluidPage(
 
     shiny::titlePanel(
         title = shiny::div(
-            "Event study", shiny::img(src = "https://github.com/irudnyts/estudy2/blob/app/man/figures/logo.png?raw=true", height = 50, align = "right")
+            "Event study", shiny::img(src = "logo.png", height = 50, align = "right")
         )
     ),
 
@@ -81,16 +81,12 @@ ui <- shiny::fluidPage(
 
             shiny::dateRangeInput(
                 "estmation_window",
-                "Select start and end date:",
-                start = "2019-01-01",
-                end = "2021-01-01"
+                "Select the estimation window:"
             ),
 
             shiny::dateRangeInput(
                 "event_window",
-                "Select the event window:",
-                start = "2019-01-01",
-                end = "2021-01-01"
+                "Select the event window:"
             ),
 
             shiny::tags$hr(),
@@ -122,10 +118,37 @@ ui <- shiny::fluidPage(
     )
 )
 
-server <- function(input, output) {
+server <- function(input, output, session) {
 
+    shiny::observeEvent(
+        input$date_range, {
 
+            estimation_window_length <- 2 / 3 *
+                as.numeric(input$date_range[2] - input$date_range[1])
 
+            shiny::updateDateRangeInput(
+                session = session,
+                inputId = "estmation_window",
+                start = input$date_range[1],
+                end = input$date_range[1] + estimation_window_length,
+                min = input$date_range[1],
+                max = input$date_range[2]
+            )
+        }
+
+    )
+
+    shiny::observeEvent(
+        input$estmation_window,
+        shiny::updateDateRangeInput(
+            session = session,
+            inputId = "event_window",
+            start = input$estmation_window[2] + 1,
+            end = input$date_range[2],
+            min = input$estmation_window[2] + 1,
+            max = input$date_range[2]
+        )
+    )
 
 }
 
