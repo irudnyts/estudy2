@@ -9,6 +9,8 @@
 #' @export
 run_app <- function() {
 
+    # XXX: add stringr package here and to DESCRIPTION
+
     if (!requireNamespace("shiny", quietly = TRUE) ||
         !requireNamespace("shinyWidgets", quietly = TRUE) ||
         !requireNamespace("bslib", quietly = TRUE)) {
