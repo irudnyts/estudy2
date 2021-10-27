@@ -129,10 +129,13 @@ ui <- shiny::fluidPage(
         mainPanel(
             shiny::tabsetPanel(
                 shiny::tabPanel(
-                    title = "Parametric test"
+                    title = "Parametric test",
+                    shiny::dataTableOutput("parametric_table")
+
                 ),
                 shiny::tabPanel(
-                    title = "Nonparametric test"
+                    title = "Nonparametric test",
+                    shiny::dataTableOutput("nonparametric_table")
                 ),
                 shiny::tabPanel(
                     title = "Plots"
@@ -146,10 +149,10 @@ server <- function(input, output, session) {
 
     prices <- shiny::eventReactive(input$download, {
 
-        req(input$date_range[1] < input$date_range[2])
+        shiny::req(input$date_range[1] < input$date_range[2])
         # XXX: make a pop up window if it is not true
 
-        req(input$tickers)
+        shiny::req(input$tickers)
         # XXX: also validate that indeed can download these tickers
 
         tickers <- input$tickers %>%
@@ -177,7 +180,63 @@ server <- function(input, output, session) {
         )
     })
 
+    rates_indx <- shiny::reactive({
 
+        if (input$model != "mean_adj") {
+            shiny::req(input$index)
+            rates_indx <- get_prices_from_tickers(
+                input$index,
+                start = input$date_range[1],
+                end = input$date_range[2],
+                quote = input$price_type,
+                retclass = "zoo"
+            ) %>%
+                get_rates_from_prices(
+                    quote = input$price_type,
+                    multi_day = input$multi_day,
+                    compounding = input$compounding
+                )
+        } else {
+            NULL
+        }
+    })
+
+    returns <- shiny::reactive({
+        # XXX: do we need req(rates())? Looks like no!
+        apply_market_model(
+            rates = rates(),
+            regressor = rates_indx(),
+            same_regressor_for_all = TRUE,
+            market_model = input$model,
+            estimation_method = "ols",
+            estimation_start = input$estmation_window[1],
+            estimation_end = input$estmation_window[2]
+        )
+    })
+
+    output$parametric_table <- shiny::renderDataTable({
+
+        parametric_tests(
+            list_of_returns = returns(),
+            event_start = input$event_window[1],
+            event_end = input$event_window[2]
+        )
+
+    })
+
+    output$nonparametric_table <- shiny::renderDataTable({
+
+        nonparametric_tests(
+            list_of_returns = returns(),
+            event_start = input$event_window[1],
+            event_end = input$event_window[2]
+        )
+
+    })
+
+
+    # Interactions between UI elements
+    #---------------------------------------------------------------------------
 
     shiny::observeEvent(input$download, {
 
@@ -222,57 +281,57 @@ server <- function(input, output, session) {
         )
     )
 
-    shiny::observeEvent(input$compute, {
-
-        tickers <- input$tickers %>%
-            stringr::str_split(",") %>%
-            unlist() %>%
-            stringr::str_trim(side = "both")
-
-        if (input$model != "mean_adj") {
-            rates_indx <- get_prices_from_tickers(
-                input$index,
-                start = input$date_range[1],
-                end = input$date_range[2],
-                quote = input$price_type,
-                retclass = "zoo"
-            ) %>%
-                get_rates_from_prices(
-                    quote = input$price_type,
-                    multi_day = input$multi_day,
-                    compounding = input$compounding
-                )
-        }
-
-        results <- get_prices_from_tickers(
-            tickers,
-            start = input$date_range[1],
-            end = input$date_range[2],
-            quote = input$price_type,
-            retclass = "zoo"
-        ) %>%
-            get_rates_from_prices(
-                quote = input$price_type,
-                multi_day = input$multi_day,
-                compounding = input$compounding
-            ) %>%
-            apply_market_model(
-                regressor = rates_indx,
-                same_regressor_for_all = TRUE,
-                market_model = input$model,
-                estimation_method = "ols",
-                estimation_start = input$estmation_window[1],
-                estimation_end = input$estmation_window[2]
-            ) %>%
-            parametric_tests(
-                event_start = input$event_window[1],
-                event_end = input$event_window[2]
-            )
-
-        print(results)
-
-
-    })
+    # shiny::observeEvent(input$compute, {
+    #
+    #     tickers <- input$tickers %>%
+    #         stringr::str_split(",") %>%
+    #         unlist() %>%
+    #         stringr::str_trim(side = "both")
+    #
+    #     if (input$model != "mean_adj") {
+    #         rates_indx <- get_prices_from_tickers(
+    #             input$index,
+    #             start = input$date_range[1],
+    #             end = input$date_range[2],
+    #             quote = input$price_type,
+    #             retclass = "zoo"
+    #         ) %>%
+    #             get_rates_from_prices(
+    #                 quote = input$price_type,
+    #                 multi_day = input$multi_day,
+    #                 compounding = input$compounding
+    #             )
+    #     }
+    #
+    #     results <- get_prices_from_tickers(
+    #         tickers,
+    #         start = input$date_range[1],
+    #         end = input$date_range[2],
+    #         quote = input$price_type,
+    #         retclass = "zoo"
+    #     ) %>%
+    #         get_rates_from_prices(
+    #             quote = input$price_type,
+    #             multi_day = input$multi_day,
+    #             compounding = input$compounding
+    #         ) %>%
+    #         apply_market_model(
+    #             regressor = rates_indx,
+    #             same_regressor_for_all = TRUE,
+    #             market_model = input$model,
+    #             estimation_method = "ols",
+    #             estimation_start = input$estmation_window[1],
+    #             estimation_end = input$estmation_window[2]
+    #         ) %>%
+    #         parametric_tests(
+    #             event_start = input$event_window[1],
+    #             event_end = input$event_window[2]
+    #         )
+    #
+    #     print(results)
+    #
+    #
+    # })
 
 }
 
