@@ -16,7 +16,7 @@ returns <- tribble(
 p <- ggplot(data = returns, aes(x = x, y = y)) +
     geom_line(aes(linetype = linetype), color = "#859596") +
     geom_point(aes(color = color), size = 4) +
-    scale_color_manual(values=c("#859596", "#238823", "#D2222D")) +
+    scale_color_manual(values=c("#238823", "#859596", "#D2222D")) +
     ylim(0.3, 2.3) +
     theme_void() +
     theme_transparent() +
