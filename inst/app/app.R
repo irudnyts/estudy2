@@ -91,6 +91,7 @@ ui <- shiny::fluidPage(
                     "Type the ticker of the index",
                     placeholder = "^GSPC"
                 ),
+                # Add a button to allow downloading
             )
             ,
 
@@ -116,12 +117,12 @@ ui <- shiny::fluidPage(
             shiny::tabsetPanel(
                 shiny::tabPanel(
                     title = "Parametric test",
-                    shiny::dataTableOutput("parametric_table")
+                    DT::dataTableOutput("parametric_table")
 
                 ),
                 shiny::tabPanel(
                     title = "Nonparametric test",
-                    shiny::dataTableOutput("nonparametric_table")
+                    DT::dataTableOutput("nonparametric_table")
                 ),
                 shiny::tabPanel(
                     title = "Plots"
@@ -200,7 +201,7 @@ server <- function(input, output, session) {
         )
     })
 
-    output$parametric_table <- shiny::renderDataTable({
+    output$parametric_table <- DT::renderDataTable({
 
         parametric_tests(
             list_of_returns = returns(),
@@ -208,9 +209,9 @@ server <- function(input, output, session) {
             event_end = input$event_window[2]
         )
 
-    })
+    }, width = "100%")
 
-    output$nonparametric_table <- shiny::renderDataTable({
+    output$nonparametric_table <- DT::renderDataTable({
 
         nonparametric_tests(
             list_of_returns = returns(),
