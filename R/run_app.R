@@ -11,17 +11,9 @@ run_app <- function() {
 
     # XXX: add stringr package here and to DESCRIPTION
 
-    if (!requireNamespace("shiny", quietly = TRUE) ||
-        !requireNamespace("shinyWidgets", quietly = TRUE) ||
-        !requireNamespace("bslib", quietly = TRUE)) {
-        stop(
-            paste(
-                "Packages {shiny}, {shinyWidgets}, and {bslib} are needed for",
-                "this function to work. Please install it."
-            ),
-            call. = FALSE
-        )
-    }
+    packages <- c("shiny", "shinyWidgets", "bslib", "stringr")
+
+    lapply(packages, check_installation)
 
     app_dir <- system.file("app", package = "estudy2")
 
