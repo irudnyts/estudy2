@@ -11,7 +11,7 @@ run_app <- function() {
 
     # XXX: add stringr package here and to DESCRIPTION
 
-    packages <- c("shiny", "shinyWidgets", "bslib", "stringr")
+    packages <- c("shiny", "shinyWidgets", "bslib", "stringr", "shinyjs", "DT")
 
     lapply(packages, check_installation)
 

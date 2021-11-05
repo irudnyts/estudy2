@@ -46,6 +46,9 @@ Suggests:
     magrittr (>= 2.0.1),
     shiny (>= 1.6.0),
     shinyWidgets (>= 0.6.0),
-    bslib (>= 0.2.5.1)
+    bslib (>= 0.2.5.1), 
+    stringr (>= 1.4.0), 
+    shinyjs (>= 2.0.0),
+    DT (>= 0.19)
 VignetteBuilder: knitr
 Encoding: UTF-8
