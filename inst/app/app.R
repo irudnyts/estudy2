@@ -3,6 +3,7 @@ source("helpers.R")
 ui <- shiny::fluidPage(
     # waiter::use_waitress(),
     # shinyjs::useShinyjs(),
+    shinyFeedback::useShinyFeedback(),
 
     shiny::titlePanel(
         title = shiny::div(
@@ -141,23 +142,21 @@ ui <- shiny::fluidPage(
 
 server <- function(input, output, session) {
 
-    # XXX: add to all reactives eventReactive(input$calculate, ...)
-
     prices <- shiny::eventReactive(input$calculate, {
 
-        shiny::req(input$date_range[1] < input$date_range[2])
-        # XXX: make a pop up window if it is not true
+        shinyFeedback::feedbackWarning(
+            "date_range",
+            input$date_range[1] >= input$date_range[2],
+            "Please make sure the start date is lower than the end date."
+        )
 
+        shiny::req(input$date_range[1] < input$date_range[2])
         shiny::req(input$tickers)
-        # XXX: also validate that we indeed can download these tickers
 
         tickers <- input$tickers %>%
             stringr::str_split(",") %>%
             unlist() %>%
             stringr::str_trim(side = "both")
-
-        # waitress <- waiter::Waitress$new(max = length(tickers))
-        # on.exit(waitress$close())
 
         prices_list <- list()
 
@@ -169,31 +168,41 @@ server <- function(input, output, session) {
                     ticker,
                     start = input$date_range[1],
                     end = input$date_range[2],
-                    quote = input$quote
+                    quote = input$quote,
+                    retclass = "list"
                 ) %>%
                     purrr::pluck(1)
 
-                # waitress$inc(1)
+                if (is.null(prices_list[[ticker]])) {
+                    shiny::showNotification(
+                        paste0(
+                            "Could not retrieve prices for ",
+                            ticker,
+                            ". This security will be ignored."
+                        ),
+                        type = "warning"
+                    )
+                }
+
                 incProgress(1 / length(tickers))
 
             }
 
         })
 
-        # browser()
+        shinyFeedback::feedbackWarning(
+            "tickers",
+            length(prices_list) < 2,
+            "Please make sure that at least two valid tickers are specified."
+        )
 
-        # missing_tickers <- purrr::map_lgl(prices_list, is.null)
-
-        # tickers[missing_tickers]
-
-        # prices_list[!missing_tickers]
+        shiny::req(length(prices_list) > 1)
 
         prices_list
 
     })
 
-    rates <- shiny::reactive({
-        # XXX: do we need req(prices())? Looks like no!
+    rates <- shiny::eventReactive(input$calculate, {
         get_rates_from_prices(
             prices = prices(),
             quote = input$price_type,
@@ -202,30 +211,40 @@ server <- function(input, output, session) {
         )
     })
 
-    rates_indx <- shiny::reactive({
+    rates_indx <- shiny::eventReactive(input$calculate, {
 
         if (input$model != "mean_adj") {
-            # XXX: notify that we need to have valid input$index
+
             shiny::req(input$index)
-            rates_indx <- get_prices_from_tickers(
+
+            prices_indx <- download_prices(
                 input$index,
                 start = input$date_range[1],
                 end = input$date_range[2],
                 quote = input$price_type,
-                retclass = "list"
-            ) %>%
-                get_rates_from_prices(
-                    quote = input$price_type,
-                    multi_day = input$multi_day,
-                    compounding = input$compounding
-                )
+                retclass = "zoo"
+            )
+
+            shinyFeedback::feedbackWarning(
+                "index",
+                is.null(prices_indx),
+                "Please specify a valid ticker for the market index."
+            )
+
+            shiny::req(!is.null(prices_indx))
+
+            get_rates_from_prices(
+                prices_indx,
+                quote = input$price_type,
+                multi_day = input$multi_day,
+                compounding = input$compounding
+            )
         } else {
             NULL
         }
     })
 
-    returns <- shiny::reactive({
-        # XXX: do we need req(rates())? Looks like no!
+    stock_returns <- shiny::eventReactive(input$calculate, {
         apply_market_model(
             rates = rates(),
             regressor = rates_indx(),
@@ -244,18 +263,20 @@ server <- function(input, output, session) {
         ## Add green bar for 100%
         ## Highlight in red significant and below zero, highlight in green above zero
 
+        # req(stock_returns())
+
         parametric_tests(
-            list_of_returns = returns(),
+            list_of_returns = stock_returns(),
             event_start = input$event_window[1],
             event_end = input$event_window[2]
         )
 
-    }, width = "100%")
+    })
 
     output$nonparametric_table <- DT::renderDataTable({
 
         nonparametric_tests(
-            list_of_returns = returns(),
+            list_of_returns = stock_returns(),
             event_start = input$event_window[1],
             event_end = input$event_window[2]
         )

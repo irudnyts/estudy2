@@ -1,4 +1,4 @@
-download_prices <- function(ticker, start, end, quote) {
+download_prices <- function(ticker, start, end, quote, retclass) {
     tryCatch(
         expr = {
             get_prices_from_tickers(
@@ -6,7 +6,7 @@ download_prices <- function(ticker, start, end, quote) {
                 start = start,
                 end = end,
                 quote = quote,
-                retclass = "list"
+                retclass = retclass
             )
         },
         error = function(cond) {
