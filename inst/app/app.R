@@ -1,6 +1,8 @@
-ui <- shiny::fluidPage(
+source("helpers.R")
 
-    shinyjs::useShinyjs(),
+ui <- shiny::fluidPage(
+    # waiter::use_waitress(),
+    # shinyjs::useShinyjs(),
 
     shiny::titlePanel(
         title = shiny::div(
@@ -36,16 +38,16 @@ ui <- shiny::fluidPage(
                 choices = c("Close", "Open")
             ),
 
-            shiny::column(
-                width = 12,
-                shiny::actionButton("download", "Download", width = "100%"),
-                align = "center"
-            ),
+            # shiny::column(
+            #     width = 12,
+            #     shiny::actionButton("download", "Download", width = "100%"),
+            #     align = "center"
+            # ),
 
 
             shiny::tags$hr(),
 
-            shinyjs::disabled(
+            # shinyjs::disabled(
                 shinyWidgets::awesomeRadio(
                     "compounding",
                     "Select the compounding type",
@@ -53,10 +55,10 @@ ui <- shiny::fluidPage(
                         "Discrete" = "discrete",
                         "Continuous" = "continuous"
                     )
-                )
-            ),
+                ),
+            # ),
 
-            shinyjs::disabled(
+            # shinyjs::disabled(
                 shinyWidgets::awesomeRadio(
                     "multi_day",
                     "Take into account rates between\n more than one day?",
@@ -64,12 +66,12 @@ ui <- shiny::fluidPage(
                         "Yes" = TRUE,
                         "No" = FALSE
                     )
-                )
-            ),
+                ),
+            # ),
 
             shiny::tags$hr(),
 
-            shinyjs::disabled(
+            # shinyjs::disabled(
                 shinyWidgets::awesomeRadio(
                     "model",
                     "Select the market model",
@@ -78,8 +80,8 @@ ui <- shiny::fluidPage(
                         "Market-adjusted returns model" = "mrkt_adj",
                         "Single index market\n model" = "sim"
                     )
-                )
-            ),
+                ),
+            # ),
 
 
             shiny::conditionalPanel(
@@ -92,23 +94,28 @@ ui <- shiny::fluidPage(
                     placeholder = "^GSPC"
                 ),
                 # Add a button to allow downloading
-            )
-            ,
+            ),
 
             shiny::tags$hr(),
 
-            shinyjs::disabled(
+            # shinyjs::disabled(
                 shiny::dateRangeInput(
                     "estmation_window",
                     "Select the estimation window:"
-                )
-            ),
+                ),
+            # ),
 
-            shinyjs::disabled(
+            # shinyjs::disabled(
                 shiny::dateRangeInput(
                     "event_window",
                     "Select the event window:"
-                )
+                ),
+            # )
+
+            shiny::column(
+                width = 12,
+                shiny::actionButton("calculate", "Calculate!", width = "100%"),
+                align = "center"
             )
 
         ),
@@ -134,26 +141,54 @@ ui <- shiny::fluidPage(
 
 server <- function(input, output, session) {
 
-    prices <- shiny::eventReactive(input$download, {
+    # XXX: add to all reactives eventReactive(input$calculate, ...)
+
+    prices <- shiny::eventReactive(input$calculate, {
 
         shiny::req(input$date_range[1] < input$date_range[2])
         # XXX: make a pop up window if it is not true
 
         shiny::req(input$tickers)
-        # XXX: also validate that indeed can download these tickers
+        # XXX: also validate that we indeed can download these tickers
 
         tickers <- input$tickers %>%
             stringr::str_split(",") %>%
             unlist() %>%
             stringr::str_trim(side = "both")
 
-        get_prices_from_tickers(
-            tickers,
-            start = input$date_range[1],
-            end = input$date_range[2],
-            quote = input$price_type,
-            retclass = "zoo"
-        )
+        # waitress <- waiter::Waitress$new(max = length(tickers))
+        # on.exit(waitress$close())
+
+        prices_list <- list()
+
+        withProgress(message = "Downloading prices...", {
+
+            for (ticker in tickers) {
+
+                prices_list[[ticker]] <- download_prices(
+                    ticker,
+                    start = input$date_range[1],
+                    end = input$date_range[2],
+                    quote = input$quote
+                ) %>%
+                    purrr::pluck(1)
+
+                # waitress$inc(1)
+                incProgress(1 / length(tickers))
+
+            }
+
+        })
+
+        # browser()
+
+        # missing_tickers <- purrr::map_lgl(prices_list, is.null)
+
+        # tickers[missing_tickers]
+
+        # prices_list[!missing_tickers]
+
+        prices_list
 
     })
 
@@ -170,13 +205,14 @@ server <- function(input, output, session) {
     rates_indx <- shiny::reactive({
 
         if (input$model != "mean_adj") {
+            # XXX: notify that we need to have valid input$index
             shiny::req(input$index)
             rates_indx <- get_prices_from_tickers(
                 input$index,
                 start = input$date_range[1],
                 end = input$date_range[2],
                 quote = input$price_type,
-                retclass = "zoo"
+                retclass = "list"
             ) %>%
                 get_rates_from_prices(
                     quote = input$price_type,
@@ -203,6 +239,11 @@ server <- function(input, output, session) {
 
     output$parametric_table <- DT::renderDataTable({
 
+        ## Add stars as emoji stars
+        ## Add nice column names
+        ## Add green bar for 100%
+        ## Highlight in red significant and below zero, highlight in green above zero
+
         parametric_tests(
             list_of_returns = returns(),
             event_start = input$event_window[1],
@@ -225,17 +266,17 @@ server <- function(input, output, session) {
     # Interactions between UI elements
     #---------------------------------------------------------------------------
 
-    shiny::observeEvent(input$download, {
-
-        req(prices())
-
-        shinyjs::enable("compounding")
-        shinyjs::enable("multi_day")
-        shinyjs::enable("model")
-        shinyjs::enable("estmation_window")
-        shinyjs::enable("event_window")
-
-    })
+    # shiny::observeEvent(input$download, {
+    #
+    #     req(prices())
+    #
+    #     shinyjs::enable("compounding")
+    #     shinyjs::enable("multi_day")
+    #     shinyjs::enable("model")
+    #     shinyjs::enable("estmation_window")
+    #     shinyjs::enable("event_window")
+    #
+    # })
 
     shiny::observeEvent( # XXX: can we just use `observe()`?
         input$date_range, {
