@@ -15,7 +15,7 @@ run_app <- function() {
 
     packages <- c(
         "shiny", "shinyWidgets", "bslib", "stringr", "shinyjs", "DT",
-        "magrittr", "curl"
+        "magrittr", "curl", "shinyFeedback"
     )
 
     check_installation("purrr")

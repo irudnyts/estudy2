@@ -267,8 +267,8 @@ server <- function(input, output, session) {
 
         parametric_tests(
             list_of_returns = stock_returns(),
-            event_start = input$event_window[1],
-            event_end = input$event_window[2]
+            event_start = isolate(input$event_window[1]),
+            event_end = isolate(input$event_window[2])
         )
 
     })
@@ -277,8 +277,8 @@ server <- function(input, output, session) {
 
         nonparametric_tests(
             list_of_returns = stock_returns(),
-            event_start = input$event_window[1],
-            event_end = input$event_window[2]
+            event_start = isolate(input$event_window[1]),
+            event_end = isolate(input$event_window[2])
         )
 
     })
