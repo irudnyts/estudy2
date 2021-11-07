@@ -151,6 +151,13 @@ server <- function(input, output, session) {
         )
 
         shiny::req(input$date_range[1] < input$date_range[2])
+
+        shinyFeedback::feedbackWarning(
+            "tickers",
+            input$tickers == "",
+            "Please specify tickers separated by comma."
+        )
+
         shiny::req(input$tickers)
 
         tickers <- input$tickers %>%
@@ -214,6 +221,12 @@ server <- function(input, output, session) {
     rates_indx <- shiny::eventReactive(input$calculate, {
 
         if (input$model != "mean_adj") {
+
+            shinyFeedback::feedbackWarning(
+                "index",
+                input$index == "",
+                "Please specify a valid ticker for the market index."
+            )
 
             shiny::req(input$index)
 
