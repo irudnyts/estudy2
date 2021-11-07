@@ -168,7 +168,7 @@ server <- function(input, output, session) {
                     ticker,
                     start = input$date_range[1],
                     end = input$date_range[2],
-                    quote = input$quote,
+                    quote = input$price_type,
                     retclass = "list"
                 ) %>%
                     purrr::pluck(1)
