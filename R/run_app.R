@@ -10,10 +10,20 @@
 run_app <- function() {
 
     # XXX: add stringr package here and to DESCRIPTION
+    # XXX: do something with margritttr
+    # XXX: do we still need shinyjs?
 
-    packages <- c("shiny", "shinyWidgets", "bslib", "stringr", "shinyjs", "DT")
+    packages <- c(
+        "shiny", "shinyWidgets", "bslib", "stringr", "shinyjs", "DT",
+        "magrittr", "curl"
+    )
 
-    lapply(packages, check_installation)
+    check_installation("purrr")
+
+    purrr::walk(packages, check_installation)
+
+    if (!curl::has_internet())
+        stop("Please make sure you have an internet connection.")
 
     app_dir <- system.file("app", package = "estudy2")
 

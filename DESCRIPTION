@@ -49,6 +49,8 @@ Suggests:
     bslib (>= 0.2.5.1), 
     stringr (>= 1.4.0), 
     shinyjs (>= 2.0.0),
-    DT (>= 0.19)
+    DT (>= 0.19), 
+    purrr (>= 0.3.4), 
+    purrr (>= 4.3.2)
 VignetteBuilder: knitr
 Encoding: UTF-8
