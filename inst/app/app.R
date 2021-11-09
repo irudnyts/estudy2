@@ -342,6 +342,16 @@ server <- function(input, output, session) {
         )
     )
 
+    #---------------------------------------------------------------------------
+    # Bookmarking
+
+    observe({
+        reactiveValuesToList(input)
+        session$doBookmark()
+    })
+
+    onBookmarked(updateQueryString)
+
 }
 
-shiny::shinyApp(ui = ui, server = server)
+shiny::shinyApp(ui = ui, server = server, enableBookmarking = "url")
