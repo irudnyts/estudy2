@@ -12,6 +12,7 @@ run_app <- function() {
     # XXX: add stringr package here and to DESCRIPTION
     # XXX: do something with margritttr
     # XXX: do we still need shinyjs?
+    # XXX: emo, formattable, dplyr
 
     packages <- c(
         "shiny", "shinyWidgets", "bslib", "stringr", "shinyjs", "DT",

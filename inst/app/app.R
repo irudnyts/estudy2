@@ -131,9 +131,6 @@ ui <- shiny::fluidPage(
                 shiny::tabPanel(
                     title = "Nonparametric test",
                     DT::dataTableOutput("nonparametric_table")
-                ),
-                shiny::tabPanel(
-                    title = "Plots"
                 )
             )
         )
@@ -282,9 +279,11 @@ server <- function(input, output, session) {
             list_of_returns = stock_returns(),
             event_start = isolate(input$event_window[1]),
             event_end = isolate(input$event_window[2])
-        )
+        ) %>%
+            beautify() %>%
+            formattable::as.datatable()
 
-    })
+    }, width = 300)
 
     output$nonparametric_table <- DT::renderDataTable({
 
@@ -294,7 +293,7 @@ server <- function(input, output, session) {
             event_end = isolate(input$event_window[2])
         )
 
-    })
+    }, width = 300)
 
 
     # Interactions between UI elements
