@@ -37,20 +37,19 @@ Imports:
     quantmod (>= 0.4.17),
     zoo (>= 1.8.7),
     matrixStats (>= 0.56.0),
-    Rcpp (>= 1.0.4.6)
+    Rcpp (>= 1.0.4.6),
+    magrittr (>= 2.0.1)
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
 Suggests: 
     knitr (>= 1.33),
     rmarkdown,
-    magrittr (>= 2.0.1),
     shiny (>= 1.6.0),
     shinyWidgets (>= 0.6.0),
-    bslib (>= 0.2.5.1), 
-    stringr (>= 1.4.0), 
+    bslib (>= 0.2.5.1),
+    stringr (>= 1.4.0),
     shinyjs (>= 2.0.0),
-    DT (>= 0.19), 
-    purrr (>= 0.3.4), 
-    purrr (>= 4.3.2)
+    DT (>= 0.19),
+    purrr (>= 0.3.4)
 VignetteBuilder: knitr
 Encoding: UTF-8
