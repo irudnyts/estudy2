@@ -20,7 +20,7 @@ ui <- shiny::fluidPage(
             shiny::textInput(
                 "tickers",
                 "List tickers separated by comma:",
-                value = "AMZN, ZM, UBER, NFLX"
+                value = "AMZN, ZM, UBER, NFLX, SHOP, FB, UPWK"
             ),
 
             shiny::dateRangeInput(
