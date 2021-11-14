@@ -50,7 +50,7 @@ sign_formatter <- formattable::formatter(
     "span",
     style = x ~ formattable::style(
         color = dplyr::if_else(
-            x > 0, "green", dplyr::if_else(x < 0, "red", "black")
+            x > 0, "green", dplyr::if_else(x < 0, "red", "#869496")
         )
     )
 )
