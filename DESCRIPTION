@@ -32,7 +32,7 @@ LazyData: TRUE
 URL: https://github.com/irudnyts/estudy2, https://irudnyts.github.io/estudy2/
 BugReports: https://github.com/irudnyts/estudy2/issues
 Depends:
-    R (>= 4.1.1)
+    R (>= 4.1)
 Imports:
     quantmod (>= 0.4.18),
     zoo (>= 1.8.9),
@@ -53,8 +53,6 @@ Suggests:
     stringr (>= 1.4.0),
     magrittr (>= 2.0.1),
     formattable (>= 0.2.1),
-    dplyr (>= 1.0.7),
-    emo
-Remotes: github::hadley/emo
+    dplyr (>= 1.0.7)
 VignetteBuilder: knitr
 Encoding: UTF-8

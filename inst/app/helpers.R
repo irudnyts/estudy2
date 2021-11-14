@@ -87,8 +87,8 @@ sign_formatter <- formattable::formatter(
 #' Beautify the result of \code{parametric_tests()} and
 #' \code{nonparametric_tests()}
 #'
-#' The function beautifies the column names, formats percent columns, rounds
-#' to the second digit, and replaces asterisks by emojis' stars.
+#' The function beautifies the column names, formats percent columns, and rounds
+#' to the second digit.
 beautify <- function(tests_table) {
 
     # beautify column names
@@ -110,12 +110,6 @@ beautify <- function(tests_table) {
                 dplyr::contains("Stat") | dplyr::contains("Mean"),
                 round,
                 2
-            )
-        ) %>%
-        dplyr::mutate(
-            dplyr::across(
-                dplyr::contains("Signif"),
-                stringr::str_replace_all, stringr::fixed("*"), emo::ji("star")
             )
         ) %>%
         dplyr::mutate(
