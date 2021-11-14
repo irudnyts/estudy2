@@ -5,3 +5,9 @@ rsconnect::setAccountInfo(
     token = Sys.getenv("TOKEN"),
     secret = Sys.getenv("SECRET")
 )
+
+deployApp(
+    appDir = "inst/app/",
+    appName = "estudy2",
+    account = Sys.getenv("ACCOUNT")
+)

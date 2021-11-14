@@ -8,7 +8,8 @@ ui <- shiny::fluidPage(
         title = shiny::div(
             "Event study",
             shiny::img(src = "logo.png", height = 50, align = "right")
-        )
+        ),
+        windowTitle = "Event study"
     ),
 
     shiny::tags$hr(),
