@@ -50,14 +50,14 @@ The purpose of this vignette is to provide a brief introduction of how to use th
 
 ## Obtaining prices of companies' stocks
 
-We select eight European insurance companies, tickers of which are listed in the code snippet below. The starting and ending date are set to `"2000-01-01"` and `"2002-01-01"`, respectively, in order to include both the estimation and the event periods. Then, prices of securities should be downloaded. The function `get_prices_from_tickers` downloads prices for companies' tickers between `start` and `end` date. Under the hood, this function is a wrapper around `get.hist.quote` from `tseries`. The function can return either Open or Close quote (`quote` argument). Also one has to choose the returning class among `"list"`, `"zoo"`, and `"data.frame"`. Further in the vignette we use `zoo` objects. We download historical prices of companies with:
+We select seven companies that could profit from COVID-19 lockdown, tickers of which are listed in the code snippet below. The starting and ending date are set to `"2019-04-01"` and `"2020-04-01"`, respectively, in order to include both the estimation and the event periods. Then, prices of securities should be downloaded. The function `get_prices_from_tickers` downloads prices for companies' tickers between `start` and `end` date. Under the hood, this function is a wrapper around `get.hist.quote` from `tseries`. The function can return either Open or Close quote (`quote` argument). Also one has to choose the returning class among `"list"`, `"zoo"`, and `"data.frame"`. Further in the vignette we use `zoo` objects. We download historical prices of companies with:
 
 ```{r, message=FALSE, warning=FALSE}
 library(estudy2)
-tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE", "TOP.CO")
+tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 prices <- get_prices_from_tickers(tickers, 
-                                  start = as.Date("2000-01-01"),
-                                  end = as.Date("2002-01-01"),
+                                  start = as.Date("2019-04-01"),
+                                  end = as.Date("2020-04-01"),
                                   quote = "Close",
                                   retclass = "zoo")
 ```
@@ -65,9 +65,9 @@ prices <- get_prices_from_tickers(tickers,
 For using a single-index market model we also need to download prices of an index (proxy):
 
 ```{r, message=FALSE, warning=FALSE}
-prices_indx <- get_prices_from_tickers("^N100",
-                                       start = as.Date("2000-01-01"),
-                                       end = as.Date("2002-01-01"),
+prices_indx <- get_prices_from_tickers("^GSPC",
+                                       start = as.Date("2019-04-01"),
+                                       end = as.Date("2020-04-01"),
                                        quote = "Close",
                                        retclass = "zoo")
 ```
@@ -93,13 +93,13 @@ To calculate expected rates of returns during the event period we need to train 
 
 ```{r}
 securities_returns <- apply_market_model(
-    rates = rates,
-    regressor = rates_indx,
-    same_regressor_for_all = TRUE,
-    market_model = "sim",
-    estimation_method = "ols",
-    estimation_start = as.Date("2001-03-26"),
-    estimation_end = as.Date("2001-09-10")
+  rates = rates,
+  regressor = rates_indx,
+  same_regressor_for_all = TRUE,
+  market_model = "sim",
+  estimation_method = "ols",
+  estimation_start = as.Date("2019-04-01"),
+  estimation_end = as.Date("2020-03-13")
 )
 ```
 
@@ -109,12 +109,12 @@ The event study utilizes both parametric and nonparametric tests. Parametric tes
 
 ```{r}
 parametric_tests(list_of_returns = securities_returns,
-                 event_start = as.Date("2001-09-11"),
-                 event_end = as.Date("2001-09-28"))
+                 event_start = as.Date("2020-03-16"),
+                 event_end = as.Date("2020-03-20"))
 
 nonparametric_tests(list_of_returns = securities_returns,
-                    event_start = as.Date("2001-09-11"),
-                    event_end = as.Date("2001-09-28"))
+                    event_start = as.Date("2020-03-16"),
+                    event_end = as.Date("2020-03-20"))
 
 ```
 
@@ -125,31 +125,31 @@ One can notice that the result of the previous function is passed to the next fu
 ```{r, message=FALSE, warning=FALSE}
 library(magrittr)
 
-rates_indx <- get_prices_from_tickers("^N100",
-                                      start = as.Date("2000-01-01"),
-                                      end = as.Date("2002-01-01"),
+rates_indx <- get_prices_from_tickers("^GSPC",
+                                      start = as.Date("2019-04-01"),
+                                      end = as.Date("2020-04-01"),
                                       quote = "Close",
                                       retclass = "zoo") %>%
-    get_rates_from_prices(quote = "Close",
-                          multi_day = TRUE,
-                          compounding = "continuous")
+  get_rates_from_prices(quote = "Close",
+                        multi_day = TRUE,
+                        compounding = "continuous")
 
-tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE", "TOP.CO")
+tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 
 nine_eleven_param <- get_prices_from_tickers(tickers,
-                                             start = as.Date("2000-01-01"),
-                                             end = as.Date("2002-01-01"),
+                                             start = as.Date("2019-04-01"),
+                                             end = as.Date("2020-04-01"),
                                              quote = "Close",
                                              retclass = "zoo") %>%
-    get_rates_from_prices(quote = "Close",
-                          multi_day = TRUE,
-                          compounding = "continuous") %>%
-    apply_market_model(regressor = rates_indx,
-                       same_regressor_for_all = TRUE,
-                       market_model = "sim",
-                       estimation_method = "ols",
-                       estimation_start = as.Date("2001-03-26"),
-                       estimation_end = as.Date("2001-09-10")) %>%
-    parametric_tests(event_start = as.Date("2001-09-11"),
-                     event_end = as.Date("2001-09-28"))
+  get_rates_from_prices(quote = "Close",
+                        multi_day = TRUE,
+                        compounding = "continuous") %>%
+  apply_market_model(regressor = rates_indx,
+                     same_regressor_for_all = TRUE,
+                     market_model = "sim",
+                     estimation_method = "ols",
+                     estimation_start = as.Date("2019-04-01"),
+                     estimation_end = as.Date("2020-03-13")) %>%
+  parametric_tests(event_start = as.Date("2020-03-16"),
+                   event_end = as.Date("2020-03-20"))
 ```
