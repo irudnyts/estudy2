@@ -43,4 +43,5 @@ This is a resubmission. In this version I have:
 
 * Modify examples to COVID-19, so that vignette does not have any issues with 
 unsupported tickers
+* Fail `get_prices_from_tickers()` gracefully, when there is not internet connection
 * Equip the package with a demo Shiny app
