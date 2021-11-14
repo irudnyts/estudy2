@@ -40,8 +40,21 @@ Imports:
     Rcpp (>= 1.0.4.6)
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
-Suggests: knitr,
-    rmarkdown,
-    magrittr
+Suggests: 
+    knitr (>= 1.33),
+    rmarkdown (>= 2.10),
+    purrr (>= 0.3.4),
+    curl (>= 4.3.2),
+    shiny (>= 1.6.0),
+    shinyFeedback (>= 0.4.0),
+    shinyWidgets (>= 0.6.0),
+    DT (>= 0.19),
+    bslib (>= 0.2.5.1),
+    stringr (>= 1.4.0),
+    magrittr (>= 2.0.1),
+    formattable (>= 0.21.1),
+    dplyr (>= 1.0.7),
+    emo
+Remotes: github::hadley/emo
 VignetteBuilder: knitr
 Encoding: UTF-8
