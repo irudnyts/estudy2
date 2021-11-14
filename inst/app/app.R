@@ -222,7 +222,7 @@ server <- function(input, output, session) {
                 start = input$date_range[1],
                 end = input$date_range[2],
                 quote = input$price_type,
-                retclass = "zoo"
+                retclass = "list"
             )
 
             shinyFeedback::feedbackWarning(
