@@ -78,7 +78,7 @@ beautify <- function(tests_table) {
         dplyr::mutate(
             dplyr::across(
                 dplyr::contains("Signif"),
-                stringr::str_replace_all, fixed("*"), emo::ji("star")
+                stringr::str_replace_all, stringr::fixed("*"), emo::ji("star")
             )
         ) %>%
         dplyr::mutate(
