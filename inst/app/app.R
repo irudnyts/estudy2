@@ -361,12 +361,12 @@ server <- function(input, output, session) {
     #---------------------------------------------------------------------------
     # Bookmarking
 
-    observe({
-        reactiveValuesToList(input)
+    shiny::observe({
+        shiny::reactiveValuesToList(input)
         session$doBookmark()
     })
 
-    onBookmarked(updateQueryString)
+    shiny::onBookmarked(shiny::updateQueryString)
 
 }
 
