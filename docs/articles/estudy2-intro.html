@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to estudy2 • estudy2</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,6 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to estudy2">
 <meta property="og:description" content="estudy2">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -31,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">estudy2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3</span>
       </span>
     </div>
 
@@ -64,7 +71,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://github.com/irudnyts/estudy2/">
+  <a href="https://github.com/irudnyts/estudy2/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,9 +92,9 @@
       <h1 data-toc-skip>Introduction to estudy2</h1>
                         <h4 class="author">Iegor Rudnytskyi</h4>
             
-            <h4 class="date">2021-08-15</h4>
+            <h4 class="date">2021-11-14</h4>
       
-      <small class="dont-index">Source: <a href="http://github.com/irudnyts/estudy2/blob/master/vignettes/estudy2-intro.Rmd"><code>vignettes/estudy2-intro.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/irudnyts/estudy2/blob/master/vignettes/estudy2-intro.Rmd"><code>vignettes/estudy2-intro.Rmd</code></a></small>
       <div class="hidden name"><code>estudy2-intro.Rmd</code></div>
 
     </div>
@@ -120,20 +127,20 @@
 <div id="obtaining-prices-of-companies-stocks" class="section level2">
 <h2 class="hasAnchor">
 <a href="#obtaining-prices-of-companies-stocks" class="anchor"></a>Obtaining prices of companies’ stocks</h2>
-<p>We select eight European insurance companies, tickers of which are listed in the code snippet below. The starting and ending date are set to <code>"2000-01-01"</code> and <code>"2002-01-01"</code>, respectively, in order to include both the estimation and the event periods. Then, prices of securities should be downloaded. The function <code>get_prices_from_tickers</code> downloads prices for companies’ tickers between <code>start</code> and <code>end</code> date. Under the hood, this function is a wrapper around <code>get.hist.quote</code> from <code>tseries</code>. The function can return either Open or Close quote (<code>quote</code> argument). Also one has to choose the returning class among <code>"list"</code>, <code>"zoo"</code>, and <code>"data.frame"</code>. Further in the vignette we use <code>zoo</code> objects. We download historical prices of companies with:</p>
+<p>We select seven companies that could profit from COVID-19 lockdown, tickers of which are listed in the code snippet below. The starting and ending date are set to <code>"2019-04-01"</code> and <code>"2020-04-01"</code>, respectively, in order to include both the estimation and the event periods. Then, prices of securities should be downloaded. The function <code>get_prices_from_tickers</code> downloads prices for companies’ tickers between <code>start</code> and <code>end</code> date. Under the hood, this function is a wrapper around <code>get.hist.quote</code> from <code>tseries</code>. The function can return either Open or Close quote (<code>quote</code> argument). Also one has to choose the returning class among <code>"list"</code>, <code>"zoo"</code>, and <code>"data.frame"</code>. Further in the vignette we use <code>zoo</code> objects. We download historical prices of companies with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/irudnyts/estudy2">estudy2</a></span><span class="op">)</span>
-<span class="va">tickers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ALV.DE"</span>, <span class="st">"CS.PA"</span>, <span class="st">"G.MI"</span>, <span class="st">"HNR1.HA"</span>, <span class="st">"HSX.L"</span>, <span class="st">"MUV2.DE"</span>, <span class="st">"TOP.CO"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/irudnyts/estudy2">estudy2</a></span><span class="op">)</span>
+<span class="va">tickers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span>, <span class="st">"ZM"</span>, <span class="st">"UBER"</span>, <span class="st">"NFLX"</span>, <span class="st">"SHOP"</span>, <span class="st">"FB"</span>, <span class="st">"UPWK"</span><span class="op">)</span>
 <span class="va">prices</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="va">tickers</span>, 
-                                  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
-                                  end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+                                  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2019-04-01"</span><span class="op">)</span>,
+                                  end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-04-01"</span><span class="op">)</span>,
                                   quote <span class="op">=</span> <span class="st">"Close"</span>,
                                   retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span></code></pre></div>
 <p>For using a single-index market model we also need to download prices of an index (proxy):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">prices_indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="st">"^N100"</span>,
-                                       start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
-                                       end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">prices_indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="st">"^GSPC"</span>,
+                                       start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2019-04-01"</span><span class="op">)</span>,
+                                       end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-04-01"</span><span class="op">)</span>,
                                        quote <span class="op">=</span> <span class="st">"Close"</span>,
                                        retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -158,13 +165,13 @@
 <p>To calculate expected rates of returns during the event period we need to train a market model based on date from the estimation period. <code>apply_market_model</code> goes over each company (column) in <code>rates</code> and calibrates a chosen model. The function returns a list of S3 <code>returns</code> class objects, which can be passed to <code>parametric_tests</code> and <code>nonparametric_tests</code>. For our case we use the single-index market model:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">securities_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/apply_market_model.html">apply_market_model</a></span><span class="op">(</span>
-    rates <span class="op">=</span> <span class="va">rates</span>,
-    regressor <span class="op">=</span> <span class="va">rates_indx</span>,
-    same_regressor_for_all <span class="op">=</span> <span class="cn">TRUE</span>,
-    market_model <span class="op">=</span> <span class="st">"sim"</span>,
-    estimation_method <span class="op">=</span> <span class="st">"ols"</span>,
-    estimation_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-03-26"</span><span class="op">)</span>,
-    estimation_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-10"</span><span class="op">)</span>
+  rates <span class="op">=</span> <span class="va">rates</span>,
+  regressor <span class="op">=</span> <span class="va">rates_indx</span>,
+  same_regressor_for_all <span class="op">=</span> <span class="cn">TRUE</span>,
+  market_model <span class="op">=</span> <span class="st">"sim"</span>,
+  estimation_method <span class="op">=</span> <span class="st">"ols"</span>,
+  estimation_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2019-04-01"</span><span class="op">)</span>,
+  estimation_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-13"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 </div>
 <div id="tests" class="section level2">
@@ -173,102 +180,48 @@
 <p>The event study utilizes both parametric and nonparametric tests. Parametric tests are Brown and Warner (1980), Brown and Warner (1985), t-test, Patell (1976), Boehmer (1991), and Lamb (1995) tests. To avoid calling all these tests separately, one can call <code>parametric_tests</code> with <code>all = TRUE</code>. The same applies to nonparametric tests, i.e. simple binomial sign, binomial sign, Corrado (1992), rank, modified rank, and Wilcoxon signed rank tests can be called all at once by specifying <code>all = TRUE</code> in <code>nonparametric_tests</code>. These tests are also available separately. Both functions return data frames with statistics and significance for each date in the event period. See <code><a href="../reference/parametric_tests.html">?parametric_tests</a></code> and <code><a href="../reference/nonparametric_tests.html">?nonparametric_tests</a></code> for references and more details.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/parametric_tests.html">parametric_tests</a></span><span class="op">(</span>list_of_returns <span class="op">=</span> <span class="va">securities_returns</span>,
-                 event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-11"</span><span class="op">)</span>,
-                 event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-28"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;          date   weekday percentage         mean bw_1980_stat bw_1980_signif</span>
-<span class="co">#&gt; 1  2001-09-11   Tuesday        100 -0.095267547  -14.1375931            ***</span>
-<span class="co">#&gt; 2  2001-09-12 Wednesday        100 -0.031384102   -4.6573643            ***</span>
-<span class="co">#&gt; 3  2001-09-13  Thursday          0           NA           NA               </span>
-<span class="co">#&gt; 4  2001-09-14    Friday        100 -0.037994921   -5.6384021            ***</span>
-<span class="co">#&gt; 5  2001-09-17    Monday        100  0.023717979    3.5197204            ***</span>
-<span class="co">#&gt; 6  2001-09-18   Tuesday        100 -0.004574035   -0.6787815               </span>
-<span class="co">#&gt; 7  2001-09-19 Wednesday        100 -0.004380471   -0.6500568               </span>
-<span class="co">#&gt; 8  2001-09-20  Thursday        100 -0.097628194  -14.4879104            ***</span>
-<span class="co">#&gt; 9  2001-09-21    Friday        100 -0.039622894   -5.8799914            ***</span>
-<span class="co">#&gt; 10 2001-09-24    Monday        100  0.031556552    4.6829556            ***</span>
-<span class="co">#&gt; 11 2001-09-25   Tuesday        100  0.041640460    6.1793958            ***</span>
-<span class="co">#&gt; 12 2001-09-26 Wednesday        100  0.022896229    3.3977737            ***</span>
-<span class="co">#&gt; 13 2001-09-27  Thursday        100  0.020423192    3.0307779            ***</span>
-<span class="co">#&gt; 14 2001-09-28    Friday        100  0.005078339    0.7536195               </span>
-<span class="co">#&gt;    bw_1985_stat bw_1985_signif t_test_stat t_test_signif      pt_stat pt_signif</span>
-<span class="co">#&gt; 1   -12.8932767            ***  -4.8342919           *** -15.93199210       ***</span>
-<span class="co">#&gt; 2    -4.2474476            ***  -1.0197160                -3.02501512       ***</span>
-<span class="co">#&gt; 3            NA                         NA                         NA          </span>
-<span class="co">#&gt; 4    -5.1421397            ***  -1.3785596                -6.04629140       ***</span>
-<span class="co">#&gt; 5     3.2099332            ***   0.9005395                 4.87549214       ***</span>
-<span class="co">#&gt; 6    -0.6190387                 -0.1608414                -0.72885915          </span>
-<span class="co">#&gt; 7    -0.5928423                 -0.2072312                -0.01540181          </span>
-<span class="co">#&gt; 8   -13.2127608            ***  -2.3475394             * -13.28950663       ***</span>
-<span class="co">#&gt; 9    -5.3624656            ***  -2.5106293            **  -6.18660223       ***</span>
-<span class="co">#&gt; 10    4.2707865            ***   1.8657907                 4.66791310       ***</span>
-<span class="co">#&gt; 11    5.6355179            ***   1.9867341             *   6.22810566       ***</span>
-<span class="co">#&gt; 12    3.0987196            ***   4.3498111           ***   3.48075345       ***</span>
-<span class="co">#&gt; 13    2.7640248            ***   1.8165741                 3.32642949       ***</span>
-<span class="co">#&gt; 14    0.6872899                  1.1444937                 1.02097492          </span>
-<span class="co">#&gt;         bh_stat bh_signif    lmb_stat lmb_signif</span>
-<span class="co">#&gt; 1  -4.033246415       *** -12.8350529        ***</span>
-<span class="co">#&gt; 2  -0.757624918            -4.2061350        ***</span>
-<span class="co">#&gt; 3            NA                    NA           </span>
-<span class="co">#&gt; 4  -1.443639802            -4.8579285        ***</span>
-<span class="co">#&gt; 5   1.271626024             3.1953793        ***</span>
-<span class="co">#&gt; 6  -0.159962572            -0.6010351           </span>
-<span class="co">#&gt; 7  -0.005548115            -0.5838091           </span>
-<span class="co">#&gt; 8  -2.800280643        ** -12.4856495        ***</span>
-<span class="co">#&gt; 9  -2.298184877         *  -5.2306013        ***</span>
-<span class="co">#&gt; 10  1.809375759             3.8950964        ***</span>
-<span class="co">#&gt; 11  2.231357971         *   5.5638463        ***</span>
-<span class="co">#&gt; 12  5.554167758       ***   3.0612478        ***</span>
-<span class="co">#&gt; 13  1.953042855         *   2.7451289        ***</span>
-<span class="co">#&gt; 14  1.228737963             0.6708057</span>
+                 event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-16"</span><span class="op">)</span>,
+                 event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-20"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;         date   weekday percentage        mean bw_1980_stat bw_1980_signif</span>
+<span class="co">#&gt; 1 2020-03-16    Monday        100  0.02329740     2.486449             **</span>
+<span class="co">#&gt; 2 2020-03-17   Tuesday        100 -0.03157867    -3.370281            ***</span>
+<span class="co">#&gt; 3 2020-03-18 Wednesday        100 -0.01617850    -1.726675              *</span>
+<span class="co">#&gt; 4 2020-03-19  Thursday        100  0.07672027     8.188085            ***</span>
+<span class="co">#&gt; 5 2020-03-20    Friday        100  0.05840545     6.233409            ***</span>
+<span class="co">#&gt;   bw_1985_stat bw_1985_signif t_test_stat t_test_signif    pt_stat pt_signif</span>
+<span class="co">#&gt; 1     1.858514              *   1.3941497                2.5507399        **</span>
+<span class="co">#&gt; 2    -2.519140             **  -1.2769075               -2.9495613       ***</span>
+<span class="co">#&gt; 3    -1.290615                 -0.4023135                0.3283654          </span>
+<span class="co">#&gt; 4     6.120241            ***   1.7958275                8.4216222       ***</span>
+<span class="co">#&gt; 5     4.659205            ***   5.1233281           ***  6.3196352       ***</span>
+<span class="co">#&gt;       bh_stat bh_signif  lmb_stat lmb_signif</span>
+<span class="co">#&gt; 1  1.20471169            1.620049           </span>
+<span class="co">#&gt; 2 -1.17531339           -2.435456         **</span>
+<span class="co">#&gt; 3  0.07606284           -1.254626           </span>
+<span class="co">#&gt; 4  2.16657728         *  6.105794        ***</span>
+<span class="co">#&gt; 5  8.65212561       ***  4.565195        ***</span>
 
 <span class="fu"><a href="../reference/nonparametric_tests.html">nonparametric_tests</a></span><span class="op">(</span>list_of_returns <span class="op">=</span> <span class="va">securities_returns</span>,
-                    event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-11"</span><span class="op">)</span>,
-                    event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-28"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;          date   weekday percentage  sign_stat sign_signif gsign_stat</span>
-<span class="co">#&gt; 1  2001-09-11   Tuesday        100 -2.6457513         *** -2.5877375</span>
-<span class="co">#&gt; 2  2001-09-12 Wednesday        100 -1.1338934             -1.0755080</span>
-<span class="co">#&gt; 3  2001-09-13  Thursday          0         NA                     NA</span>
-<span class="co">#&gt; 4  2001-09-14    Friday        100 -1.1338934             -1.0755080</span>
-<span class="co">#&gt; 5  2001-09-17    Monday        100  1.1338934              1.1928362</span>
-<span class="co">#&gt; 6  2001-09-18   Tuesday        100  0.3779645              0.4367214</span>
-<span class="co">#&gt; 7  2001-09-19 Wednesday        100 -0.3779645             -0.3193933</span>
-<span class="co">#&gt; 8  2001-09-20  Thursday        100 -2.6457513         *** -2.5877375</span>
-<span class="co">#&gt; 9  2001-09-21    Friday        100 -1.1338934             -1.0755080</span>
-<span class="co">#&gt; 10 2001-09-24    Monday        100  1.8898224           *  1.9489509</span>
-<span class="co">#&gt; 11 2001-09-25   Tuesday        100  0.3779645              0.4367214</span>
-<span class="co">#&gt; 12 2001-09-26 Wednesday        100  2.6457513         ***  2.7050657</span>
-<span class="co">#&gt; 13 2001-09-27  Thursday        100  1.1338934              1.1928362</span>
-<span class="co">#&gt; 14 2001-09-28    Friday        100 -0.3779645             -0.3193933</span>
-<span class="co">#&gt;    gsign_signif csign_stat csign_signif  rank_stat rank_signif mrank_stat</span>
-<span class="co">#&gt; 1           *** -2.2292016           ** -3.4115930         *** -3.4115930</span>
-<span class="co">#&gt; 2               -0.9553721              -1.0640921             -1.0640921</span>
-<span class="co">#&gt; 3                       NA                      NA                     NA</span>
-<span class="co">#&gt; 4               -0.9553721              -1.6083224             -1.6083224</span>
-<span class="co">#&gt; 5                0.9553721               1.1128291              1.1128291</span>
-<span class="co">#&gt; 6                0.3184574               0.6741958              0.6741958</span>
-<span class="co">#&gt; 7               -0.3184574              -0.2274395             -0.2274395</span>
-<span class="co">#&gt; 8           *** -2.2292016           ** -3.4115930         *** -3.4115930</span>
-<span class="co">#&gt; 9               -0.9553721              -1.7707792           * -1.7707792</span>
-<span class="co">#&gt; 10            *  1.5922868               2.2987639          **  2.2987639</span>
-<span class="co">#&gt; 11               0.3184574               1.3808829              1.3808829</span>
-<span class="co">#&gt; 12          ***  2.2292016           **  2.7211516         ***  2.7211516</span>
-<span class="co">#&gt; 13               0.6369147               1.4296199              1.4296199</span>
-<span class="co">#&gt; 14              -0.3184574               0.5604760              0.5604760</span>
-<span class="co">#&gt;    mrank_signif wlcx_stat wlcx_signif</span>
-<span class="co">#&gt; 1           ***         0         ***</span>
-<span class="co">#&gt; 2                       9            </span>
-<span class="co">#&gt; 3                      NA            </span>
-<span class="co">#&gt; 4                       5            </span>
-<span class="co">#&gt; 5                      20            </span>
-<span class="co">#&gt; 6                      16            </span>
-<span class="co">#&gt; 7                      12            </span>
-<span class="co">#&gt; 8           ***         0         ***</span>
-<span class="co">#&gt; 9             *         3          **</span>
-<span class="co">#&gt; 10           **        22           *</span>
-<span class="co">#&gt; 11                     22           *</span>
-<span class="co">#&gt; 12          ***        28         ***</span>
-<span class="co">#&gt; 13                     23           *</span>
-<span class="co">#&gt; 14                     18</span></code></pre></div>
+                    event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-16"</span><span class="op">)</span>,
+                    event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-20"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;         date   weekday percentage sign_stat sign_signif gsign_stat gsign_signif</span>
+<span class="co">#&gt; 1 2020-03-16    Monday        100 1.1338934              1.1516761             </span>
+<span class="co">#&gt; 2 2020-03-17   Tuesday        100 0.3779645              0.3957301             </span>
+<span class="co">#&gt; 3 2020-03-18 Wednesday        100 1.1338934              1.1516761             </span>
+<span class="co">#&gt; 4 2020-03-19  Thursday        100 1.8898224           *  1.9076220            *</span>
+<span class="co">#&gt; 5 2020-03-20    Friday        100 2.6457513         ***  2.6635680          ***</span>
+<span class="co">#&gt;   csign_stat csign_signif  rank_stat rank_signif mrank_stat mrank_signif</span>
+<span class="co">#&gt; 1  0.8636930               0.7962064              0.8499246             </span>
+<span class="co">#&gt; 2  0.2878977              -0.1857202             -0.2283881             </span>
+<span class="co">#&gt; 3  0.8636930               1.0205417              0.9865178             </span>
+<span class="co">#&gt; 4  1.4394883               2.1127972          **  2.1665371           **</span>
+<span class="co">#&gt; 5  2.0152836           **  2.9255529         ***  2.9786668          ***</span>
+<span class="co">#&gt;   wlcx_stat wlcx_signif</span>
+<span class="co">#&gt; 1        23           *</span>
+<span class="co">#&gt; 2        10            </span>
+<span class="co">#&gt; 3        15            </span>
+<span class="co">#&gt; 4        27         ***</span>
+<span class="co">#&gt; 5        28         ***</span></code></pre></div>
 </div>
 <div id="using-magrittr" class="section level2">
 <h2 class="hasAnchor">
@@ -278,33 +231,33 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 
-<span class="va">rates_indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="st">"^N100"</span>,
-                                      start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
-                                      end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+<span class="va">rates_indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="st">"^GSPC"</span>,
+                                      start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2019-04-01"</span><span class="op">)</span>,
+                                      end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-04-01"</span><span class="op">)</span>,
                                       quote <span class="op">=</span> <span class="st">"Close"</span>,
                                       retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="st">"Close"</span>,
-                          multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
-                          compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="st">"Close"</span>,
+                        multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
+                        compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span>
 
-<span class="va">tickers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ALV.DE"</span>, <span class="st">"CS.PA"</span>, <span class="st">"G.MI"</span>, <span class="st">"HNR1.HA"</span>, <span class="st">"HSX.L"</span>, <span class="st">"MUV2.DE"</span>, <span class="st">"TOP.CO"</span><span class="op">)</span>
+<span class="va">tickers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span>, <span class="st">"ZM"</span>, <span class="st">"UBER"</span>, <span class="st">"NFLX"</span>, <span class="st">"SHOP"</span>, <span class="st">"FB"</span>, <span class="st">"UPWK"</span><span class="op">)</span>
 
 <span class="va">nine_eleven_param</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prices_from_tickers.html">get_prices_from_tickers</a></span><span class="op">(</span><span class="va">tickers</span>,
-                                             start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2000-01-01"</span><span class="op">)</span>,
-                                             end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2002-01-01"</span><span class="op">)</span>,
+                                             start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2019-04-01"</span><span class="op">)</span>,
+                                             end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-04-01"</span><span class="op">)</span>,
                                              quote <span class="op">=</span> <span class="st">"Close"</span>,
                                              retclass <span class="op">=</span> <span class="st">"zoo"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="st">"Close"</span>,
-                          multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
-                          compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/apply_market_model.html">apply_market_model</a></span><span class="op">(</span>regressor <span class="op">=</span> <span class="va">rates_indx</span>,
-                       same_regressor_for_all <span class="op">=</span> <span class="cn">TRUE</span>,
-                       market_model <span class="op">=</span> <span class="st">"sim"</span>,
-                       estimation_method <span class="op">=</span> <span class="st">"ols"</span>,
-                       estimation_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-03-26"</span><span class="op">)</span>,
-                       estimation_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-10"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="../reference/parametric_tests.html">parametric_tests</a></span><span class="op">(</span>event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-11"</span><span class="op">)</span>,
-                     event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2001-09-28"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/get_rates_from_prices.html">get_rates_from_prices</a></span><span class="op">(</span>quote <span class="op">=</span> <span class="st">"Close"</span>,
+                        multi_day <span class="op">=</span> <span class="cn">TRUE</span>,
+                        compounding <span class="op">=</span> <span class="st">"continuous"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/apply_market_model.html">apply_market_model</a></span><span class="op">(</span>regressor <span class="op">=</span> <span class="va">rates_indx</span>,
+                     same_regressor_for_all <span class="op">=</span> <span class="cn">TRUE</span>,
+                     market_model <span class="op">=</span> <span class="st">"sim"</span>,
+                     estimation_method <span class="op">=</span> <span class="st">"ols"</span>,
+                     estimation_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2019-04-01"</span><span class="op">)</span>,
+                     estimation_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-13"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/parametric_tests.html">parametric_tests</a></span><span class="op">(</span>event_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-16"</span><span class="op">)</span>,
+                   event_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-03-20"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
