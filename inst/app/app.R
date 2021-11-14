@@ -83,12 +83,16 @@ ui <- shiny::fluidPage(
 
             shiny::dateRangeInput(
                 "estmation_window",
-                "Select the estimation window:"
+                "Select the estimation window:",
+                start = "2019-04-01",
+                end = "2020-03-13"
             ),
 
             shiny::dateRangeInput(
                 "event_window",
-                "Select the event window:"
+                "Select the event window:",
+                start = "2020-03-16",
+                end = "2020-03-20"
             ),
 
             shiny::column(
@@ -276,19 +280,29 @@ server <- function(input, output, session) {
     # Interactions between UI elements
     #---------------------------------------------------------------------------
 
-    # shiny::observeEvent(input$download, {
-    #
-    #     req(prices())
-    #
-    #     shinyjs::enable("compounding")
-    #     shinyjs::enable("multi_day")
-    #     shinyjs::enable("model")
-    #     shinyjs::enable("estmation_window")
-    #     shinyjs::enable("event_window")
-    #
-    # })
+    # Update boundaries of input$estmation_window
+    shiny::observeEvent(
+        input$date_range,
+        shiny::updateDateRangeInput(
+            session = session,
+            inputId = "estmation_window",
+            min = input$date_range[1],
+            max = input$date_range[2]
+        )
+    )
 
-    shiny::observeEvent( # XXX: can we just use `observe()`?
+    # Update boundaries of input$event_window
+    observe({
+        shiny::updateDateRangeInput(
+            session = session,
+            inputId = "event_window",
+            min = input$estmation_window[2] + 1,
+            max = input$date_range[2]
+        )
+    })
+
+    # Update values of input$estmation_window (ignoring initialization)
+    shiny::observeEvent(
         input$date_range, {
 
             estimation_window_length <- 2 / 3 *
@@ -298,23 +312,22 @@ server <- function(input, output, session) {
                 session = session,
                 inputId = "estmation_window",
                 start = input$date_range[1],
-                end = input$date_range[1] + estimation_window_length,
-                min = input$date_range[1],
-                max = input$date_range[2]
+                end = input$date_range[1] + estimation_window_length
             )
-        }
+        },
+        ignoreInit = TRUE
     )
 
+    # Update values of input$event_window (ignoring initialization)
     shiny::observeEvent(
         input$estmation_window,
         shiny::updateDateRangeInput(
             session = session,
             inputId = "event_window",
             start = input$estmation_window[2] + 1,
-            end = input$date_range[2],
-            min = input$estmation_window[2] + 1,
-            max = input$date_range[2]
-        )
+            end = input$date_range[2]
+        ),
+        ignoreInit = TRUE
     )
 
     #---------------------------------------------------------------------------
