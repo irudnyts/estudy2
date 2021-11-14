@@ -54,7 +54,7 @@ Suggests:
     stringr (>= 1.4.0),
     formattable (>= 0.21.1),
     dplyr (>= 1.0.7),
-    emo (>=0.0.0.9000)
+    emo
 Remotes: github::hadley/emo
 VignetteBuilder: knitr
 Encoding: UTF-8
