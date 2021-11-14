@@ -1,3 +1,11 @@
+#' Pipe operator
+#'
+#' See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
+#'
+#' Brutally imported from \code{magrittr} package, since otherwise
+#' would require \code{library(magrittr)} when the app is deployed as-is.
+`%>%` <- magrittr::`%>%`
+
 #' Download prices given a ticker
 #'
 #' The function uses \code{get_prices_from_tickers()} from the package to
@@ -8,7 +16,7 @@
 download_prices <- function(ticker, start, end, quote, retclass) {
     tryCatch(
         expr = {
-            get_prices_from_tickers(
+            estudy2::get_prices_from_tickers(
                 ticker,
                 start = start,
                 end = end,

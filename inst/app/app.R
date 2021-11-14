@@ -197,7 +197,7 @@ server <- function(input, output, session) {
     })
 
     rates <- shiny::eventReactive(input$calculate, {
-        get_rates_from_prices(
+        estudy2::get_rates_from_prices(
             prices = prices(),
             quote = input$price_type,
             multi_day = input$multi_day,
@@ -233,7 +233,7 @@ server <- function(input, output, session) {
 
             shiny::req(!is.null(prices_indx))
 
-            get_rates_from_prices(
+            estudy2::get_rates_from_prices(
                 prices_indx,
                 quote = input$price_type,
                 multi_day = input$multi_day,
@@ -245,7 +245,7 @@ server <- function(input, output, session) {
     })
 
     stock_returns <- shiny::eventReactive(input$calculate, {
-        apply_market_model(
+        estudy2::apply_market_model(
             rates = rates(),
             regressor = rates_indx(),
             same_regressor_for_all = TRUE,
@@ -258,7 +258,7 @@ server <- function(input, output, session) {
 
     output$parametric_table <- DT::renderDataTable({
 
-        parametric_tests(
+        estudy2::parametric_tests(
             list_of_returns = stock_returns(),
             event_start = isolate(input$event_window[1]),
             event_end = isolate(input$event_window[2])
@@ -270,7 +270,7 @@ server <- function(input, output, session) {
 
     output$nonparametric_table <- DT::renderDataTable({
 
-        nonparametric_tests(
+        estudy2::nonparametric_tests(
             list_of_returns = stock_returns(),
             event_start = isolate(input$event_window[1]),
             event_end = isolate(input$event_window[2])
