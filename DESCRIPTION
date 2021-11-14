@@ -45,7 +45,7 @@ Suggests:
     knitr (>= 1.33),
     rmarkdown (>= 2.10),
     purrr (>= 0.3.4),
-    curl (>= 4.3.2)
+    curl (>= 4.3.2),
     shiny (>= 1.6.0),
     shinyFeedback (>= 0.4.0),
     shinyWidgets (>= 0.6.0),
