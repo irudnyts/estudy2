@@ -52,7 +52,7 @@ Suggests:
     bslib (>= 0.2.5.1),
     stringr (>= 1.4.0),
     magrittr (>= 2.0.1),
-    formattable (>= 0.21.1),
+    formattable (>= 0.2.1),
     dplyr (>= 1.0.7),
     emo
 Remotes: github::hadley/emo
