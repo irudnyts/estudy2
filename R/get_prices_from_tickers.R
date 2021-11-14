@@ -37,7 +37,7 @@
 #' ## The result of the above code is stored in:
 #' data(prices)
 #'
-#' ## Download historical prices of ESTX50 EUR P index:
+#' ## Download historical prices of S&P 500 index:
 #' \dontrun{
 #' prices_indx <- get_prices_from_tickers("^GSPC",
 #'                                        start = as.Date("2019-04-01"),
