@@ -268,11 +268,6 @@ server <- function(input, output, session) {
 
     output$parametric_table <- DT::renderDataTable({
 
-        ## Add stars as emoji stars
-        ## Add nice column names
-        ## Add green bar for 100%
-        ## Highlight in red significant and below zero, highlight in green above zero
-
         # req(stock_returns())
 
         parametric_tests(
@@ -281,9 +276,9 @@ server <- function(input, output, session) {
             event_end = isolate(input$event_window[2])
         ) %>%
             beautify() %>%
-            formattable::as.datatable()
+            formattable::as.datatable(options = list(scrollX = TRUE))
 
-    }, width = 300)
+    })
 
     output$nonparametric_table <- DT::renderDataTable({
 
@@ -291,9 +286,11 @@ server <- function(input, output, session) {
             list_of_returns = stock_returns(),
             event_start = isolate(input$event_window[1]),
             event_end = isolate(input$event_window[2])
-        )
+        ) %>%
+            beautify() %>%
+            formattable::as.datatable(options = list(scrollX = TRUE))
 
-    }, width = 300)
+    })
 
 
     # Interactions between UI elements
