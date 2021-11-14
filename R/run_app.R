@@ -12,8 +12,8 @@ run_app <- function() {
     check_installation("purrr")
 
     packages <- c(
-        "curl", "shiny", "shinyFeedback", "shinyWidgets", "DT", "bslib",
-        "stringr", "magrittr", "formattable", "dplyr"
+        "shiny", "shinyFeedback", "shinyWidgets", "DT", "bslib", "stringr",
+        "magrittr", "formattable", "dplyr"
     )
 
     purrr::walk(packages, check_installation)

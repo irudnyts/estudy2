@@ -55,6 +55,10 @@ get_prices_from_tickers <- function(..., start, end,
     quote <- match.arg(quote)
     retclass <- match.arg(retclass)
     tickers <- c(...)
+    if (!curl::has_internet()) {
+        message("Please make sure you have an internet connection.")
+        return(invisible(NULL))
+    }
     # for avoiding check inside the loop, the if/else is done outside the loop,
     # that is why so many repetition of the code. Done for optimality and speed.
     if(retclass == "list") {
