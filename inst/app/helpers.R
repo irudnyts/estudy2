@@ -1,3 +1,10 @@
+#' Download prices given a ticker
+#'
+#' The function uses \code{get_prices_from_tickers()} from the package to
+#' download prices. However, instead of throwing an error if the ticker is
+#' not valid, it returns \code{NULL}.
+#'
+#' The function does not return \code{NULL} in case of the warining.
 download_prices <- function(ticker, start, end, quote, retclass) {
     tryCatch(
         expr = {
@@ -15,6 +22,13 @@ download_prices <- function(ticker, start, end, quote, retclass) {
     )
 }
 
+#' Named vector with nice column names
+#'
+#' Each element of the vector is a nice column name that has a corresponding
+#' name from the data frames that returned by \code{parametric_tests()} and
+#' \code{nonparametric_tests()}.
+#'
+#' All labels are in title case.
 nice_colnames <- c(
     "date" = "Date",
     "weekday" = "Weekday",
@@ -46,6 +60,13 @@ nice_colnames <- c(
     "wlcx_signif" = "Wilcoxon's Signif."
 )
 
+#' Highlight values depending on their sign
+#'
+#' An auxiliary function that highlights values below zero into red, above --
+#' into green, and zero values into grey (default from \code{bslib}'s
+#'  \code{solar} theme).
+#'
+#'  The function heavily relies to \code{formattable}.
 sign_formatter <- formattable::formatter(
     "span",
     style = x ~ formattable::style(
@@ -55,11 +76,17 @@ sign_formatter <- formattable::formatter(
     )
 )
 
+#' Beautify the result of \code{parametric_tests()} and
+#' \code{nonparametric_tests()}
+#'
+#' The function beautifies the column names, formats percent columns, rounds
+#' to the second digit, and replaces asterisks by emojis' stars.
 beautify <- function(tests_table) {
 
     # beautify column names
     names(tests_table) <- nice_colnames[names(tests_table)]
 
+    # Define formatters for various columns
     column_formatters <- list(
         Percent = formattable::color_bar(
             "lightgreen", fun = formattable::proportion
@@ -85,7 +112,6 @@ beautify <- function(tests_table) {
         ) %>%
         dplyr::mutate(
             Percent = formattable::percent(Percent / 100, digits = 0),
-
             Date = format(Date, "%b %d")
         ) %>%
         dplyr::mutate(
