@@ -13,7 +13,7 @@ run_app <- function() {
 
     packages <- c(
         "curl", "shiny", "shinyFeedback", "shinyWidgets", "DT", "bslib",
-        "stringr", "formattable", "dplyr", "emo"
+        "stringr", "magrittr", "formattable", "dplyr", "emo"
     )
 
     purrr::walk(packages, check_installation)

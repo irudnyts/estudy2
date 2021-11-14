@@ -37,8 +37,7 @@ Imports:
     quantmod (>= 0.4.17),
     zoo (>= 1.8.7),
     matrixStats (>= 0.56.0),
-    Rcpp (>= 1.0.4.6),
-    magrittr (>= 2.0.1)
+    Rcpp (>= 1.0.4.6)
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
 Suggests: 
@@ -52,6 +51,7 @@ Suggests:
     DT (>= 0.19),
     bslib (>= 0.2.5.1),
     stringr (>= 1.4.0),
+    magrittr (>= 2.0.1),
     formattable (>= 0.21.1),
     dplyr (>= 1.0.7),
     emo
