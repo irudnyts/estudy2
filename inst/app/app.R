@@ -1,8 +1,7 @@
 source("helpers.R")
 
 ui <- shiny::fluidPage(
-    # waiter::use_waitress(),
-    # shinyjs::useShinyjs(),
+
     shinyFeedback::useShinyFeedback(),
 
     shiny::titlePanel(
@@ -14,8 +13,6 @@ ui <- shiny::fluidPage(
 
     shiny::tags$hr(),
 
-    theme = bslib::bs_theme(version = 4, bootswatch = "solar"),
-
     shiny::sidebarLayout(
 
         shiny::sidebarPanel(
@@ -23,14 +20,14 @@ ui <- shiny::fluidPage(
             shiny::textInput(
                 "tickers",
                 "List tickers separated by comma:",
-                placeholder = "AAPL, MSFT, AMZN, FB, GOOGL, NVDA"
+                value = "AMZN, ZM, UBER, NFLX"
             ),
 
             shiny::dateRangeInput(
                 "date_range",
                 "Select start and end date:",
-                start = "2019-01-01",
-                end = "2021-01-01"
+                start = "2019-04-01",
+                end = "2020-04-01"
             ),
 
             shinyWidgets::awesomeRadio(
@@ -39,51 +36,37 @@ ui <- shiny::fluidPage(
                 choices = c("Close", "Open")
             ),
 
-            # shiny::column(
-            #     width = 12,
-            #     shiny::actionButton("download", "Download", width = "100%"),
-            #     align = "center"
-            # ),
+            shiny::tags$hr(),
 
+            shinyWidgets::awesomeRadio(
+                "compounding",
+                "Select the compounding type",
+                choices = c(
+                    "Discrete" = "discrete",
+                    "Continuous" = "continuous"
+                )
+            ),
+
+            shinyWidgets::awesomeRadio(
+                "multi_day",
+                "Take into account rates between\n more than one day?",
+                choices = c(
+                    "Yes" = TRUE,
+                    "No" = FALSE
+                )
+            ),
 
             shiny::tags$hr(),
 
-            # shinyjs::disabled(
-                shinyWidgets::awesomeRadio(
-                    "compounding",
-                    "Select the compounding type",
-                    choices = c(
-                        "Discrete" = "discrete",
-                        "Continuous" = "continuous"
-                    )
-                ),
-            # ),
-
-            # shinyjs::disabled(
-                shinyWidgets::awesomeRadio(
-                    "multi_day",
-                    "Take into account rates between\n more than one day?",
-                    choices = c(
-                        "Yes" = TRUE,
-                        "No" = FALSE
-                    )
-                ),
-            # ),
-
-            shiny::tags$hr(),
-
-            # shinyjs::disabled(
-                shinyWidgets::awesomeRadio(
-                    "model",
-                    "Select the market model",
-                    choices = c(
-                        "Mean-adjusted returns model" = "mean_adj",
-                        "Market-adjusted returns model" = "mrkt_adj",
-                        "Single index market\n model" = "sim"
-                    )
-                ),
-            # ),
-
+            shinyWidgets::awesomeRadio(
+                "model",
+                "Select the market model",
+                choices = c(
+                    "Mean-adjusted returns model" = "mean_adj",
+                    "Market-adjusted returns model" = "mrkt_adj",
+                    "Single index market\n model" = "sim"
+                )
+            ),
 
             shiny::conditionalPanel(
                 condition =
@@ -92,26 +75,21 @@ ui <- shiny::fluidPage(
                 shiny::textInput(
                     "index",
                     "Type the ticker of the index",
-                    placeholder = "^GSPC"
+                    value = "^GSPC"
                 ),
-                # Add a button to allow downloading
             ),
 
             shiny::tags$hr(),
 
-            # shinyjs::disabled(
-                shiny::dateRangeInput(
-                    "estmation_window",
-                    "Select the estimation window:"
-                ),
-            # ),
+            shiny::dateRangeInput(
+                "estmation_window",
+                "Select the estimation window:"
+            ),
 
-            # shinyjs::disabled(
-                shiny::dateRangeInput(
-                    "event_window",
-                    "Select the event window:"
-                ),
-            # )
+            shiny::dateRangeInput(
+                "event_window",
+                "Select the event window:"
+            ),
 
             shiny::column(
                 width = 12,
@@ -134,7 +112,9 @@ ui <- shiny::fluidPage(
                 )
             )
         )
-    )
+    ),
+
+    theme = bslib::bs_theme(version = 4, bootswatch = "solar")
 )
 
 server <- function(input, output, session) {
@@ -323,7 +303,6 @@ server <- function(input, output, session) {
                 max = input$date_range[2]
             )
         }
-
     )
 
     shiny::observeEvent(
