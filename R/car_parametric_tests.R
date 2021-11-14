@@ -68,14 +68,14 @@
 #'                        estimation_method = "ols",
 #'                        estimation_start = as.Date("2019-04-01"),
 #'                        estimation_end = as.Date("2020-03-13")) %>%
-#'     car_parametric_tests(car_start = as.Date("2020-13-16"),
+#'     car_parametric_tests(car_start = as.Date("2020-03-16"),
 #'                          car_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' car_param <- car_parametric_tests(
 #'     list_of_returns = securities_returns,
-#'     car_start = as.Date("2020-13-16"),
+#'     car_start = as.Date("2020-03-16"),
 #'     car_end = as.Date("2020-03-20")
 #' )
 #'
@@ -180,14 +180,14 @@ car_parametric_tests <- function(list_of_returns, car_start, car_end,
 #'                        estimation_method = "ols",
 #'                        estimation_start = as.Date("2019-04-01"),
 #'                        estimation_end = as.Date("2020-03-13")) %>%
-#'     car_lamb(car_start = as.Date("2020-13-16"),
+#'     car_lamb(car_start = as.Date("2020-03-16"),
 #'              car_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' car_lamb(
 #'     list_of_returns = securities_returns,
-#'     car_start = as.Date("2020-13-16"),
+#'     car_start = as.Date("2020-03-16"),
 #'     car_end = as.Date("2020-03-20")
 #' )
 #'
@@ -288,14 +288,14 @@ car_lamb <- function(list_of_returns, car_start, car_end, percentage = 90) {
 #'                        estimation_method = "ols",
 #'                        estimation_start = as.Date("2019-04-01"),
 #'                        estimation_end = as.Date("2020-03-13")) %>%
-#'     car_brown_warner_1985(car_start = as.Date("2020-13-16"),
+#'     car_brown_warner_1985(car_start = as.Date("2020-03-16"),
 #'                           car_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' car_brown_warner_1985(
 #'     list_of_returns = securities_returns,
-#'     car_start = as.Date("2020-13-16"),
+#'     car_start = as.Date("2020-03-16"),
 #'     car_end = as.Date("2020-03-20")
 #' )
 #'

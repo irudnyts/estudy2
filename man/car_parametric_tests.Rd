@@ -82,14 +82,14 @@ car_param <- get_prices_from_tickers(tickers,
                        estimation_method = "ols",
                        estimation_start = as.Date("2019-04-01"),
                        estimation_end = as.Date("2020-03-13")) \%>\%
-    car_parametric_tests(car_start = as.Date("2020-13-16"),
+    car_parametric_tests(car_start = as.Date("2020-03-16"),
                          car_end = as.Date("2020-03-20"))
 }
 ## The result of the code above is equivalent to:
 data(securities_returns)
 car_param <- car_parametric_tests(
     list_of_returns = securities_returns,
-    car_start = as.Date("2020-13-16"),
+    car_start = as.Date("2020-03-16"),
     car_end = as.Date("2020-03-20")
 )
 
