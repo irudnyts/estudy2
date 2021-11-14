@@ -9,17 +9,12 @@
 #' @export
 run_app <- function() {
 
-    # XXX: add stringr package here and to DESCRIPTION
-    # XXX: do something with margritttr
-    # XXX: do we still need shinyjs?
-    # XXX: emo, formattable, dplyr
+    check_installation("purrr")
 
     packages <- c(
-        "shiny", "shinyWidgets", "bslib", "stringr", "shinyjs", "DT",
-        "magrittr", "curl", "shinyFeedback"
+        "curl", "shiny", "shinyFeedback", "shinyWidgets", "DT", "bslib",
+        "stringr", "formattable", "dplyr", "emo"
     )
-
-    check_installation("purrr")
 
     purrr::walk(packages, check_installation)
 
