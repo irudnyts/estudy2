@@ -97,7 +97,13 @@ ui <- shiny::fluidPage(
 
             shiny::column(
                 width = 12,
-                shiny::actionButton("calculate", "Calculate!", width = "100%"),
+                shiny::actionButton(
+                    "calculate",
+                    "Calculate",
+                    icon = shiny::icon("calculator"),
+                    width = "100%"
+
+                ),
                 align = "center"
             )
 
@@ -342,6 +348,15 @@ server <- function(input, output, session) {
         priority = 1,
         ignoreInit = TRUE
     )
+
+    shiny::observeEvent(input$calculate, {
+        shiny::updateActionButton(
+            session = session,
+            inputId = "calculate",
+            label = "Update",
+            icon = shiny::icon("redo")
+        )
+    })
 
     #---------------------------------------------------------------------------
     # Bookmarking
