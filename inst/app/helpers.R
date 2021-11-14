@@ -61,7 +61,9 @@ beautify <- function(tests_table) {
     names(tests_table) <- nice_colnames[names(tests_table)]
 
     column_formatters <- list(
-        Percent = formattable::color_bar("lightgreen")
+        Percent = formattable::color_bar(
+            "lightgreen", fun = formattable::proportion
+        )
     )
 
     if (any(names(tests_table) == "Mean"))
