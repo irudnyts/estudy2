@@ -32,7 +32,7 @@ ui <- shiny::fluidPage(
 
             shinyWidgets::awesomeRadio(
                 "price_type",
-                "Select the price type",
+                "Select the price type:",
                 choices = c("Close", "Open")
             ),
 
@@ -40,7 +40,7 @@ ui <- shiny::fluidPage(
 
             shinyWidgets::awesomeRadio(
                 "compounding",
-                "Select the compounding type",
+                "Select the compounding type:",
                 choices = c(
                     "Discrete" = "discrete",
                     "Continuous" = "continuous"
@@ -60,7 +60,7 @@ ui <- shiny::fluidPage(
 
             shinyWidgets::awesomeRadio(
                 "model",
-                "Select the market model",
+                "Select the market model:",
                 choices = c(
                     "Mean-adjusted returns model" = "mean_adj",
                     "Market-adjusted returns model" = "mrkt_adj",
@@ -74,7 +74,7 @@ ui <- shiny::fluidPage(
                 shiny::tags$hr(),
                 shiny::textInput(
                     "index",
-                    "Type the ticker of the index",
+                    "Specify the ticker of the index:",
                     value = "^GSPC"
                 ),
             ),
