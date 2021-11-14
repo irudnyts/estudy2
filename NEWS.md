@@ -1,3 +1,8 @@
+# estudy2 0.10.0
+
+* Update examples to COVID-19 related
+* Equip the package with the demo Shiny app
+
 # estudy2 0.9.3
 
 * Fix a bug in the vignette and examples
