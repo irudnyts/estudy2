@@ -49,19 +49,18 @@ values are standard normal. The significance levels of \eqn{\alpha} are 0.1,
 \examples{
 \dontrun{
 library("magrittr")
-rates_indx <- get_prices_from_tickers("^N100",
-                                      start = as.Date("2000-01-01"),
-                                      end = as.Date("2002-01-01"),
+rates_indx <- get_prices_from_tickers("^GSPC",
+                                      start = as.Date("2019-04-01"),
+                                      end = as.Date("2020-04-01"),
                                       quote = "Close",
                                       retclass = "zoo") \%>\%
     get_rates_from_prices(quote = "Close",
                           multi_day = TRUE,
                           compounding = "continuous")
-tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-             "TOP.CO")
+tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 get_prices_from_tickers(tickers,
-                        start = as.Date("2000-01-01"),
-                        end = as.Date("2002-01-01"),
+                        start = as.Date("2019-04-01"),
+                        end = as.Date("2020-04-01"),
                         quote = "Close",
                         retclass = "zoo") \%>\%
     get_rates_from_prices(quote = "Close",
@@ -71,17 +70,17 @@ get_prices_from_tickers(tickers,
                        same_regressor_for_all = TRUE,
                        market_model = "sim",
                        estimation_method = "ols",
-                       estimation_start = as.Date("2001-03-26"),
-                       estimation_end = as.Date("2001-09-10")) \%>\%
-    car_lamb(car_start = as.Date("2001-09-11"),
-             car_end = as.Date("2001-09-28"))
+                       estimation_start = as.Date("2019-04-01"),
+                       estimation_end = as.Date("2020-03-13")) \%>\%
+    car_lamb(car_start = as.Date("2020-03-16"),
+             car_end = as.Date("2020-03-20"))
 }
 ## The result of the code above is equivalent to:
 data(securities_returns)
 car_lamb(
     list_of_returns = securities_returns,
-    car_start = as.Date("2001-09-11"),
-    car_end = as.Date("2001-09-28")
+    car_start = as.Date("2020-03-16"),
+    car_end = as.Date("2020-03-20")
 )
 
 }

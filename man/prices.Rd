@@ -3,26 +3,26 @@
 \docType{data}
 \name{prices}
 \alias{prices}
-\title{Stock prices of eight major European insurance companies from 2000-01-03 to
-2002-01-01}
+\title{Stock prices of seven companies from 2019-04-01 to 2020-04-01}
 \format{
 A \code{zoo} object of eight columns:
 \itemize{
-  \item ALV.DE
-  \item CS.PA
-  \item G.MI
-  \item HNR1.HA
-  \item HSX.L
-  \item MUV2.DE
-  \item TOP.CO
+  \item AMZN
+  \item ZM
+  \item UBER
+  \item NFLX
+  \item SHOP
+  \item FB
+  \item UPWK
 }
 }
 \usage{
 prices
 }
 \description{
-A \code{zoo} object of eight columns containing daily Close stock prices of
-eight major European insurance companies from 2000-01-03 to 2002-01-01. See
-examples of \code{\link{get_prices_from_tickers}} for the dataset generation.
+A \code{zoo} object of seven columns containing daily Close stock prices from
+2019-04-01 to 2020-04-01 of seven companies, which could profit from COVID-19
+lockdown. See examples of \code{\link{get_prices_from_tickers}} for the
+dataset generation.
 }
 \keyword{datasets}

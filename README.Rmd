@@ -49,3 +49,14 @@ To install the development version of estudy2 use:
 # library("devtools")
 devtools::install_github("irudnyts/estudy2")
 ```
+
+## Demo
+
+The package is equipped with a demonstration Shiny app that can be run locally with: 
+
+```{r, eval=FALSE}
+library("estudy2")
+run_app()
+```
+
+Otherwise, one can explore the deployed version using this [link](http://irudnyts.shinyapps.io/estudy2/). 

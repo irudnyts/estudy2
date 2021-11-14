@@ -3,7 +3,7 @@
 \docType{data}
 \name{prices_indx}
 \alias{prices_indx}
-\title{Prices of of EURONEXT 100 index from 2000-01-03 to 2001-12-31}
+\title{Prices of S&P 500 index from 2019-04-01 to 2020-04-01}
 \format{
 A \code{zoo} object.
 }
@@ -11,8 +11,8 @@ A \code{zoo} object.
 prices_indx
 }
 \description{
-A \code{zoo} object containing daily prices of EURONEXT 100 index from
-2000-01-03 to 2001-12-31. See examples of
+A \code{zoo} object containing daily prices of S&P 500 index from
+2019-04-01 to 2020-04-01. See examples of
 \code{\link{get_prices_from_tickers}} for the dataset generation.
 }
 \keyword{datasets}

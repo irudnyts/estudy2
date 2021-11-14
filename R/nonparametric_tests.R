@@ -67,21 +67,20 @@
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^N100",
-#'                                       start = as.Date("2000-01-01"),
-#'                                       end = as.Date("2002-01-01"),
+#' rates_indx <- get_prices_from_tickers("^GSPC",
+#'                                       start = as.Date("2019-04-01"),
+#'                                       end = as.Date("2020-04-01"),
 #'                                       quote = "Close",
 #'                                       retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
-#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "TOP.CO")
-#' nine_eleven_nparam <- get_prices_from_tickers(tickers,
-#'                                               start = as.Date("2000-01-01"),
-#'                                               end = as.Date("2002-01-01"),
-#'                                               quote = "Close",
-#'                                               retclass = "zoo") %>%
+#' tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
+#' nparam <- get_prices_from_tickers(tickers,
+#'                                   start = as.Date("2019-04-01"),
+#'                                   end = as.Date("2020-04-01"),
+#'                                   quote = "Close",
+#'                                   retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous") %>%
@@ -89,16 +88,16 @@
 #'                        same_regressor_for_all = TRUE,
 #'                        market_model = "sim",
 #'                        estimation_method = "ols",
-#'                        estimation_start = as.Date("2001-03-26"),
-#'                        estimation_end = as.Date("2001-09-10")) %>%
-#'     nonparametric_tests(event_start = as.Date("2001-09-11"),
-#'                         event_end = as.Date("2001-09-28"))
+#'                        estimation_start = as.Date("2019-04-01"),
+#'                        estimation_end = as.Date("2020-03-13")) %>%
+#'     nonparametric_tests(event_start = as.Date("2020-03-16"),
+#'                         event_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
-#' nine_eleven_nparam <- nonparametric_tests(list_of_returns = securities_returns,
-#'                                           event_start = as.Date("2001-09-11"),
-#'                                           event_end = as.Date("2001-09-28"))
+#' nparam <- nonparametric_tests(list_of_returns = securities_returns,
+#'                               event_start = as.Date("2020-03-16"),
+#'                               event_end = as.Date("2020-03-20"))
 #'
 #' @export
 nonparametric_tests <- function(list_of_returns, event_start, event_end,
@@ -176,19 +175,18 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^N100",
-#'                                       start = as.Date("2000-01-01"),
-#'                                       end = as.Date("2002-01-01"),
+#' rates_indx <- get_prices_from_tickers("^GSPC",
+#'                                       start = as.Date("2019-04-01"),
+#'                                       end = as.Date("2020-04-01"),
 #'                                       quote = "Close",
 #'                                       retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
-#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "TOP.CO")
+#' tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 #' get_prices_from_tickers(tickers,
-#'                         start = as.Date("2000-01-01"),
-#'                         end = as.Date("2002-01-01"),
+#'                         start = as.Date("2019-04-01"),
+#'                         end = as.Date("2020-04-01"),
 #'                         quote = "Close",
 #'                         retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
@@ -198,16 +196,16 @@ nonparametric_tests <- function(list_of_returns, event_start, event_end,
 #'                        same_regressor_for_all = TRUE,
 #'                        market_model = "sim",
 #'                        estimation_method = "ols",
-#'                        estimation_start = as.Date("2001-03-26"),
-#'                        estimation_end = as.Date("2001-09-10")) %>%
-#'     sign_test(event_start = as.Date("2001-09-11"),
-#'               event_end = as.Date("2001-09-28"))
+#'                        estimation_start = as.Date("2019-04-01"),
+#'                        estimation_end = as.Date("2020-03-13")) %>%
+#'     sign_test(event_start = as.Date("2020-03-16"),
+#'               event_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' sign_test(list_of_returns = securities_returns,
-#'           event_start =  as.Date("2001-09-11"),
-#'           event_end = as.Date("2001-09-28"))
+#'           event_start =  as.Date("2020-03-16"),
+#'           event_end = as.Date("2020-03-20"))
 #'
 #' @export
 sign_test <- function(list_of_returns, event_start, event_end) {
@@ -323,19 +321,18 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^N100",
-#'                                       start = as.Date("2000-01-01"),
-#'                                       end = as.Date("2002-01-01"),
+#' rates_indx <- get_prices_from_tickers("^GSPC",
+#'                                       start = as.Date("2019-04-01"),
+#'                                       end = as.Date("2020-04-01"),
 #'                                       quote = "Close",
 #'                                       retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
-#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "TOP.CO")
+#' tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 #' get_prices_from_tickers(tickers,
-#'                         start = as.Date("2000-01-01"),
-#'                         end = as.Date("2002-01-01"),
+#'                         start = as.Date("2019-04-01"),
+#'                         end = as.Date("2020-04-01"),
 #'                         quote = "Close",
 #'                         retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
@@ -345,16 +342,16 @@ sign_test <- function(list_of_returns, event_start, event_end) {
 #'                        same_regressor_for_all = TRUE,
 #'                        market_model = "sim",
 #'                        estimation_method = "ols",
-#'                        estimation_start = as.Date("2001-03-26"),
-#'                        estimation_end = as.Date("2001-09-10")) %>%
-#'     generalized_sign_test(event_start = as.Date("2001-09-11"),
-#'                           event_end = as.Date("2001-09-28"))
+#'                        estimation_start = as.Date("2019-04-01"),
+#'                        estimation_end = as.Date("2020-03-13")) %>%
+#'     generalized_sign_test(event_start = as.Date("2020-03-16"),
+#'                           event_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' generalized_sign_test(list_of_returns = securities_returns,
-#'                       event_start =  as.Date("2001-09-11"),
-#'                       event_end = as.Date("2001-09-28"))
+#'                       event_start =  as.Date("2020-03-16"),
+#'                       event_end = as.Date("2020-03-20"))
 #'
 #' @export
 generalized_sign_test <- function(list_of_returns, event_start, event_end) {
@@ -483,19 +480,18 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^N100",
-#'                                       start = as.Date("2000-01-01"),
-#'                                       end = as.Date("2002-01-01"),
+#' rates_indx <- get_prices_from_tickers("^GSPC",
+#'                                       start = as.Date("2019-04-01"),
+#'                                       end = as.Date("2020-04-01"),
 #'                                       quote = "Close",
 #'                                       retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
-#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "TOP.CO")
+#' tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 #' get_prices_from_tickers(tickers,
-#'                         start = as.Date("2000-01-01"),
-#'                         end = as.Date("2002-01-01"),
+#'                         start = as.Date("2019-04-01"),
+#'                         end = as.Date("2020-04-01"),
 #'                         quote = "Close",
 #'                         retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
@@ -505,16 +501,16 @@ generalized_sign_test <- function(list_of_returns, event_start, event_end) {
 #'                        same_regressor_for_all = TRUE,
 #'                        market_model = "sim",
 #'                        estimation_method = "ols",
-#'                        estimation_start = as.Date("2001-03-26"),
-#'                        estimation_end = as.Date("2001-09-10")) %>%
-#'     corrado_sign_test(event_start = as.Date("2001-09-11"),
-#'                       event_end = as.Date("2001-09-28"))
+#'                        estimation_start = as.Date("2019-04-01"),
+#'                        estimation_end = as.Date("2020-03-13")) %>%
+#'     corrado_sign_test(event_start = as.Date("2020-03-16"),
+#'                       event_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' corrado_sign_test(list_of_returns = securities_returns,
-#'                   event_start =  as.Date("2001-09-11"),
-#'                   event_end = as.Date("2001-09-28"))
+#'                   event_start =  as.Date("2020-03-16"),
+#'                   event_end = as.Date("2020-03-20"))
 #'
 #' @export
 corrado_sign_test <- function(list_of_returns, event_start, event_end) {
@@ -662,19 +658,18 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^N100",
-#'                                       start = as.Date("2000-01-01"),
-#'                                       end = as.Date("2002-01-01"),
+#' rates_indx <- get_prices_from_tickers("^GSPC",
+#'                                       start = as.Date("2019-04-01"),
+#'                                       end = as.Date("2020-04-01"),
 #'                                       quote = "Close",
 #'                                       retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
-#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "TOP.CO")
+#' tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 #' get_prices_from_tickers(tickers,
-#'                         start = as.Date("2000-01-01"),
-#'                         end = as.Date("2002-01-01"),
+#'                         start = as.Date("2019-04-01"),
+#'                         end = as.Date("2020-04-01"),
 #'                         quote = "Close",
 #'                         retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
@@ -684,16 +679,16 @@ corrado_sign_test <- function(list_of_returns, event_start, event_end) {
 #'                        same_regressor_for_all = TRUE,
 #'                        market_model = "sim",
 #'                        estimation_method = "ols",
-#'                        estimation_start = as.Date("2001-03-26"),
-#'                        estimation_end = as.Date("2001-09-10")) %>%
-#'     rank_test(event_start = as.Date("2001-09-11"),
-#'               event_end = as.Date("2001-09-28"))
+#'                        estimation_start = as.Date("2019-04-01"),
+#'                        estimation_end = as.Date("2020-03-13")) %>%
+#'     rank_test(event_start = as.Date("2020-03-16"),
+#'               event_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' rank_test(list_of_returns = securities_returns,
-#'           event_start =  as.Date("2001-09-11"),
-#'           event_end = as.Date("2001-09-28"))
+#'           event_start =  as.Date("2020-03-16"),
+#'           event_end = as.Date("2020-03-20"))
 #'
 #' @export
 rank_test <- function(list_of_returns, event_start, event_end) {
@@ -850,19 +845,18 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^N100",
-#'                                       start = as.Date("2000-01-01"),
-#'                                       end = as.Date("2002-01-01"),
+#' rates_indx <- get_prices_from_tickers("^GSPC",
+#'                                       start = as.Date("2019-04-01"),
+#'                                       end = as.Date("2020-04-01"),
 #'                                       quote = "Close",
 #'                                       retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
-#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "TOP.CO")
+#' tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 #' get_prices_from_tickers(tickers,
-#'                         start = as.Date("2000-01-01"),
-#'                         end = as.Date("2002-01-01"),
+#'                         start = as.Date("2019-04-01"),
+#'                         end = as.Date("2020-04-01"),
 #'                         quote = "Close",
 #'                         retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
@@ -872,16 +866,16 @@ rank_test <- function(list_of_returns, event_start, event_end) {
 #'                        same_regressor_for_all = TRUE,
 #'                        market_model = "sim",
 #'                        estimation_method = "ols",
-#'                        estimation_start = as.Date("2001-03-26"),
-#'                        estimation_end = as.Date("2001-09-10")) %>%
-#'     modified_rank_test(event_start = as.Date("2001-09-11"),
-#'                        event_end = as.Date("2001-09-28"))
+#'                        estimation_start = as.Date("2019-04-01"),
+#'                        estimation_end = as.Date("2020-03-13")) %>%
+#'     modified_rank_test(event_start = as.Date("2020-03-16"),
+#'                        event_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' modified_rank_test(list_of_returns = securities_returns,
-#'                    event_start =  as.Date("2001-09-11"),
-#'                    event_end = as.Date("2001-09-28"))
+#'                    event_start =  as.Date("2020-03-16"),
+#'                    event_end = as.Date("2020-03-20"))
 #'
 #' @export
 modified_rank_test <- function(list_of_returns, event_start, event_end) {
@@ -1042,19 +1036,18 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #' @examples
 #' \dontrun{
 #' library("magrittr")
-#' rates_indx <- get_prices_from_tickers("^N100",
-#'                                       start = as.Date("2000-01-01"),
-#'                                       end = as.Date("2002-01-01"),
+#' rates_indx <- get_prices_from_tickers("^GSPC",
+#'                                       start = as.Date("2019-04-01"),
+#'                                       end = as.Date("2020-04-01"),
 #'                                       quote = "Close",
 #'                                       retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
 #'                           multi_day = TRUE,
 #'                           compounding = "continuous")
-#' tickers <- c("ALV.DE", "CS.PA", "G.MI", "HNR1.HA", "HSX.L", "MUV2.DE",
-#'              "TOP.CO")
+#' tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 #' get_prices_from_tickers(tickers,
-#'                         start = as.Date("2000-01-01"),
-#'                         end = as.Date("2002-01-01"),
+#'                         start = as.Date("2019-04-01"),
+#'                         end = as.Date("2020-04-01"),
 #'                         quote = "Close",
 #'                         retclass = "zoo") %>%
 #'     get_rates_from_prices(quote = "Close",
@@ -1064,16 +1057,16 @@ modified_rank_test <- function(list_of_returns, event_start, event_end) {
 #'                        same_regressor_for_all = TRUE,
 #'                        market_model = "sim",
 #'                        estimation_method = "ols",
-#'                        estimation_start = as.Date("2001-03-26"),
-#'                        estimation_end = as.Date("2001-09-10")) %>%
-#'     wilcoxon_test(event_start = as.Date("2001-09-11"),
-#'                   event_end = as.Date("2001-09-28"))
+#'                        estimation_start = as.Date("2019-04-01"),
+#'                        estimation_end = as.Date("2020-03-13")) %>%
+#'     wilcoxon_test(event_start = as.Date("2020-03-16"),
+#'                   event_end = as.Date("2020-03-20"))
 #' }
 #' ## The result of the code above is equivalent to:
 #' data(securities_returns)
 #' wilcoxon_test(list_of_returns = securities_returns,
-#'               event_start =  as.Date("2001-09-11"),
-#'               event_end = as.Date("2001-09-28"))
+#'               event_start =  as.Date("2020-03-16"),
+#'               event_end = as.Date("2020-03-20"))
 #'
 #' @export
 wilcoxon_test <- function(list_of_returns, event_start, event_end) {
