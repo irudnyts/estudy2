@@ -31,7 +31,19 @@ nice_colnames <- c(
     "bh_stat" = "BMP Stat.",
     "bh_signif" = "BMP Signif.",
     "lmb_stat" = "Lamb's Stat.",
-    "lmb_signif" = "Lamb's Signif."
+    "lmb_signif" = "Lamb's Signif.",
+    "sign_stat" = "Sign Stat.",
+    "sign_signif" = "Sign Signif.",
+    "gsign_stat" = "G. Sign Stat.",
+    "gsign_signif" = "G. Sign Signif.",
+    "csign_stat" = "C. Sign Stat.",
+    "csign_signif" = "C. Sign Signif.",
+    "rank_stat" = "Rank Stat.",
+    "rank_signif" = "Rank Signif.",
+    "mrank_stat" = "M. Rank Stat.",
+    "mrank_signif" = "M. Rank Signif.",
+    "wlcx_stat" = "Wilcoxon's Stat.",
+    "wlcx_signif" = "Wilcoxon's Signif."
 )
 
 sign_formatter <- formattable::formatter(
@@ -48,9 +60,20 @@ beautify <- function(tests_table) {
     # beautify column names
     names(tests_table) <- nice_colnames[names(tests_table)]
 
+    column_formatters <- list(
+        Percent = formattable::color_bar("lightgreen")
+    )
+
+    if (any(names(tests_table) == "Mean"))
+        column_formatters[["Mean"]] <- sign_formatter
+
     tests_table %>%
         dplyr::mutate(
-            dplyr::across(dplyr::contains("Stat") | Mean, round, 2)
+            dplyr::across(
+                dplyr::contains("Stat") | dplyr::contains("Mean"),
+                round,
+                2
+            )
         ) %>%
         dplyr::mutate(
             dplyr::across(
@@ -60,13 +83,13 @@ beautify <- function(tests_table) {
         ) %>%
         dplyr::mutate(
             Percent = formattable::percent(Percent / 100, digits = 0),
-            Mean = formattable::percent(Mean),
+
             Date = format(Date, "%b %d")
         ) %>%
+        dplyr::mutate(
+            dplyr::across(dplyr::contains("Mean"), formattable::percent)
+        ) %>%
         formattable::formattable(
-            list(
-                Percent =  formattable::color_bar("lightgreen"),
-                Mean = sign_formatter
-            )
+            column_formatters
         )
 }
