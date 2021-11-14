@@ -252,8 +252,6 @@ server <- function(input, output, session) {
 
     output$parametric_table <- DT::renderDataTable({
 
-        # req(stock_returns())
-
         parametric_tests(
             list_of_returns = stock_returns(),
             event_start = isolate(input$event_window[1]),
@@ -280,6 +278,15 @@ server <- function(input, output, session) {
     # Interactions between UI elements
     #---------------------------------------------------------------------------
 
+    # The priority argument had to be added, since the default start of
+    # input$event_window was set to input$estmation_window[2] + 1, before
+    # input$estmation_window was updated with
+    # input$date_range[1] + estimation_window_length.
+
+    # I split setting min/max and start/end since I did not want to overwrite
+    # default values of start/end at launch (ignoreInit = TRUE), but
+    # still wanted to set min/max if input$date_range is changed.
+
     # Update boundaries of input$estmation_window
     shiny::observeEvent(
         input$date_range,
@@ -288,18 +295,9 @@ server <- function(input, output, session) {
             inputId = "estmation_window",
             min = input$date_range[1],
             max = input$date_range[2]
-        )
+        ),
+        priority = 4
     )
-
-    # Update boundaries of input$event_window
-    observe({
-        shiny::updateDateRangeInput(
-            session = session,
-            inputId = "event_window",
-            min = input$estmation_window[2] + 1,
-            max = input$date_range[2]
-        )
-    })
 
     # Update values of input$estmation_window (ignoring initialization)
     shiny::observeEvent(
@@ -315,8 +313,22 @@ server <- function(input, output, session) {
                 end = input$date_range[1] + estimation_window_length
             )
         },
+        priority = 3,
         ignoreInit = TRUE
     )
+
+
+    # Update boundaries of input$event_window
+    observe({
+        shiny::updateDateRangeInput(
+            session = session,
+            inputId = "event_window",
+            min = input$estmation_window[2] + 1,
+            max = input$date_range[2]
+        )},
+        priority = 2
+    )
+
 
     # Update values of input$event_window (ignoring initialization)
     shiny::observeEvent(
@@ -327,6 +339,7 @@ server <- function(input, output, session) {
             start = input$estmation_window[2] + 1,
             end = input$date_range[2]
         ),
+        priority = 1,
         ignoreInit = TRUE
     )
 
