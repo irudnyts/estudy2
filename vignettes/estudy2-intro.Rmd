@@ -46,7 +46,7 @@ The `estudy2` package provides a set of functions to cover these steps. Function
 
 The package is designed to work with one of the data types, namely `zoo`, `list`, or `data.frame` depending on user preference.
 
-The purpose of this vignette is to provide a brief introduction of how to use this package. The illustrative example is the analysis of the impact of 9/11 terrorist attacks on World Trading Center on eight European insurance companies.
+The purpose of this vignette is to provide a brief introduction of how to use this package. The illustrative example is the analysis of the impact of the COVID-19 lockdown introduction on seven companies, which could profit from it.
 
 ## Obtaining prices of companies' stocks
 
@@ -136,7 +136,7 @@ rates_indx <- get_prices_from_tickers("^GSPC",
 
 tickers <- c("AMZN", "ZM", "UBER", "NFLX", "SHOP", "FB", "UPWK")
 
-nine_eleven_param <- get_prices_from_tickers(tickers,
+param_tests <- get_prices_from_tickers(tickers,
                                              start = as.Date("2019-04-01"),
                                              end = as.Date("2020-04-01"),
                                              quote = "Close",
