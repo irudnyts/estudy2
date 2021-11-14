@@ -1,8 +1,6 @@
 ## Test environments
 
-* local MacOS 11.4, R 3.6.2
-* local MacOS 11.4, R 3.0.4
-* local MacOS 11.4, R 4.1.1
+* local MacOS 11.5.2, R 4.1.1
 * Ubuntu 16.04 (on Travis-CI), R-release
 * Windows (on AppVayor), R-release
 * win-builder (R-release, R-devel)
@@ -40,7 +38,9 @@ Found the following (possibly) invalid DOIs:
 There are currently no downstream dependencies for this package.
 
 ## Resubmission
+
 This is a resubmission. In this version I have:
 
-* Fix a bug in documentation and vignette related to the unsupported ticker in 
-  Yahoo Finance
+* Modify examples to COVID-19, so that vignette does not have any issues with 
+unsupported tickers
+* Equip the package with a demo Shiny app
