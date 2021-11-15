@@ -2,7 +2,7 @@ Package: estudy2
 Type: Package
 Title: An Implementation of Parametric and Nonparametric Event Study
 Version: 0.10.0
-Date: 2021-11-14
+Date: 2021-11-15
 Authors@R:
     person("Iegor", "Rudnytskyi", , "iegor.rudnytskyi@gmail.com", c("aut", "cre"))
 Description: An implementation of a most commonly used event study methodology,

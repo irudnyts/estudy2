@@ -59,4 +59,4 @@ library("estudy2")
 run_app()
 ```
 
-Otherwise, one can explore the deployed version using this [link](http://irudnyts.shinyapps.io/estudy2/). 
+Otherwise, one can explore the deployed version using this [link](https://irudnyts.shinyapps.io/estudy2/). 

@@ -50,4 +50,4 @@ run_app()
 ```
 
 Otherwise, one can explore the deployed version using this
-[link](http://irudnyts.shinyapps.io/estudy2/).
+[link](https://irudnyts.shinyapps.io/estudy2/).
