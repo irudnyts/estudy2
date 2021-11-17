@@ -130,7 +130,7 @@ ui <- shiny::fluidPage(
 
 server <- function(input, output, session) {
 
-    prices <- shiny::eventReactive(input$calculate, {
+    prices <- shiny::reactive({
 
         shinyFeedback::feedbackWarning(
             "date_range",
@@ -195,7 +195,9 @@ server <- function(input, output, session) {
 
         prices_list
 
-    })
+    }) %>%
+        shiny::bindCache(input$date_range, input$tickers, input$price_type) %>%
+        shiny::bindEvent(input$calculate)
 
     rates <- shiny::eventReactive(input$calculate, {
         estudy2::get_rates_from_prices(
