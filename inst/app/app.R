@@ -208,7 +208,7 @@ server <- function(input, output, session) {
         )
     })
 
-    rates_indx <- shiny::eventReactive(input$calculate, {
+    prices_indx <- shiny::reactive({
 
         if (input$model != "mean_adj") {
 
@@ -236,8 +236,21 @@ server <- function(input, output, session) {
 
             shiny::req(!is.null(prices_indx))
 
+            prices_indx
+
+        } else {
+            NULL
+        }
+    }) %>%
+        shiny::bindCache(
+            input$date_range, input$index, input$price_type, input$model
+        ) %>%
+        shiny::bindEvent(input$calculate)
+
+    rates_indx <- shiny::eventReactive(input$calculate, {
+        if (input$model != "mean_adj") {
             estudy2::get_rates_from_prices(
-                prices_indx,
+                prices_indx(),
                 quote = input$price_type,
                 multi_day = input$multi_day,
                 compounding = input$compounding
