@@ -53,6 +53,7 @@ Suggests:
     stringr (>= 1.4.0),
     magrittr (>= 2.0.1),
     formattable (>= 0.2.1),
-    dplyr (>= 1.0.7)
+    dplyr (>= 1.0.7), 
+    ggplot2 (>= 3.3.5)
 VignetteBuilder: knitr
 Encoding: UTF-8
