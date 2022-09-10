@@ -387,12 +387,14 @@ scedas <- lmtest::bptest(lm_fit)["p.value"] < significance
 autocorr <- lmtest::bgtest(lm_fit, order = 1)["p.value"] < significance
 
 # 3. Statements that correctly specify GLS ####
-# copy for variance purposes
+# copy for heteroscedasticity correction in the gls models
 est_copy <- estimation_data
+# add an extra feature that allows for different variance structures over time
 names(est_copy) <- c("date","y","x")
 est_copy['month'] <- format(est_copy$date,"%m")
+
 make_gls <- function(d = est_copy, ar.res=NULL) {
-    # specify different variance structures
+    # specify possible different variance structures
     vf1 <- nlme::varFixed(~x)
     vf2 <- nlme::varIdent(form = ~ x | month)
     vf3 <- nlme::varPower(form = ~ x)
@@ -401,23 +403,33 @@ make_gls <- function(d = est_copy, ar.res=NULL) {
     vf6 <- nlme::varConstPower(form = ~ x | month)
     vf7 <- nlme::varExp(form = ~x)
 
-    lm_gls <- nlme::gls(y ~ x, data = est_copy)
-    vf1_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf1)
-    vf2_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf2)
-    vf3_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf3)
-    vf4_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf4)
-    vf5_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf5)
-    vf6_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf6)
-    vf7_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf7)
+    # specify possible models
+    lm_gls <- try(nlme::gls(y ~ x, data = est_copy), silent = TRUE)
+    vf1_gls <- try(nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf1), silent = TRUE)
+    vf2_gls <- try(nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf2), silent = TRUE)
+    vf3_gls <- try(nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf3), silent = TRUE)
+    vf4_gls <- try(nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf4), silent = TRUE)
+    vf5_gls <- try(nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf5), silent = TRUE)
+    vf6_gls <- try(nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf6), silent = TRUE)
+    vf7_gls <- try(nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf7), silent = TRUE)
 
-    res <- anova(lm_gls, vf1_gls, vf2_gls, vf3_gls, vf4_gls, vf5_gls, vf6_gls, vf7_gls)
-} ret
+    # Find & remove all models that run into errors
+    reg_res <- list(lm_gls, vf1_gls, vf2_gls, vf3_gls, vf4_gls, vf5_gls, vf6_gls, vf7_gls)
+    reg_res_logical <- lapply(reg_res, function (a) return(class(a) != "gls"))
+    if (any(reg_res_logical == TRUE) == TRUE){
+        regs <- reg_res[-which((reg_res_logical == TRUE))]
+    }
 
-# slice out name of best model
-selected_gls <- rownames(dplyr::slice_min(res, order_by = AIC))
+    # Select best fitting model according to AIC criterion
+    aic <- sapply(regs, AIC)
+    gls_model <- regs[-which((aic != min(aic))==TRUE)]
+    aic_logical <- aic == min(aic)
+
+    return(gls_model)
+}
 
 # specify remedies
-if ((scedas == TRUE) & (auto == TRUE)) {
+if ((scedas == TRUE) & (autocorr == TRUE)) {
     # model has both heteroscedasticity and autocorrelation
     # Calc autocorrelation of residuals
     corr <- stats::acf(lm_fit$residuals,
@@ -427,21 +439,14 @@ if ((scedas == TRUE) & (auto == TRUE)) {
                          form = ~1,
                          fixed = FALSE)
 
-    gls_fit <- nlme::gls(y ~ x,
-                         correlation = ARcorr,
-                         weights = weig)
+    gls_fit <- make_gls(ar.res = ARcorr)
 
-} else if ((scedas == TRUE) & (auto == FALSE)) {
+} else if ((scedas == TRUE) & (autocorr == FALSE)) {
     # model has heteroscedasticity but no autocorrelation
-    # Calc heteroscedasticity of residuals
-    weig <- nlme::var # something
+    # Fit gls corrected for heteroscedasticity
+    gls_fit <- make_gls(ar.res = NULL)
 
-
-    gls_fit <- nlme::gls(y ~ x,
-                         correlation = NULL,
-                         weights = weig)
-
-} else if ((scedas == FALSE) & (auto == TRUE)) {
+} else if ((scedas == FALSE) & (autocorr == TRUE)) {
     # model has autocorrelation but no heteroscedasticity
     # Calcl autocorrelation of residuals
     corr <- stats::acf(lm_fit$residuals,
@@ -458,6 +463,14 @@ if ((scedas == TRUE) & (auto == TRUE)) {
     # if no tests TRUE then OLS model remains OLS
     predicted <- predicted
 }
+
+#nlme::predict.gls
+predicted_gls <- predict(
+    object = gls_fit,
+    newdata = data.frame(x = data[, 3]),
+    interval = c("confidence"),
+    level = 0.95
+)
 
 
 rownames(predicted) <- NULL
