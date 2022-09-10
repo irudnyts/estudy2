@@ -305,6 +305,7 @@ paste("Complete. Time elapsed: ", round(end_time - start_time, digits = 4), "sec
 
 
 # A. Create tests in generalized format ####
+# 1. Setup for dev ####
 # REMOVE UNNCESSARY ITEMS FROM ENVIRONMENT
 rm(cds,df2,df3,market_list_copy,stock_list_copy,name_dict)
 
@@ -328,12 +329,12 @@ library(nlme)
 
 # cut out sample from data and allocate to correct variables
 all_dependents <- stock_list$MEXBOL.Index
-dependent <- all_dependents$GRUMAB.MF.Equity %>%
+dependent <- all_dependents$AMXL.MF.Equity %>%
     as.data.frame(
         row.names = all_dependents$date,
-        col.names = "GRUMAB.MF.Equity"
+        col.names = "AMXL.MF.Equity"
         )
-names(dependent) <- "GRUMAB.MF.Equity"
+names(dependent) <- "AMXL.MF.Equity"
 dependent <- cbind(date = as.Date(rownames(dependent)), dependent)
 rates <- estudy2::get_rates_from_prices(dependent,
                                       quote = "Close",
@@ -362,6 +363,7 @@ estimation_data <- estimation_data[
         estimation_data[, 1] <= estimation_end, ]
 delta <- nrow(estimation_data)
 
+# 2. Tests for GLS ####
 
 # two variables created, because predict is looking for the same
 # as in lm variables names
@@ -381,8 +383,38 @@ significance <- 0.01
 bp_test <- lmtest::bptest(lm_fit)
 bg_test1 <- lmtest::bgtest(lm_fit, order = 1)
 
-scedas <- bp_test$p.value < significance
-autocorr <- bg_test1$p.value < significance
+scedas <- lmtest::bptest(lm_fit)["p.value"] < significance
+autocorr <- lmtest::bgtest(lm_fit, order = 1)["p.value"] < significance
+
+# 3. Statements that correctly specify GLS ####
+# copy for variance purposes
+est_copy <- estimation_data
+names(est_copy) <- c("date","y","x")
+est_copy['month'] <- format(est_copy$date,"%m")
+make_gls <- function(d = est_copy, ar.res=NULL) {
+    # specify different variance structures
+    vf1 <- nlme::varFixed(~x)
+    vf2 <- nlme::varIdent(form = ~ x | month)
+    vf3 <- nlme::varPower(form = ~ x)
+    vf4 <- nlme::varPower(form = ~ x | month)
+    vf5 <- nlme::varConstPower(form = ~ x)
+    vf6 <- nlme::varConstPower(form = ~ x | month)
+    vf7 <- nlme::varExp(form = ~x)
+
+    lm_gls <- nlme::gls(y ~ x, data = est_copy)
+    vf1_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf1)
+    vf2_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf2)
+    vf3_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf3)
+    vf4_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf4)
+    vf5_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf5)
+    vf6_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf6)
+    vf7_gls <- nlme::gls(y ~ x, data = est_copy, correlation = ar.res, weights = vf7)
+
+    res <- anova(lm_gls, vf1_gls, vf2_gls, vf3_gls, vf4_gls, vf5_gls, vf6_gls, vf7_gls)
+} ret
+
+# slice out name of best model
+selected_gls <- rownames(dplyr::slice_min(res, order_by = AIC))
 
 # specify remedies
 if ((scedas == TRUE) & (auto == TRUE)) {
@@ -394,14 +426,10 @@ if ((scedas == TRUE) & (auto == TRUE)) {
     ARcorr <- nlme::corAR1(value = corr$acf[[2]],
                          form = ~1,
                          fixed = FALSE)
-    # Calc heteroscedasticity of residuals
-    weig <- nlme::var # something
-
 
     gls_fit <- nlme::gls(y ~ x,
                          correlation = ARcorr,
                          weights = weig)
-
 
 } else if ((scedas == TRUE) & (auto == FALSE)) {
     # model has heteroscedasticity but no autocorrelation
