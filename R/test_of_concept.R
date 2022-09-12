@@ -413,7 +413,7 @@ bg_test1 <- lmtest::bgtest(lm_fit, order = 1)
 scedas <- lmtest::bptest(lm_fit)["p.value"] < significance
 autocorr <- lmtest::bgtest(lm_fit, order = 1)["p.value"] < significance
 
-# 4. Statements that correctly specify GLS ####
+# 4. Creation of GLS model specifying function ####
 
 make_gls <- function(d = estimation_data, ar.res=NULL) {
     # copy for heteroscedasticity correction in the gls models
@@ -455,6 +455,11 @@ make_gls <- function(d = estimation_data, ar.res=NULL) {
 
     return(gls_model)
 }
+
+# 5. Statement ensures correct model specification of GLS ####
+
+scedas <- TRUE
+autocorr <- TRUE
 
 # specify remedies
 if ((scedas == TRUE) & (autocorr == TRUE)) {
