@@ -5,3 +5,4 @@ inst/doc
 .DS_Store
 .Renviron
 inst/app/rsconnect
+test_of_concept.R
