@@ -833,27 +833,36 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             # function for gls prediction
             predict.gls <- function(gls_model, newdata, level = 0.95) {
                 # obtain the model's coefficients
-                model_coeff <- nlme::intervals(gls_model, level = level)[[1]]
+                model_confint <- try(nlme::intervals(gls_model, level = level),
+                                     silent = TRUE)
 
-                lwr_intercept <- model_coeff[1,1]
-                fit_intercept <- model_coeff[1,2]
-                upr_intercept <- model_coeff[1,3]
+                if ((class(model_confint) == "try-error") == TRUE) {
+                    print("An error occured in calculation of intervals")
+                    problem <- model_confint
+                    return(problem)
 
-                lwr_beta <- model_coeff[2,1]
-                fit_beta <- model_coeff[2,2]
-                upr_beta <- model_coeff[2,3]
+                } else if ((class(model_confint) == "intervals.gls") == TRUE) {
+                    model_coeff <- model_confint[[1]]
 
-                # calculate results, where 'newdata' is the independent variable
-                Y_lwr <- lwr_intercept + (lwr_beta * newdata)
-                Y_fit <- fit_intercept + (fit_beta * newdata)
-                Y_upr <- upr_intercept + (upr_beta * newdata)
+                    lwr_intercept <- model_coeff[1, 1]
+                    fit_intercept <- model_coeff[1, 2]
+                    upr_intercept <- model_coeff[1, 3]
 
-                res <- as.matrix(
-                    as.data.frame(list(Y_fit,Y_lwr,Y_upr),
-                                  col.names=c("fit","lwr","upr")
-                    )
-                )
-                return(res)
+                    lwr_beta <- model_coeff[2, 1]
+                    fit_beta <- model_coeff[2, 2]
+                    upr_beta <- model_coeff[2, 3]
+
+                    # calculate results, where 'newdata' is the independent variable
+                    Y_lwr <- lwr_intercept + (lwr_beta * newdata)
+                    Y_fit <- fit_intercept + (fit_beta * newdata)
+                    Y_upr <- upr_intercept + (upr_beta * newdata)
+
+                    res <- as.matrix(
+                        as.data.frame(list(Y_fit, Y_lwr, Y_upr),
+                                      col.names = c("fit", "lwr", "upr"))
+                                     )
+                    return(res)
+                }
             }
             # Tests for appropriate model specification
             significance <- 0.01
@@ -864,7 +873,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             scedas <- lmtest::bptest(lm_fit)["p.value"] < significance
             autocorr <- lmtest::bgtest(lm_fit, order = 1)["p.value"] < significance
 
-            # correct for problems in OLS model "lm_fit"
+            # specify remedies
             if ((scedas == TRUE) & (autocorr == TRUE)) {
                 # model has both heteroscedasticity and autocorrelation
                 # Calc autocorrelation of residuals
@@ -873,16 +882,21 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                                    type = "correlation",
                                    plot = FALSE)
                 ARcorr <- nlme::corAR1(value = corr$acf[[2]],
-                                       form = ~1,
+                                       form = ~ 1,
                                        fixed = FALSE)
                 gls_fit <- make_gls(d = estimation_data,
                                     ar.res = ARcorr)
 
-                predicted <- predict.gls(
-                    gls_model = gls_fit[[1]],
-                    newdata = data[,3],
-                    level = 0.95
-                )
+                predict_attempt <- predict.gls(gls_model = gls_fit[[1]],
+                                               newdata = data[, 3],
+                                               level = 0.95)
+                if (all(class(predict_attempt) == "try-error") == TRUE) {
+                    predicted <- predicted
+                    print("Deffering to OLS model prediction.")
+                } else if (all(class(predict_attempt) == c("matrix", "array")) == TRUE) {
+                    predicted <- predict_attempt
+                }
+
             } else if ((scedas == TRUE) & (autocorr == FALSE)) {
                 # model has heteroscedasticity but no autocorrelation
                 # Fit gls corrected for heteroscedasticity
@@ -890,31 +904,41 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                 gls_fit <- make_gls(d = estimation_data,
                                     ar.res = NULL)
 
-                predicted <- predict.gls(
-                    gls_model = gls_fit[[1]],
-                    newdata = data[,3],
-                    level = 0.95
-                )
+                predicted <- predict.gls(gls_model = gls_fit[[1]],
+                                         newdata = data[, 3],
+                                         level = 0.95)
+                if (all(class(predict_attempt) == "try-error") == TRUE) {
+                    print("Deffering to OLS model prediction.")
+                    predicted <- predicted
+                } else if (all(class(predict_attempt) == c("matrix", "array")) == TRUE) {
+                    predicted <- predict_attempt
+                }
+
             } else if ((scedas == FALSE) & (autocorr == TRUE)) {
                 # model has autocorrelation but no heteroscedasticity
-                # Calc autocorrelation of residuals
+                # Calcl autocorrelation of residuals
                 print("Correcting for autocorr of residuals. No heteroscedasticity found.")
                 corr <- stats::acf(lm_fit$residuals,
                                    type = "correlation",
                                    plot = FALSE)
                 ARcorr <- nlme::corAR1(value = corr$acf[[2]],
-                                       form = ~1,
+                                       form = ~ 1,
                                        fixed = FALSE)
 
                 gls_fit <- nlme::gls(y ~ x,
                                      correlation = ARcorr,
                                      weights = NULL)
 
-                predicted <- predict.gls(
-                    gls_model = gls_fit,
-                    newdata = data[,3],
-                    level = 0.95
-                )
+                predicted <- predict.gls(gls_model = gls_fit,
+                                         newdata = data[, 3],
+                                         level = 0.95)
+                if (all(class(predict_attempt) == "try-error") == TRUE) {
+                    print("Deffering to OLS model prediction.")
+                    predicted <- predicted
+                } else if (all(class(predict_attempt) == c("matrix", "array")) == TRUE) {
+                    predicted <- predict_attempt
+                }
+
             } else {
                 # if no tests TRUE then OLS model remains OLS
                 predicted <- predicted
