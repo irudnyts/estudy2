@@ -137,7 +137,7 @@
 #' @export
 apply_market_model <- function(rates, regressors, same_regressor_for_all = TRUE,
                                market_model = c("mean_adj", "mrkt_adj", "sim"),
-                               estimation_method = c("ols"), estimation_start,
+                               estimation_method = c("ols","gls"), estimation_start,
                                estimation_end) {
     UseMethod("apply_market_model")
 }
@@ -212,7 +212,7 @@ apply_market_model.data.frame <- function(rates, regressors,
                                           same_regressor_for_all = TRUE,
                                           market_model =
                                               c("mean_adj", "mrkt_adj", "sim"),
-                                          estimation_method = c("ols"),
+                                          estimation_method = c("ols","gls"),
                                           estimation_start, estimation_end) {
     # check args for validity
     market_model <- match.arg(market_model)
@@ -642,7 +642,7 @@ returns.zoo <- function(rates, regressor, market_model = c("mean_adj",
 #' @export
 returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                                                            "mrkt_adj", "sim"),
-                        estimation_method = c("ols"), estimation_start,
+                        estimation_method = c("ols","gls"), estimation_start,
                         estimation_end) {
     # check parameters
     market_model <- match.arg(market_model)
@@ -791,8 +791,6 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             )
             # Function for correct gls model specification
             make_gls <- function(d = estimation_data, ar.res=NULL) {
-                # copy for heteroscedasticity correction in the gls models
-                d <- estimation_data
                 # add an extra feature that allows for different variance structures over time
                 names(d) <- c("date","y","x")
                 d['month'] <- format(d$date,"%m")
@@ -807,7 +805,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                 vf7 <- nlme::varExp(form = ~x)
 
                 # specify possible models
-                lm_gls <- try(nlme::gls(y ~ x, data = d), silent = TRUE)
+                lm_gls  <- try(nlme::gls(y ~ x, data = d), silent = TRUE)
                 vf1_gls <- try(nlme::gls(y ~ x, data = d, correlation = ar.res, weights = vf1), silent = TRUE)
                 vf2_gls <- try(nlme::gls(y ~ x, data = d, correlation = ar.res, weights = vf2), silent = TRUE)
                 vf3_gls <- try(nlme::gls(y ~ x, data = d, correlation = ar.res, weights = vf3), silent = TRUE)
@@ -821,11 +819,13 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                 reg_res_logical <- lapply(reg_res, function (a) return(class(a) != "gls"))
                 if (any(reg_res_logical == TRUE) == TRUE){
                     regs <- reg_res[-which((reg_res_logical == TRUE))]
+                } else {
+                    regs <- reg_res
                 }
 
                 # Select best fitting model according to AIC criterion
                 aic <- sapply(regs, AIC)
-                gls_model <- regs[-which((aic != min(aic))==TRUE)]
+                gls_model <- regs[-which((aic != min(aic)) == TRUE)]
                 aic_logical <- aic == min(aic)
 
                 return(gls_model)
@@ -833,7 +833,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             # function for gls prediction
             predict.gls <- function(gls_model, newdata, level = 0.95) {
                 # obtain the model's coefficients
-                model_coeff <- nlme::intervals(gls_model[[1]], level = level)[[1]]
+                model_coeff <- nlme::intervals(gls_model, level = level)[[1]]
 
                 lwr_intercept <- model_coeff[1,1]
                 fit_intercept <- model_coeff[1,2]
@@ -868,33 +868,37 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             if ((scedas == TRUE) & (autocorr == TRUE)) {
                 # model has both heteroscedasticity and autocorrelation
                 # Calc autocorrelation of residuals
+                print("Correcting for autocorr & heteroscedasticity of residuals...")
                 corr <- stats::acf(lm_fit$residuals,
                                    type = "correlation",
                                    plot = FALSE)
                 ARcorr <- nlme::corAR1(value = corr$acf[[2]],
                                        form = ~1,
                                        fixed = FALSE)
-                print("correcting for autocorr & heteroscedas...")
-                gls_fit <- make_gls(ar.res = ARcorr)
+                gls_fit <- make_gls(d = estimation_data,
+                                    ar.res = ARcorr)
 
                 predicted <- predict.gls(
-                    gls_model = gls_fit,
+                    gls_model = gls_fit[[1]],
                     newdata = data[,3],
                     level = 0.95
                 )
             } else if ((scedas == TRUE) & (autocorr == FALSE)) {
                 # model has heteroscedasticity but no autocorrelation
                 # Fit gls corrected for heteroscedasticity
-                gls_fit <- make_gls(ar.res = NULL)
+                print("Correcting for heteroscedasticity of residuals. No autocorrelation found.")
+                gls_fit <- make_gls(d = estimation_data,
+                                    ar.res = NULL)
 
                 predicted <- predict.gls(
-                    gls_model = gls_fit,
+                    gls_model = gls_fit[[1]],
                     newdata = data[,3],
                     level = 0.95
                 )
             } else if ((scedas == FALSE) & (autocorr == TRUE)) {
                 # model has autocorrelation but no heteroscedasticity
-                # Calcl autocorrelation of residuals
+                # Calc autocorrelation of residuals
+                print("Correcting for autocorr of residuals. No heteroscedasticity found.")
                 corr <- stats::acf(lm_fit$residuals,
                                    type = "correlation",
                                    plot = FALSE)
