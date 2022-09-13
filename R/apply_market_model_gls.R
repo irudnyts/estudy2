@@ -904,7 +904,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                 gls_fit <- make_gls(d = estimation_data,
                                     ar.res = NULL)
 
-                predicted <- predict.gls(gls_model = gls_fit[[1]],
+                predict_attempt <- predict.gls(gls_model = gls_fit[[1]],
                                          newdata = data[, 3],
                                          level = 0.95)
                 if (all(class(predict_attempt) == "try-error") == TRUE) {
@@ -929,7 +929,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
                                      correlation = ARcorr,
                                      weights = NULL)
 
-                predicted <- predict.gls(gls_model = gls_fit,
+                predict_attempt <- predict.gls(gls_model = gls_fit,
                                          newdata = data[, 3],
                                          level = 0.95)
                 if (all(class(predict_attempt) == "try-error") == TRUE) {
@@ -941,6 +941,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
 
             } else {
                 # if no tests TRUE then OLS model remains OLS
+                print("GLS not needed, using OLS estimation instead.")
                 predicted <- predicted
             }
             # store results
