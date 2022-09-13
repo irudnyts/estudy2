@@ -941,7 +941,7 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
 
             } else {
                 # if no tests TRUE then OLS model remains OLS
-                print("GLS not needed, using OLS estimation instead.")
+                print("GLS not needed, using OLS estimation.")
                 predicted <- predicted
             }
             # store results
