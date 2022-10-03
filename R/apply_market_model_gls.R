@@ -867,11 +867,28 @@ returns.data.frame <- function(rates, regressor, market_model = c("mean_adj",
             # Tests for appropriate model specification
             significance <- 0.01
 
-            bp_test <- lmtest::bptest(lm_fit)
-            bg_test1 <- lmtest::bgtest(lm_fit, order = 1)
+            # bp_test <- lmtest::bptest(lm_fit)
+            # bg_test1 <- lmtest::bgtest(lm_fit, order = 1)
 
-            scedas <- lmtest::bptest(lm_fit)["p.value"] < significance
-            autocorr <- lmtest::bgtest(lm_fit, order = 1)["p.value"] < significance
+            scedas <- try(lmtest::bptest(lm_fit), silent = TRUE)
+            if ((class(scedas)  == 'try-error')) {
+                scedas <- TRUE
+            } else {
+                scedas <- scedas["p.value"] < significance
+                if(is.na(scedas) | is.null(scedas)){
+                    scedas <- TRUE
+                }
+            }
+
+            autocorr <- try(lmtest::bgtest(lm_fit, order = 1), silent = TRUE)
+            if (any(class(autocorr) == 'try-error')) {
+                autocorr <- TRUE
+            } else {
+                autocorr <- autocorr["p.value"] < significance
+                if(is.na(autocorr) | is.null(autocorr)){
+                    autocorr <- TRUE
+                }
+            }
 
             # specify remedies
             if ((scedas == TRUE) & (autocorr == TRUE)) {
