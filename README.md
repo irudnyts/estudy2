@@ -1,3 +1,8 @@
+## :warning: :warning: :warning: The project is shelved and archived :warning: :warning: :warning:
+
+Since the project has been stalled for more than a year, it has been
+archived and won’t be maintained.
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # estudy2 <img src="man/figures/logo.png" align="right" width="120" />

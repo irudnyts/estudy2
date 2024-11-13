@@ -4,6 +4,10 @@ output:
     variant: markdown_github
 ---
 
+## :warning: :warning: :warning: The project is shelved and archived :warning: :warning: :warning:
+
+Since the project has been stalled for more than a year, it has been archived and won't be maintained.
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE}
